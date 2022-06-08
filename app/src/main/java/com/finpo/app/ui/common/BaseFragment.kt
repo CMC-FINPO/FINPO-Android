@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.finpo.app.utils.SingleLiveData
 
 abstract class BaseFragment<B : ViewDataBinding>(
     @LayoutRes val layoutId: Int
@@ -37,4 +38,8 @@ abstract class BaseFragment<B : ViewDataBinding>(
 
     protected fun longShowToast(msg: String) =
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+
+    protected infix fun <T> SingleLiveData<T>.observe(action: (T) -> Unit) {
+        observe(viewLifecycleOwner, action)
+    }
 }
