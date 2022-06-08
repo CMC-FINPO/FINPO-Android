@@ -95,16 +95,11 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    style="@style/h3_16_mid"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginBottom="43dp"
                     android:background="@drawable/selector_main_button_bg"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="14dp"
-                    android:textColor="@drawable/selector_main_button_text"
+                    style="@style/finpo_main_button"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
