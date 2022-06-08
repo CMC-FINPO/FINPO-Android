@@ -17,6 +17,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private val viewModel by activityViewModels<IntroViewModel>()
     override fun init() {
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         viewModel.kakaoLoginEvent.observe {
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {

@@ -15,10 +15,19 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
     val viewModel by viewModels<IntroViewModel>()
 
     override fun init() {
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         viewPager = binding.vpIntro
         viewPager.adapter = IntroAdapter(this)
         viewPager.isUserInputEnabled = false
 
         //TODO finpo refresh token이 있는 경우 바로 main activity로 이동
+    }
+
+    override fun onBackPressed() {
+        when(viewModel.currentPage.value) {
+            0 -> doDelayFinish()
+            else -> viewModel.prevPage()
+        }
     }
 }
