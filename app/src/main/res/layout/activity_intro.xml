@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.intro.IntroViewModel" />
@@ -25,6 +27,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_toolbar"
+                    introVisibility="@{viewModel.currentPage}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingHorizontal="20dp">
@@ -95,11 +98,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    style="@style/finpo_main_button"
+                    introVisibility="@{viewModel.currentPage}"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginBottom="43dp"
                     android:background="@drawable/selector_main_button_bg"
-                    style="@style/finpo_main_button"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
