@@ -4,45 +4,116 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.intro.IntroViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="20dp"
-            tools:context=".ui.intro.IntroActivity">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="20dp">
+
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/ic_back"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/pb"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginEnd="12dp"
+                        android:max="6"
+                        android:paddingTop="3.5dp"
+                        android:paddingBottom="3.5dp"
+                        android:progressDrawable="@drawable/ll_progressbar"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_progress"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_back"
+                        tools:progress="3" />
+
+                    <TextView
+                        android:id="@+id/tv_progress"
+                        style="@style/l1_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{@string/intro_progress_text(3)}"
+                        app:layout_constraintBottom_toBottomOf="@id/pb"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/pb" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ic_back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vp_intro"
-                android:layout_marginTop="60dp"
-                android:layout_marginBottom="93dp"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                currentPage="@{viewModel.currentPage}"
-                />
+                android:paddingHorizontal="20dp"
+                tools:context=".ui.intro.IntroActivity">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp_intro"
+                    currentPage="@{viewModel.currentPage}"
+                    android:layout_width="0dp"
+                    android:layout_height="523dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginBottom="93dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/h3_16_mid"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="43dp"
+                    android:background="@drawable/selector_main_button_bg"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="14dp"
+                    android:textColor="@drawable/selector_main_button_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="확인" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+        </ScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

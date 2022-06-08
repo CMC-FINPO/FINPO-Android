@@ -25,6 +25,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 }
                 else if (token != null) {
                     //TODO 로그인 성공 처리
+                    //TODO 이미 가입된 회원인 경우 바로 앱 시작
+                    //TODO 미회원인 경우 회원가입 절차
                 }
             }
 

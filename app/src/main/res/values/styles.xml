@@ -48,4 +48,9 @@
         <item name="android:textSize">13sp</item>
     </style>
 
+    <style name="l1_12" parent="b1_16_reg">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray_g05</item>
+    </style>
+
 </resources>
