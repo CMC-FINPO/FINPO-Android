@@ -99,15 +99,16 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     style="@style/finpo_main_button"
+                    currentPage="@{viewModel.currentPage}"
                     introButtonText="@{viewModel.currentPage}"
                     introVisibility="@{viewModel.currentPage}"
-                    currentPage="@{viewModel.currentPage}"
                     isCheckedPersonalInfo="@{viewModel.termsConditionsLiveData.isCheckedPersonalInfo()}"
                     isCheckedTermsConditions="@{viewModel.termsConditionsLiveData.isCheckedTermsConditions()}"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginBottom="43dp"
                     android:background="@drawable/selector_main_button_bg"
+                    android:onClick="@{() -> viewModel.nextPage()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

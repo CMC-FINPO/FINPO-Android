@@ -21,7 +21,7 @@ fun setPage(
     viewPager2: ViewPager2,
     currentPage: Int
 ) {
-    viewPager2.currentItem = currentPage
+    viewPager2.setCurrentItem(currentPage, false)
 }
 
 @BindingAdapter("introVisibility")

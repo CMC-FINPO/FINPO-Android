@@ -27,6 +27,7 @@ class IntroViewModel @Inject constructor(
     }
 
     fun nextPage() {
+        //TODO 마지막 페이지, 중간 회원가입 완료 페이지인 경우 예외 처리 필요
         _currentPage.value = _currentPage.value?.plus(1)
     }
 
