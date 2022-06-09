@@ -6,6 +6,7 @@ import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.finpo.app.repository.IntroRepository
 import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
 import com.finpo.app.ui.intro.login.LoginLiveData
 import com.finpo.app.ui.intro.terms_conditions.TermsConditionsLiveData
@@ -18,7 +19,8 @@ import javax.inject.Inject
 class IntroViewModel @Inject constructor(
     val termsConditionsLiveData: TermsConditionsLiveData,
     val loginLiveData: LoginLiveData,
-    val defaultInfoLiveData: DefaultInfoLiveData
+    val defaultInfoLiveData: DefaultInfoLiveData,
+    private val introRepository: IntroRepository
 ) : ViewModel() {
 
     private val _currentPage = MutableLiveData<Int>()

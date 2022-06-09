@@ -1,5 +1,7 @@
 package com.finpo.app.di
 
+import com.finpo.app.network.ApiService
+import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.API.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -9,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -47,4 +50,15 @@ object NetworkModule {
 
     private fun getLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+
+    @Singleton
+    @Provides
+    fun provideApiService(retrofit: Retrofit) : ApiService {
+        return retrofit.create(ApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideIntroRepository(apiService: ApiService) = IntroRepository(apiService)
+
 }
