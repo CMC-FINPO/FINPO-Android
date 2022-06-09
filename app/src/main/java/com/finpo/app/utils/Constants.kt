@@ -15,3 +15,7 @@ object PAGE {
     const val ADDITIONAL_REGION = 7
     const val FINISH = 8
 }
+
+object API {
+    const val BASE_URL: String = "https://dev.finpo.kr/"
+}
