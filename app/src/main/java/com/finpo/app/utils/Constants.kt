@@ -1,6 +1,8 @@
 package com.finpo.app.utils
 
 const val INTRO_PAGE_NUM = 9
+const val MAX_NAME_LENGTH = 13
+const val MAX_NICKNAME_LENGTH = 13
 
 object PAGE {
     const val LOGIN = 0

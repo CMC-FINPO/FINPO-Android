@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="constants"
+            type="com.finpo.app.utils.ConstantsKt" />
 
         <variable
             name="viewModel"
@@ -37,6 +42,7 @@
             <TextView
                 android:id="@+id/tv_name"
                 style="@style/l1_13"
+                setErrorColor="@{viewModel.defaultInfoLiveData.nameErrorText}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name"
@@ -49,8 +55,11 @@
                 style="@style/t1_16"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                app:layout_constraintEnd_toStartOf="@id/iv_name"
+                android:afterTextChanged="@{() -> viewModel.defaultInfoLiveData.afterNameTextChanged()}"
+                android:background="@drawable/selector_edittext"
+                android:text="@={viewModel.defaultInfoLiveData.nameInputText}"
+                setErrorColor="@{viewModel.defaultInfoLiveData.nameErrorText}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
@@ -58,29 +67,22 @@
                 android:id="@+id/iv_name"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:src="@drawable/ic_error"
+                android:visibility="@{viewModel.defaultInfoLiveData.nameErrorText == null ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/et_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/et_name" />
 
-            <View
-                android:id="@+id/view_name"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/gray_g07"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_name" />
-
             <TextView
                 android:id="@+id/tv_name_error"
                 style="@style/reg_11"
+                nameErrorMsg="@{viewModel.defaultInfoLiveData.nameErrorText}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/error_e01"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_name"
+                app:layout_constraintTop_toBottomOf="@id/et_name"
                 tools:text="중복된 닉네임입니다" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -110,6 +112,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:maxLength="@{constants.MAX_NICKNAME_LENGTH}"
                 app:layout_constraintEnd_toStartOf="@id/iv_nickname"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_nickname" />

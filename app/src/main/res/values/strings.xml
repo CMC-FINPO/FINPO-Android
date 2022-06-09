@@ -20,4 +20,5 @@
     <string name="female">여성</string>
     <string name="male">남성</string>
     <string name="birth_hint">예)2022-5-26</string>
+    <string name="please_input_under_13">13자 이하만 가능해요</string>
 </resources>
