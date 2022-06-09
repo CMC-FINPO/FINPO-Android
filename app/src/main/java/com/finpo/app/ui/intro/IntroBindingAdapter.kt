@@ -6,6 +6,14 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.finpo.app.R
+import com.finpo.app.utils.PAGE.ADDITIONAL_REGION
+import com.finpo.app.utils.PAGE.AGREE
+import com.finpo.app.utils.PAGE.DEFAULT_INFO
+import com.finpo.app.utils.PAGE.INTEREST
+import com.finpo.app.utils.PAGE.LOGIN
+import com.finpo.app.utils.PAGE.REGION
+import com.finpo.app.utils.PAGE.REGISTRATION
+import com.finpo.app.utils.PAGE.STATE_PURPOSE
 
 @BindingAdapter("currentPage")
 fun setPage(
@@ -25,7 +33,7 @@ fun setVisibility(view: View, currentPage: Int) {
 @BindingAdapter("introProgressBar")
 fun setProgressBar(progressbar: ProgressBar, currentPage: Int) {
     progressbar.progress = when(currentPage) {
-        0, 1, 2, 3, 4 -> currentPage
+        LOGIN, AGREE, DEFAULT_INFO, REGION, INTEREST -> currentPage
         else -> currentPage - 1
     }
 }
@@ -33,7 +41,7 @@ fun setProgressBar(progressbar: ProgressBar, currentPage: Int) {
 @BindingAdapter("introProgressText")
 fun setIntroProgressText(textView: TextView, currentPage: Int) {
     textView.text = String.format(textView.context.getString(R.string.intro_progress_text), when(currentPage) {
-        0, 1, 2, 3, 4 -> currentPage
+        LOGIN, AGREE, DEFAULT_INFO, REGION, INTEREST -> currentPage
         else -> currentPage - 1
     })
 }
@@ -41,10 +49,10 @@ fun setIntroProgressText(textView: TextView, currentPage: Int) {
 @BindingAdapter("introButtonText")
 fun setIntroButtonText(textView: TextView, currentPage: Int) {
     textView.text = when(currentPage) {
-        1 -> "동의하기"
-        2 -> "다음"
-        3, 4, 6, 7 -> "선택 완료"
-        5 -> "나중에 할게요"
+        AGREE -> "동의하기"
+        DEFAULT_INFO -> "다음"
+        REGION, INTEREST, STATE_PURPOSE, ADDITIONAL_REGION -> "선택 완료"
+        REGISTRATION -> "나중에 할게요"
         else -> "시작하기"
     }
 }
