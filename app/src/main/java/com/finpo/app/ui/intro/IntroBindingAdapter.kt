@@ -1,6 +1,7 @@
 package com.finpo.app.ui.intro
 
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -32,7 +33,7 @@ fun setVisibility(view: View, currentPage: Int) {
 
 @BindingAdapter("introProgressBar")
 fun setProgressBar(progressbar: ProgressBar, currentPage: Int) {
-    progressbar.progress = when(currentPage) {
+    progressbar.progress = when (currentPage) {
         LOGIN, AGREE, DEFAULT_INFO, REGION, INTEREST -> currentPage
         else -> currentPage - 1
     }
@@ -40,19 +41,31 @@ fun setProgressBar(progressbar: ProgressBar, currentPage: Int) {
 
 @BindingAdapter("introProgressText")
 fun setIntroProgressText(textView: TextView, currentPage: Int) {
-    textView.text = String.format(textView.context.getString(R.string.intro_progress_text), when(currentPage) {
-        LOGIN, AGREE, DEFAULT_INFO, REGION, INTEREST -> currentPage
-        else -> currentPage - 1
-    })
+    textView.text = String.format(
+        textView.context.getString(R.string.intro_progress_text), when (currentPage) {
+            LOGIN, AGREE, DEFAULT_INFO, REGION, INTEREST -> currentPage
+            else -> currentPage - 1
+        }
+    )
 }
 
 @BindingAdapter("introButtonText")
 fun setIntroButtonText(textView: TextView, currentPage: Int) {
-    textView.text = when(currentPage) {
+    textView.text = when (currentPage) {
         AGREE -> "동의하기"
         DEFAULT_INFO -> "다음"
         REGION, INTEREST, STATE_PURPOSE, ADDITIONAL_REGION -> "선택 완료"
         REGISTRATION -> "나중에 할게요"
         else -> "시작하기"
     }
+}
+
+@BindingAdapter("currentPage", "isCheckedTermsConditions", "isCheckedPersonalInfo")
+fun setIntroButtonEnabled(
+    button: Button,
+    currentPage: Int,
+    isCheckedTermsConditions: Boolean,
+    isCheckedPersonalInfo: Boolean
+) {
+    button.isEnabled = (currentPage == AGREE && isCheckedPersonalInfo && isCheckedTermsConditions)
 }
