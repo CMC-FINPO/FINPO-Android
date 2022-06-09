@@ -6,30 +6,24 @@ import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.finpo.app.ui.intro.login.LoginLiveData
+import com.finpo.app.ui.intro.terms_conditions.TermsConditionsLiveData
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-class IntroViewModel @Inject constructor(): ViewModel() {
-    private val _kakaoLoginEvent = MutableSingleLiveData<Boolean>()
-    val kakaoLoginEvent : SingleLiveData<Boolean> = _kakaoLoginEvent
+@HiltViewModel
+class IntroViewModel @Inject constructor(
+    val termsConditionsLiveData: TermsConditionsLiveData,
+    val loginLiveData: LoginLiveData
+) : ViewModel() {
 
     private val _currentPage = MutableLiveData<Int>()
     val currentPage: LiveData<Int> = _currentPage
 
-    private val _isCheckedAll = MutableLiveData<Boolean>()
-    val isCheckedAll: LiveData<Boolean> = _isCheckedAll
-
     init {
         _currentPage.value = 0
-    }
-
-    fun onCheckboxAllChange(button: CompoundButton, check: Boolean) {
-        _isCheckedAll.value = check
-    }
-
-    fun loginKakao() {
-        _kakaoLoginEvent.setValue(true)
     }
 
     fun nextPage() {

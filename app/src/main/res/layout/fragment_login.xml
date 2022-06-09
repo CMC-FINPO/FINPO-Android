@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.intro.LoginFragment">
+        tools:context=".ui.intro.login.LoginFragment">
 
         <ImageView
             android:id="@+id/iv_temp"
@@ -31,7 +31,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="63dp"
             android:background="@drawable/bg_solid_kakao_rounded_5"
-            android:onClick="@{() -> viewModel.loginKakao()}"
+            android:onClick="@{() -> viewModel.loginLiveData.loginKakao()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_temp">

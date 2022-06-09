@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.intro.TermsConditionsFragment">
+        tools:context=".ui.intro.terms_conditions.TermsConditionsFragment">
 
         <TextView
             android:id="@+id/tv_header"
@@ -32,8 +32,8 @@
             android:layout_marginTop="25dp"
             android:background="@drawable/selector_checkbox"
             android:button="@null"
-            android:checked="@{viewModel.isCheckedAll}"
-            android:onCheckedChanged="@{viewModel.onCheckboxAllChange}"
+            android:checked="@{viewModel.termsConditionsLiveData.isCheckedAll}"
+            android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxAllChange}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_header" />
 
@@ -63,8 +63,8 @@
             android:layout_marginTop="21dp"
             android:background="@drawable/selector_checkbox"
             android:button="@null"
-            android:checked="@{viewModel.isCheckedAll}"
-            android:onCheckedChanged="@{viewModel.onCheckboxAllChange}"
+            android:checked="@{viewModel.termsConditionsLiveData.isCheckedAll}"
+            android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxAllChange}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_divider" />
 
@@ -109,8 +109,8 @@
             android:layout_marginTop="22dp"
             android:background="@drawable/selector_checkbox"
             android:button="@null"
-            android:checked="@{viewModel.isCheckedAll}"
-            android:onCheckedChanged="@{viewModel.onCheckboxAllChange}"
+            android:checked="@{viewModel.termsConditionsLiveData.isCheckedAll}"
+            android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxAllChange}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cb_terms_conditions" />
 
@@ -156,8 +156,8 @@
             android:layout_marginTop="22dp"
             android:background="@drawable/selector_checkbox"
             android:button="@null"
-            android:checked="@{viewModel.isCheckedAll}"
-            android:onCheckedChanged="@{viewModel.onCheckboxAllChange}"
+            android:checked="@{viewModel.termsConditionsLiveData.isCheckedAll}"
+            android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxAllChange}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cb_personal_information" />
 
