@@ -1,16 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.intro.IntroViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/error_e01"
         tools:context=".ui.intro.TermsConditionsFragment">
+
+        <TextView
+            android:id="@+id/tv_header"
+            style="@style/h2_24_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/please_agree_terms_conditions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/cb_all"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/selector_checkbox"
+            android:button="@null"
+            android:checked="@{viewModel.isCheckedAll}"
+            android:onCheckedChanged="@{viewModel.onCheckboxAllChange}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header" />
+
+        <TextView
+            android:id="@+id/tv_agree_all"
+            style="@style/mid_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="@string/agree_all"
+            app:layout_constraintBottom_toBottomOf="@id/cb_all"
+            app:layout_constraintStart_toEndOf="@id/cb_all"
+            app:layout_constraintTop_toTopOf="@id/cb_all" />
+
+        <View
+            android:id="@+id/view_divider"
+            style="@style/finpo_horizontal_line"
+            android:layout_marginTop="22dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_agree_all" />
+
+        <CheckBox
+            android:id="@+id/cb_terms_conditions"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="21dp"
+            android:background="@drawable/selector_checkbox"
+            android:button="@null"
+            android:checked="@{viewModel.isCheckedAll}"
+            android:onCheckedChanged="@{viewModel.onCheckboxAllChange}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_divider" />
+
+        <TextView
+            android:id="@+id/tv_required_terms_conditions"
+            style="@style/l1_13"
+            android:layout_width="32dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/bg_solid_none_rounded_g04_5"
+            android:gravity="center"
+            android:text="@string/essential"
+            android:textColor="@color/gray_g04"
+            app:layout_constraintBottom_toBottomOf="@id/cb_terms_conditions"
+            app:layout_constraintStart_toEndOf="@id/cb_terms_conditions"
+            app:layout_constraintTop_toTopOf="@id/cb_terms_conditions" />
+
+        <TextView
+            android:id="@+id/tv_terms_conditions"
+            style="@style/h3_16_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@string/agree_terms_conditions"
+            app:layout_constraintBottom_toBottomOf="@id/cb_terms_conditions"
+            app:layout_constraintStart_toEndOf="@id/tv_required_terms_conditions"
+            app:layout_constraintTop_toTopOf="@id/cb_terms_conditions" />
+
+        <ImageView
+            android:id="@+id/iv_terms_conditions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:src="@drawable/ic_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/view_divider" />
+
+        <CheckBox
+            android:id="@+id/cb_personal_information"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/selector_checkbox"
+            android:button="@null"
+            android:checked="@{viewModel.isCheckedAll}"
+            android:onCheckedChanged="@{viewModel.onCheckboxAllChange}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_terms_conditions" />
+
+        <TextView
+            android:id="@+id/tv_required_personal_information"
+            style="@style/l1_13"
+            android:layout_width="32dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/bg_solid_none_rounded_g04_5"
+            android:gravity="center"
+            android:text="@string/essential"
+            android:textColor="@color/gray_g04"
+            app:layout_constraintBottom_toBottomOf="@id/cb_personal_information"
+            app:layout_constraintStart_toEndOf="@id/cb_personal_information"
+            app:layout_constraintTop_toTopOf="@id/cb_personal_information" />
+
+        <TextView
+            android:id="@+id/tv_personal_information"
+            style="@style/h3_16_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@string/agree_personal_info"
+            app:layout_constraintBottom_toBottomOf="@id/tv_required_personal_information"
+            app:layout_constraintStart_toEndOf="@id/tv_required_personal_information"
+            app:layout_constraintTop_toTopOf="@id/tv_required_personal_information" />
+
+        <ImageView
+            android:id="@+id/iv_personal_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:src="@drawable/ic_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_terms_conditions" />
+
+        <!-- -->
+        <CheckBox
+            android:id="@+id/cb_marketing"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/selector_checkbox"
+            android:button="@null"
+            android:checked="@{viewModel.isCheckedAll}"
+            android:onCheckedChanged="@{viewModel.onCheckboxAllChange}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_personal_information" />
+
+        <TextView
+            android:id="@+id/tv_required_marketing"
+            style="@style/l1_13"
+            android:layout_width="32dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/bg_solid_none_rounded_g04_5"
+            android:gravity="center"
+            android:text="@string/choice"
+            android:textColor="@color/gray_g04"
+            app:layout_constraintBottom_toBottomOf="@id/cb_marketing"
+            app:layout_constraintStart_toEndOf="@id/cb_marketing"
+            app:layout_constraintTop_toTopOf="@id/cb_marketing" />
+
+        <TextView
+            android:id="@+id/tv_marketing"
+            style="@style/h3_16_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@string/agree_marketing"
+            app:layout_constraintBottom_toBottomOf="@id/tv_required_marketing"
+            app:layout_constraintStart_toEndOf="@id/tv_required_marketing"
+            app:layout_constraintTop_toTopOf="@id/tv_required_marketing" />
+
+        <ImageView
+            android:id="@+id/iv_marketing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:src="@drawable/ic_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_personal_information" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

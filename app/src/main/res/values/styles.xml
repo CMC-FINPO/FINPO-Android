@@ -52,6 +52,10 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/gray_g05</item>
     </style>
+    
+    <style name="mid_18" parent="h1_28_mid">
+        <item name="android:textSize">18sp</item>
+    </style>
 
     <style name="finpo_main_button" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/selector_main_button_bg</item>
@@ -62,6 +66,12 @@
         <item name="android:textColor">@drawable/selector_main_button_text</item>
         <item name="android:fontFamily">@font/notosans_medium</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="finpo_horizontal_line">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/gray_g05</item>
     </style>
 
 </resources>

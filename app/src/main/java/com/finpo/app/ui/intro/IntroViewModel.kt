@@ -1,6 +1,8 @@
 package com.finpo.app.ui.intro
 
 import android.util.Log
+import android.widget.CompoundButton
+import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,8 +17,15 @@ class IntroViewModel @Inject constructor(): ViewModel() {
     private val _currentPage = MutableLiveData<Int>()
     val currentPage: LiveData<Int> = _currentPage
 
+    private val _isCheckedAll = MutableLiveData<Boolean>()
+    val isCheckedAll: LiveData<Boolean> = _isCheckedAll
+
     init {
         _currentPage.value = 0
+    }
+
+    fun onCheckboxAllChange(button: CompoundButton, check: Boolean) {
+        _isCheckedAll.value = check
     }
 
     fun loginKakao() {
