@@ -21,4 +21,5 @@
     <string name="male">남성</string>
     <string name="birth_hint">예)2022-5-26</string>
     <string name="please_input_under_13">13자 이하만 가능해요</string>
+    <string name="is_overlap_nickname">중복된 닉네임입니다</string>
 </resources>

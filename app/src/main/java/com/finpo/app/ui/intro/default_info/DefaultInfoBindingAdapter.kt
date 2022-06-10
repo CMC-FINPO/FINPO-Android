@@ -1,10 +1,8 @@
 package com.finpo.app.ui.intro.default_info
 
+import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -33,9 +31,9 @@ fun setErrorMsg(
 @BindingAdapter("setErrorColor")
 fun setErrorColor(
     textView: TextView,
-    stringId: Int?
+    isError: Boolean
 ) {
-    if (stringId != null)
+    if (isError)
         textView.setTextColor(ContextCompat.getColor(textView.context, R.color.error_e01))
     else
         textView.setTextColor(ContextCompat.getColor(textView.context, R.color.gray_g01))
@@ -44,11 +42,29 @@ fun setErrorColor(
 @BindingAdapter("setErrorColor")
 fun setErrorColor(
     editText: EditText,
-    stringId: Int?
+    isError: Boolean
 ) {
-    if (stringId != null)
+    if (isError)
         editText.setBackgroundResource(R.drawable.ll_edittext_underline_error)
     else
         editText.setBackgroundResource(R.drawable.selector_edittext)
+}
 
+@BindingAdapter("isNicknameError")
+fun setErrorImageVisibility(
+    imageView: ImageView,
+    isNicknameError: Boolean
+) {
+    if(isNicknameError) imageView.visibility = View.VISIBLE
+    else imageView.visibility = View.GONE
+}
+
+@BindingAdapter("isNicknameOverlap", "isNicknameBlank")
+fun setOkImageVisibility(
+    imageView: ImageView,
+    isNicknameOverlap: Boolean,
+    isNicknameBlank: String?
+) {
+    if(!isNicknameOverlap && !isNicknameBlank.isNullOrBlank()) imageView.visibility = View.VISIBLE
+    else imageView.visibility = View.GONE
 }

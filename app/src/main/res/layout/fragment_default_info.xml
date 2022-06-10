@@ -42,7 +42,7 @@
             <TextView
                 android:id="@+id/tv_name"
                 style="@style/l1_13"
-                setErrorColor="@{viewModel.defaultInfoLiveData.nameErrorText}"
+                setErrorColor="@{viewModel.defaultInfoLiveData.isNameError}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name"
@@ -58,7 +58,7 @@
                 android:afterTextChanged="@{() -> viewModel.defaultInfoLiveData.afterNameTextChanged()}"
                 android:background="@drawable/selector_edittext"
                 android:text="@={viewModel.defaultInfoLiveData.nameInputText}"
-                setErrorColor="@{viewModel.defaultInfoLiveData.nameErrorText}"
+                setErrorColor="@{viewModel.defaultInfoLiveData.isNameError}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name" />
@@ -68,7 +68,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/ic_error"
-                android:visibility="@{viewModel.defaultInfoLiveData.nameErrorText == null ? View.GONE : View.VISIBLE}"
+                android:visibility="@{viewModel.defaultInfoLiveData.isNameError ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@id/et_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/et_name" />
@@ -97,6 +97,7 @@
             app:layout_constraintTop_toBottomOf="@id/cl_name">
 
             <TextView
+                setErrorColor="@{viewModel.defaultInfoLiveData.isNicknameError}"
                 android:id="@+id/tv_nickname"
                 style="@style/l1_13"
                 android:layout_width="wrap_content"
@@ -111,29 +112,34 @@
                 style="@style/t1_16"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:maxLength="@{constants.MAX_NICKNAME_LENGTH}"
-                app:layout_constraintEnd_toStartOf="@id/iv_nickname"
+                android:background="@drawable/selector_edittext"
+                android:afterTextChanged="@{() -> viewModel.defaultInfoLiveData.afterNicknameTextChanged()}"
+                android:text="@={viewModel.defaultInfoLiveData.nickNameInputText}"
+                setErrorColor="@{viewModel.defaultInfoLiveData.isNicknameError}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
 
             <ImageView
-                android:id="@+id/iv_nickname"
+                android:id="@+id/iv_nickname_ok"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:src="@drawable/ic_check"
+                isNicknameBlank="@{viewModel.defaultInfoLiveData.nickNameInputText}"
+                isNicknameOverlap="@{viewModel.defaultInfoLiveData.isNicknameOverlap}"
                 app:layout_constraintBottom_toBottomOf="@id/et_nickname"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/et_nickname" />
 
-            <View
-                android:id="@+id/view_nickname"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/gray_g07"
+            <ImageView
+                android:id="@+id/iv_nickname_error"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_error"
+                isNicknameError="@{viewModel.defaultInfoLiveData.isNicknameError}"
+                app:layout_constraintBottom_toBottomOf="@id/et_nickname"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_nickname" />
+                app:layout_constraintTop_toTopOf="@id/et_nickname" />
 
             <TextView
                 android:id="@+id/tv_nickname_error"
@@ -143,7 +149,8 @@
                 android:layout_marginTop="4dp"
                 android:textColor="@color/error_e01"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_nickname"
+                app:layout_constraintTop_toBottomOf="@id/et_nickname"
+                nameErrorMsg="@{viewModel.defaultInfoLiveData.nickNameErrorText}"
                 tools:text="중복된 닉네임입니다" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
