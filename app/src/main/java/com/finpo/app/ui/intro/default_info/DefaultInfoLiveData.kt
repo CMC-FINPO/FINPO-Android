@@ -64,36 +64,44 @@ class DefaultInfoLiveData @Inject constructor(
         nickNameInputText.value?.let { nickNameText ->
             verifyNameLength(nickNameText, _nickNameErrorText, _isNicknameError)
             debounceJob?.cancel()
-            if(lastNicknameInput != nickNameText) {
-                lastNicknameInput = nickNameText
-                debounceJob = viewModelScope.launch {
-                    delay(500L)
-                    if(lastNicknameInput == nickNameText && nickNameText.isNotBlank()) {
-                        val data = introRepository.checkNicknameDuplication(nickNameText)
-                        if(data.isSuccessful) {
-                            val isOverlap = data.body()?.data ?: return@launch
-                            if(isOverlap) {
-                                _nickNameErrorText.value = R.string.is_overlap_nickname
-                                _isNicknameError.value = true
-                            }
-                            else if(!isOverlap && _isNicknameError.value == false) _nickNameErrorText.value = null
-                            _isNicknameOverlap.value = isOverlap
-                        }
-                    }
+            if (lastNicknameInput == nickNameText) return
+            lastNicknameInput = nickNameText
+            debounceJob = viewModelScope.launch {
+                delay(500L)
+
+                if (!(lastNicknameInput == nickNameText && nickNameText.isNotBlank())) {
+                    _isNicknameOverlap.value = true
+                    return@launch
                 }
+
+                val data = introRepository.checkNicknameDuplication(nickNameText)
+
+                if (!data.isSuccessful) return@launch
+                val isOverlap = data.body()?.data ?: return@launch
+
+                if (isOverlap) {
+                    _nickNameErrorText.value = R.string.is_overlap_nickname
+                    _isNicknameError.value = true
+                } else if (!isOverlap && _isNicknameError.value == false) _nickNameErrorText.value = null
+
+                _isNicknameOverlap.value = isOverlap
             }
+
         }
     }
 
-    private fun verifyNameLength(text: String, errorText: MutableLiveData<Int?>, isError: MutableLiveData<Boolean>) {
+    private fun verifyNameLength(
+        text: String,
+        errorText: MutableLiveData<Int?>,
+        isError: MutableLiveData<Boolean>
+    ) {
         if (text.length > MAX_NAME_LENGTH) {
             errorText.value = R.string.please_input_under_13
             isError.value = true
-        }
-         else {
+        } else {
             errorText.value = null
             isError.value = false
-         }
+        }
     }
 
     fun showDialog() {
