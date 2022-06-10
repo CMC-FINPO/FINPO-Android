@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.Finpo" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/point_p01</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -14,9 +14,13 @@
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
         <item name="appBarLayoutStyle">@style/FinfoAppbar</item>
+        <item name="android:datePickerStyle">@style/FinpoDatePicker</item>
     </style>
 
     <style name="FinfoAppbar" parent="Widget.AppCompat.Toolbar">
         <item name="background">@color/white_w01</item>
+    </style>
+    <style name="FinpoDatePicker" parent="android:Widget.Material.DatePicker">
+        <item name="android:datePickerMode">spinner</item>
     </style>
 </resources>

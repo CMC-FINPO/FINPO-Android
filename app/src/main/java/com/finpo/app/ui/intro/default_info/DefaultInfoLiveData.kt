@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.finpo.app.R
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.MAX_NAME_LENGTH
+import com.finpo.app.utils.MutableSingleLiveData
+import com.finpo.app.utils.SingleLiveData
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -32,13 +34,23 @@ class DefaultInfoLiveData @Inject constructor(
     private val _isNicknameError = MutableLiveData<Boolean>()
     val isNicknameError: LiveData<Boolean> = _isNicknameError
 
-    private val _isNicknameOverlap = MutableLiveData<Boolean?>()
-    val isNicknameOverlap: LiveData<Boolean?> = _isNicknameOverlap
+    private val _isNicknameOverlap = MutableLiveData<Boolean>()
+    val isNicknameOverlap: LiveData<Boolean> = _isNicknameOverlap
+
+    private val _showDatePickerDialog = MutableSingleLiveData<Boolean>()
+    val showDatePickerDialog: SingleLiveData<Boolean> = _showDatePickerDialog
+
+    private val _birthText = MutableLiveData<String>()
+    val birthText: LiveData<String> = _birthText
 
     var lastNicknameInput = ""
 
     init {
         _isNicknameOverlap.value = true
+    }
+
+    fun setBirth(birth: String) {
+        _birthText.value = birth
     }
 
     fun afterNameTextChanged() {
@@ -82,5 +94,9 @@ class DefaultInfoLiveData @Inject constructor(
             errorText.value = null
             isError.value = false
          }
+    }
+
+    fun showDialog() {
+        _showDatePickerDialog.setValue(true)
     }
 }

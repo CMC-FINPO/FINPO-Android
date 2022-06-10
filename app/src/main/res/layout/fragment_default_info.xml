@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -53,12 +54,12 @@
             <EditText
                 android:id="@+id/et_name"
                 style="@style/t1_16"
+                setErrorColor="@{viewModel.defaultInfoLiveData.isNameError}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:afterTextChanged="@{() -> viewModel.defaultInfoLiveData.afterNameTextChanged()}"
                 android:background="@drawable/selector_edittext"
                 android:text="@={viewModel.defaultInfoLiveData.nameInputText}"
-                setErrorColor="@{viewModel.defaultInfoLiveData.isNameError}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name" />
@@ -97,9 +98,9 @@
             app:layout_constraintTop_toBottomOf="@id/cl_name">
 
             <TextView
-                setErrorColor="@{viewModel.defaultInfoLiveData.isNicknameError}"
                 android:id="@+id/tv_nickname"
                 style="@style/l1_13"
+                setErrorColor="@{viewModel.defaultInfoLiveData.isNicknameError}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nickname"
@@ -110,33 +111,33 @@
             <EditText
                 android:id="@+id/et_nickname"
                 style="@style/t1_16"
+                setErrorColor="@{viewModel.defaultInfoLiveData.isNicknameError}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_edittext"
                 android:afterTextChanged="@{() -> viewModel.defaultInfoLiveData.afterNicknameTextChanged()}"
+                android:background="@drawable/selector_edittext"
                 android:text="@={viewModel.defaultInfoLiveData.nickNameInputText}"
-                setErrorColor="@{viewModel.defaultInfoLiveData.isNicknameError}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
 
             <ImageView
                 android:id="@+id/iv_nickname_ok"
+                isNicknameBlank="@{viewModel.defaultInfoLiveData.nickNameInputText}"
+                isNicknameOverlap="@{viewModel.defaultInfoLiveData.isNicknameOverlap}"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/ic_check"
-                isNicknameBlank="@{viewModel.defaultInfoLiveData.nickNameInputText}"
-                isNicknameOverlap="@{viewModel.defaultInfoLiveData.isNicknameOverlap}"
                 app:layout_constraintBottom_toBottomOf="@id/et_nickname"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/et_nickname" />
 
             <ImageView
                 android:id="@+id/iv_nickname_error"
+                isNicknameError="@{viewModel.defaultInfoLiveData.isNicknameError}"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/ic_error"
-                isNicknameError="@{viewModel.defaultInfoLiveData.isNicknameError}"
                 app:layout_constraintBottom_toBottomOf="@id/et_nickname"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/et_nickname" />
@@ -144,13 +145,13 @@
             <TextView
                 android:id="@+id/tv_nickname_error"
                 style="@style/reg_11"
+                nameErrorMsg="@{viewModel.defaultInfoLiveData.nickNameErrorText}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/error_e01"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/et_nickname"
-                nameErrorMsg="@{viewModel.defaultInfoLiveData.nickNameErrorText}"
                 tools:text="중복된 닉네임입니다" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -180,7 +181,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:focusable="false"
                 android:hint="@string/birth_hint"
+                android:onClick="@{() -> viewModel.defaultInfoLiveData.showDialog()}"
+                android:text="@{viewModel.defaultInfoLiveData.birthText}"
                 android:textColorHint="@color/gray_g05"
                 app:layout_constraintEnd_toStartOf="@id/iv_birth"
                 app:layout_constraintStart_toStartOf="parent"
