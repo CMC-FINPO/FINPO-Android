@@ -63,8 +63,7 @@
             android:layout_marginTop="21dp"
             android:background="@drawable/selector_checkbox_agree"
             android:button="@null"
-            android:checked="@{viewModel.termsConditionsLiveData.isCheckedTermsConditions}"
-            android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxTermsConditionChange}"
+            android:checked="@={viewModel.termsConditionsLiveData.isCheckedTermsConditions}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_divider" />
 
@@ -109,8 +108,7 @@
             android:layout_marginTop="22dp"
             android:background="@drawable/selector_checkbox_agree"
             android:button="@null"
-            android:checked="@{viewModel.termsConditionsLiveData.isCheckedPersonalInfo}"
-            android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxPersonalInfoChange}"
+            android:checked="@={viewModel.termsConditionsLiveData.isCheckedPersonalInfo}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cb_terms_conditions" />
 
@@ -156,8 +154,7 @@
             android:layout_marginTop="22dp"
             android:background="@drawable/selector_checkbox_agree"
             android:button="@null"
-            android:checked="@{viewModel.termsConditionsLiveData.isCheckedMarketing()}"
-            android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxMarketingChange}"
+            android:checked="@={viewModel.termsConditionsLiveData.isCheckedMarketing()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cb_personal_information" />
 
