@@ -1,5 +1,6 @@
 package com.finpo.app.ui.intro
 
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -7,6 +8,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.finpo.app.R
+import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
 import com.finpo.app.utils.PAGE.ADDITIONAL_REGION
 import com.finpo.app.utils.PAGE.AGREE
 import com.finpo.app.utils.PAGE.DEFAULT_INFO
@@ -60,12 +62,29 @@ fun setIntroButtonText(textView: TextView, currentPage: Int) {
     }
 }
 
-@BindingAdapter("currentPage", "isCheckedTermsConditions", "isCheckedPersonalInfo")
-fun setIntroButtonEnabled(
+@BindingAdapter("currentPage", "isCheckedTermsConditions", "isCheckedPersonalInfo"
+    , "nameInputText", "isNameError",
+    "nickNameInputText", "isNicknameError", "isNicknameOverlap",
+    "birthText", "isFemaleRadioButtonChecked", "isMaleRadioButtonChecked", "defaultInfoLiveData")
+fun setAgreeButtonEnabled(
     button: Button,
     currentPage: Int,
     isCheckedTermsConditions: Boolean,
-    isCheckedPersonalInfo: Boolean
+    isCheckedPersonalInfo: Boolean,
+    nameInputText: String,
+    isNameError: Boolean,
+    nickNameInputText: String,
+    isNicknameError: Boolean,
+    isNicknameOverlap: Boolean,
+    birthText: String,
+    isFemaleRadioButtonChecked: Boolean,
+    isMaleRadioButtonChecked : Boolean,
+    defaultInfoLiveData: DefaultInfoLiveData?
 ) {
-    button.isEnabled = (currentPage == AGREE && isCheckedPersonalInfo && isCheckedTermsConditions)
+    button.isEnabled = (currentPage == AGREE && isCheckedPersonalInfo && isCheckedTermsConditions) ||
+            (currentPage == DEFAULT_INFO && defaultInfoLiveData != null &&
+                    nameInputText.isNotBlank() && !isNameError
+                    && nickNameInputText.isNotBlank() && !isNicknameError && !isNicknameOverlap
+                    && birthText.isNotBlank()
+                    && isFemaleRadioButtonChecked != isMaleRadioButtonChecked)
 }

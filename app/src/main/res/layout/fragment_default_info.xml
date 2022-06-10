@@ -231,7 +231,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_gender">
 
             <RadioButton
-                android:id="@+id/cb_female"
+                android:id="@+id/rb_female"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginEnd="6dp"
@@ -242,12 +242,14 @@
                 android:text="@string/female"
                 android:textColor="@drawable/selector_checkbox_gender_text"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@id/cb_male"
+                changeFont="@{viewModel.defaultInfoLiveData.isFemaleRadioButtonChecked}"
+                android:checked="@={viewModel.defaultInfoLiveData.isFemaleRadioButtonChecked}"
+                app:layout_constraintEnd_toStartOf="@id/rb_male"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_gender" />
 
             <RadioButton
-                android:id="@+id/cb_male"
+                android:id="@+id/rb_male"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_marginStart="6dp"
@@ -255,11 +257,13 @@
                 android:background="@drawable/selector_checkbox_gender"
                 android:button="@null"
                 android:gravity="center"
+                changeFont="@{viewModel.defaultInfoLiveData.isMaleRadioButtonChecked}"
                 android:text="@string/male"
                 android:textColor="@drawable/selector_checkbox_gender_text"
                 android:textSize="16sp"
+                android:checked="@={viewModel.defaultInfoLiveData.isMaleRadioButtonChecked}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/cb_female"
+                app:layout_constraintStart_toEndOf="@id/rb_female"
                 app:layout_constraintTop_toBottomOf="@id/tv_gender" />
 
         </RadioGroup>

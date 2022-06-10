@@ -19,6 +19,8 @@
     <string name="gender">성별</string>
     <string name="female">여성</string>
     <string name="male">남성</string>
+    <string name="female_eng">FEMALE</string>
+    <string name="male_eng">MALE</string>
     <string name="birth_hint">예)2022-05-26</string>
     <string name="please_input_under_13">13자 이하만 가능해요</string>
     <string name="is_overlap_nickname">중복된 닉네임입니다</string>

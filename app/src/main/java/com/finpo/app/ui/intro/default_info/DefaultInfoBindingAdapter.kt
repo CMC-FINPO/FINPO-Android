@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.finpo.app.R
@@ -67,4 +68,13 @@ fun setOkImageVisibility(
 ) {
     if(!isNicknameOverlap && !isNicknameBlank.isNullOrBlank()) imageView.visibility = View.VISIBLE
     else imageView.visibility = View.GONE
+}
+
+@BindingAdapter("changeFont")
+fun setFont(
+    radioButton: RadioButton,
+    isChecked: Boolean
+) {
+    radioButton.typeface = if(isChecked) ResourcesCompat.getFont(radioButton.context, R.font.notosans_medium)
+    else ResourcesCompat.getFont(radioButton.context, R.font.notosans_regular)
 }

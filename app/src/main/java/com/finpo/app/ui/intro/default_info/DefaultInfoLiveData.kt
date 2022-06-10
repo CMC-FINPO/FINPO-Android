@@ -43,9 +43,16 @@ class DefaultInfoLiveData @Inject constructor(
     private val _birthText = MutableLiveData<String>()
     val birthText: LiveData<String> = _birthText
 
+    val isFemaleRadioButtonChecked = MutableLiveData<Boolean>()
+    val isMaleRadioButtonChecked = MutableLiveData<Boolean>()
+
+    var gender = ""
     var lastNicknameInput = ""
 
     init {
+        nameInputText.value = ""
+        nickNameInputText.value = ""
+        _birthText.value = ""
         _isNicknameOverlap.value = true
     }
 
