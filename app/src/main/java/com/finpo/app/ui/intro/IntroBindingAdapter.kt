@@ -62,6 +62,7 @@ fun setIntroButtonText(textView: TextView, currentPage: Int) {
     }
 }
 
+//TODO REFACTOR
 @BindingAdapter("currentPage", "isCheckedTermsConditions", "isCheckedPersonalInfo"
     , "nameInputText", "isNameError",
     "nickNameInputText", "isNicknameError", "isNicknameOverlap",

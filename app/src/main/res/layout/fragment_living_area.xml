@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.intro.IntroViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.intro.living_area.LivingAreaFragment">
+
+        <TextView
+            android:id="@+id/tv_header"
+            style="@style/h2_24_mid"
+            livingAreaText="@{viewModel.defaultInfoLiveData.nickNameInputText}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="핀포님이 거주하고 있는\n지역은 어디인가요?" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_live_area"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_solid_g09_rounded_g04_5"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header">
+
+            <TextView
+                android:id="@+id/tv_live_area"
+                style="@style/b3_15_mid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/where_you_live"
+                android:textColor="@color/gray_g04"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:background="@drawable/ll_line_top_bot_g05"
+            android:layout_width="0dp"
+            android:layout_height="285dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_live_area">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_region_all"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_g05" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_region_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

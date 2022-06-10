@@ -35,6 +35,10 @@
         <item name="android:fontFamily">@font/notosans_bold</item>
     </style>
 
+    <style name="b3_15_mid" parent="b4_10_mid">
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <style name="b4_10_mid" parent="b1_16_reg">
         <item name="android:textSize">10sp</item>
         <item name="android:fontFamily">@font/notosans_medium</item>
