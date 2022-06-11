@@ -1,6 +1,7 @@
 package com.finpo.app.network
 
 import com.finpo.app.model.remote.NicknameDuplicationResponse
+import com.finpo.app.model.remote.RegionResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -10,4 +11,7 @@ interface ApiService {
     suspend fun checkNicknameDuplication(
         @Query("nickname") nickname: String
     ) : Response<NicknameDuplicationResponse>
+
+    @GET("/region/name")
+    suspend fun getRegionAll() : Response<RegionResponse>
 }
