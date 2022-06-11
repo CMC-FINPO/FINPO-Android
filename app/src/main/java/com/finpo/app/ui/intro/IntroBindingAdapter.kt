@@ -66,7 +66,7 @@ fun setIntroButtonText(textView: TextView, currentPage: Int) {
 @BindingAdapter("currentPage", "isCheckedTermsConditions", "isCheckedPersonalInfo"
     , "nameInputText", "isNameError",
     "nickNameInputText", "isNicknameError", "isNicknameOverlap",
-    "birthText", "isFemaleRadioButtonChecked", "isMaleRadioButtonChecked", "defaultInfoLiveData")
+    "birthText", "isFemaleRadioButtonChecked", "isMaleRadioButtonChecked", "selectedDetailRegionText")
 fun setAgreeButtonEnabled(
     button: Button,
     currentPage: Int,
@@ -80,12 +80,13 @@ fun setAgreeButtonEnabled(
     birthText: String,
     isFemaleRadioButtonChecked: Boolean,
     isMaleRadioButtonChecked : Boolean,
-    defaultInfoLiveData: DefaultInfoLiveData?
+    selectedDetailRegionText: String
 ) {
     button.isEnabled = (currentPage == AGREE && isCheckedPersonalInfo && isCheckedTermsConditions) ||
-            (currentPage == DEFAULT_INFO && defaultInfoLiveData != null &&
+            (currentPage == DEFAULT_INFO &&
                     nameInputText.isNotBlank() && !isNameError
                     && nickNameInputText.isNotBlank() && !isNicknameError && !isNicknameOverlap
                     && birthText.isNotBlank()
-                    && isFemaleRadioButtonChecked != isMaleRadioButtonChecked)
+                    && isFemaleRadioButtonChecked != isMaleRadioButtonChecked) ||
+            (currentPage == REGION && selectedDetailRegionText.isNotEmpty())
 }

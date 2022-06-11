@@ -105,7 +105,6 @@
                     isCheckedPersonalInfo="@{viewModel.termsConditionsLiveData.isCheckedPersonalInfo()}"
                     isCheckedTermsConditions="@{viewModel.termsConditionsLiveData.isCheckedTermsConditions()}"
 
-                    defaultInfoLiveData="@{viewModel.defaultInfoLiveData}"
                     nameInputText="@{viewModel.defaultInfoLiveData.nameInputText}"
                     isNameError="@{viewModel.defaultInfoLiveData.isNameError}"
                     nickNameInputText="@{viewModel.defaultInfoLiveData.nickNameInputText}"
@@ -114,6 +113,8 @@
                     birthText="@{viewModel.defaultInfoLiveData.birthText}"
                     isFemaleRadioButtonChecked="@{viewModel.defaultInfoLiveData.isFemaleRadioButtonChecked()}"
                     isMaleRadioButtonChecked="@{viewModel.defaultInfoLiveData.isMaleRadioButtonChecked()}"
+
+                    selectedDetailRegionText="@{viewModel.livingAreaLiveData.regionDetailText}"
 
                     android:layout_width="0dp"
                     android:layout_height="50dp"

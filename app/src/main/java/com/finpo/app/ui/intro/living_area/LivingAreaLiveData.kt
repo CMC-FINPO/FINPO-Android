@@ -33,12 +33,16 @@ class LivingAreaLiveData@Inject constructor(
     private val _regionDetailSel = MutableLiveData<Int>()
     val regionDetailSel: LiveData<Int> = _regionDetailSel
 
-    private val _regionDetailSelEvent = MutableSingleLiveData<Int>()
-    val regionDetailSelEvent: SingleLiveData<Int> = _regionDetailSelEvent
+    private val _regionDetailText = MutableLiveData<String>()
+    val regionDetailText: LiveData<String> = _regionDetailText
+
+    private val _showRegionToastEvent = MutableSingleLiveData<Boolean>()
+    val showRegionToastEvent: SingleLiveData<Boolean> = _showRegionToastEvent
 
     var regionName = ""
 
     init {
+        _regionDetailText.value = ""
         getRegionAll()
     }
 
@@ -71,8 +75,24 @@ class LivingAreaLiveData@Inject constructor(
                 _regionDetailData.value = RegionResponse(listOf(Region(_regionSel.value!!,
                     "$regionName 전체"
                 )) + data.body()!!.data)
-                Log.d("region","${_regionDetailData.value}")
             }
         }
+    }
+
+    fun selectRegionDetail(regionDetailId: Int, regionDetailText: String) {
+        if(_regionDetailSel.value == regionDetailId)    return
+        if(!_regionDetailText.value.isNullOrEmpty()) {
+            _showRegionToastEvent.setValue(true)
+            return
+        }
+
+        _regionDetailSel.value = regionDetailId
+
+        _regionDetailText.value = if(_regionDetailSel.value == _regionSel.value) regionDetailText
+        else "$regionName $regionDetailText"
+    }
+
+    fun removeRegionDetail() {
+        _regionDetailText.value = ""
     }
 }

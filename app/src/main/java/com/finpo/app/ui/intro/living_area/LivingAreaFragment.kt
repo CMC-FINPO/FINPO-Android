@@ -40,5 +40,9 @@ class LivingAreaFragment : BaseFragment<FragmentLivingAreaBinding>(R.layout.frag
             regionAdapter.notifyDataSetChanged()
             viewModel.livingAreaLiveData.getRegionDetail(regionId)
         }
+
+        viewModel.livingAreaLiveData.showRegionToastEvent.observe {
+            shortShowToast(getString(R.string.show_only_one_living_area))
+        }
     }
 }

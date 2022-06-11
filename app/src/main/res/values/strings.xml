@@ -26,4 +26,5 @@
     <string name="is_overlap_nickname">중복된 닉네임입니다</string>
     <string name="living_area_text">%s님이 거주하고 있는\n지역은 어디인가요?</string>
     <string name="where_you_live">어디 사시나요...? &#128064;</string>
+    <string name="show_only_one_living_area">거주 지역은 하나만 선택할 수 있어요</string>
 </resources>
