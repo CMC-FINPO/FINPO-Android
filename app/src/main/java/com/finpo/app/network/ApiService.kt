@@ -14,4 +14,9 @@ interface ApiService {
 
     @GET("/region/name")
     suspend fun getRegionAll() : Response<RegionResponse>
+
+    @GET("/region/name")
+    suspend fun getRegionDetail(
+        @Query("parentId") parentId: Int
+    ) : Response<RegionResponse>
 }

@@ -19,19 +19,26 @@ import javax.inject.Inject
 class LivingAreaFragment : BaseFragment<FragmentLivingAreaBinding>(R.layout.fragment_living_area) {
     private val viewModel by activityViewModels<IntroViewModel>()
     @Inject lateinit var regionAdapter: RegionAdapter
+    @Inject lateinit var regionDetailAdapter: RegionDetailAdapter
     @SuppressLint("NotifyDataSetChanged")
     override fun init() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.rvRegionAll.adapter = regionAdapter
+        binding.rvRegionDetail.adapter = regionDetailAdapter
 
         viewModel.livingAreaLiveData.regionData.observe(viewLifecycleOwner) {
             regionAdapter.submitList(it.data)
         }
 
-        viewModel.livingAreaLiveData.regionSelEvent.observe {
+        viewModel.livingAreaLiveData.regionDetailData.observe(viewLifecycleOwner) {
+            regionDetailAdapter.submitList(it.data)
+        }
+
+        viewModel.livingAreaLiveData.regionSelEvent.observe { regionId ->
             regionAdapter.notifyDataSetChanged()
+            viewModel.livingAreaLiveData.getRegionDetail(regionId)
         }
     }
 }

@@ -24,8 +24,19 @@ class LivingAreaLiveData@Inject constructor(
     private val _regionSel = MutableLiveData<Int>()
     val regionSel: LiveData<Int> = _regionSel
 
-    private val _regionSelEvent = MutableSingleLiveData<Boolean>()
-    val regionSelEvent: SingleLiveData<Boolean> = _regionSelEvent
+    private val _regionSelEvent = MutableSingleLiveData<Int>()
+    val regionSelEvent: SingleLiveData<Int> = _regionSelEvent
+
+    private val _regionDetailData = MutableLiveData<RegionResponse>()
+    val regionDetailData: LiveData<RegionResponse> = _regionDetailData
+
+    private val _regionDetailSel = MutableLiveData<Int>()
+    val regionDetailSel: LiveData<Int> = _regionDetailSel
+
+    private val _regionDetailSelEvent = MutableSingleLiveData<Int>()
+    val regionDetailSelEvent: SingleLiveData<Int> = _regionDetailSelEvent
+
+    var regionName = ""
 
     init {
         getRegionAll()
@@ -37,12 +48,31 @@ class LivingAreaLiveData@Inject constructor(
             if(data.isSuccessful && data.body() != null) {
                 _regionData.value = data.body()
                 _regionSel.value = data.body()!!.data[0].id
+                _regionSelEvent.setValue(_regionSel.value!!)
             }
         }
     }
 
+    private fun setRegionName() {
+        regionName = _regionData.value?.data?.find { it.id == _regionSel.value }?.name ?: ""
+    }
+
     fun selectRegion(regionId: Int) {
+        if(regionId == _regionSel.value) return
         _regionSel.value = regionId
-        _regionSelEvent.setValue(true)
+        _regionSelEvent.setValue(regionId)
+    }
+
+    fun getRegionDetail(regionId: Int) {
+        viewModelScope.launch {
+            val data = introRepository.getRegionDetail(regionId)
+            if(data.isSuccessful && data.body() != null) {
+                setRegionName()
+                _regionDetailData.value = RegionResponse(listOf(Region(_regionSel.value!!,
+                    "$regionName 전체"
+                )) + data.body()!!.data)
+                Log.d("region","${_regionDetailData.value}")
+            }
+        }
     }
 }
