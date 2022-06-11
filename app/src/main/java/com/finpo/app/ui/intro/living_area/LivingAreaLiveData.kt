@@ -80,7 +80,7 @@ class LivingAreaLiveData@Inject constructor(
     }
 
     fun selectRegionDetail(regionDetailId: Int, regionDetailText: String) {
-        if(_regionDetailSel.value == regionDetailId)    return
+        if(_regionDetailText.value == regionDetailText)    return
         if(!_regionDetailText.value.isNullOrEmpty()) {
             _showRegionToastEvent.setValue(true)
             return
