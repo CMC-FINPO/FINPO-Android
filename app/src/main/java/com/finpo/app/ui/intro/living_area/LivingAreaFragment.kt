@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentLivingAreaBinding
 import com.finpo.app.model.remote.Region
@@ -26,7 +27,10 @@ class LivingAreaFragment : BaseFragment<FragmentLivingAreaBinding>(R.layout.frag
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.rvRegionAll.adapter = regionAdapter
+
+        regionDetailAdapter.setHasStableIds(true)
         binding.rvRegionDetail.adapter = regionDetailAdapter
+        binding.rvRegionDetail.itemAnimator = null
 
         viewModel.livingAreaLiveData.regionData.observe(viewLifecycleOwner) {
             regionAdapter.submitList(it.data)

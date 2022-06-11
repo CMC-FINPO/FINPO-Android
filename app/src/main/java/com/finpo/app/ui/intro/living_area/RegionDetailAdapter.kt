@@ -26,6 +26,10 @@ class RegionDetailAdapter @Inject constructor(val viewModel: LivingAreaLiveData)
         holder.bind(currentList[position])
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     inner class RegionViewHolder(private val binding: ItemRecyclerRegionDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
