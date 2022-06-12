@@ -1,7 +1,7 @@
 package com.finpo.app.di
 
 import android.util.Log
-import com.finpo.app.network.ApiService
+import com.finpo.app.network.ApiServiceWithoutToken
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.API.BASE_URL
 import com.finpo.app.utils.isJsonArray
@@ -16,7 +16,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -40,19 +39,6 @@ object NetworkModule {
         return GsonConverterFactory.create()
     }
 
-    @Singleton
-    @Provides
-    fun provideRetrofitInstance(
-        okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(gsonConverterFactory)
-            .build()
-    }
-
     private fun getLoggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor { message ->
             when {
@@ -70,12 +56,20 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit) : ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun provideApiService(
+        okHttpClient: OkHttpClient,
+        gsonConverterFactory: GsonConverterFactory
+    ): ApiServiceWithoutToken {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+            .create(ApiServiceWithoutToken::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideIntroRepository(apiService: ApiService) = IntroRepository(apiService)
+    fun provideIntroRepository(apiServiceWithoutToken: ApiServiceWithoutToken) = IntroRepository(apiServiceWithoutToken)
 
 }

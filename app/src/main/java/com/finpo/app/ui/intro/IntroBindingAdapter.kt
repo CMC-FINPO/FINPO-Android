@@ -88,5 +88,6 @@ fun setAgreeButtonEnabled(
                     && nickNameInputText.isNotBlank() && !isNicknameError && !isNicknameOverlap
                     && birthText.isNotBlank()
                     && isFemaleRadioButtonChecked != isMaleRadioButtonChecked) ||
-            (currentPage == REGION && selectedDetailRegionText.isNotEmpty())
+            (currentPage == REGION && selectedDetailRegionText.isNotEmpty()) ||
+            (currentPage == INTEREST)
 }
