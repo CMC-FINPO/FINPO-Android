@@ -43,7 +43,7 @@ class LivingAreaLiveData@Inject constructor(
 
     init {
         _regionDetailText.value = ""
-        getRegionAll()
+        getRegionAll() //TODO 초기화 시점 변경
     }
 
     private fun getRegionAll() {

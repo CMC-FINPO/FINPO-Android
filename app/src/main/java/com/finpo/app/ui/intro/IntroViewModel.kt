@@ -39,6 +39,7 @@ class IntroViewModel @Inject constructor(
         _currentPage.value = 0
     }
 
+    //TODO 함수 INTEREST로 이동
     private fun registerByKakao() {
         viewModelScope.launch {
             val name = defaultInfoLiveData.nameInputText.value.toString().toPlainRequestBody()
@@ -56,13 +57,12 @@ class IntroViewModel @Inject constructor(
             textHashMap["regionId"] = regionId
             textHashMap["status"] = status
             val profileImage = loginLiveData.profileImage?.let { BitmapRequestBody(it) }
-            Log.d("image","${profileImage.toString()}")
             val bitmapMultipartBody: MultipartBody.Part? =
                 if (profileImage == null) null
                 else MultipartBody.Part.createFormData("profileImgFile", "imagefile.jpeg", profileImage)
 
             val data = introRepository.registerByKakao(loginLiveData.acToken,bitmapMultipartBody, textHashMap)
-            Log.d("register","$data")
+            //TODO 실패 로직 추가
         }
     }
 

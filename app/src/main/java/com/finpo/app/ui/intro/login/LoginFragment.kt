@@ -40,10 +40,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                         CoroutineScope(Main).launch {
                             viewModel.defaultInfoLiveData.nickNameInputText.value =
                                 user?.kakaoAccount?.profile?.nickname ?: ""
-                            withContext(IO) {
-                                viewModel.loginLiveData.profileImage =
-                                    GlideUtils(requireContext()).imageUrlToBitmap(user?.kakaoAccount?.profile?.thumbnailImageUrl)
-                            }
+                            viewModel.loginLiveData.profileImage =
+                                GlideUtils(requireContext()).imageUrlToBitmap(user?.kakaoAccount?.profile?.thumbnailImageUrl)
                             viewModel.loginLiveData.acToken = token.accessToken
                             viewModel.loginLiveData.loginFinpoByKakao(token.accessToken)
                         }
@@ -54,11 +52,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 }
             }
 
-            if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireActivity())) UserApiClient.instance.loginWithKakaoTalk(
-                requireActivity(),
-                callback = callback
-            )
-            else UserApiClient.instance.loginWithKakaoAccount(
+            if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireActivity())) {
+                UserApiClient.instance.loginWithKakaoTalk(
+                    requireActivity(),
+                    callback = callback
+                )
+                Log.d("kakaologin","카카오 실행")
+            } else UserApiClient.instance.loginWithKakaoAccount(
                 requireActivity(),
                 callback = callback
             )

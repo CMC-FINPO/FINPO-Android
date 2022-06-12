@@ -68,6 +68,7 @@ class DefaultInfoLiveData @Inject constructor(
 
     fun afterNicknameTextChanged() {
         var debounceJob: Job? = null
+        _isNicknameOverlap.value = true
         nickNameInputText.value?.let { nickNameText ->
             verifyNameLength(nickNameText, _nickNameErrorText, _isNicknameError)
             debounceJob?.cancel()
