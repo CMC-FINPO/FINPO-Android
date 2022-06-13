@@ -26,10 +26,17 @@ fun setPage(
     viewPager2.setCurrentItem(currentPage, false)
 }
 
-@BindingAdapter("introVisibility")
+@BindingAdapter("introTopLayoutVisibility")
+fun setIntroTopLayoutVisibility(view: View, currentPage: Int) {
+    view.visibility =
+        if (currentPage == LOGIN || currentPage == REGISTRATION) View.GONE
+        else View.VISIBLE
+}
+
+@BindingAdapter("introButtonVisibility")
 fun setVisibility(view: View, currentPage: Int) {
     view.visibility =
-        if (currentPage == 0) View.GONE
+        if (currentPage == LOGIN) View.GONE
         else View.VISIBLE
 }
 

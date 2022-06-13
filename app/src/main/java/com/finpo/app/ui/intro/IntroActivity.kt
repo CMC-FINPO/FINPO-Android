@@ -5,6 +5,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.finpo.app.R
 import com.finpo.app.databinding.ActivityIntroBinding
 import com.finpo.app.ui.common.BaseActivity
+import com.finpo.app.utils.PAGE.LOGIN
+import com.finpo.app.utils.PAGE.REGISTRATION
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +39,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
 
     override fun onBackPressed() {
         when(viewModel.currentPage.value) {
-            0 -> doDelayFinish()
+            LOGIN, REGISTRATION -> doDelayFinish()
             else -> viewModel.prevPage()
         }
     }

@@ -19,7 +19,7 @@
             android:id="@+id/iv_register_complete"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginTop="113dp"
+            android:layout_marginTop="158dp"
             android:src="@drawable/ic_sign_up_confirm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
