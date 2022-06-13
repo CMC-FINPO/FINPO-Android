@@ -24,7 +24,12 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
                 viewModel.nextPage()
             } else {
                 viewModel.loginLiveData.acToken = ""
+                //TODO 메인 페이지 이동
             }
+        }
+
+        viewModel.registerErrorToastEvent.observe(this) {
+            shortShowToast("회원가입 실패!")
         }
 
         //TODO finpo refresh token이 있는 경우 바로 main activity로 이동

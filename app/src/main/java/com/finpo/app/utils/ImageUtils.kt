@@ -9,10 +9,11 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 import java.lang.Exception
 
-class GlideUtils(val context: Context) {
-    suspend fun imageUrlToBitmap(imageUrl: String?): Bitmap? = withContext(IO) {
+class ImageUtils {
+    suspend fun imageUrlToBitmap(context: Context, imageUrl: String?): Bitmap? = withContext(IO) {
         kotlin.runCatching {
             Glide
                 .with(context)
@@ -21,5 +22,15 @@ class GlideUtils(val context: Context) {
                 .submit()
                 .get()
         }.getOrNull()
+    }
+
+    fun getProfileImgFromBitmap(bitmap: Bitmap?): MultipartBody.Part? {
+        val profileImage = bitmap?.let { BitmapRequestBody(it) }
+        return if (profileImage == null) null
+        else MultipartBody.Part.createFormData(
+            "profileImgFile",
+            "imagefile.jpeg",
+            profileImage
+        )
     }
 }

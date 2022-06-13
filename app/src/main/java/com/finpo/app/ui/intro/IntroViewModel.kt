@@ -1,8 +1,5 @@
 package com.finpo.app.ui.intro
 
-import android.util.Log
-import android.widget.CompoundButton
-import androidx.databinding.BaseObservable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,11 +9,8 @@ import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
 import com.finpo.app.ui.intro.living_area.LivingAreaLiveData
 import com.finpo.app.ui.intro.login.LoginLiveData
 import com.finpo.app.ui.intro.terms_conditions.TermsConditionsLiveData
-import com.finpo.app.utils.BitmapRequestBody
-import com.finpo.app.utils.MutableSingleLiveData
+import com.finpo.app.utils.*
 import com.finpo.app.utils.PAGE.INTEREST
-import com.finpo.app.utils.SingleLiveData
-import com.finpo.app.utils.toPlainRequestBody
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -35,43 +29,43 @@ class IntroViewModel @Inject constructor(
     private val _currentPage = MutableLiveData<Int>()
     val currentPage: LiveData<Int> = _currentPage
 
+    private val _registerErrorToastEvent = MutableSingleLiveData<Boolean>()
+    val registerErrorToastEvent: SingleLiveData<Boolean> = _registerErrorToastEvent
+
     init {
         _currentPage.value = 0
     }
 
-    //TODO 함수 INTEREST로 이동
     private fun registerByKakao() {
         viewModelScope.launch {
-            val name = defaultInfoLiveData.nameInputText.value.toString().toPlainRequestBody()
-            val nickname = defaultInfoLiveData.nickNameInputText.value.toString().toPlainRequestBody()
-            val birth = defaultInfoLiveData.birthText.value.toString().toPlainRequestBody()
-            val gender = defaultInfoLiveData.gender.toPlainRequestBody()
-            val regionId = livingAreaLiveData.regionDetailSel.value.toString().toPlainRequestBody()
-            //TODO 수정
-            val status = "대학교 재학 중".toPlainRequestBody()
-            val textHashMap = hashMapOf<String, RequestBody>()
-            textHashMap["name"] = name
-            textHashMap["nickname"] = nickname
-            textHashMap["birth"] = birth
-            textHashMap["gender"] = gender
-            textHashMap["regionId"] = regionId
-            textHashMap["status"] = status
-            val profileImage = loginLiveData.profileImage?.let { BitmapRequestBody(it) }
-            val bitmapMultipartBody: MultipartBody.Part? =
-                if (profileImage == null) null
-                else MultipartBody.Part.createFormData("profileImgFile", "imagefile.jpeg", profileImage)
-
-            val data = introRepository.registerByKakao(loginLiveData.acToken,bitmapMultipartBody, textHashMap)
-            //TODO 실패 로직 추가
+            val textHashMap = getUserInputInfo()
+            val bitmapMultipartBody: MultipartBody.Part? = ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage)
+            val data = introRepository.registerByKakao(loginLiveData.acToken, bitmapMultipartBody, textHashMap)
+            if(data.isSuccessful)   _currentPage.value = _currentPage.value?.plus(1)
+            else _registerErrorToastEvent.setValue(true)
         }
     }
 
+    private fun getUserInputInfo(): HashMap<String, RequestBody> {
+        val name = defaultInfoLiveData.nameInputText.value.toString().toPlainRequestBody()
+        val nickname =
+            defaultInfoLiveData.nickNameInputText.value.toString().toPlainRequestBody()
+        val birth = defaultInfoLiveData.birthText.value.toString().toPlainRequestBody()
+        val gender = defaultInfoLiveData.gender.toPlainRequestBody()
+        val regionId = livingAreaLiveData.regionDetailSel.value.toString().toPlainRequestBody()
+        //TODO 수정
+        val status = "대학교 재학 중".toPlainRequestBody()
+        return hashMapOf(
+            "name" to name, "nickname" to nickname, "birth" to birth, "gender" to gender,
+            "regionId" to regionId, "status" to status
+        )
+    }
+
+
     fun nextPage() {
-        //TODO 마지막 페이지, 중간 회원가입 완료 페이지인 경우 예외 처리 필요
-        if(_currentPage.value == INTEREST) {
-            registerByKakao()
-        }
-        _currentPage.value = _currentPage.value?.plus(1)
+        //TODO 마지막 페이지인 경우 예외 처리 필요
+        if(_currentPage.value == INTEREST) registerByKakao()
+        else _currentPage.value = _currentPage.value?.plus(1)
     }
 
     fun prevPage() {

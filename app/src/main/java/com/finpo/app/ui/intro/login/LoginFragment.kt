@@ -6,15 +6,13 @@ import com.finpo.app.R
 import com.finpo.app.databinding.FragmentLoginBinding
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.intro.IntroViewModel
-import com.finpo.app.utils.GlideUtils
+import com.finpo.app.utils.ImageUtils
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
@@ -41,7 +39,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                             viewModel.defaultInfoLiveData.nickNameInputText.value =
                                 user?.kakaoAccount?.profile?.nickname ?: ""
                             viewModel.loginLiveData.profileImage =
-                                GlideUtils(requireContext()).imageUrlToBitmap(user?.kakaoAccount?.profile?.thumbnailImageUrl)
+                                ImageUtils().imageUrlToBitmap(requireContext(), user?.kakaoAccount?.profile?.thumbnailImageUrl)
                             viewModel.loginLiveData.acToken = token.accessToken
                             viewModel.loginLiveData.loginFinpoByKakao(token.accessToken)
                         }
