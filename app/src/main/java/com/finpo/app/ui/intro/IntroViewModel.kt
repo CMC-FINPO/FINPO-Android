@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.finpo.app.di.FinpoApplication
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
 import com.finpo.app.ui.intro.living_area.LivingAreaLiveData
@@ -41,9 +42,18 @@ class IntroViewModel @Inject constructor(
             val textHashMap = getUserInputInfo()
             val bitmapMultipartBody: MultipartBody.Part? = ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage)
             val data = introRepository.registerByKakao(loginLiveData.acToken, bitmapMultipartBody, textHashMap)
-//            if(data.isSuccessful)   _currentPage.value = _currentPage.value?.plus(1)
+
+//            if(data.isSuccessful)   {
+//                FinpoApplication.encryptedPrefs.saveAccessToken(data.body()?.data?.accessToken ?: "")
+//                FinpoApplication.encryptedPrefs.saveRefreshToken(data.body()?.data?.refreshToken ?: "")
+//                _currentPage.value = _currentPage.value?.plus(1)
+//            }
 //            else _registerErrorToastEvent.setValue(true)
-            _currentPage.value = _currentPage.value?.plus(1) // TODO 회원가입 테스트 완료 후 해당 코드 위 주석으로 변경 필요
+
+            // TODO 회원가입 테스트 완료 후 해당 코드 위 주석으로 변경 필요
+            FinpoApplication.encryptedPrefs.saveAccessToken(data.body()?.data?.accessToken ?: "")
+            FinpoApplication.encryptedPrefs.saveRefreshToken(data.body()?.data?.refreshToken ?: "")
+            _currentPage.value = _currentPage.value?.plus(1)
         }
     }
 
