@@ -76,7 +76,7 @@
         <item name="android:textSize">11sp</item>
     </style>
 
-    <style name="finpo_main_button" parent="Widget.AppCompat.Button">
+    <style name="finpo_main_button" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/selector_main_button_bg</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:minHeight">0dp</item>

@@ -15,12 +15,23 @@
         android:layout_height="match_parent"
         tools:context=".ui.intro.login.LoginFragment">
 
+        <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/iv_logo"
+            style="@style/h3_16_mid"
+            android:textColor="@color/point_p01"
+            android:text="@string/intro_text"
+            android:layout_marginBottom="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <ImageView
-            android:id="@+id/iv_temp"
-            android:layout_width="275dp"
-            android:layout_height="256dp"
-            android:layout_marginTop="74dp"
-            android:background="@color/point_p01"
+            android:id="@+id/iv_logo"
+            android:layout_width="209dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="207dp"
+            android:src="@drawable/ic_logo_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,12 +40,12 @@
             android:id="@+id/cl_kakao_login"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginTop="63dp"
             android:background="@drawable/bg_solid_kakao_rounded_5"
             android:onClick="@{() -> viewModel.loginLiveData.loginKakao()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_temp">
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toTopOf="@id/cl_google_login">
 
             <ImageView
                 android:id="@+id/iv_kakao_logo"
@@ -70,10 +81,11 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/bg_solid_g07_rounded_5"
+            android:background="@drawable/bg_solid_g09_rounded_g07_5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_kakao_login">
+            android:layout_marginBottom="108dp"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageView
                 android:id="@+id/iv_google_logo"
