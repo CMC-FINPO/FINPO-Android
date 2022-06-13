@@ -34,4 +34,7 @@
     <string name="stability">생활 안정</string>
     <string name="education">교육 문화</string>
     <string name="participation">참여 공간</string>
+    <string name="register_complete">가입이 완료되었어요!</string>
+    <string name="additional_data">현재 상태와 이용 목적,\n추가 관심 지역을 선택하러 가볼까요?</string>
+    <string name="input_additional_info">추가 정보 입력하기</string>
 </resources>

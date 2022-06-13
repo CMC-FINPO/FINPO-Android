@@ -26,6 +26,10 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="b2_16_reg" parent="b1_16_reg">
+        <item name="android:textColor">@color/gray_g01</item>
+    </style>
+
     <style name="b1_14_reg" parent="b1_16_reg">
         <item name="android:textSize">14sp</item>
     </style>

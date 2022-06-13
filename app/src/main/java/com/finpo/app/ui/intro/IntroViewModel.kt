@@ -41,8 +41,9 @@ class IntroViewModel @Inject constructor(
             val textHashMap = getUserInputInfo()
             val bitmapMultipartBody: MultipartBody.Part? = ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage)
             val data = introRepository.registerByKakao(loginLiveData.acToken, bitmapMultipartBody, textHashMap)
-            if(data.isSuccessful)   _currentPage.value = _currentPage.value?.plus(1)
-            else _registerErrorToastEvent.setValue(true)
+//            if(data.isSuccessful)   _currentPage.value = _currentPage.value?.plus(1)
+//            else _registerErrorToastEvent.setValue(true)
+            _currentPage.value = _currentPage.value?.plus(1) // TODO 회원가입 테스트 완료 후 해당 코드 위 주석으로 변경 필요
         }
     }
 
