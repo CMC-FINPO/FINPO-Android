@@ -38,9 +38,10 @@ class LivingAreaLiveData@Inject constructor(
     private val _showRegionToastEvent = MutableSingleLiveData<Boolean>()
     val showRegionToastEvent: SingleLiveData<Boolean> = _showRegionToastEvent
 
-    var regionName = ""
+    private val regionName = MutableLiveData<String>()
 
     init {
+        regionName.value = ""
         _regionDetailText.value = ""
         getRegionAll()
     }
@@ -50,31 +51,33 @@ class LivingAreaLiveData@Inject constructor(
             val data = introRepository.getRegionAll()
             if(data.isSuccessful && data.body() != null) {
                 _regionData.value = data.body()
-                _regionSel.value = data.body()!!.data[0].id
-                _regionSelEvent.setValue(_regionSel.value!!)
-                getRegionDetail(_regionSel.value!!, _regionDetailData)
+                setRegion(data.body()!!.data[0].id)
             }
         }
     }
 
-    private fun setRegionName() {
-        regionName = _regionData.value?.data?.find { it.id == _regionSel.value }?.name ?: ""
+    private fun setRegion(regionId: Int) {
+        _regionSel.value = regionId
+        _regionSelEvent.setValue(regionId)
+        setRegionName(regionName, _regionSel.value!!)
+        getRegionDetail(regionId, regionName, _regionDetailData)
     }
 
     fun selectRegion(regionId: Int) {
         if(regionId == _regionSel.value) return
-        _regionSel.value = regionId
-        _regionSelEvent.setValue(regionId)
-        getRegionDetail(regionId, _regionDetailData)
+        setRegion(regionId)
     }
 
-    fun getRegionDetail(regionId: Int, mutableLiveData: MutableLiveData<RegionResponse>) {
+    fun setRegionName(regionName: MutableLiveData<String> ,regionId: Int) {
+        regionName.value = _regionData.value?.data?.find { it.id == regionId }?.name ?: ""
+    }
+
+    fun getRegionDetail(regionId: Int, nowRegion: MutableLiveData<String>,mutableLiveData: MutableLiveData<RegionResponse>) {
         viewModelScope.launch {
             val data = introRepository.getRegionDetail(regionId)
             if(data.isSuccessful && data.body() != null) {
-                setRegionName()
                 mutableLiveData.value = RegionResponse(listOf(Region(_regionSel.value!!,
-                    "$regionName 전체"
+                    "${nowRegion.value} 전체"
                 )) + data.body()!!.data)
             }
         }
@@ -90,7 +93,7 @@ class LivingAreaLiveData@Inject constructor(
         _regionDetailSel.value = regionDetailId
 
         _regionDetailText.value = if(_regionDetailSel.value == _regionSel.value) regionDetailText
-        else "$regionName $regionDetailText"
+        else "${regionName.value!!} $regionDetailText"
     }
 
     fun removeRegionDetail() {

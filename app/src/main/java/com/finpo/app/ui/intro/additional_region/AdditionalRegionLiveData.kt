@@ -28,6 +28,12 @@ class AdditionalRegionLiveData@Inject constructor(
     private val _additionalRegionDetailData = MutableLiveData<RegionResponse>()
     val additionalRegionDetailData: LiveData<RegionResponse> = _additionalRegionDetailData
 
+    private val regionName = MutableLiveData<String>()
+
+    init {
+        regionName.value = ""
+    }
+
     fun setAdditionalRegionData(regionResponse: RegionResponse) {
         _additionalRegionData.value = regionResponse
     }
@@ -35,12 +41,12 @@ class AdditionalRegionLiveData@Inject constructor(
     fun setAdditionalRegionSel(regionId: Int) {
         _additionalRegionSel.value = regionId
         _additionalRegionSelEvent.setValue(regionId)
+        livingAreaLiveData.setRegionName(regionName, regionId)
+        livingAreaLiveData.getRegionDetail(regionId, regionName ,_additionalRegionDetailData)
     }
 
     fun selectAdditionalRegion(regionId: Int) {
         if(regionId == _additionalRegionSel.value) return
-        _additionalRegionSel.value = regionId
-        _additionalRegionSelEvent.setValue(regionId)
-        livingAreaLiveData.getRegionDetail(regionId, _additionalRegionDetailData)
+        setAdditionalRegionSel(regionId)
     }
 }

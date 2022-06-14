@@ -7,6 +7,7 @@ import com.finpo.app.databinding.FragmentAdditionalRegionBinding
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.intro.IntroViewModel
 import com.finpo.app.ui.intro.living_area.RegionAdapter
+import com.finpo.app.ui.intro.living_area.RegionDetailAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -14,12 +15,16 @@ import javax.inject.Inject
 class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R.layout.fragment_additional_region) {
     private val viewModel by activityViewModels<IntroViewModel>()
     @Inject lateinit var additionalRegionAdapter: AdditionalRegionAdapter
+    @Inject lateinit var additionalRegionDetailAdapter: AdditionalRegionDetailAdapter
     @SuppressLint("NotifyDataSetChanged")
     override fun init() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.rvAdditionalRegionAll.adapter = additionalRegionAdapter
+        additionalRegionDetailAdapter.setHasStableIds(true)
+        binding.rvAdditionalRegionDetail.adapter = additionalRegionDetailAdapter
+        binding.rvAdditionalRegionDetail.itemAnimator = null
 
         viewModel.additionalRegionLiveData.additionalRegionData.observe(viewLifecycleOwner) {
             additionalRegionAdapter.submitList(it.data)
@@ -27,6 +32,10 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
 
         viewModel.additionalRegionLiveData.additionalRegionSelEvent.observe {
             additionalRegionAdapter.notifyDataSetChanged()
+        }
+
+        viewModel.additionalRegionLiveData.additionalRegionDetailData.observe(viewLifecycleOwner) {
+            additionalRegionDetailAdapter.submitList(it.data)
         }
     }
 }
