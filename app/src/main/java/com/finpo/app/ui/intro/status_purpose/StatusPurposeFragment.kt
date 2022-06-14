@@ -10,7 +10,9 @@ import com.finpo.app.R
 import com.finpo.app.databinding.FragmentStatusPurposeBinding
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.intro.IntroViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StatusPurposeFragment : BaseFragment<FragmentStatusPurposeBinding>(R.layout.fragment_status_purpose) {
     private val viewModel by activityViewModels<IntroViewModel>()
     override fun init() {

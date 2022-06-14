@@ -57,7 +57,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
     }
 
     override fun onBackPressed() {
-        when(viewModel.currentPage.value) {
+        when (viewModel.currentPage.value) {
             LOGIN, REGISTRATION -> doDelayFinish()
             else -> viewModel.prevPage()
         }

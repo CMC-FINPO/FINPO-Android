@@ -26,6 +26,7 @@
     <string name="is_overlap_nickname">중복된 닉네임입니다</string>
     <string name="living_area_text">%s님이 거주하고 있는\n지역은 어디인가요?</string>
     <string name="where_you_live">어디 사시나요...? &#128064;</string>
+    <string name="no_selected_area">선택한 곳이 없어요...&#128517;</string>
     <string name="show_only_one_living_area">거주 지역은 하나만 선택할 수 있어요</string>
     <string name="interest_text">%s님의\n관심 분야를 선택해주세요</string>
     <string name="interest">관심 분야&#160;</string>
@@ -40,4 +41,5 @@
     <string name="intro_text">내 지원금은 내가 챙기자!</string>
     <string name="skip">나중에 할게요</string>
     <string name="status_purpose_text">%s님의 현재 상태와\n이용 목적을 선택해주세요</string>
+    <string name="please_additional_region">추가로 원하는\n지역을 선택해주세요</string>
 </resources>

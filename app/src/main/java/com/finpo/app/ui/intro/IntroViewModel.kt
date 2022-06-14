@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.di.FinpoApplication
+import com.finpo.app.model.remote.RegionResponse
 import com.finpo.app.repository.IntroRepository
+import com.finpo.app.ui.intro.additional_region.AdditionalRegionLiveData
 import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
 import com.finpo.app.ui.intro.living_area.LivingAreaLiveData
 import com.finpo.app.ui.intro.login.LoginLiveData
@@ -25,6 +27,7 @@ class IntroViewModel @Inject constructor(
     val loginLiveData: LoginLiveData,
     val defaultInfoLiveData: DefaultInfoLiveData,
     val livingAreaLiveData: LivingAreaLiveData,
+    val additionalRegionLiveData: AdditionalRegionLiveData,
     private val introRepository: IntroRepository
 ) : ViewModel() {
 
@@ -82,6 +85,11 @@ class IntroViewModel @Inject constructor(
 
     fun introMainButtonClick() {
         _introMainButtonClickEvent.setValue(true)
+    }
+
+    fun setAdditionalRegionData() {
+        additionalRegionLiveData.setAdditionalRegionData(livingAreaLiveData.regionData.value ?: RegionResponse(listOf()))
+        nextPage()
     }
 
     fun nextPage() {
