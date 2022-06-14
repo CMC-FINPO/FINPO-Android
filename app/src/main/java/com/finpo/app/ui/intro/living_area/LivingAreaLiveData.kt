@@ -1,6 +1,5 @@
 package com.finpo.app.ui.intro.living_area
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,12 +9,9 @@ import com.finpo.app.model.remote.RegionResponse
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @ActivityRetainedScoped
 class LivingAreaLiveData@Inject constructor(
@@ -56,6 +52,7 @@ class LivingAreaLiveData@Inject constructor(
                 _regionData.value = data.body()
                 _regionSel.value = data.body()!!.data[0].id
                 _regionSelEvent.setValue(_regionSel.value!!)
+                getRegionDetail(_regionSel.value!!, _regionDetailData)
             }
         }
     }
@@ -68,14 +65,15 @@ class LivingAreaLiveData@Inject constructor(
         if(regionId == _regionSel.value) return
         _regionSel.value = regionId
         _regionSelEvent.setValue(regionId)
+        getRegionDetail(regionId, _regionDetailData)
     }
 
-    fun getRegionDetail(regionId: Int) {
+    fun getRegionDetail(regionId: Int, mutableLiveData: MutableLiveData<RegionResponse>) {
         viewModelScope.launch {
             val data = introRepository.getRegionDetail(regionId)
             if(data.isSuccessful && data.body() != null) {
                 setRegionName()
-                _regionDetailData.value = RegionResponse(listOf(Region(_regionSel.value!!,
+                mutableLiveData.value = RegionResponse(listOf(Region(_regionSel.value!!,
                     "$regionName 전체"
                 )) + data.body()!!.data)
             }

@@ -1,5 +1,6 @@
 package com.finpo.app.ui.intro.additional_region
 
+import android.annotation.SuppressLint
 import androidx.fragment.app.activityViewModels
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentAdditionalRegionBinding
@@ -13,6 +14,7 @@ import javax.inject.Inject
 class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R.layout.fragment_additional_region) {
     private val viewModel by activityViewModels<IntroViewModel>()
     @Inject lateinit var additionalRegionAdapter: AdditionalRegionAdapter
+    @SuppressLint("NotifyDataSetChanged")
     override fun init() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -21,6 +23,10 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
 
         viewModel.additionalRegionLiveData.additionalRegionData.observe(viewLifecycleOwner) {
             additionalRegionAdapter.submitList(it.data)
+        }
+
+        viewModel.additionalRegionLiveData.additionalRegionSelEvent.observe {
+            additionalRegionAdapter.notifyDataSetChanged()
         }
     }
 }

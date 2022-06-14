@@ -40,9 +40,8 @@ class LivingAreaFragment : BaseFragment<FragmentLivingAreaBinding>(R.layout.frag
             regionDetailAdapter.submitList(it.data)
         }
 
-        viewModel.livingAreaLiveData.regionSelEvent.observe { regionId ->
+        viewModel.livingAreaLiveData.regionSelEvent.observe {
             regionAdapter.notifyDataSetChanged()
-            viewModel.livingAreaLiveData.getRegionDetail(regionId)
         }
 
         viewModel.livingAreaLiveData.showRegionToastEvent.observe {

@@ -89,6 +89,7 @@ class IntroViewModel @Inject constructor(
 
     fun setAdditionalRegionData() {
         additionalRegionLiveData.setAdditionalRegionData(livingAreaLiveData.regionData.value ?: RegionResponse(listOf()))
+        additionalRegionLiveData.setAdditionalRegionSel(livingAreaLiveData.regionData.value?.data?.get(0)?.id ?: 0)
         nextPage()
     }
 

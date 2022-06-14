@@ -12,6 +12,6 @@ fun setLivingAreaText(textView: TextView, nickname: String) {
 }
 
 @BindingAdapter("regionSelectedId", "regionId")
-fun setLivingAreaText(radioButton: RadioButton, regionSelectedId : Int, regionId: Int) {
+fun setRegionSelected(radioButton: RadioButton, regionSelectedId : Int, regionId: Int) {
     radioButton.isChecked = (regionSelectedId == regionId)
 }
