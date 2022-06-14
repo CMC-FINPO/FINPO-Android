@@ -70,6 +70,20 @@
                         app:layout_constraintTop_toTopOf="@id/pb"
                         tools:text="1/6" />
 
+                    <TextView
+                        android:onClick="@{() -> viewModel.goToLastPage()}"
+                        android:id="@+id/tv_skip"
+                        style="@style/l1_13"
+                        introSkipVisibility="@{viewModel.currentPage}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="@string/skip"
+                        android:textColor="@color/gray_g03"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_back"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/iv_back" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </Toolbar>

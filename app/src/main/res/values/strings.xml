@@ -38,4 +38,5 @@
     <string name="additional_data">현재 상태와 이용 목적,\n추가 관심 지역을 선택하러 가볼까요?</string>
     <string name="input_additional_info">추가 정보 입력하기</string>
     <string name="intro_text">내 지원금은 내가 챙기자!</string>
+    <string name="skip">나중에 할게요</string>
 </resources>

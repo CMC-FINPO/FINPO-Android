@@ -11,6 +11,7 @@ import com.finpo.app.ui.intro.living_area.LivingAreaLiveData
 import com.finpo.app.ui.intro.login.LoginLiveData
 import com.finpo.app.ui.intro.terms_conditions.TermsConditionsLiveData
 import com.finpo.app.utils.*
+import com.finpo.app.utils.PAGE.FINISH
 import com.finpo.app.utils.PAGE.INTEREST
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -70,6 +71,10 @@ class IntroViewModel @Inject constructor(
             "name" to name, "nickname" to nickname, "birth" to birth, "gender" to gender,
             "regionId" to regionId, "status" to status
         )
+    }
+
+    fun goToLastPage() {
+        _currentPage.value = FINISH
     }
 
 

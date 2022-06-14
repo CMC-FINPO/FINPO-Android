@@ -13,6 +13,7 @@ import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
 import com.finpo.app.utils.PAGE.ADDITIONAL_REGION
 import com.finpo.app.utils.PAGE.AGREE
 import com.finpo.app.utils.PAGE.DEFAULT_INFO
+import com.finpo.app.utils.PAGE.FINISH
 import com.finpo.app.utils.PAGE.INTEREST
 import com.finpo.app.utils.PAGE.LOGIN
 import com.finpo.app.utils.PAGE.REGION
@@ -30,7 +31,7 @@ fun setPage(
 @BindingAdapter("introTopLayoutVisibility")
 fun setIntroTopLayoutVisibility(view: View, currentPage: Int) {
     view.visibility =
-        if (currentPage == LOGIN || currentPage == REGISTRATION) View.GONE
+        if (currentPage == LOGIN || currentPage == REGISTRATION || currentPage == FINISH) View.GONE
         else View.VISIBLE
 }
 
@@ -39,6 +40,13 @@ fun setVisibility(view: View, currentPage: Int) {
     view.visibility =
         if (currentPage == LOGIN) View.GONE
         else View.VISIBLE
+}
+
+@BindingAdapter("introSkipVisibility")
+fun setIntroSkipVisibility(view: View, currentPage: Int) {
+    view.visibility =
+        if (currentPage > REGISTRATION && currentPage != FINISH) View.VISIBLE
+        else View.GONE
 }
 
 @BindingAdapter("introProgressBar")
