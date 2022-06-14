@@ -82,7 +82,7 @@
         <item name="android:minHeight">0dp</item>
         <item name="android:paddingStart">20dp</item>
         <item name="android:paddingEnd">20dp</item>
-        <item name="android:textColor">@drawable/selector_main_button_text</item>
+        <item name="android:textColor">@color/selector_main_button_text</item>
         <item name="android:fontFamily">@font/notosans_medium</item>
         <item name="android:textSize">16sp</item>
     </style>

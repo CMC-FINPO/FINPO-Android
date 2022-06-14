@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.finpo.app.R
@@ -96,5 +97,13 @@ fun setAgreeButtonEnabled(
                     && birthText.isNotBlank()
                     && isFemaleRadioButtonChecked != isMaleRadioButtonChecked) ||
             (currentPage == REGION && selectedDetailRegionText.isNotEmpty()) ||
-            (currentPage == INTEREST)
+            (currentPage == INTEREST) || (currentPage == REGISTRATION)
+
+    if(currentPage == REGISTRATION) {
+        button.setBackgroundResource(R.drawable.bg_solid_g08_rounded_5)
+        button.setTextColor(button.context.getColor(R.color.gray_g02))
+    } else {
+        button.setBackgroundResource(R.drawable.selector_main_button_bg)
+        button.setTextColor(button.context.getColorStateList(R.color.selector_main_button_text))
+    }
 }
