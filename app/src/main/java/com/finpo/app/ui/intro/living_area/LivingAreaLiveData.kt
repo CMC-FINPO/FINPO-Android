@@ -10,11 +10,14 @@ import com.finpo.app.model.remote.RegionResponse
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.hilt.android.scopes.ActivityScoped
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
+@ActivityRetainedScoped
 class LivingAreaLiveData@Inject constructor(
     private val introRepository: IntroRepository
 ) : ViewModel() {
