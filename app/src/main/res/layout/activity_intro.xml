@@ -137,7 +137,7 @@
                     android:layout_height="50dp"
                     android:layout_marginBottom="43dp"
                     android:background="@drawable/selector_main_button_bg"
-                    android:onClick="@{() -> viewModel.nextPage()}"
+                    android:onClick="@{() -> viewModel.introMainButtonClick()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

@@ -31,6 +31,9 @@ class IntroViewModel @Inject constructor(
     private val _currentPage = MutableLiveData<Int>()
     val currentPage: LiveData<Int> = _currentPage
 
+    private val _introMainButtonClickEvent = MutableSingleLiveData<Boolean>()
+    val introMainButtonClickEvent: SingleLiveData<Boolean> = _introMainButtonClickEvent
+
     private val _registerErrorToastEvent = MutableSingleLiveData<Boolean>()
     val registerErrorToastEvent: SingleLiveData<Boolean> = _registerErrorToastEvent
 
@@ -38,7 +41,7 @@ class IntroViewModel @Inject constructor(
         _currentPage.value = 0
     }
 
-    private fun registerByKakao() {
+    fun registerByKakao() {
         viewModelScope.launch {
             val textHashMap = getUserInputInfo()
             val bitmapMultipartBody: MultipartBody.Part? = ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage)
@@ -47,14 +50,14 @@ class IntroViewModel @Inject constructor(
 //            if(data.isSuccessful)   {
 //                FinpoApplication.encryptedPrefs.saveAccessToken(data.body()?.data?.accessToken ?: "")
 //                FinpoApplication.encryptedPrefs.saveRefreshToken(data.body()?.data?.refreshToken ?: "")
-//                _currentPage.value = _currentPage.value?.plus(1)
+//                nextPage()
 //            }
 //            else _registerErrorToastEvent.setValue(true)
 
             // TODO 회원가입 테스트 완료 후 해당 코드 위 주석으로 변경 필요
             FinpoApplication.encryptedPrefs.saveAccessToken(data.body()?.data?.accessToken ?: "")
             FinpoApplication.encryptedPrefs.saveRefreshToken(data.body()?.data?.refreshToken ?: "")
-            _currentPage.value = _currentPage.value?.plus(1)
+            nextPage()
         }
     }
 
@@ -77,11 +80,12 @@ class IntroViewModel @Inject constructor(
         _currentPage.value = FINISH
     }
 
+    fun introMainButtonClick() {
+        _introMainButtonClickEvent.setValue(true)
+    }
 
     fun nextPage() {
-        //TODO 마지막 페이지인 경우 예외 처리 필요
-        if(_currentPage.value == INTEREST) registerByKakao()
-        else _currentPage.value = _currentPage.value?.plus(1)
+        _currentPage.value = _currentPage.value?.plus(1)
     }
 
     fun prevPage() {
