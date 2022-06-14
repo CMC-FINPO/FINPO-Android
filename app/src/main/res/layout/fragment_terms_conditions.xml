@@ -32,6 +32,7 @@
             android:layout_marginTop="25dp"
             android:background="@drawable/selector_checkbox_agree"
             android:button="@null"
+            android:onClick="@{() -> viewModel.termsConditionsLiveData.clickCheckboxAll(viewModel.termsConditionsLiveData.isCheckedAll)}"
             android:checked="@{viewModel.termsConditionsLiveData.isCheckedAll}"
             android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxAllChange}"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +64,8 @@
             android:layout_marginTop="21dp"
             android:background="@drawable/selector_checkbox_agree"
             android:button="@null"
-            android:checked="@={viewModel.termsConditionsLiveData.isCheckedTermsConditions}"
+            android:checked="@{viewModel.termsConditionsLiveData.isCheckedTermsConditions}"
+            android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxTermsConditionsChange}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_divider" />
 
@@ -108,7 +110,8 @@
             android:layout_marginTop="22dp"
             android:background="@drawable/selector_checkbox_agree"
             android:button="@null"
-            android:checked="@={viewModel.termsConditionsLiveData.isCheckedPersonalInfo}"
+            android:checked="@{viewModel.termsConditionsLiveData.isCheckedPersonalInfo}"
+            android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxPersonalInfoChange}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cb_terms_conditions" />
 
@@ -154,7 +157,8 @@
             android:layout_marginTop="22dp"
             android:background="@drawable/selector_checkbox_agree"
             android:button="@null"
-            android:checked="@={viewModel.termsConditionsLiveData.isCheckedMarketing()}"
+            android:checked="@{viewModel.termsConditionsLiveData.isCheckedMarketing()}"
+            android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxMarketingChange}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cb_personal_information" />
 

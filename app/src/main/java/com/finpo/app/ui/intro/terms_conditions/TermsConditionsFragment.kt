@@ -1,6 +1,5 @@
 package com.finpo.app.ui.intro.terms_conditions
 
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentTermsConditionsBinding
@@ -14,5 +13,9 @@ class TermsConditionsFragment : BaseFragment<FragmentTermsConditionsBinding>(R.l
     override fun init() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.termsConditionsLiveData.checkedAllClickEvent.observe { check ->
+            viewModel.termsConditionsLiveData.changeOtherCheckBox(check)
+        }
     }
 }
