@@ -105,7 +105,11 @@ fun setAgreeButtonEnabled(
                     && birthText.isNotBlank()
                     && isFemaleRadioButtonChecked != isMaleRadioButtonChecked) ||
             (currentPage == REGION && selectedDetailRegionText.isNotEmpty()) ||
-            (currentPage == INTEREST) || (currentPage == REGISTRATION)
+            (currentPage == INTEREST) ||
+            (currentPage == REGISTRATION) ||
+            (currentPage == STATE_PURPOSE) ||
+            (currentPage == ADDITIONAL_REGION) ||
+            (currentPage == FINISH)
 
     if(currentPage == REGISTRATION) {
         button.setBackgroundResource(R.drawable.bg_solid_g08_rounded_5)

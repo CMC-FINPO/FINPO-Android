@@ -39,4 +39,5 @@
     <string name="input_additional_info">추가 정보 입력하기</string>
     <string name="intro_text">내 지원금은 내가 챙기자!</string>
     <string name="skip">나중에 할게요</string>
+    <string name="status_purpose_text">%s님의 현재 상태와\n이용 목적을 선택해주세요</string>
 </resources>
