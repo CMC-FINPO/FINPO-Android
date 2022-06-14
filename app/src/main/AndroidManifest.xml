@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finpo">
         <activity
+            android:name=".ui.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Finpo.Splash">
@@ -40,9 +43,7 @@
         <activity
             android:name=".ui.intro.IntroActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

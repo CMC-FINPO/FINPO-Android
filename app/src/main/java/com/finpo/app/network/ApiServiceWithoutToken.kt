@@ -2,7 +2,8 @@ package com.finpo.app.network
 
 import com.finpo.app.model.remote.NicknameDuplicationResponse
 import com.finpo.app.model.remote.RegionResponse
-import com.finpo.app.model.remote.RegisterResponse
+import com.finpo.app.model.remote.RequestTokenBody
+import com.finpo.app.model.remote.TokenResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -25,7 +26,7 @@ interface ApiServiceWithoutToken {
     @GET("/oauth/login/kakao")
     suspend fun loginByKakao(
         @Header("Authorization") kakaoAccessToken: String
-    ) : Response<RegisterResponse>
+    ) : Response<TokenResponse>
 
     @Multipart
     @POST("/oauth/register/kakao")
@@ -33,5 +34,10 @@ interface ApiServiceWithoutToken {
         @Header("Authorization") kakaoAccessToken: String,
         @Part profileImg: MultipartBody.Part?,
         @PartMap data: HashMap<String, RequestBody>
-    ) : Response<RegisterResponse>
+    ) : Response<TokenResponse>
+
+    @POST("/oauth/reissue")
+    suspend fun refreshToken(
+        @Body requestTokenBody: RequestTokenBody
+    ) : Response<TokenResponse>
 }
