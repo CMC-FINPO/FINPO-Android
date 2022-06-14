@@ -38,6 +38,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                         CoroutineScope(Main).launch {
                             viewModel.defaultInfoLiveData.nickNameInputText.value =
                                 user?.kakaoAccount?.profile?.nickname ?: ""
+                            user?.kakaoAccount?.gender?.let {
+                                viewModel.defaultInfoLiveData.gender = it.toString()
+                                viewModel.defaultInfoLiveData.isMaleRadioButtonChecked.value = (it.toString() == getString(R.string.male_eng))
+                                viewModel.defaultInfoLiveData.isFemaleRadioButtonChecked.value = (it.toString() == getString(R.string.female_eng))
+                            }
                             viewModel.loginLiveData.profileImage =
                                 ImageUtils().imageUrlToBitmap(requireContext(), user?.kakaoAccount?.profile?.thumbnailImageUrl)
                             viewModel.loginLiveData.acToken = token.accessToken

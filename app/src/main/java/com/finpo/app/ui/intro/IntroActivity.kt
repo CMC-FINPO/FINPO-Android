@@ -1,9 +1,11 @@
 package com.finpo.app.ui.intro
 
+import android.content.Intent
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.finpo.app.R
 import com.finpo.app.databinding.ActivityIntroBinding
+import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseActivity
 import com.finpo.app.utils.PAGE.LOGIN
 import com.finpo.app.utils.PAGE.REGISTRATION
@@ -26,7 +28,8 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
                 viewModel.nextPage()
             } else {
                 viewModel.loginLiveData.acToken = ""
-                //TODO 메인 페이지 이동
+                startActivity(Intent(this@IntroActivity, MainActivity::class.java))
+                finish()
             }
         }
 

@@ -3,6 +3,7 @@ package com.finpo.app.ui.intro.login
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.finpo.app.di.FinpoApplication
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
@@ -29,6 +30,10 @@ class LoginLiveData @Inject constructor(
         viewModelScope.launch {
             val data = introRepository.loginByKakao(acToken)
             if(data.isSuccessful && data.body() != null) {
+                if(data.body()!!.data.accessToken != null) {
+                    FinpoApplication.encryptedPrefs.saveAccessToken(data.body()!!.data.accessToken!!)
+                    FinpoApplication.encryptedPrefs.saveRefreshToken(data.body()!!.data.refreshToken!!)
+                }
                 _isLoginSuccessfulEvent.setValue(data.body()!!.data.accessToken != null)
             }
         }
