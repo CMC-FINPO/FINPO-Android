@@ -17,5 +17,9 @@ class RegisterCompleteFragment : BaseFragment<FragmentRegisterCompleteBinding>(R
     override fun init() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.registerCompleteLiveData.additionalInfoButtonEvent.observe {
+            viewModel.nextPage()
+        }
     }
 }

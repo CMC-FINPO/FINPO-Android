@@ -11,6 +11,7 @@ import com.finpo.app.ui.intro.additional_region.AdditionalRegionLiveData
 import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
 import com.finpo.app.ui.intro.living_area.LivingAreaLiveData
 import com.finpo.app.ui.intro.login.LoginLiveData
+import com.finpo.app.ui.intro.register_complete.RegisterCompleteLiveData
 import com.finpo.app.ui.intro.terms_conditions.TermsConditionsLiveData
 import com.finpo.app.utils.*
 import com.finpo.app.utils.PAGE.FINISH
@@ -28,6 +29,7 @@ class IntroViewModel @Inject constructor(
     val defaultInfoLiveData: DefaultInfoLiveData,
     val livingAreaLiveData: LivingAreaLiveData,
     val additionalRegionLiveData: AdditionalRegionLiveData,
+    val registerCompleteLiveData: RegisterCompleteLiveData,
     private val introRepository: IntroRepository
 ) : ViewModel() {
 
@@ -85,12 +87,6 @@ class IntroViewModel @Inject constructor(
 
     fun introMainButtonClick() {
         _introMainButtonClickEvent.setValue(true)
-    }
-
-    fun setAdditionalRegionData() {
-        additionalRegionLiveData.setAdditionalRegionData(livingAreaLiveData.regionData.value ?: RegionResponse(listOf()))
-        additionalRegionLiveData.setAdditionalRegionSel(livingAreaLiveData.regionData.value?.data?.get(0)?.id ?: 0)
-        nextPage()
     }
 
     fun nextPage() {
