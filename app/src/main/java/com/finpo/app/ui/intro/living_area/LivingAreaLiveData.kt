@@ -76,7 +76,7 @@ class LivingAreaLiveData@Inject constructor(
         viewModelScope.launch {
             val data = introRepository.getRegionDetail(regionId)
             if(data.isSuccessful && data.body() != null) {
-                mutableLiveData.value = RegionResponse(listOf(Region(_regionSel.value!!,
+                mutableLiveData.value = RegionResponse(listOf(Region(regionId,
                     "${nowRegion.value} 전체"
                 )) + data.body()!!.data)
             }

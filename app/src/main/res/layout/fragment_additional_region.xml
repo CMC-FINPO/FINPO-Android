@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.intro.IntroViewModel" />
@@ -27,24 +29,25 @@
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/fl_additional_region"
-            android:layout_marginTop="20dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             app:alignContent="stretch"
             app:alignItems="stretch"
+            app:showDivider="middle"
+            app:dividerDrawable="@drawable/shape_flexbox_divider"
             app:flexWrap="wrap"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_header">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_additional_region_none"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="15dp"
                 android:background="@drawable/bg_solid_g09_rounded_g04_5"
                 android:paddingHorizontal="10dp"
+                android:visibility="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelCount == 0 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_header"
                 tools:visibility="visible">
@@ -67,11 +70,10 @@
                 android:id="@+id/cl_additional_region1"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="15dp"
                 android:background="@drawable/bg_solid_p03_rounded_p01_5"
                 android:paddingStart="10dp"
                 android:paddingEnd="4dp"
+                android:visibility="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[0].empty ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_header">
 
@@ -80,7 +82,7 @@
                     style="@style/b3_15_mid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.livingAreaLiveData.regionDetailText}"
+                    android:text="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[0]}"
                     android:textColor="@color/point_p01"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:onClick="@{() -> viewModel.livingAreaLiveData.removeRegionDetail()}"
+                    android:onClick="@{() -> viewModel.additionalRegionLiveData.deleteAdditionalRegionDetail(0)}"
                     android:src="@drawable/ic_delete_point"
                     app:layout_constraintBottom_toBottomOf="@id/tv_additional_region1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -105,11 +107,10 @@
                 android:id="@+id/cl_additional_region2"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="15dp"
                 android:background="@drawable/bg_solid_p03_rounded_p01_5"
                 android:paddingStart="10dp"
                 android:paddingEnd="4dp"
+                android:visibility="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[1].empty ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_header">
 
@@ -118,7 +119,7 @@
                     style="@style/b3_15_mid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.livingAreaLiveData.regionDetailText}"
+                    android:text="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[1]}"
                     android:textColor="@color/point_p01"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -131,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:onClick="@{() -> viewModel.livingAreaLiveData.removeRegionDetail()}"
+                    android:onClick="@{() -> viewModel.additionalRegionLiveData.deleteAdditionalRegionDetail(1)}"
                     android:src="@drawable/ic_delete_point"
                     app:layout_constraintBottom_toBottomOf="@id/tv_additional_region2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -143,11 +144,10 @@
                 android:id="@+id/cl_additional_region3"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="15dp"
                 android:background="@drawable/bg_solid_p03_rounded_p01_5"
                 android:paddingStart="10dp"
                 android:paddingEnd="4dp"
+                android:visibility="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[2].empty ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_header">
 
@@ -156,7 +156,7 @@
                     style="@style/b3_15_mid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.livingAreaLiveData.regionDetailText}"
+                    android:text="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[2]}"
                     android:textColor="@color/point_p01"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -169,7 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:onClick="@{() -> viewModel.livingAreaLiveData.removeRegionDetail()}"
+                    android:onClick="@{() -> viewModel.additionalRegionLiveData.deleteAdditionalRegionDetail(2)}"
                     android:src="@drawable/ic_delete_point"
                     app:layout_constraintBottom_toBottomOf="@id/tv_additional_region3"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -181,11 +181,10 @@
                 android:id="@+id/cl_additional_region4"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="15dp"
                 android:background="@drawable/bg_solid_p03_rounded_p01_5"
                 android:paddingStart="10dp"
                 android:paddingEnd="4dp"
+                android:visibility="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[3].empty ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_header">
 
@@ -194,7 +193,7 @@
                     style="@style/b3_15_mid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.livingAreaLiveData.regionDetailText}"
+                    android:text="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[3]}"
                     android:textColor="@color/point_p01"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -207,7 +206,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:onClick="@{() -> viewModel.livingAreaLiveData.removeRegionDetail()}"
+                    android:onClick="@{() -> viewModel.additionalRegionLiveData.deleteAdditionalRegionDetail(3)}"
                     android:src="@drawable/ic_delete_point"
                     app:layout_constraintBottom_toBottomOf="@id/tv_additional_region4"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -219,11 +218,10 @@
                 android:id="@+id/cl_additional_region5"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="15dp"
                 android:background="@drawable/bg_solid_p03_rounded_p01_5"
                 android:paddingStart="10dp"
                 android:paddingEnd="4dp"
+                android:visibility="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[4].empty ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_header">
 
@@ -232,7 +230,7 @@
                     style="@style/b3_15_mid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.livingAreaLiveData.regionDetailText}"
+                    android:text="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[4]}"
                     android:textColor="@color/point_p01"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -245,7 +243,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:onClick="@{() -> viewModel.livingAreaLiveData.removeRegionDetail()}"
+                    android:onClick="@{() -> viewModel.additionalRegionLiveData.deleteAdditionalRegionDetail(4)}"
                     android:src="@drawable/ic_delete_point"
                     app:layout_constraintBottom_toBottomOf="@id/tv_additional_region5"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -258,7 +256,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="285dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/ll_line_top_bot_g05"
             android:paddingVertical="1dp"
             app:layout_constraintEnd_toEndOf="parent"
