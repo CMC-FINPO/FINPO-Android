@@ -59,6 +59,9 @@ class IntroViewModel @Inject constructor(
                 nextPage()
             }
             else _registerErrorToastEvent.setValue(true)
+
+            //TODO 테스트 코드 삭제  필요
+            nextPage()
         }
     }
 

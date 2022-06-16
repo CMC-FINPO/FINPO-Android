@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.finpo.app.model.remote.Region
+import com.finpo.app.model.remote.RegionRequest
 import com.finpo.app.model.remote.RegionResponse
 import com.finpo.app.repository.AdditionalInfoRepository
 import com.finpo.app.repository.IntroRepository
@@ -44,6 +46,7 @@ class AdditionalRegionLiveData@Inject constructor(
     val regionOverlapToastEvent: SingleLiveData<Boolean> = _regionOverlapToastEvent
 
     private val additionalRegionName = MutableLiveData<String>()
+    val additionalRegionDetailIdList = mutableListOf<RegionRequest>()
 
     init {
         _additionalDetailRegionSelCount.value = 0
@@ -68,7 +71,6 @@ class AdditionalRegionLiveData@Inject constructor(
     }
 
     fun selectAdditionalRegionDetail(additionalRegionDetailId: Int, additionalRegionDetailText: String) {
-        Log.d("addRegion","${_additionalRegionSel.value!!} $additionalRegionDetailId")
         if(_additionalDetailRegionSelCount.value!! >= MAX_ADDITIONAL_COUNT) {
             _chooseMaxToastEvent.setValue(true)
             return
@@ -79,6 +81,8 @@ class AdditionalRegionLiveData@Inject constructor(
             _regionOverlapToastEvent.setValue(true)
             return
         }
+        additionalRegionDetailIdList.add(RegionRequest(additionalRegionDetailId))
+        Log.d("regionid","$additionalRegionDetailIdList")
         _additionalDetailRegionSelTextList.value!![_additionalDetailRegionSelCount.value!!] = regionDetailTextFormatted
         _additionalDetailRegionSelTextList.value = _additionalDetailRegionSelTextList.value!!
         _additionalDetailRegionSelCount.value = _additionalDetailRegionSelCount.value!! + 1
@@ -86,6 +90,8 @@ class AdditionalRegionLiveData@Inject constructor(
 
     fun deleteAdditionalRegionDetail(deleteIndex: Int) {
         val detailRegionTextList = _additionalDetailRegionSelTextList.value!!
+        additionalRegionDetailIdList.removeAt(deleteIndex)
+        Log.d("regionid","$additionalRegionDetailIdList")
         for(i in deleteIndex until MAX_ADDITIONAL_COUNT - 1) {
             detailRegionTextList[i] = detailRegionTextList[i + 1]
         }
