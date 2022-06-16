@@ -12,6 +12,9 @@ import com.finpo.app.repository.IntroRepository
 import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseActivity
 import com.finpo.app.ui.intro.IntroActivity
+import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.onSuccess
+import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -42,9 +45,9 @@ class SplashActivity : AppCompatActivity() {
             }
 
             val refreshTokenResponse = introRepository.refreshToken(accessToken, refreshToken)
-            if(refreshTokenResponse.isSuccessful && refreshTokenResponse.body() != null) {
-                FinpoApplication.encryptedPrefs.saveAccessToken(refreshTokenResponse.body()!!.data.accessToken!!)
-                FinpoApplication.encryptedPrefs.saveRefreshToken(refreshTokenResponse.body()!!.data.refreshToken!!)
+            if(refreshTokenResponse is ApiResponse.Success) {
+                FinpoApplication.encryptedPrefs.saveAccessToken(refreshTokenResponse.data.data.accessToken ?: "")
+                FinpoApplication.encryptedPrefs.saveRefreshToken(refreshTokenResponse.data.data.refreshToken ?: "")
                 goToMainActivity()
                 return@launch
             }

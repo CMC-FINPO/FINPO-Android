@@ -6,6 +6,7 @@ import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.API.BASE_URL
 import com.finpo.app.utils.isJsonArray
 import com.finpo.app.utils.isJsonObject
+import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -63,6 +64,7 @@ object NetworkModule {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .addConverterFactory(gsonConverterFactory)
             .build()
             .create(ApiServiceWithoutToken::class.java)

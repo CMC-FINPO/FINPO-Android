@@ -9,6 +9,7 @@ import com.finpo.app.model.remote.RegionResponse
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.skydoves.sandwich.ApiResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -48,10 +49,10 @@ class LivingAreaLiveData@Inject constructor(
 
     private fun getRegionAll() {
         viewModelScope.launch {
-            val data = introRepository.getRegionAll()
-            if(data.isSuccessful && data.body() != null) {
-                _regionData.value = data.body()
-                setRegion(data.body()!!.data[0].id)
+            val getRegionAllResponse = introRepository.getRegionAll()
+            if(getRegionAllResponse is ApiResponse.Success) {
+                _regionData.value = getRegionAllResponse.data!!
+                setRegion(getRegionAllResponse.data.data[0].id)
             }
         }
     }
@@ -74,11 +75,11 @@ class LivingAreaLiveData@Inject constructor(
 
     fun getRegionDetail(regionId: Int, nowRegion: MutableLiveData<String>,mutableLiveData: MutableLiveData<RegionResponse>) {
         viewModelScope.launch {
-            val data = introRepository.getRegionDetail(regionId)
-            if(data.isSuccessful && data.body() != null) {
+            val getRegionDetailResponse = introRepository.getRegionDetail(regionId)
+            if(getRegionDetailResponse is ApiResponse.Success) {
                 mutableLiveData.value = RegionResponse(listOf(Region(regionId,
                     "${nowRegion.value} 전체"
-                )) + data.body()!!.data)
+                )) + getRegionDetailResponse.data.data)
             }
         }
     }

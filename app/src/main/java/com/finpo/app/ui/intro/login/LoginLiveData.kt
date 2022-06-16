@@ -7,6 +7,7 @@ import com.finpo.app.di.FinpoApplication
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.skydoves.sandwich.ApiResponse
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,13 +29,13 @@ class LoginLiveData @Inject constructor(
 
     fun loginFinpoByKakao(acToken: String) {
         viewModelScope.launch {
-            val data = introRepository.loginByKakao(acToken)
-            if(data.isSuccessful && data.body() != null) {
-                if(data.body()!!.data.accessToken != null) {
-                    FinpoApplication.encryptedPrefs.saveAccessToken(data.body()!!.data.accessToken!!)
-                    FinpoApplication.encryptedPrefs.saveRefreshToken(data.body()!!.data.refreshToken!!)
+            val loginByKakaoResponse = introRepository.loginByKakao(acToken)
+            if(loginByKakaoResponse is ApiResponse.Success) {
+                if(loginByKakaoResponse.data.data.accessToken != null) {
+                    FinpoApplication.encryptedPrefs.saveAccessToken(loginByKakaoResponse.data.data.accessToken!!)
+                    FinpoApplication.encryptedPrefs.saveRefreshToken(loginByKakaoResponse.data.data.refreshToken!!)
                 }
-                _isLoginSuccessfulEvent.setValue(data.body()!!.data.accessToken != null)
+                _isLoginSuccessfulEvent.setValue(loginByKakaoResponse.data.data.accessToken != null)
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.finpo.app.ui.intro.default_info
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,7 @@ import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.MAX_NAME_LENGTH
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.skydoves.sandwich.ApiResponse
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -82,10 +82,10 @@ class DefaultInfoLiveData @Inject constructor(
                     return@launch
                 }
 
-                val data = introRepository.checkNicknameDuplication(nickNameText)
+                val checkNicknameResponse = introRepository.checkNicknameDuplication(nickNameText)
 
-                if (!data.isSuccessful) return@launch
-                val isOverlap = data.body()?.data ?: return@launch
+                if (checkNicknameResponse !is ApiResponse.Success) return@launch
+                val isOverlap = checkNicknameResponse.data.data
 
                 if (isOverlap) {
                     _nickNameErrorText.value = R.string.is_overlap_nickname

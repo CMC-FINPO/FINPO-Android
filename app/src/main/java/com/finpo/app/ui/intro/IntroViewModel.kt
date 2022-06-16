@@ -16,6 +16,7 @@ import com.finpo.app.ui.intro.terms_conditions.TermsConditionsLiveData
 import com.finpo.app.utils.*
 import com.finpo.app.utils.PAGE.FINISH
 import com.finpo.app.utils.PAGE.INTEREST
+import com.skydoves.sandwich.ApiResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -50,19 +51,14 @@ class IntroViewModel @Inject constructor(
         viewModelScope.launch {
             val textHashMap = getUserInputInfo()
             val bitmapMultipartBody: MultipartBody.Part? = ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage)
-            val data = introRepository.registerByKakao(loginLiveData.acToken, bitmapMultipartBody, textHashMap)
+            val registerKakaoResponse = introRepository.registerByKakao(loginLiveData.acToken, bitmapMultipartBody, textHashMap)
 
-//            if(data.isSuccessful)   {
-//                FinpoApplication.encryptedPrefs.saveAccessToken(data.body()?.data?.accessToken ?: "")
-//                FinpoApplication.encryptedPrefs.saveRefreshToken(data.body()?.data?.refreshToken ?: "")
-//                nextPage()
-//            }
-//            else _registerErrorToastEvent.setValue(true)
-
-            // TODO 회원가입 테스트 완료 후 해당 코드 위 주석으로 변경 필요
-            FinpoApplication.encryptedPrefs.saveAccessToken(data.body()?.data?.accessToken ?: "")
-            FinpoApplication.encryptedPrefs.saveRefreshToken(data.body()?.data?.refreshToken ?: "")
-            nextPage()
+            if(registerKakaoResponse is ApiResponse.Success)   {
+                FinpoApplication.encryptedPrefs.saveAccessToken(registerKakaoResponse.data.data.accessToken ?: "")
+                FinpoApplication.encryptedPrefs.saveRefreshToken(registerKakaoResponse.data.data.refreshToken ?: "")
+                nextPage()
+            }
+            else _registerErrorToastEvent.setValue(true)
         }
     }
 
