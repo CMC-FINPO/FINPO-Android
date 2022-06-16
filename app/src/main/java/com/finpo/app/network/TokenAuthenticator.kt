@@ -11,7 +11,9 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Route
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TokenAuthenticator@Inject constructor() : Authenticator {
     @Inject lateinit var api: ApiServiceWithoutToken
 
@@ -32,7 +34,7 @@ class TokenAuthenticator@Inject constructor() : Authenticator {
             response.request
                 .newBuilder()
                 .removeHeader("Authorization")
-                .header("Authorization", FinpoApplication.encryptedPrefs.getAccessToken() ?: "")
+                .header("Authorization", "Bearer " + FinpoApplication.encryptedPrefs.getAccessToken())
                 .build()
         } else {
             null

@@ -18,8 +18,7 @@ import javax.inject.Inject
 
 @ActivityRetainedScoped
 class AdditionalRegionLiveData@Inject constructor(
-    val livingAreaLiveData: LivingAreaLiveData,
-    private val introRepository: IntroRepository
+    val livingAreaLiveData: LivingAreaLiveData
 ): ViewModel() {
     private val _additionalRegionData = MutableLiveData<RegionResponse>()
     val additionalRegionData: LiveData<RegionResponse> = _additionalRegionData

@@ -8,7 +8,7 @@ import retrofit2.http.POST
 
 interface ApiService {
     @POST("/region/me")
-    fun addMyInterestRegion(
+    suspend fun addMyInterestRegion(
         @Body regionList: List<RegionRequest>
     ) : ApiResponse<RegionInterestResponse>
 }

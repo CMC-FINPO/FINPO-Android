@@ -8,6 +8,7 @@ import com.finpo.app.databinding.ActivityIntroBinding
 import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseActivity
 import com.finpo.app.utils.PAGE
+import com.finpo.app.utils.PAGE.FINISH
 import com.finpo.app.utils.PAGE.INTEREST
 import com.finpo.app.utils.PAGE.LOGIN
 import com.finpo.app.utils.PAGE.REGISTRATION
@@ -44,6 +45,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
             when (viewModel.currentPage.value) {
                 INTEREST -> viewModel.registerByKakao()
                 REGISTRATION -> goToMainActivity()
+                FINISH -> viewModel.postAdditionalInfo()
                 else -> viewModel.nextPage()
             }
         }

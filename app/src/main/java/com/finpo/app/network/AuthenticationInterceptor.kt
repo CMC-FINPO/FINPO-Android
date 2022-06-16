@@ -5,7 +5,9 @@ import com.finpo.app.di.FinpoApplication
 import com.finpo.app.utils.RETROFIT_TAG
 import okhttp3.Interceptor
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AuthenticationInterceptor@Inject constructor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val accessToken = FinpoApplication.encryptedPrefs.getAccessToken() ?: ""

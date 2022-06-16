@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.di.FinpoApplication
 import com.finpo.app.model.remote.RegionResponse
+import com.finpo.app.repository.AdditionalInfoRepository
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.ui.intro.additional_region.AdditionalRegionLiveData
 import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
@@ -31,7 +32,8 @@ class IntroViewModel @Inject constructor(
     val livingAreaLiveData: LivingAreaLiveData,
     val additionalRegionLiveData: AdditionalRegionLiveData,
     val registerCompleteLiveData: RegisterCompleteLiveData,
-    private val introRepository: IntroRepository
+    private val introRepository: IntroRepository,
+    private val additionalInfoRepository: AdditionalInfoRepository
 ) : ViewModel() {
 
     private val _currentPage = MutableLiveData<Int>()
@@ -47,21 +49,35 @@ class IntroViewModel @Inject constructor(
         _currentPage.value = 0
     }
 
+    fun postAdditionalInfo() {
+        viewModelScope.launch {
+            additionalInfoRepository.addMyInterestRegion(additionalRegionLiveData.additionalRegionDetailIdList)
+        }
+    }
+
     fun registerByKakao() {
         viewModelScope.launch {
             val textHashMap = getUserInputInfo()
-            val bitmapMultipartBody: MultipartBody.Part? = ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage)
-            val registerKakaoResponse = introRepository.registerByKakao(loginLiveData.acToken, bitmapMultipartBody, textHashMap)
+            val bitmapMultipartBody: MultipartBody.Part? =
+                ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage)
+            val registerKakaoResponse = introRepository.registerByKakao(
+                loginLiveData.acToken,
+                bitmapMultipartBody,
+                textHashMap
+            )
 
-            if(registerKakaoResponse is ApiResponse.Success)   {
-                FinpoApplication.encryptedPrefs.saveAccessToken(registerKakaoResponse.data.data.accessToken ?: "")
-                FinpoApplication.encryptedPrefs.saveRefreshToken(registerKakaoResponse.data.data.refreshToken ?: "")
+            if (registerKakaoResponse is ApiResponse.Success) {
+                FinpoApplication.encryptedPrefs.saveAccessToken(
+                    registerKakaoResponse.data.data.accessToken ?: ""
+                )
+                FinpoApplication.encryptedPrefs.saveRefreshToken(
+                    registerKakaoResponse.data.data.refreshToken ?: ""
+                )
                 nextPage()
+            } else {
+                _registerErrorToastEvent.setValue(true)
+                nextPage() //TODO 테스트 코드 삭제  필요
             }
-            else _registerErrorToastEvent.setValue(true)
-
-            //TODO 테스트 코드 삭제  필요
-            nextPage()
         }
     }
 
