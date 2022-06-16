@@ -1,25 +1,19 @@
 package com.finpo.app.di
 
-import android.util.Log
 import com.finpo.app.network.ApiService
 import com.finpo.app.network.ApiServiceWithoutToken
 import com.finpo.app.network.AuthenticationInterceptor
 import com.finpo.app.network.TokenAuthenticator
+import com.finpo.app.repository.AdditionalInfoRepository
 import com.finpo.app.repository.IntroRepository
-import com.finpo.app.utils.API.BASE_URL
-import com.finpo.app.utils.RETROFIT_TAG
-import com.finpo.app.utils.isJsonArray
-import com.finpo.app.utils.isJsonObject
+import com.finpo.app.utils.API
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.json.JSONArray
-import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -27,11 +21,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object AuthNetworkModule {
     @Provides
     @Singleton
-    @NormalOkHttpClient
+    @AuthOkHttpClient
     fun provideHttpClient(
+        authenticator: TokenAuthenticator,
+        authenticationInterceptor: AuthenticationInterceptor,
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
@@ -39,48 +35,27 @@ object NetworkModule {
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(authenticationInterceptor)
+            .authenticator(authenticator)
             .build()
     }
 
-    @Provides
-    @Singleton
-    fun provideConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create()
-    }
-
-    @Provides
-    @Singleton
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-        val loggingInterceptor = HttpLoggingInterceptor { message ->
-            when {
-                message.isJsonObject() ->
-                    Log.d(RETROFIT_TAG, JSONObject(message).toString(4))
-                message.isJsonArray() ->
-                    Log.d(RETROFIT_TAG, JSONArray(message).toString(4))
-                else ->
-                    Log.d(RETROFIT_TAG, "CONNECTION INFO -> $message")
-            }
-        }
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        return loggingInterceptor
-    }
-
     @Singleton
     @Provides
-    fun provideApiServiceWithoutToken(
-        @NormalOkHttpClient okHttpClient: OkHttpClient,
+    fun provideApiService(
+        @AuthOkHttpClient okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
-    ): ApiServiceWithoutToken {
+    ): ApiService {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(API.BASE_URL)
             .client(okHttpClient)
             .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .addConverterFactory(gsonConverterFactory)
             .build()
-            .create(ApiServiceWithoutToken::class.java)
+            .create(ApiService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideIntroRepository(apiServiceWithoutToken: ApiServiceWithoutToken) = IntroRepository(apiServiceWithoutToken)
+    fun provideIntroRepository(apiService: ApiService) = AdditionalInfoRepository(apiService)
 }
