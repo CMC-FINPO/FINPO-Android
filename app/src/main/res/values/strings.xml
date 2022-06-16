@@ -42,4 +42,6 @@
     <string name="skip">나중에 할게요</string>
     <string name="status_purpose_text">%s님의 현재 상태와\n이용 목적을 선택해주세요</string>
     <string name="please_additional_region">추가로 원하는\n지역을 선택해주세요</string>
+    <string name="can_select_max">최대 5개까지 선택할 수 있어요!</string>
+    <string name="overlap_region">이미 선택된 지역입니다!</string>
 </resources>

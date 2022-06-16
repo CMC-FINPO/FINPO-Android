@@ -36,6 +36,12 @@ class AdditionalRegionLiveData@Inject constructor(
     private val _additionalDetailRegionSelCount = MutableLiveData<Int>()
     val additionalDetailRegionSelCount: LiveData<Int> = _additionalDetailRegionSelCount
 
+    private val _chooseMaxToastEvent = MutableSingleLiveData<Boolean>()
+    val chooseMaxToastEvent: SingleLiveData<Boolean> = _chooseMaxToastEvent
+
+    private val _regionOverlapToastEvent = MutableSingleLiveData<Boolean>()
+    val regionOverlapToastEvent: SingleLiveData<Boolean> = _regionOverlapToastEvent
+
     private val additionalRegionName = MutableLiveData<String>()
 
     init {
@@ -63,13 +69,13 @@ class AdditionalRegionLiveData@Inject constructor(
     fun selectAdditionalRegionDetail(additionalRegionDetailId: Int, additionalRegionDetailText: String) {
         Log.d("addRegion","${_additionalRegionSel.value!!} $additionalRegionDetailId")
         if(_additionalDetailRegionSelCount.value!! >= MAX_ADDITIONAL_COUNT) {
-            //TODO 최대 5개까지 선택 가능 toast 띄워주기
+            _chooseMaxToastEvent.setValue(true)
             return
         }
         val regionDetailTextFormatted = if(additionalRegionDetailId == _additionalRegionSel.value!!)  additionalRegionDetailText
         else "${additionalRegionName.value!!} $additionalRegionDetailText"
         if(regionDetailTextFormatted in _additionalDetailRegionSelTextList.value!!) {
-            //TODO 이미 들어간 정보라고 toast 띄워주기
+            _regionOverlapToastEvent.setValue(true)
             return
         }
         _additionalDetailRegionSelTextList.value!![_additionalDetailRegionSelCount.value!!] = regionDetailTextFormatted

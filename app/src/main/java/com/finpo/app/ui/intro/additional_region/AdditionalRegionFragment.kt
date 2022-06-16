@@ -37,5 +37,13 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
         viewModel.additionalRegionLiveData.additionalRegionDetailData.observe(viewLifecycleOwner) {
             additionalRegionDetailAdapter.submitList(it.data)
         }
+
+        viewModel.additionalRegionLiveData.chooseMaxToastEvent.observe {
+            shortShowToast(getString(R.string.can_select_max))
+        }
+
+        viewModel.additionalRegionLiveData.regionOverlapToastEvent.observe {
+            shortShowToast(getString(R.string.overlap_region))
+        }
     }
 }
