@@ -44,7 +44,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
         viewModel.introMainButtonClickEvent.observe(this) {
             when (viewModel.currentPage.value) {
                 INTEREST -> viewModel.registerByKakao()
-                REGISTRATION -> viewModel.goToMainActivity()
+                REGISTRATION -> viewModel.goToLastPage()
                 FINISH -> viewModel.postAdditionalInfo()
                 else -> viewModel.nextPage()
             }

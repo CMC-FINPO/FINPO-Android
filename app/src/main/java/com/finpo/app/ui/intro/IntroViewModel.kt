@@ -43,6 +43,8 @@ class IntroViewModel @Inject constructor(
     private val _currentPage = MutableLiveData<Int>()
     val currentPage: LiveData<Int> = _currentPage
 
+    private val _prevPage = MutableLiveData<Int>()
+
     private val _introMainButtonClickEvent = MutableSingleLiveData<Boolean>()
     val introMainButtonClickEvent: SingleLiveData<Boolean> = _introMainButtonClickEvent
 
@@ -53,6 +55,7 @@ class IntroViewModel @Inject constructor(
     val goToMainActivityEvent: SingleLiveData<Boolean> = _goToMainActivityEvent
 
     init {
+        _prevPage.value = 0
         _currentPage.value = 0
     }
 
@@ -106,6 +109,7 @@ class IntroViewModel @Inject constructor(
     }
 
     fun goToLastPage() {
+        _prevPage.value = _currentPage.value
         _currentPage.value = FINISH
     }
 
@@ -114,10 +118,14 @@ class IntroViewModel @Inject constructor(
     }
 
     fun nextPage() {
+        _prevPage.value = _currentPage.value
         _currentPage.value = _currentPage.value?.plus(1)
     }
 
     fun prevPage() {
-        _currentPage.value = _currentPage.value?.minus(1)
+        if(_prevPage.value!! < _currentPage.value!!)
+            _currentPage.value = _prevPage.value
+        else
+            _currentPage.value = _currentPage.value?.minus(1)
     }
 }
