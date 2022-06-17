@@ -31,7 +31,7 @@ fun setPage(
 @BindingAdapter("introTopLayoutVisibility")
 fun setIntroTopLayoutVisibility(view: View, currentPage: Int) {
     view.visibility =
-        if (currentPage == LOGIN || currentPage == REGISTRATION || currentPage == FINISH) View.GONE
+        if (currentPage == LOGIN || currentPage == REGISTRATION) View.GONE
         else View.VISIBLE
 }
 
@@ -55,6 +55,8 @@ fun setProgressBar(progressbar: ProgressBar, currentPage: Int) {
         LOGIN, AGREE, DEFAULT_INFO, REGION, INTEREST -> currentPage
         else -> currentPage - 1
     }
+    if(currentPage == FINISH)   progressbar.visibility = View.GONE
+    else progressbar.visibility = View.VISIBLE
 }
 
 @BindingAdapter("introProgressText")
@@ -65,6 +67,8 @@ fun setIntroProgressText(textView: TextView, currentPage: Int) {
             else -> currentPage - 1
         }
     )
+    if(currentPage == FINISH)   textView.visibility = View.GONE
+    else textView.visibility = View.VISIBLE
 }
 
 @BindingAdapter("introButtonText")

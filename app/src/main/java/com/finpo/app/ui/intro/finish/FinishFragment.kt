@@ -14,9 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FinishFragment : BaseFragment<FragmentFinishBinding>(R.layout.fragment_finish) {
-    private val viewModel by activityViewModels<IntroViewModel>()
+
     override fun init() {
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+
     }
 }

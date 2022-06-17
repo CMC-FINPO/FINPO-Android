@@ -44,4 +44,5 @@
     <string name="please_additional_region">추가로 원하는\n지역을 선택해주세요</string>
     <string name="can_select_max">최대 5개까지 선택할 수 있어요!</string>
     <string name="overlap_region">이미 선택된 지역입니다!</string>
+    <string name="find_policy">핀포와 함께\n정책을 찾으러 가볼까요?</string>
 </resources>
