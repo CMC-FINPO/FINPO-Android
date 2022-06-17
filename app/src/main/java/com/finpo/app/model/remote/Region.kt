@@ -14,12 +14,12 @@ data class RegionRequest(
 )
 
 data class RegionInterestResponse(
-    val data: RegionInterest
+    val data: List<RegionInterest>
 )
 
 data class RegionInterest(
-    val id: Int,
-    val name: String,
+    val id: Int?,
+    val name: String?,
     val parent: RegionParent?
 )
 

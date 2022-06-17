@@ -1,5 +1,6 @@
 package com.finpo.app.ui.intro
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,9 @@ import com.finpo.app.utils.*
 import com.finpo.app.utils.PAGE.FINISH
 import com.finpo.app.utils.PAGE.INTEREST
 import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.message
+import com.skydoves.sandwich.onFailure
+import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -45,13 +49,23 @@ class IntroViewModel @Inject constructor(
     private val _registerErrorToastEvent = MutableSingleLiveData<Boolean>()
     val registerErrorToastEvent: SingleLiveData<Boolean> = _registerErrorToastEvent
 
+    private val _goToMainActivityEvent = MutableSingleLiveData<Boolean>()
+    val goToMainActivityEvent: SingleLiveData<Boolean> = _goToMainActivityEvent
+
     init {
         _currentPage.value = 0
     }
 
+    fun goToMainActivity() {
+        _goToMainActivityEvent.setValue(true)
+    }
+
     fun postAdditionalInfo() {
         viewModelScope.launch {
-            additionalInfoRepository.addMyInterestRegion(additionalRegionLiveData.additionalRegionDetailIdList)
+            val response = additionalInfoRepository.addMyInterestRegion(additionalRegionLiveData.additionalRegionDetailIdList)
+            response.onSuccess {
+                goToMainActivity()
+            }
         }
     }
 
@@ -67,16 +81,11 @@ class IntroViewModel @Inject constructor(
             )
 
             if (registerKakaoResponse is ApiResponse.Success) {
-                FinpoApplication.encryptedPrefs.saveAccessToken(
-                    registerKakaoResponse.data.data.accessToken ?: ""
-                )
-                FinpoApplication.encryptedPrefs.saveRefreshToken(
-                    registerKakaoResponse.data.data.refreshToken ?: ""
-                )
+                FinpoApplication.encryptedPrefs.saveAccessToken(registerKakaoResponse.data.data.accessToken ?: "")
+                FinpoApplication.encryptedPrefs.saveRefreshToken(registerKakaoResponse.data.data.refreshToken ?: "")
                 nextPage()
             } else {
                 _registerErrorToastEvent.setValue(true)
-                nextPage() //TODO 테스트 코드 삭제  필요
             }
         }
     }

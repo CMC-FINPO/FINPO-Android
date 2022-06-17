@@ -1,6 +1,7 @@
 package com.finpo.app.ui.intro
 
 import android.content.Intent
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.finpo.app.R
@@ -41,21 +42,20 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
         }
 
         viewModel.introMainButtonClickEvent.observe(this) {
-            //TODO 마지막 페이지인 경우 예외 처리 필요
             when (viewModel.currentPage.value) {
                 INTEREST -> viewModel.registerByKakao()
-                REGISTRATION -> goToMainActivity()
+                REGISTRATION -> viewModel.goToMainActivity()
                 FINISH -> viewModel.postAdditionalInfo()
                 else -> viewModel.nextPage()
             }
         }
 
         //TODO finpo refresh token이 있는 경우 바로 main activity로 이동
-    }
 
-    private fun goToMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+        viewModel.goToMainActivityEvent.observe(this) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     override fun onBackPressed() {
