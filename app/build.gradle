@@ -73,7 +73,11 @@ dependencies {
     // EncryptedSharedPreference
     implementation "androidx.security:security-crypto:1.0.0"
 
-    //etc
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.4.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.4.2"
+
+    // Etc
     implementation "androidx.core:core-splashscreen:1.0.0-rc01"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation "com.github.skydoves:sandwich:1.2.5"

@@ -50,8 +50,6 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
             }
         }
 
-        //TODO finpo refresh token이 있는 경우 바로 main activity로 이동
-
         viewModel.goToMainActivityEvent.observe(this) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
