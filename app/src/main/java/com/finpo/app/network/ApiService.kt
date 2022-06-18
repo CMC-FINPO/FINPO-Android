@@ -1,9 +1,11 @@
 package com.finpo.app.network
 
+import com.finpo.app.model.remote.MyInfoResponse
 import com.finpo.app.model.remote.RegionInterestResponse
 import com.finpo.app.model.remote.RegionRequest
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiService {
@@ -11,4 +13,7 @@ interface ApiService {
     suspend fun addMyInterestRegion(
         @Body regionList: List<RegionRequest>
     ) : ApiResponse<RegionInterestResponse>
+
+    @GET("/user/me")
+    suspend fun getMyInfo() : ApiResponse<MyInfoResponse>
 }

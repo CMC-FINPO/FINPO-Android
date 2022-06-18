@@ -20,10 +20,6 @@ abstract class BaseActivity<T : ViewDataBinding>(@LayoutRes private val layoutRe
 
     abstract fun init()
 
-    override fun onBackPressed() {
-        doDelayFinish()
-    }
-
     fun doDelayFinish() {
         if (System.currentTimeMillis() - waitTime >= 1500) {
             waitTime = System.currentTimeMillis()

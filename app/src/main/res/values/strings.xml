@@ -49,4 +49,9 @@
     <string name="community">커뮤니티</string>
     <string name="alarm">알람</string>
     <string name="my_page">마이페이지</string>
+    <string name="interests">관심사</string>
+    <string name="select_interest_region">관심 지역 선택</string>
+    <string name="interest_list">관심 목록</string>
+    <string name="participation_list">참여 목록</string>
+    <string name="nickname_title">%s님</string>
 </resources>
