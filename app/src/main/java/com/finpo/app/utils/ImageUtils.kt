@@ -1,16 +1,17 @@
 package com.finpo.app.utils
 
+import android.R.attr.bitmap
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import com.bumptech.glide.Glide
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
-import java.lang.Exception
+
 
 class ImageUtils {
     suspend fun imageUrlToBitmap(context: Context, imageUrl: String?): Bitmap? = withContext(IO) {
@@ -32,5 +33,22 @@ class ImageUtils {
             "imagefile.jpeg",
             profileImage
         )
+    }
+
+    fun uriToBitmap(context: Context, imageUri: Uri): Bitmap? {
+        return try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                ImageDecoder.decodeBitmap(
+                    ImageDecoder.createSource(
+                        context.contentResolver,
+                        imageUri
+                    )
+                )
+            } else {
+                MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
+            }
+        } catch (e: Exception) {
+            null
+        }
     }
 }
