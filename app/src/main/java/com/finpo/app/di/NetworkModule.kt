@@ -1,10 +1,7 @@
 package com.finpo.app.di
 
 import android.util.Log
-import com.finpo.app.network.ApiService
-import com.finpo.app.network.ApiServiceWithoutToken
-import com.finpo.app.network.AuthenticationInterceptor
-import com.finpo.app.network.TokenAuthenticator
+import com.finpo.app.network.*
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.API.BASE_URL
 import com.finpo.app.utils.RETROFIT_TAG
@@ -82,5 +79,16 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideIntroRepository(apiServiceWithoutToken: ApiServiceWithoutToken) = IntroRepository(apiServiceWithoutToken)
+    fun provideGoogleLoginApi(
+        @NormalOkHttpClient okHttpClient: OkHttpClient,
+        gsonConverterFactory: GsonConverterFactory
+    ): GoogleLoginApi {
+        return Retrofit.Builder()
+            .baseUrl("https://www.googleapis.com/")
+            .client(okHttpClient)
+            .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
+            .addConverterFactory(gsonConverterFactory)
+            .build()
+            .create(GoogleLoginApi::class.java)
+    }
 }

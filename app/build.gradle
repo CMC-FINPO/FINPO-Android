@@ -66,6 +66,7 @@ dependencies {
 
     //Social Login
     implementation "com.kakao.sdk:v2-user:2.10.0"
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'

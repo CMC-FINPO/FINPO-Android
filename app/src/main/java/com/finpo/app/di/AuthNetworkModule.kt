@@ -54,8 +54,4 @@ object AuthNetworkModule {
             .build()
             .create(ApiService::class.java)
     }
-
-    @Singleton
-    @Provides
-    fun provideIntroRepository(apiService: ApiService) = AdditionalInfoRepository(apiService)
 }

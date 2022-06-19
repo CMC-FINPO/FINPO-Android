@@ -76,7 +76,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:onClick="@{() -> viewModel.nextPage()}"
+            android:onClick="@{() -> viewModel.loginLiveData.loginGoogle()}"
             android:id="@+id/cl_google_login"
             android:layout_width="0dp"
             android:layout_height="50dp"
