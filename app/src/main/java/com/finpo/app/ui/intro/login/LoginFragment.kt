@@ -39,9 +39,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             if (result.resultCode == RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 val account = task.getResult(ApiException::class.java)!!
-                CoroutineScope(IO).launch {
-                    viewModel.loginLiveData.getGoogleAccessToken(getString(R.string.GOOGLE_CLIENT_ID), getString(R.string.GOOGLE_SECRET_ID), account.serverAuthCode.orEmpty())
-                }
+                viewModel.loginLiveData.getGoogleAccessToken(getString(R.string.GOOGLE_CLIENT_ID), getString(R.string.GOOGLE_SECRET_ID), account.serverAuthCode.orEmpty())
             }
         }
 

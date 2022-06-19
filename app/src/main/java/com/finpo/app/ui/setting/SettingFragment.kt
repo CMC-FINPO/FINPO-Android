@@ -33,7 +33,12 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         viewModel.withdrawalSuccessfulEvent.observe { isSuccessful ->
             if(isSuccessful) {
                 if(args.oAuthType == "KAKAO")
-                    UserApiClient.instance.unlink {  }
+                    UserApiClient.instance.unlink { error ->
+                        if (error != null) {
+                            longShowToast("카카오 계정 연결 끊기 실패! 카카오톡 -> 더보기 -> 설정 -> 개인/보안 - 카카오계정 -> 연결된 서비스 관리에서 직접" +
+                                    " 연결을 끊어주세요!")
+                        }
+                    }
                 //TODO 구글 로그아웃 추가
                 logout()
             }
