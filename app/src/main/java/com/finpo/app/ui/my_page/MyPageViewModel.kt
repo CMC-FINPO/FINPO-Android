@@ -25,14 +25,24 @@ class MyPageViewModel @Inject constructor(
     private val _gender = MutableLiveData<String>()
     val gender: LiveData<String> = _gender
 
+    private val _oAuthType = MutableLiveData<String>()
+    val oAuthType: LiveData<String> = _oAuthType
+
     private val _profileImgUrl = MutableLiveData<String?>()
     val profileImgUrl: LiveData<String?> = _profileImgUrl
 
     private val _profileEditClickEvent = MutableSingleLiveData<Boolean>()
     val profileEditClickEvent: SingleLiveData<Boolean> = _profileEditClickEvent
 
+    private val _settingClickEvent = MutableSingleLiveData<Boolean>()
+    val settingClickEvent: SingleLiveData<Boolean> = _settingClickEvent
+
     init {
         getMyInfo()
+    }
+
+    fun settingClick() {
+        _settingClickEvent.setValue(true)
     }
 
     fun changeProfileImg(profileImage: Bitmap?) {
@@ -57,6 +67,7 @@ class MyPageViewModel @Inject constructor(
                 _nickname.value = data.data.nickname ?: ""
                 _gender.value = data.data.gender ?: ""
                 _profileImgUrl.value = data.data.profileImg
+                _oAuthType.value = data.data.oAuthType ?: ""
             }
         }
     }

@@ -4,6 +4,7 @@ import android.Manifest
 import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentMyPageBinding
 import com.finpo.app.ui.MainActivity
@@ -25,6 +26,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         viewModel.profileEditClickEvent.observe {
             val permissionListener: PermissionListener = setPermissionListener()
             createPermission(permissionListener)
+        }
+
+        viewModel.settingClickEvent.observe {
+            val action = MyPageFragmentDirections.actionMyPageFragmentToSettingFragment(viewModel.oAuthType.value)
+            findNavController().navigate(action)
         }
     }
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.my_page.MyPageViewModel" />
@@ -20,27 +21,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:onClick="@{() -> viewModel.settingClick()}"
             android:src="@drawable/ic_setting"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_profile"
+            circleImageUrl="@{viewModel.profileImgUrl}"
+            gender="@{viewModel.gender}"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="47dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:background="@color/point_p01"
-            gender="@{viewModel.gender}"
-            circleImageUrl="@{viewModel.profileImgUrl}"/>
+            tools:background="@color/point_p01" />
 
         <ImageView
-            android:onClick="@{() -> viewModel.profileEditClick()}"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="-4dp"
             android:layout_marginBottom="-4dp"
+            android:onClick="@{() -> viewModel.profileEditClick()}"
             android:src="@drawable/ic_edit_proflie"
             app:layout_constraintBottom_toBottomOf="@id/iv_profile"
             app:layout_constraintEnd_toEndOf="@id/iv_profile" />
@@ -51,9 +53,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
+            android:text="@{@string/nickname_title(viewModel.nickname)}"
             app:layout_constraintStart_toEndOf="@id/iv_profile"
             app:layout_constraintTop_toTopOf="@id/iv_profile"
-            android:text="@{@string/nickname_title(viewModel.nickname)}"
             tools:text="핀포님" />
 
         <TextView
@@ -101,8 +103,8 @@
             android:layout_width="93dp"
             android:layout_height="97dp"
             android:layout_marginTop="22dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_profile">
 
             <ImageView
@@ -125,6 +127,7 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_participation"
             android:layout_width="93dp"

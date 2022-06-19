@@ -1,4 +1,4 @@
-package com.finpo.app.ui.notification
+package com.finpo.app.ui.alarm
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
