@@ -16,16 +16,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
-    private val TAG = "LoginFragment"
     private val viewModel by activityViewModels<IntroViewModel>()
     override fun init() {
-        UserApiClient.instance.unlink { error ->
-            if (error != null) {
-                Log.e(TAG, "연결 끊기 실패", error)
-            } else {
-                Log.i(TAG, "연결 끊기 성공. SDK에서 토큰 삭제 됨")
-            }
-        }
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.loginLiveData.kakaoLoginEvent.observe {

@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.setting.SettingViewModel" />
     </data>
 
     <ScrollView
@@ -184,6 +187,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="start|center"
+                android:onClick="@{() -> viewModel.logoutClick()}"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/logout"
@@ -200,6 +204,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="start|center"
+                android:onClick="@{() -> viewModel.withdrawalClick()}"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/withdrawal"

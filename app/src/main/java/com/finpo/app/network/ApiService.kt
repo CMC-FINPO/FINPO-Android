@@ -4,6 +4,7 @@ import com.finpo.app.model.remote.MyInfoResponse
 import com.finpo.app.model.remote.RegionInterestResponse
 import com.finpo.app.model.remote.RegionRequest
 import com.finpo.app.model.remote.TokenResponse
+import com.google.gson.JsonElement
 import com.skydoves.sandwich.ApiResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -23,4 +24,7 @@ interface ApiService {
     suspend fun changeProfileImg(
         @Part profileImg: MultipartBody.Part?
     ) : ApiResponse<MyInfoResponse>
+
+    @DELETE("/user/me")
+    suspend fun withdrawal() : ApiResponse<JsonElement>
 }
