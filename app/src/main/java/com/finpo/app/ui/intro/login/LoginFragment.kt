@@ -64,6 +64,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             if (tokenResponse.data.accessToken == null) {
                 CoroutineScope(Main).launch {
                     //TODO REFACTOR - KAKAO, GOOGLE
+                    if(tokenResponse.data.oAuthType == getString(R.string.kakao_eng)) {
+                        viewModel.loginLiveData.oAuthType = tokenResponse.data.oAuthType ?: ""
+                        viewModel.nextPage()
+                        return@launch
+                    }
                     viewModel.defaultInfoLiveData.gender = tokenResponse.data.gender ?: ""
                     viewModel.defaultInfoLiveData.isMaleRadioButtonChecked.value = (tokenResponse.data.gender == getString(R.string.male_eng))
                     viewModel.defaultInfoLiveData.isFemaleRadioButtonChecked.value = (tokenResponse.data.gender == getString(R.string.female_eng))
