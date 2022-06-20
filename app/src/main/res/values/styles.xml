@@ -34,6 +34,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="b2_13_reg" parent="b1_16_reg">
+        <item name="android:textSize">13sp</item>
+    </style>
+
     <style name="b3_10_bold" parent="b1_16_reg">
         <item name="android:textSize">10sp</item>
         <item name="android:fontFamily">@font/notosans_bold</item>
@@ -98,9 +102,15 @@
         <item name="fontFamily">@font/notosans_regular</item>
         <item name="android:textSize">10sp</item>
     </style>
+
     <style name="BottomNavigationText.Selected">
         <item name="fontFamily">@font/notosans_bold</item>
         <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="Widget.App.Spinner" parent="@style/Widget.AppCompat.Spinner">
+        <item name="overlapAnchor">true</item>
+        <item name="android:background">@drawable/selector_spinner_down</item>
     </style>
 
 </resources>
