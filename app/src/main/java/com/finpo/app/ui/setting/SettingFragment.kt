@@ -11,6 +11,8 @@ import com.finpo.app.databinding.FragmentSettingBinding
 import com.finpo.app.di.FinpoApplication
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.intro.IntroActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,15 +33,28 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         }
 
         viewModel.withdrawalSuccessfulEvent.observe { isSuccessful ->
-            if(isSuccessful) {
-                if(args.oAuthType == "KAKAO")
+            if (isSuccessful) {
+                if (args.oAuthType == getString(R.string.kakao_eng))
                     UserApiClient.instance.unlink { error ->
                         if (error != null) {
-                            longShowToast("카카오 계정 연결 끊기 실패! 카카오톡 -> 더보기 -> 설정 -> 개인/보안 - 카카오계정 -> 연결된 서비스 관리에서 직접" +
-                                    " 연결을 끊어주세요!")
+                            longShowToast(
+                                "카카오 계정 연결 끊기 실패! 카카오톡 > 더보기 > 설정 > 개인/보안 - 카카오계정 > 연결된 서비스 관리에서 직접" +
+                                        " 연결을 끊어주세요!"
+                            )
                         }
                     }
-                //TODO 구글 로그아웃 추가
+                else {
+                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestServerAuthCode(getString(R.string.GOOGLE_CLIENT_ID))
+                        .build()
+                    val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+                    googleSignInClient.revokeAccess()
+                        .addOnCompleteListener(requireActivity()) { }
+                        .addOnFailureListener { longShowToast(
+                            "구글 계정 연결 끊기 실패! 구글 > 연결한 계정 페이지 이동 후 직접" +
+                                    " 연결을 끊어주세요!"
+                        )  }
+                }
                 logout()
             }
         }

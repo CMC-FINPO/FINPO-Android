@@ -27,23 +27,18 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
         viewPager.adapter = IntroAdapter(this)
         viewPager.isUserInputEnabled = false
 
-        viewModel.loginLiveData.isLoginSuccessfulEvent.observe(this) { isSuccessful ->
-            if (!isSuccessful) {
-                viewModel.nextPage()
-            } else {
-                viewModel.loginLiveData.acToken = ""
-                startActivity(Intent(this@IntroActivity, MainActivity::class.java))
-                finish()
-            }
-        }
-
         viewModel.registerErrorToastEvent.observe(this) {
             shortShowToast("회원가입 실패!")
         }
 
         viewModel.introMainButtonClickEvent.observe(this) {
             when (viewModel.currentPage.value) {
-                INTEREST -> viewModel.registerByKakao()
+                INTEREST -> {
+                    if(viewModel.loginLiveData.oAuthType == getString(R.string.kakao_eng))
+                        viewModel.registerByKakao()
+                    else
+                        viewModel.registerByGoogle()
+                }
                 REGISTRATION -> viewModel.goToLastPage()
                 FINISH -> viewModel.postAdditionalInfo()
                 else -> viewModel.nextPage()

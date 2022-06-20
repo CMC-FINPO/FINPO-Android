@@ -38,6 +38,19 @@ interface ApiServiceWithoutToken {
         @PartMap data: HashMap<String, RequestBody>
     ) : ApiResponse<TokenResponse>
 
+    @GET("/oauth/login/google")
+    suspend fun loginByGoogle(
+        @Header("Authorization") googleAccessToken: String
+    ) : ApiResponse<TokenResponse>
+
+    @Multipart
+    @POST("/oauth/register/google")
+    suspend fun registerByGoogle(
+        @Header("Authorization") googleAccessToken: String,
+        @Part profileImg: MultipartBody.Part?,
+        @PartMap data: HashMap<String, RequestBody>
+    ) : ApiResponse<TokenResponse>
+
     @POST("/oauth/reissue")
     suspend fun refreshToken(
         @Body requestTokenBody: RequestTokenBody

@@ -11,6 +11,7 @@ import com.finpo.app.R
 import com.finpo.app.databinding.FragmentLoginBinding
 import com.finpo.app.network.GoogleLoginApi
 import com.finpo.app.repository.GoogleLoginRepository
+import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.intro.IntroViewModel
 import com.finpo.app.utils.ImageUtils
@@ -50,18 +51,33 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             kakaoLogin()
         }
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestServerAuthCode(getString(R.string.GOOGLE_CLIENT_ID))
-            .build()
-        val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-
-        googleSignInClient.revokeAccess()
-            .addOnCompleteListener(requireActivity()) {
-                // ...
-            }
-
         viewModel.loginLiveData.googleLoginEvent.observe {
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestServerAuthCode(getString(R.string.GOOGLE_CLIENT_ID))
+                .build()
+            val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+
             activityLauncher.launch(googleSignInClient.signInIntent)
+        }
+
+        viewModel.loginLiveData.isLoginSuccessfulEvent.observe(this) { tokenResponse ->
+            if (tokenResponse.data.accessToken == null) {
+                CoroutineScope(Main).launch {
+                    //TODO REFACTOR - KAKAO, GOOGLE
+                    viewModel.defaultInfoLiveData.gender = tokenResponse.data.gender ?: ""
+                    viewModel.defaultInfoLiveData.isMaleRadioButtonChecked.value = (tokenResponse.data.gender == getString(R.string.male_eng))
+                    viewModel.defaultInfoLiveData.isFemaleRadioButtonChecked.value = (tokenResponse.data.gender == getString(R.string.female_eng))
+                    viewModel.defaultInfoLiveData.nameInputText.value = tokenResponse.data.name ?: ""
+                    viewModel.defaultInfoLiveData.setBirth(tokenResponse.data.birth ?: "")
+                    viewModel.loginLiveData.profileImage = ImageUtils().imageUrlToBitmap(requireContext(), tokenResponse.data.profileImg)
+                    viewModel.loginLiveData.oAuthType = tokenResponse.data.oAuthType ?: ""
+                    viewModel.nextPage()
+                }
+            } else {
+                viewModel.loginLiveData.acToken = ""
+                startActivity(Intent(requireActivity(), MainActivity::class.java))
+                activity?.finish()
+            }
         }
 
     }

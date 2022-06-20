@@ -65,4 +65,5 @@
     <string name="open_source">오픈 소스 라이브러리</string>
     <string name="logout">로그아웃</string>
     <string name="withdrawal">회원 탈퇴</string>
+    <string name="kakao_eng">KAKAO</string>
 </resources>

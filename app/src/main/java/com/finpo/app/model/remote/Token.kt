@@ -5,9 +5,15 @@ data class TokenResponse(
 )
 
 data class Token(
+    val name: String?,
+    val nickname: String,
+    val birth: String?,
+    val gender: String?,
+    val profileImg: String?,
     val accessToken: String?,
     val refreshToken: String?,
-    val accessTokenExpiresIn: Long?
+    val accessTokenExpiresIn: Long?,
+    val oAuthType: String?
 )
 
 data class RequestTokenBody(

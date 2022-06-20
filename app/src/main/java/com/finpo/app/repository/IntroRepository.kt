@@ -23,6 +23,14 @@ class IntroRepository @Inject constructor(private val apiServiceWithoutToken: Ap
         data: HashMap<String, RequestBody>
     ) = apiServiceWithoutToken.registerByKakao(kakaoAccessToken, profileImg, data)
 
+    suspend fun loginByGoogle(acToken: String) = apiServiceWithoutToken.loginByGoogle(acToken)
+
+    suspend fun registerByGoogle(
+        googleAccessToken: String,
+        profileImg: MultipartBody.Part?,
+        data: HashMap<String, RequestBody>
+    ) = apiServiceWithoutToken.registerByGoogle(googleAccessToken, profileImg, data)
+
     suspend fun refreshToken(accessToken: String, refreshToken: String) =
         apiServiceWithoutToken.refreshToken(RequestTokenBody(accessToken, refreshToken))
 }

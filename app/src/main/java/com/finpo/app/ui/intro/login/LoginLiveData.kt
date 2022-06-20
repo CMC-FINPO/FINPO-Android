@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.di.FinpoApplication
+import com.finpo.app.model.remote.TokenResponse
 import com.finpo.app.repository.GoogleLoginRepository
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.MutableSingleLiveData
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 class LoginLiveData @Inject constructor(
     val introRepository: IntroRepository,
-    val googleApiRepository: GoogleLoginRepository
+    private val googleApiRepository: GoogleLoginRepository
 ) : ViewModel() {
     private val _kakaoLoginEvent = MutableSingleLiveData<Boolean>()
     val kakaoLoginEvent: SingleLiveData<Boolean> = _kakaoLoginEvent
@@ -24,17 +25,31 @@ class LoginLiveData @Inject constructor(
     private val _googleLoginEvent = MutableSingleLiveData<Boolean>()
     val googleLoginEvent: SingleLiveData<Boolean> = _googleLoginEvent
 
-    private val _isLoginSuccessfulEvent = MutableSingleLiveData<Boolean>()
-    val isLoginSuccessfulEvent: SingleLiveData<Boolean> = _isLoginSuccessfulEvent
+    private val _isLoginSuccessfulEvent = MutableSingleLiveData<TokenResponse>()
+    val isLoginSuccessfulEvent: SingleLiveData<TokenResponse> = _isLoginSuccessfulEvent
 
     var acToken = ""
+    var oAuthType = ""
     var profileImage: Bitmap? = null
 
     fun getGoogleAccessToken(clientId: String, secretId: String, authCode: String) {
         viewModelScope.launch {
             val googleResponse = googleApiRepository.getGoogleAccessToken(clientId, secretId, authCode)
             googleResponse.onSuccess {
-                Log.d("GoogleLogin","${data.accessToken}")
+                acToken = data.accessToken
+                loginFinpoByGoogle(data.accessToken)
+            }
+        }
+    }
+
+    private fun loginFinpoByGoogle(acToken: String) {
+        viewModelScope.launch {
+            val loginByGoogleResponse = introRepository.loginByGoogle(acToken)
+            loginByGoogleResponse.onSuccess {
+                if(data.data.accessToken != null) {
+                    saveToken(data.data.accessToken!!, data.data.refreshToken!!)
+                }
+                _isLoginSuccessfulEvent.setValue(data)
             }
         }
     }
@@ -52,11 +67,15 @@ class LoginLiveData @Inject constructor(
             val loginByKakaoResponse = introRepository.loginByKakao(acToken)
             if(loginByKakaoResponse is ApiResponse.Success) {
                 if(loginByKakaoResponse.data.data.accessToken != null) {
-                    FinpoApplication.encryptedPrefs.saveAccessToken(loginByKakaoResponse.data.data.accessToken!!)
-                    FinpoApplication.encryptedPrefs.saveRefreshToken(loginByKakaoResponse.data.data.refreshToken!!)
+                    saveToken(loginByKakaoResponse.data.data.accessToken!!, loginByKakaoResponse.data.data.refreshToken!!)
                 }
-                _isLoginSuccessfulEvent.setValue(loginByKakaoResponse.data.data.accessToken != null)
+                _isLoginSuccessfulEvent.setValue(loginByKakaoResponse.data)
             }
         }
+    }
+
+    private fun saveToken(acToken: String, reToken: String) {
+        FinpoApplication.encryptedPrefs.saveAccessToken(acToken)
+        FinpoApplication.encryptedPrefs.saveRefreshToken(reToken)
     }
 }

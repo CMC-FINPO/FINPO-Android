@@ -72,6 +72,7 @@ class IntroViewModel @Inject constructor(
         }
     }
 
+    //TODO REFACTOR 코드 중복
     fun registerByKakao() {
         viewModelScope.launch {
             val textHashMap = getUserInputInfo()
@@ -84,8 +85,30 @@ class IntroViewModel @Inject constructor(
             )
 
             if (registerKakaoResponse is ApiResponse.Success) {
+                //TODO REFACTOR 코드 중복
                 FinpoApplication.encryptedPrefs.saveAccessToken(registerKakaoResponse.data.data.accessToken ?: "")
                 FinpoApplication.encryptedPrefs.saveRefreshToken(registerKakaoResponse.data.data.refreshToken ?: "")
+                nextPage()
+            } else {
+                _registerErrorToastEvent.setValue(true)
+            }
+        }
+    }
+
+    fun registerByGoogle() {
+        viewModelScope.launch {
+            val textHashMap = getUserInputInfo()
+            val bitmapMultipartBody: MultipartBody.Part? =
+                ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage)
+            val registerGoogleResponse = introRepository.registerByGoogle(
+                loginLiveData.acToken,
+                bitmapMultipartBody,
+                textHashMap
+            )
+
+            if (registerGoogleResponse is ApiResponse.Success) {
+                FinpoApplication.encryptedPrefs.saveAccessToken(registerGoogleResponse.data.data.accessToken ?: "")
+                FinpoApplication.encryptedPrefs.saveRefreshToken(registerGoogleResponse.data.data.refreshToken ?: "")
                 nextPage()
             } else {
                 _registerErrorToastEvent.setValue(true)
