@@ -14,10 +14,6 @@ import com.finpo.app.ui.intro.IntroViewModel
 class RegisterCompleteFragment : BaseFragment<FragmentRegisterCompleteBinding>(R.layout.fragment_register_complete) {
     private val viewModel by activityViewModels<IntroViewModel>()
 
-    override fun doCreateView() {
-
-    }
-
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

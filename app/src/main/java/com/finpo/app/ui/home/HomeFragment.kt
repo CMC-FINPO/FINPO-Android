@@ -11,15 +11,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val viewModel by viewModels<HomeViewModel>()
     private lateinit var policyAdapter: PolicyAdapter
 
-    override fun doCreateView() {
+    override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         policyAdapter = PolicyAdapter(viewModel)
         binding.rvPolicy.adapter = policyAdapter
-    }
 
-    override fun doViewCreated() {
         viewModel.policyList.observe(viewLifecycleOwner) {
             policyAdapter.submitList(it.toMutableList())
         }

@@ -21,10 +21,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
     private val viewModel by viewModels<SettingViewModel>()
     private val args: SettingFragmentArgs by navArgs()
 
-    override fun doCreateView() {
-
-    }
-
     override fun doViewCreated() {
         binding.viewModel = viewModel
 

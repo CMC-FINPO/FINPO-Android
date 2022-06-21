@@ -17,10 +17,6 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
     @Inject lateinit var additionalRegionAdapter: AdditionalRegionAdapter
     @Inject lateinit var additionalRegionDetailAdapter: AdditionalRegionDetailAdapter
 
-    override fun doCreateView() {
-
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     override fun doViewCreated() {
         binding.viewModel = viewModel

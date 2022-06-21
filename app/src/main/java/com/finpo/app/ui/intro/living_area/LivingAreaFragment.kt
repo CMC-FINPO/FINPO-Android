@@ -21,9 +21,6 @@ class LivingAreaFragment : BaseFragment<FragmentLivingAreaBinding>(R.layout.frag
     private val viewModel by activityViewModels<IntroViewModel>()
     @Inject lateinit var regionAdapter: RegionAdapter
     @Inject lateinit var regionDetailAdapter: RegionDetailAdapter
-    override fun doCreateView() {
-
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun doViewCreated() {

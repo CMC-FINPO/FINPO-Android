@@ -22,7 +22,6 @@ abstract class BaseFragment<B : ViewDataBinding>(
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        doCreateView()
         return binding.root
     }
 
@@ -32,8 +31,6 @@ abstract class BaseFragment<B : ViewDataBinding>(
     }
 
     abstract fun doViewCreated()
-
-    abstract fun doCreateView()
 
     protected fun shortShowToast(msg: String) =
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()

@@ -14,9 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FinishFragment : BaseFragment<FragmentFinishBinding>(R.layout.fragment_finish) {
-    override fun doCreateView() {
-
-    }
 
     override fun doViewCreated() {
 
