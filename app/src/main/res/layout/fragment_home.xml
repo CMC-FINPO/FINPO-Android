@@ -100,6 +100,7 @@
                         tools:text="개의 정책 결과" />
 
                     <com.finpo.app.utils.DynamicWidthSpinner
+                        android:selectedItemPosition="@={viewModel.spinnerPosition}"
                         android:id="@+id/spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
@@ -157,7 +158,7 @@
             tools:listitem="@layout/item_recycler_policy"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            doScrollBottom="@{() -> viewModel.getPolicy()}"/>
+            doScrollBottom="@{() -> viewModel.addPolicy()}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -20,7 +20,7 @@ class Paging<T> @Inject constructor() {
         loading()
     }
 
-    fun loading() {
+    private fun loading() {
         _itemList.value = mutableListOf(null)
     }
 

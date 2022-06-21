@@ -5,6 +5,7 @@ const val MAX_NAME_LENGTH = 13
 const val MAX_NICKNAME_LENGTH = 13
 const val MAX_ADDITIONAL_COUNT = 5
 const val RETROFIT_TAG = "retrofit2"
+val SORT = listOf("modifiedAt,desc", "startDate,asc") // TODO REFACTOR 인기순 - "title,asc" 변경 필요
 
 object PAGE {
     const val LOGIN = 0

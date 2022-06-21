@@ -28,7 +28,7 @@ interface ApiService {
     @GET("/policy/me")
     suspend fun getPolicy(
         @Query("page") page: Int,
-        @Query("sort[]") sort: List<String>,
+        @Query("sort", encoded = true) sort: List<String>,
         @Query("size") size: Int = 10
     ) : ApiResponse<PolicyResponse>
 }
