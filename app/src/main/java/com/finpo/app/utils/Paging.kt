@@ -37,17 +37,12 @@ class Paging<T> @Inject constructor() {
         _itemList.value = data
     }
 
-    fun addData(data: MutableList<T?>): MutableList<T?> {
-        if(isLastPage) return _itemList.value!!
+    fun addData(data: MutableList<T?>) {
         _itemList.value?.addAll(data)
         _itemList.value = _itemList.value
-        Log.d("paging","아이템 추가 됨 ${_itemList.value}")
-        return _itemList.value!!
     }
 
     fun nextPage() {
-        if (isLastPage)
-            return
         _page.value = _page.value?.plus(1)
     }
 
@@ -57,6 +52,7 @@ class Paging<T> @Inject constructor() {
     }
 
     fun <T> addLoadingView(tmpEvaluationData: MutableList<T?>) {
-        tmpEvaluationData.add(null)
+        if(tmpEvaluationData.size == 10)
+            tmpEvaluationData.add(null)
     }
 }

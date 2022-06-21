@@ -26,9 +26,12 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getPolicy() {
+        if(paging.isLastPage) return
+
         viewModelScope.launch {
             val policyResponse = policyRepository.getPolicy(paging.page.value ?: 0, listOf("modifiedAt,desc"))
             policyResponse.onSuccess {
+                //TODO - REFACTOR, 함수 하나만 사용하게 만들기
                 paging.deleteLoading()
                 val policyList: MutableList<PolicyContent?> = data.data.content.toMutableList()
                 paging.addLoadingView(policyList)
