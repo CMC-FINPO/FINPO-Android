@@ -5,7 +5,9 @@ import com.finpo.app.network.ApiServiceWithoutToken
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class IntroRepository @Inject constructor(private val apiServiceWithoutToken: ApiServiceWithoutToken) {
     suspend fun checkNicknameDuplication(nickname: String) =
         apiServiceWithoutToken.checkNicknameDuplication(nickname)

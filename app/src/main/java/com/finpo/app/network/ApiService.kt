@@ -1,9 +1,6 @@
 package com.finpo.app.network
 
-import com.finpo.app.model.remote.MyInfoResponse
-import com.finpo.app.model.remote.RegionInterestResponse
-import com.finpo.app.model.remote.RegionRequest
-import com.finpo.app.model.remote.TokenResponse
+import com.finpo.app.model.remote.*
 import com.google.gson.JsonElement
 import com.skydoves.sandwich.ApiResponse
 import okhttp3.MultipartBody
@@ -27,4 +24,11 @@ interface ApiService {
 
     @DELETE("/user/me")
     suspend fun withdrawal() : ApiResponse<JsonElement>
+
+    @GET("/policy/me")
+    suspend fun getPolicy(
+        @Query("page") page: Int,
+        @Query("sort[]") sort: List<String>,
+        @Query("size") size: Int = 10
+    ) : ApiResponse<PolicyResponse>
 }

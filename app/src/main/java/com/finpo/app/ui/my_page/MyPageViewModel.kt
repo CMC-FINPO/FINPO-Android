@@ -38,6 +38,7 @@ class MyPageViewModel @Inject constructor(
     val settingClickEvent: SingleLiveData<Boolean> = _settingClickEvent
 
     init {
+        _nickname.value = ""
         getMyInfo()
     }
 
