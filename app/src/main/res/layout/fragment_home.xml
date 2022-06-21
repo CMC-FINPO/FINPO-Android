@@ -156,7 +156,8 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/item_recycler_policy"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            doScrollBottom="@{() -> viewModel.getPolicy()}"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

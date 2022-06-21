@@ -16,7 +16,12 @@ import java.util.*
 class DefaultInfoFragment :
     BaseFragment<FragmentDefaultInfoBinding>(R.layout.fragment_default_info) {
     private val viewModel by activityViewModels<IntroViewModel>()
-    override fun init() {
+
+    override fun doCreateView() {
+
+    }
+
+    override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         val datePickerDialog = DatePickerDialog()

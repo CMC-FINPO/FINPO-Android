@@ -10,7 +10,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TermsConditionsFragment : BaseFragment<FragmentTermsConditionsBinding>(R.layout.fragment_terms_conditions) {
     private val viewModel by activityViewModels<IntroViewModel>()
-    override fun init() {
+
+    override fun doCreateView() {
+
+    }
+
+    override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 

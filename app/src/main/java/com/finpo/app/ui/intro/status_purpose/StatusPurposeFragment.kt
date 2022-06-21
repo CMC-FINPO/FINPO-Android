@@ -15,7 +15,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class StatusPurposeFragment : BaseFragment<FragmentStatusPurposeBinding>(R.layout.fragment_status_purpose) {
     private val viewModel by activityViewModels<IntroViewModel>()
-    override fun init() {
+
+    override fun doCreateView() {
+
+    }
+
+    override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
     }

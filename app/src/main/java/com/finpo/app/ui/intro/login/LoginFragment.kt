@@ -44,7 +44,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             }
         }
 
-    override fun init() {
+    override fun doCreateView() {
+
+    }
+
+    override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         viewModel.loginLiveData.kakaoLoginEvent.observe {

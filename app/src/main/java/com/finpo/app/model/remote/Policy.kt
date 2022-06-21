@@ -6,7 +6,8 @@ data class PolicyResponse(
 
 data class PolicyList(
     val content: List<PolicyContent>,
-    val totalElements: Int
+    val totalElements: Int,
+    val last: Boolean
 )
 
 data class PolicyContent(

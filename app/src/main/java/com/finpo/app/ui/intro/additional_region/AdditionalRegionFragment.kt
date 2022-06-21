@@ -16,8 +16,13 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
     private val viewModel by activityViewModels<IntroViewModel>()
     @Inject lateinit var additionalRegionAdapter: AdditionalRegionAdapter
     @Inject lateinit var additionalRegionDetailAdapter: AdditionalRegionDetailAdapter
+
+    override fun doCreateView() {
+
+    }
+
     @SuppressLint("NotifyDataSetChanged")
-    override fun init() {
+    override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 

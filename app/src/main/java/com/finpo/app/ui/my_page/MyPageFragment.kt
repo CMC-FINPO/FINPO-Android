@@ -19,7 +19,12 @@ import gun0912.tedbottompicker.TedBottomPicker
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
     private val viewModel by viewModels<MyPageViewModel>()
-    override fun init() {
+
+    override fun doCreateView() {
+
+    }
+
+    override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
