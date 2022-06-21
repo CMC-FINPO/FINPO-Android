@@ -14,9 +14,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     override fun init() {
-        val itemList = listOf("최신순", "sadfsadfsadfsadfsaf")
-        val adapter = ArrayAdapter(requireActivity(), R.layout.item_spinner_sort, itemList)
-        binding.spinner.adapter = adapter
+//        val itemList = listOf("최신순")
+//        val adapter = ArrayAdapter(requireActivity(), R.layout.item_spinner_sort, itemList)
+//        binding.spinner.adapter = adapter
 
     }
 }
