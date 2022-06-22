@@ -25,10 +25,16 @@ interface ApiService {
     @DELETE("/user/me")
     suspend fun withdrawal() : ApiResponse<JsonElement>
 
-    @GET("/policy/me")
+    @GET("/policy/search")
     suspend fun getPolicy(
+        @Query("title") title: String,
+        @Query("region", encoded = true) region: List<Int> ,
+        @Query("category", encoded = true) category: List<Int>,
         @Query("page") page: Int,
         @Query("sort", encoded = true) sort: List<String>,
         @Query("size") size: Int = 10
     ) : ApiResponse<PolicyResponse>
+
+    @GET("/region/me")
+    suspend fun getMyRegion() : ApiResponse<MyRegionResponse>
 }

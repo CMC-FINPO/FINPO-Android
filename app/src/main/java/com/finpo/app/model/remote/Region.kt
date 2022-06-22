@@ -17,6 +17,14 @@ data class RegionInterestResponse(
     val data: List<RegionInterest>
 )
 
+data class MyRegionResponse(
+    val data: List<MyRegion>
+)
+
+data class MyRegion(
+    val region: RegionInterest
+)
+
 data class RegionInterest(
     val id: Int?,
     val name: String?,

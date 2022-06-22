@@ -10,4 +10,5 @@ import javax.inject.Singleton
 class MyInfoRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun getMyInfo() = apiService.getMyInfo()
     suspend fun changeProfileImg(profileImg: MultipartBody.Part?) = apiService.changeProfileImg(profileImg)
+    suspend fun getMyRegion() = apiService.getMyRegion()
 }
