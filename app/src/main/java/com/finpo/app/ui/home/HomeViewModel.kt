@@ -1,15 +1,16 @@
 package com.finpo.app.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.PolicyContent
+import com.finpo.app.model.remote.PolicyResponse
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.repository.PolicyRepository
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SORT
+import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -49,11 +50,7 @@ class HomeViewModel @Inject constructor(
         if (paging.isLastPage) return
 
         viewModelScope.launch {
-            val policyResponse = policyRepository.getPolicy(
-                region = _regionIds.value ?: listOf(),
-                page = paging.page.value ?: 0,
-                sort = listOf(SORT[spinnerPosition.value ?: 0])
-            )
+            val policyResponse = getPolicyResponse()
             policyResponse.onSuccess {
                 paging.loadData(
                     data.data.content.toMutableList(),
@@ -68,11 +65,7 @@ class HomeViewModel @Inject constructor(
         paging.resetPage()
 
         viewModelScope.launch {
-            val policyResponse = policyRepository.getPolicy(
-                region = _regionIds.value ?: listOf(),
-                page = paging.page.value ?: 0,
-                sort = listOf(SORT[spinnerPosition.value ?: 0])
-            )
+            val policyResponse = getPolicyResponse()
             policyResponse.onSuccess {
                 paging.loadData(
                     data.data.content.toMutableList(),
@@ -81,5 +74,13 @@ class HomeViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    private suspend fun getPolicyResponse(): ApiResponse<PolicyResponse> {
+        return policyRepository.getPolicy(
+            region = _regionIds.value ?: listOf(),
+            page = paging.page.value ?: 0,
+            sort = listOf(SORT[spinnerPosition.value ?: 0])
+        )
     }
 }
