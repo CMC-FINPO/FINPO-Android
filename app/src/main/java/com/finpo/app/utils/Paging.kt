@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class Paging<T> @Inject constructor() {
     private val _itemList = MutableLiveData<MutableList<T?>>()
-    val itemList: LiveData<MutableList<T?>>
+    private val itemList: LiveData<MutableList<T?>>
         get() = _itemList
     private val _page = MutableLiveData<Int>()
     val page: LiveData<Int>
@@ -24,7 +24,22 @@ class Paging<T> @Inject constructor() {
         _itemList.value = mutableListOf(null)
     }
 
-    fun deleteLoading() {
+    fun loadData(
+        data: MutableList<T?>,
+        isLastPage: Boolean,
+        itemMutableLiveData: MutableLiveData<List<T?>>,
+        updateFunction: (data: MutableList<T?>) -> Unit
+    )
+    {
+        deleteLoading()
+        addLoadingView(data)
+        updateFunction(data)
+        this.isLastPage = isLastPage
+        itemMutableLiveData.value = itemList.value
+        nextPage()
+    }
+
+    private fun deleteLoading() {
         if(_itemList.value?.isEmpty() == true)
             return
         if(_itemList.value?.last() == null) {
@@ -33,16 +48,16 @@ class Paging<T> @Inject constructor() {
         }
     }
 
-    fun changeData(data: MutableList<T?>) {
+    fun changeData(): (data: MutableList<T?>) -> Unit = { data ->
         _itemList.value = data
     }
 
-    fun addData(data: MutableList<T?>) {
+    fun addData(): (data: MutableList<T?>) -> Unit = { data ->
         _itemList.value?.addAll(data)
         _itemList.value = _itemList.value
     }
 
-    fun nextPage() {
+    private fun nextPage() {
         _page.value = _page.value?.plus(1)
     }
 
@@ -51,7 +66,7 @@ class Paging<T> @Inject constructor() {
         _page.value = 0
     }
 
-    fun <T> addLoadingView(tmpEvaluationData: MutableList<T?>) {
+    private fun <T> addLoadingView(tmpEvaluationData: MutableList<T?>) {
         if(tmpEvaluationData.size == 10)
             tmpEvaluationData.add(null)
     }
