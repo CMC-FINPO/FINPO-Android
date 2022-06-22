@@ -31,8 +31,7 @@
             android:textColor="@color/point_p01"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            detailRegion="@{data.region.name}"
-            region="@{data.region.parent.name}"
+            region="@{data.region}"
             tools:text="서울 동대문구" />
 
         <TextView

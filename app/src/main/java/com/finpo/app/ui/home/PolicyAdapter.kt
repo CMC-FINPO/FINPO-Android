@@ -1,5 +1,6 @@
 package com.finpo.app.ui.home
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +11,7 @@ import com.finpo.app.databinding.ItemRecyclerPolicyLoadingBinding
 import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.utils.PolicyRecyclerViewType.LOADING
 import com.finpo.app.utils.PolicyRecyclerViewType.CONTENT
+import java.lang.Exception
 
 class PolicyAdapter(val viewModel: HomeViewModel)
     : ListAdapter<PolicyContent, RecyclerView.ViewHolder>(diffUtil) {

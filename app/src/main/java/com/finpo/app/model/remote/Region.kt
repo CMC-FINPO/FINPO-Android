@@ -25,5 +25,5 @@ data class RegionInterest(
 
 data class RegionParent(
     val id: Int,
-    val name: String
+    val name: String?
 )
