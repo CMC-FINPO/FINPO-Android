@@ -1,5 +1,8 @@
 package com.finpo.app.ui.home
 
+import android.view.KeyEvent
+import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,6 +34,8 @@ class HomeViewModel @Inject constructor(
 
     val spinnerPosition = MutableLiveData<Int>()
     var prevSpinnerPosition = 0
+
+    val searchText = MutableLiveData<String>()
 
     init {
         getInitData()
@@ -78,9 +83,17 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun getPolicyResponse(): ApiResponse<PolicyResponse> {
         return policyRepository.getPolicy(
+            title = searchText.value ?: "",
             region = _regionIds.value ?: listOf(),
             page = paging.page.value ?: 0,
             sort = listOf(SORT[spinnerPosition.value ?: 0])
         )
+    }
+
+    fun onEditTextSearchClick(actionId: Int): Boolean {
+        return if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+            changePolicy()
+            true
+        } else false
     }
 }

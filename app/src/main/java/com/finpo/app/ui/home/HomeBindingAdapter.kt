@@ -1,5 +1,7 @@
 package com.finpo.app.ui.home
 
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.finpo.app.R
