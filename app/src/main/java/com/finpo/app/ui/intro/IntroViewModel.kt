@@ -1,12 +1,11 @@
 package com.finpo.app.ui.intro
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.di.FinpoApplication
-import com.finpo.app.model.remote.RegionResponse
+import com.finpo.app.model.remote.TokenResponse
 import com.finpo.app.repository.AdditionalInfoRepository
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.ui.intro.additional_region.AdditionalRegionLiveData
@@ -17,9 +16,7 @@ import com.finpo.app.ui.intro.register_complete.RegisterCompleteLiveData
 import com.finpo.app.ui.intro.terms_conditions.TermsConditionsLiveData
 import com.finpo.app.utils.*
 import com.finpo.app.utils.PAGE.FINISH
-import com.finpo.app.utils.PAGE.INTEREST
 import com.skydoves.sandwich.ApiResponse
-import com.skydoves.sandwich.message
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -75,47 +72,35 @@ class IntroViewModel @Inject constructor(
         }
     }
 
-    //TODO REFACTOR 코드 중복
     fun registerByKakao() {
         viewModelScope.launch {
-            val textHashMap = getUserInputInfo()
-            val bitmapMultipartBody: MultipartBody.Part? =
-                ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage)
             val registerKakaoResponse = introRepository.registerByKakao(
                 loginLiveData.acToken,
-                bitmapMultipartBody,
-                textHashMap
+                ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage),
+                getUserInputInfo()
             )
+            processRegisterResponse(registerKakaoResponse)
+        }
+    }
 
-            if (registerKakaoResponse is ApiResponse.Success) {
-                //TODO REFACTOR 코드 중복
-                FinpoApplication.encryptedPrefs.saveAccessToken(registerKakaoResponse.data.data.accessToken ?: "")
-                FinpoApplication.encryptedPrefs.saveRefreshToken(registerKakaoResponse.data.data.refreshToken ?: "")
-                _registerSuccessEvent.setValue(true)
-            } else {
-                _registerErrorToastEvent.setValue(true)
-            }
+    private fun processRegisterResponse(registerResponse: ApiResponse<TokenResponse>) {
+        if (registerResponse is ApiResponse.Success) {
+            FinpoApplication.encryptedPrefs.saveAccessToken(registerResponse.data.data.accessToken ?: "")
+            FinpoApplication.encryptedPrefs.saveRefreshToken(registerResponse.data.data.refreshToken ?: "")
+            _registerSuccessEvent.setValue(true)
+        } else {
+            _registerErrorToastEvent.setValue(true)
         }
     }
 
     fun registerByGoogle() {
         viewModelScope.launch {
-            val textHashMap = getUserInputInfo()
-            val bitmapMultipartBody: MultipartBody.Part? =
-                ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage)
             val registerGoogleResponse = introRepository.registerByGoogle(
                 loginLiveData.acToken,
-                bitmapMultipartBody,
-                textHashMap
+                ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage),
+                getUserInputInfo()
             )
-
-            if (registerGoogleResponse is ApiResponse.Success) {
-                FinpoApplication.encryptedPrefs.saveAccessToken(registerGoogleResponse.data.data.accessToken ?: "")
-                FinpoApplication.encryptedPrefs.saveRefreshToken(registerGoogleResponse.data.data.refreshToken ?: "")
-                _registerSuccessEvent.setValue(true)
-            } else {
-                _registerErrorToastEvent.setValue(true)
-            }
+            processRegisterResponse(registerGoogleResponse)
         }
     }
 

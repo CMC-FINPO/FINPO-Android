@@ -1,7 +1,9 @@
 package com.finpo.app.repository
 
 import com.finpo.app.model.remote.RequestTokenBody
+import com.finpo.app.model.remote.TokenResponse
 import com.finpo.app.network.ApiServiceWithoutToken
+import com.skydoves.sandwich.ApiResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
