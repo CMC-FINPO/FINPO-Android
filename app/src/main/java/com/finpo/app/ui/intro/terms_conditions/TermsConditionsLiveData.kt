@@ -3,9 +3,11 @@ package com.finpo.app.ui.intro.terms_conditions
 import android.util.Log
 import android.widget.CompoundButton
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.finpo.app.utils.addSourceList
 import javax.inject.Inject
 
 class TermsConditionsLiveData @Inject constructor() {
@@ -23,6 +25,14 @@ class TermsConditionsLiveData @Inject constructor() {
 
     private val _isCheckedMarketing = MutableLiveData<Boolean>()
     val isCheckedMarketing: LiveData<Boolean> = _isCheckedMarketing
+
+    val isTermsConditionsButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSourceList(_isCheckedTermsConditions, _isCheckedPersonalInfo) {
+            isTermsConditionsValid()
+        }
+    }
+
+    private fun isTermsConditionsValid(): Boolean = _isCheckedPersonalInfo.value == true && _isCheckedTermsConditions.value == true
 
     init {
         _isCheckedAll.value = false

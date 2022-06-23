@@ -7,6 +7,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.MediatorLiveData
 import androidx.viewpager2.widget.ViewPager2
 import com.finpo.app.R
 import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
@@ -82,34 +83,19 @@ fun setIntroButtonText(textView: TextView, currentPage: Int) {
     }
 }
 
-//TODO REFACTOR
-@BindingAdapter("currentPage", "isCheckedTermsConditions", "isCheckedPersonalInfo"
-    , "nameInputText", "isNameError",
-    "nickNameInputText", "isNicknameError", "isNicknameOverlap",
-    "birthText", "isFemaleRadioButtonChecked", "isMaleRadioButtonChecked", "selectedDetailRegionText",
+@BindingAdapter("currentPage", "isTermsConditionsButtonEnabled",
+    "isDefaultInfoButtonEnabled", "selectedDetailRegionText",
     "additionalRegionSelCount")
 fun setAgreeButtonEnabled(
     button: Button,
     currentPage: Int,
-    isCheckedTermsConditions: Boolean,
-    isCheckedPersonalInfo: Boolean,
-    nameInputText: String,
-    isNameError: Boolean,
-    nickNameInputText: String,
-    isNicknameError: Boolean,
-    isNicknameOverlap: Boolean,
-    birthText: String,
-    isFemaleRadioButtonChecked: Boolean,
-    isMaleRadioButtonChecked : Boolean,
+    isTermsConditionsButtonEnabled: Boolean,
+    isDefaultInfoButtonEnabled: Boolean,
     selectedDetailRegionText: String,
     additionalRegionSelCount: Int
 ) {
-    button.isEnabled = (currentPage == AGREE && isCheckedPersonalInfo && isCheckedTermsConditions) ||
-            (currentPage == DEFAULT_INFO &&
-                    nameInputText.isNotBlank() && !isNameError
-                    && nickNameInputText.isNotBlank() && !isNicknameError && !isNicknameOverlap
-                    && birthText.isNotBlank()
-                    && isFemaleRadioButtonChecked != isMaleRadioButtonChecked) ||
+    button.isEnabled = (currentPage == AGREE && isTermsConditionsButtonEnabled) ||
+            (currentPage == DEFAULT_INFO && isDefaultInfoButtonEnabled) ||
             (currentPage == REGION && selectedDetailRegionText.isNotEmpty()) ||
             (currentPage == INTEREST) ||
             (currentPage == REGISTRATION) ||

@@ -1,14 +1,12 @@
 package com.finpo.app.ui.intro.default_info
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.finpo.app.R
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.MAX_NAME_LENGTH
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.finpo.app.utils.addSourceList
 import com.skydoves.sandwich.ApiResponse
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -45,6 +43,23 @@ class DefaultInfoLiveData @Inject constructor(
 
     val isFemaleRadioButtonChecked = MutableLiveData<Boolean>()
     val isMaleRadioButtonChecked = MutableLiveData<Boolean>()
+
+    val isDefaultInfoButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSourceList(nameInputText, _isNameError, nickNameInputText, _isNicknameError,
+        _isNicknameOverlap, _birthText, isFemaleRadioButtonChecked, isMaleRadioButtonChecked) {
+            isDefaultInfoValid()
+        }
+    }
+
+    private fun isDefaultInfoValid(): Boolean =
+        !nameInputText.value.isNullOrBlank()
+                && (isNameError.value == false)
+            && !nickNameInputText.value.isNullOrBlank()
+                && isNicknameError.value == false
+                && isNicknameOverlap.value == false
+            && !birthText.value.isNullOrBlank()
+            && isFemaleRadioButtonChecked.value != isMaleRadioButtonChecked.value
+
 
     var gender = ""
     var lastNicknameInput = ""

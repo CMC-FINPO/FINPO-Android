@@ -112,22 +112,11 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/appCompatButton"
                     style="@style/finpo_main_button"
-                    birthText="@{viewModel.defaultInfoLiveData.birthText}"
                     currentPage="@{viewModel.currentPage}"
                     introButtonText="@{viewModel.currentPage}"
                     introButtonVisibility="@{viewModel.currentPage}"
-
-                    isCheckedPersonalInfo="@{viewModel.termsConditionsLiveData.isCheckedPersonalInfo()}"
-                    isCheckedTermsConditions="@{viewModel.termsConditionsLiveData.isCheckedTermsConditions()}"
-                    isFemaleRadioButtonChecked="@{viewModel.defaultInfoLiveData.isFemaleRadioButtonChecked()}"
-                    isMaleRadioButtonChecked="@{viewModel.defaultInfoLiveData.isMaleRadioButtonChecked()}"
-                    isNameError="@{viewModel.defaultInfoLiveData.isNameError}"
-                    isNicknameError="@{viewModel.defaultInfoLiveData.isNicknameError}"
-                    isNicknameOverlap="@{viewModel.defaultInfoLiveData.isNicknameOverlap}"
-                    nameInputText="@{viewModel.defaultInfoLiveData.nameInputText}"
-
-                    nickNameInputText="@{viewModel.defaultInfoLiveData.nickNameInputText}"
-
+                    isTermsConditionsButtonEnabled="@{viewModel.termsConditionsLiveData.isTermsConditionsButtonEnabled()}"
+                    isDefaultInfoButtonEnabled="@{viewModel.defaultInfoLiveData.isDefaultInfoButtonEnabled}"
                     selectedDetailRegionText="@{viewModel.livingAreaLiveData.regionDetailText}"
                     additionalRegionSelCount="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelCount}"
                     android:layout_width="0dp"
