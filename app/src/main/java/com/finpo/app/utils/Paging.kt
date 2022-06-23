@@ -32,7 +32,7 @@ class Paging<T> @Inject constructor() {
     )
     {
         deleteLoading()
-        addLoadingView(data)
+        addLoadingView(data, isLastPage)
         updateFunction(data)
         this.isLastPage = isLastPage
         itemMutableLiveData.value = itemList.value
@@ -66,8 +66,7 @@ class Paging<T> @Inject constructor() {
         _page.value = 0
     }
 
-    private fun <T> addLoadingView(tmpEvaluationData: MutableList<T?>) {
-        if(tmpEvaluationData.size == 10)
-            tmpEvaluationData.add(null)
+    private fun <T> addLoadingView(tmpEvaluationData: MutableList<T?>, isLastPage: Boolean) {
+        if(!isLastPage) tmpEvaluationData.add(null)
     }
 }
