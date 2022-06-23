@@ -41,7 +41,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 val account = task.getResult(ApiException::class.java)!!
                 viewModel.loginLiveData.getGoogleAccessToken(getString(R.string.GOOGLE_CLIENT_ID), getString(R.string.GOOGLE_SECRET_ID), account.serverAuthCode.orEmpty())
-            }
+            } else hideLoadingDialog()
         }
 
     override fun doViewCreated() {
@@ -52,12 +52,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         }
 
         viewModel.loginLiveData.googleLoginEvent.observe {
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestServerAuthCode(getString(R.string.GOOGLE_CLIENT_ID))
-                .build()
-            val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-
-            activityLauncher.launch(googleSignInClient.signInIntent)
+            googleLogin()
         }
 
         viewModel.loginLiveData.isLoginSuccessfulEvent.observe(this) { tokenResponse ->
@@ -66,6 +61,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                     //TODO REFACTOR - KAKAO, GOOGLE
                     if(tokenResponse.data.oAuthType == getString(R.string.kakao_eng)) {
                         viewModel.loginLiveData.oAuthType = tokenResponse.data.oAuthType ?: ""
+                        hideLoadingDialog()
                         viewModel.nextPage()
                         return@launch
                     }
@@ -76,10 +72,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                     viewModel.defaultInfoLiveData.setBirth(tokenResponse.data.birth ?: "")
                     viewModel.loginLiveData.profileImage = ImageUtils().imageUrlToBitmap(requireContext(), tokenResponse.data.profileImg)
                     viewModel.loginLiveData.oAuthType = tokenResponse.data.oAuthType ?: ""
+                    hideLoadingDialog()
                     viewModel.nextPage()
                 }
             } else {
                 viewModel.loginLiveData.acToken = ""
+                hideLoadingDialog()
                 startActivity(Intent(requireActivity(), MainActivity::class.java))
                 activity?.finish()
             }
@@ -87,7 +85,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     }
 
+    private fun googleLogin() {
+        showLoadingDialog()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestServerAuthCode(getString(R.string.GOOGLE_CLIENT_ID))
+            .build()
+        val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+
+        activityLauncher.launch(googleSignInClient.signInIntent)
+    }
+
     private fun kakaoLogin() {
+        showLoadingDialog()
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireActivity())) {
             UserApiClient.instance.loginWithKakaoTalk(
                 requireActivity(),
@@ -101,7 +110,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     private fun kakaoLoginCallback(): (OAuthToken?, Throwable?) -> Unit = { token, error ->
         if (error != null) {
-            //TODO 에러 처리
+            hideLoadingDialog()
         } else if (token != null) {
             //TODO 서버 api 변경된 후 수정 필요
             UserApiClient.instance.me { user, error ->

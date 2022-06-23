@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.finpo.app.di.FinpoApplication
 import com.finpo.app.utils.SingleLiveData
 
 abstract class BaseFragment<B : ViewDataBinding>(
@@ -40,5 +41,13 @@ abstract class BaseFragment<B : ViewDataBinding>(
 
     protected infix fun <T> SingleLiveData<T>.observe(action: (T) -> Unit) {
         observe(viewLifecycleOwner, action)
+    }
+
+    fun showLoadingDialog() {
+        FinpoApplication.instance.showLoadingDialog(requireActivity())
+    }
+
+    fun hideLoadingDialog() {
+        FinpoApplication.instance.hideLoadingDialog()
     }
 }

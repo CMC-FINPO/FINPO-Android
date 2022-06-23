@@ -54,12 +54,15 @@ class IntroViewModel @Inject constructor(
     private val _goToMainActivityEvent = MutableSingleLiveData<Boolean>()
     val goToMainActivityEvent: SingleLiveData<Boolean> = _goToMainActivityEvent
 
+    private val _registerSuccessEvent = MutableSingleLiveData<Boolean>()
+    val registerSuccessEvent: SingleLiveData<Boolean> = _registerSuccessEvent
+
     init {
         _prevPage.value = 0
         _currentPage.value = 0
     }
 
-    fun goToMainActivity() {
+    private fun goToMainActivity() {
         _goToMainActivityEvent.setValue(true)
     }
 
@@ -88,7 +91,7 @@ class IntroViewModel @Inject constructor(
                 //TODO REFACTOR 코드 중복
                 FinpoApplication.encryptedPrefs.saveAccessToken(registerKakaoResponse.data.data.accessToken ?: "")
                 FinpoApplication.encryptedPrefs.saveRefreshToken(registerKakaoResponse.data.data.refreshToken ?: "")
-                nextPage()
+                _registerSuccessEvent.setValue(true)
             } else {
                 _registerErrorToastEvent.setValue(true)
             }
@@ -109,7 +112,7 @@ class IntroViewModel @Inject constructor(
             if (registerGoogleResponse is ApiResponse.Success) {
                 FinpoApplication.encryptedPrefs.saveAccessToken(registerGoogleResponse.data.data.accessToken ?: "")
                 FinpoApplication.encryptedPrefs.saveRefreshToken(registerGoogleResponse.data.data.refreshToken ?: "")
-                nextPage()
+                _registerSuccessEvent.setValue(true)
             } else {
                 _registerErrorToastEvent.setValue(true)
             }

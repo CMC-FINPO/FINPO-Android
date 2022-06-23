@@ -27,6 +27,11 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
         viewPager.adapter = IntroAdapter(this)
         viewPager.isUserInputEnabled = false
 
+        viewModel.registerSuccessEvent.observe(this) {
+            hideLoadingDialog()
+            viewModel.nextPage()
+        }
+
         viewModel.registerErrorToastEvent.observe(this) {
             shortShowToast("회원가입 실패!")
         }
@@ -34,6 +39,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
         viewModel.introMainButtonClickEvent.observe(this) {
             when (viewModel.currentPage.value) {
                 INTEREST -> {
+                    showLoadingDialog()
                     if(viewModel.loginLiveData.oAuthType == getString(R.string.kakao_eng))
                         viewModel.registerByKakao()
                     else

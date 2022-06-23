@@ -6,6 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.finpo.app.di.FinpoApplication
 
 abstract class BaseActivity<T : ViewDataBinding>(@LayoutRes private val layoutResId: Int) :
     AppCompatActivity() {
@@ -32,4 +33,12 @@ abstract class BaseActivity<T : ViewDataBinding>(@LayoutRes private val layoutRe
 
     protected fun longShowToast(msg: String) =
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+
+    fun showLoadingDialog() {
+        FinpoApplication.instance.showLoadingDialog(this)
+    }
+
+    fun hideLoadingDialog() {
+        FinpoApplication.instance.hideLoadingDialog()
+    }
 }
