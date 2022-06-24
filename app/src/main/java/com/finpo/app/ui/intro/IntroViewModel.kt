@@ -17,6 +17,7 @@ import com.finpo.app.ui.intro.register_complete.RegisterCompleteLiveData
 import com.finpo.app.ui.intro.terms_conditions.TermsConditionsLiveData
 import com.finpo.app.utils.*
 import com.finpo.app.utils.PAGE.FINISH
+import com.google.gson.Gson
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
@@ -24,6 +25,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONArray
+import retrofit2.http.Multipart
 import javax.inject.Inject
 
 @HiltViewModel
@@ -113,11 +116,10 @@ class IntroViewModel @Inject constructor(
         val birth = defaultInfoLiveData.birthText.value.toString().toPlainRequestBody()
         val gender = defaultInfoLiveData.gender.toPlainRequestBody()
         val regionId = livingAreaLiveData.regionDetailSel.value.toString().toPlainRequestBody()
-        //TODO 수정
-        val status = "대학교 재학 중".toPlainRequestBody()
+        val categories = Gson().toJson(interestLiveData.userInterestData.value?.toList())
         return hashMapOf(
             "name" to name, "nickname" to nickname, "birth" to birth, "gender" to gender,
-            "regionId" to regionId, "status" to status
+            "regionId" to regionId, "categories" to categories.toPlainRequestBody()
         )
     }
 

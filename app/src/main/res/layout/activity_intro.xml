@@ -118,6 +118,7 @@
                     isTermsConditionsButtonEnabled="@{viewModel.termsConditionsLiveData.isTermsConditionsButtonEnabled()}"
                     isDefaultInfoButtonEnabled="@{viewModel.defaultInfoLiveData.isDefaultInfoButtonEnabled}"
                     selectedDetailRegionText="@{viewModel.livingAreaLiveData.regionDetailText}"
+                    userInterestData="@{viewModel.interestLiveData.userInterestData}"
                     additionalRegionSelCount="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelCount}"
                     android:layout_width="0dp"
                     android:layout_height="50dp"

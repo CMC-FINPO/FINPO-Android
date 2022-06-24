@@ -10,6 +10,7 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MediatorLiveData
 import androidx.viewpager2.widget.ViewPager2
 import com.finpo.app.R
+import com.finpo.app.model.local.CategoryId
 import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
 import com.finpo.app.utils.PAGE.ADDITIONAL_REGION
 import com.finpo.app.utils.PAGE.AGREE
@@ -84,7 +85,7 @@ fun setIntroButtonText(textView: TextView, currentPage: Int) {
 }
 
 @BindingAdapter("currentPage", "isTermsConditionsButtonEnabled",
-    "isDefaultInfoButtonEnabled", "selectedDetailRegionText",
+    "isDefaultInfoButtonEnabled", "selectedDetailRegionText","userInterestData",
     "additionalRegionSelCount")
 fun setAgreeButtonEnabled(
     button: Button,
@@ -92,12 +93,13 @@ fun setAgreeButtonEnabled(
     isTermsConditionsButtonEnabled: Boolean,
     isDefaultInfoButtonEnabled: Boolean,
     selectedDetailRegionText: String,
+    userInterestData: MutableSet<CategoryId>,
     additionalRegionSelCount: Int
 ) {
     button.isEnabled = (currentPage == AGREE && isTermsConditionsButtonEnabled) ||
             (currentPage == DEFAULT_INFO && isDefaultInfoButtonEnabled) ||
             (currentPage == REGION && selectedDetailRegionText.isNotEmpty()) ||
-            (currentPage == INTEREST) ||
+            (currentPage == INTEREST && userInterestData.isNotEmpty()) ||
             (currentPage == REGISTRATION) ||
             (currentPage == STATE_PURPOSE) ||
             (currentPage == ADDITIONAL_REGION && (additionalRegionSelCount != 0)) ||
