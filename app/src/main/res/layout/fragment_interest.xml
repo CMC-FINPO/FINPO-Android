@@ -48,138 +48,14 @@
             app:layout_constraintStart_toEndOf="@id/tv_interest"
             app:layout_constraintTop_toBottomOf="@id/tv_header" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_job"
-            android:layout_width="0dp"
-            android:layout_height="129dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_interest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="6dp"
-            android:background="@drawable/bg_solid_none_rounded_g06_5"
-            app:layout_constraintEnd_toStartOf="@id/cl_stability"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_select_multi">
-
-            <ImageView
-                android:id="@+id/iv_job"
-                android:layout_width="95dp"
-                android:layout_height="65dp"
-                android:layout_marginTop="18dp"
-                android:background="@color/point_p01"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                style="@style/h5_14_mid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:text="@string/job"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_stability"
-            android:layout_width="0dp"
-            android:layout_height="129dp"
-            android:layout_marginStart="6dp"
-            android:background="@drawable/bg_solid_none_rounded_g06_5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cl_job"
-            app:layout_constraintTop_toTopOf="@id/cl_job">
-
-            <ImageView
-                android:id="@+id/iv_stability"
-                android:layout_width="95dp"
-                android:layout_height="65dp"
-                android:layout_marginTop="18dp"
-                android:background="@color/point_p01"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                style="@style/h5_14_mid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:text="@string/stability"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_education"
-            android:layout_width="0dp"
-            android:layout_height="129dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="6dp"
-            android:background="@drawable/bg_solid_none_rounded_g06_5"
-            app:layout_constraintEnd_toStartOf="@id/cl_participation"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_job">
-
-            <ImageView
-                android:id="@+id/iv_education"
-                android:layout_width="95dp"
-                android:layout_height="65dp"
-                android:layout_marginTop="18dp"
-                android:background="@color/point_p01"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                style="@style/h5_14_mid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:text="@string/education"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_participation"
-            android:layout_width="0dp"
-            android:layout_height="129dp"
-            android:layout_marginStart="6dp"
-            android:background="@drawable/bg_solid_none_rounded_g06_5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cl_education"
-            app:layout_constraintTop_toTopOf="@id/cl_education">
-
-            <ImageView
-                android:id="@+id/iv_participation"
-                android:layout_width="95dp"
-                android:layout_height="65dp"
-                android:layout_marginTop="18dp"
-                android:background="@color/point_p01"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                style="@style/h5_14_mid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:text="@string/participation"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@id/tv_interest" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,9 +1,6 @@
 package com.finpo.app.network
 
-import com.finpo.app.model.remote.NicknameDuplicationResponse
-import com.finpo.app.model.remote.RegionResponse
-import com.finpo.app.model.remote.RequestTokenBody
-import com.finpo.app.model.remote.TokenResponse
+import com.finpo.app.model.remote.*
 import com.skydoves.sandwich.ApiResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -55,4 +52,7 @@ interface ApiServiceWithoutToken {
     suspend fun refreshToken(
         @Body requestTokenBody: RequestTokenBody
     ) : ApiResponse<TokenResponse>
+
+    @GET("/policy/category/name")
+    suspend fun getParentCategory(): ApiResponse<ParentCategoryResponse>
 }

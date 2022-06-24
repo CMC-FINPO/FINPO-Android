@@ -10,6 +10,7 @@ import com.finpo.app.repository.AdditionalInfoRepository
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.ui.intro.additional_region.AdditionalRegionLiveData
 import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
+import com.finpo.app.ui.intro.interest.InterestLiveData
 import com.finpo.app.ui.intro.living_area.LivingAreaLiveData
 import com.finpo.app.ui.intro.login.LoginLiveData
 import com.finpo.app.ui.intro.register_complete.RegisterCompleteLiveData
@@ -33,6 +34,7 @@ class IntroViewModel @Inject constructor(
     val livingAreaLiveData: LivingAreaLiveData,
     val additionalRegionLiveData: AdditionalRegionLiveData,
     val registerCompleteLiveData: RegisterCompleteLiveData,
+    val interestLiveData: InterestLiveData,
     private val introRepository: IntroRepository,
     private val additionalInfoRepository: AdditionalInfoRepository
 ) : ViewModel() {

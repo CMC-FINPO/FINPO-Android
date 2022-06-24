@@ -37,4 +37,6 @@ class IntroRepository @Inject constructor(private val apiServiceWithoutToken: Ap
 
     suspend fun refreshToken(accessToken: String, refreshToken: String) =
         apiServiceWithoutToken.refreshToken(RequestTokenBody(accessToken, refreshToken))
+
+    suspend fun getParentCategory() = apiServiceWithoutToken.getParentCategory()
 }
