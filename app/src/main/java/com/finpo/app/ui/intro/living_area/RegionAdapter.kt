@@ -21,6 +21,10 @@ class RegionAdapter @Inject constructor(val viewModel: LivingAreaLiveData) :
         )
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     override fun onBindViewHolder(holder: RegionViewHolder, position: Int) {
         holder.bind(currentList[position])
     }

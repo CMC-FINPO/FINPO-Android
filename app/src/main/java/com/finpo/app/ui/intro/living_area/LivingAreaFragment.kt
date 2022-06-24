@@ -22,17 +22,26 @@ class LivingAreaFragment : BaseFragment<FragmentLivingAreaBinding>(R.layout.frag
     @Inject lateinit var regionAdapter: RegionAdapter
     @Inject lateinit var regionDetailAdapter: RegionDetailAdapter
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        setRecyclerView()
+        observeRecyclerViewData()
+        observeRecyclerViewEvent()
+    }
+
+    private fun setRecyclerView() {
+        regionAdapter.setHasStableIds(true)
         binding.rvRegionAll.adapter = regionAdapter
+        binding.rvRegionAll.itemAnimator = null
 
         regionDetailAdapter.setHasStableIds(true)
         binding.rvRegionDetail.adapter = regionDetailAdapter
         binding.rvRegionDetail.itemAnimator = null
+    }
 
+    private fun observeRecyclerViewData() {
         viewModel.livingAreaLiveData.regionData.observe(viewLifecycleOwner) {
             regionAdapter.submitList(it.data)
         }
@@ -40,7 +49,10 @@ class LivingAreaFragment : BaseFragment<FragmentLivingAreaBinding>(R.layout.frag
         viewModel.livingAreaLiveData.regionDetailData.observe(viewLifecycleOwner) {
             regionDetailAdapter.submitList(it.data)
         }
+    }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun observeRecyclerViewEvent() {
         viewModel.livingAreaLiveData.regionSelEvent.observe {
             regionAdapter.notifyDataSetChanged()
         }

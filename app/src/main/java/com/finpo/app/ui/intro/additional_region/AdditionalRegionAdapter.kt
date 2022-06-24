@@ -27,6 +27,10 @@ class AdditionalRegionAdapter @Inject constructor(val viewModel: AdditionalRegio
         holder.bind(currentList[position])
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     inner class RegionViewHolder(private val binding: ItemRecyclerAdditionalRegionBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

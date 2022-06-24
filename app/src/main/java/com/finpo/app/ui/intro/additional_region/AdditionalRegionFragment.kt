@@ -22,11 +22,22 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.rvAdditionalRegionAll.adapter = additionalRegionAdapter
-        additionalRegionDetailAdapter.setHasStableIds(true)
-        binding.rvAdditionalRegionDetail.adapter = additionalRegionDetailAdapter
-        binding.rvAdditionalRegionDetail.itemAnimator = null
+        setRecyclerView()
+        observeRecyclerViewData()
+        observeRecyclerViewEvent()
+    }
 
+    private fun observeRecyclerViewEvent() {
+        viewModel.additionalRegionLiveData.chooseMaxToastEvent.observe {
+            shortShowToast(getString(R.string.can_select_max))
+        }
+
+        viewModel.additionalRegionLiveData.regionOverlapToastEvent.observe {
+            shortShowToast(getString(R.string.overlap_region))
+        }
+    }
+
+    private fun observeRecyclerViewData() {
         viewModel.additionalRegionLiveData.additionalRegionData.observe(viewLifecycleOwner) {
             additionalRegionAdapter.submitList(it.data)
         }
@@ -38,13 +49,15 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
         viewModel.additionalRegionLiveData.additionalRegionDetailData.observe(viewLifecycleOwner) {
             additionalRegionDetailAdapter.submitList(it.data)
         }
+    }
 
-        viewModel.additionalRegionLiveData.chooseMaxToastEvent.observe {
-            shortShowToast(getString(R.string.can_select_max))
-        }
+    private fun setRecyclerView() {
+        additionalRegionAdapter.setHasStableIds(true)
+        binding.rvAdditionalRegionAll.adapter = additionalRegionAdapter
+        binding.rvAdditionalRegionAll.itemAnimator = null
 
-        viewModel.additionalRegionLiveData.regionOverlapToastEvent.observe {
-            shortShowToast(getString(R.string.overlap_region))
-        }
+        additionalRegionDetailAdapter.setHasStableIds(true)
+        binding.rvAdditionalRegionDetail.adapter = additionalRegionDetailAdapter
+        binding.rvAdditionalRegionDetail.itemAnimator = null
     }
 }
