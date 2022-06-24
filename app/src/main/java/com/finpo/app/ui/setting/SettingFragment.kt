@@ -34,20 +34,13 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
 
         viewModel.withdrawalSuccessfulEvent.observe { isSuccessful ->
             if (isSuccessful) {
-                if (args.oAuthType == getString(R.string.kakao_eng))
-                    UserApiClient.instance.unlink { error ->
-                        if (error != null) {
-                            longShowToast(
-                                "카카오 계정 연결 끊기 실패! 카카오톡 > 더보기 > 설정 > 개인/보안 - 카카오계정 > 연결된 서비스 관리에서 직접" +
-                                        " 연결을 끊어주세요!"
-                            )
-                        }
-                    }
-                else {
+                //TODO REFACTOR - 서버에서 oauth 연결 해제 예정
+                if (args.oAuthType == getString(R.string.google_eng)) {
                     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestServerAuthCode(getString(R.string.GOOGLE_CLIENT_ID))
                         .build()
                     val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+                    // GoogleSignIn.getLastSignedInAccount(requireActivity())?.serverAuthCode
                     googleSignInClient.revokeAccess()
                         .addOnCompleteListener(requireActivity()) { }
                         .addOnFailureListener { longShowToast(

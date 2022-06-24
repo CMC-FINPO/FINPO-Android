@@ -64,6 +64,7 @@
     <string name="logout">로그아웃</string>
     <string name="withdrawal">회원 탈퇴</string>
     <string name="kakao_eng">KAKAO</string>
+    <string name="google_eng">GOOGLE</string>
     <string name="search_policy">청년정책을 검색해보세요</string>
     <string name="filter">필터</string>
     <string name="region_text">%s %s</string>

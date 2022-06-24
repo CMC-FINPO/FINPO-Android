@@ -23,6 +23,11 @@ class EncryptedPrefsManger(context: Context) {
 
     fun getRefreshToken() = getString(REFRESH_TOKEN)
 
+    fun saveTokens(acToken: String, reToken: String) {
+        saveAccessToken(acToken)
+        saveRefreshToken(reToken)
+    }
+
     private fun setString(key: String, value: String) =
         sharedPreferences.edit().putString(key, value).apply()
 

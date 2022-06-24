@@ -28,6 +28,9 @@ class LoginLiveData @Inject constructor(
     private val _isLoginSuccessfulEvent = MutableSingleLiveData<TokenResponse>()
     val isLoginSuccessfulEvent: SingleLiveData<TokenResponse> = _isLoginSuccessfulEvent
 
+    private val _needRegisterEvent = MutableSingleLiveData<TokenResponse>()
+    val needRegisterEvent: SingleLiveData<TokenResponse> = _needRegisterEvent
+
     var acToken = ""
     var oAuthType = ""
     var profileImage: Bitmap? = null
@@ -45,12 +48,7 @@ class LoginLiveData @Inject constructor(
     private fun loginFinpoByGoogle(acToken: String) {
         viewModelScope.launch {
             val loginByGoogleResponse = introRepository.loginByGoogle(acToken)
-            loginByGoogleResponse.onSuccess {
-                if(data.data.accessToken != null) {
-                    saveToken(data.data.accessToken!!, data.data.refreshToken!!)
-                }
-                _isLoginSuccessfulEvent.setValue(data)
-            }
+            processLoginResponse(loginByGoogleResponse)
         }
     }
 
@@ -65,17 +63,16 @@ class LoginLiveData @Inject constructor(
     fun loginFinpoByKakao(acToken: String) {
         viewModelScope.launch {
             val loginByKakaoResponse = introRepository.loginByKakao(acToken)
-            if(loginByKakaoResponse is ApiResponse.Success) {
-                if(loginByKakaoResponse.data.data.accessToken != null) {
-                    saveToken(loginByKakaoResponse.data.data.accessToken!!, loginByKakaoResponse.data.data.refreshToken!!)
-                }
-                _isLoginSuccessfulEvent.setValue(loginByKakaoResponse.data)
-            }
+            processLoginResponse(loginByKakaoResponse)
         }
     }
 
-    private fun saveToken(acToken: String, reToken: String) {
-        FinpoApplication.encryptedPrefs.saveAccessToken(acToken)
-        FinpoApplication.encryptedPrefs.saveRefreshToken(reToken)
+    private fun processLoginResponse(loginResponse: ApiResponse<TokenResponse>) {
+        loginResponse.onSuccess {
+            when (statusCode.code) {
+                200 -> _isLoginSuccessfulEvent.setValue(data)
+                202 -> _needRegisterEvent.setValue(data)
+            }
+        }
     }
 }

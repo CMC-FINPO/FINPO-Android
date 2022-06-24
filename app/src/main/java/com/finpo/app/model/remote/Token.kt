@@ -6,7 +6,7 @@ data class TokenResponse(
 
 data class Token(
     val name: String?,
-    val nickname: String,
+    val nickname: String?,
     val birth: String?,
     val gender: String?,
     val profileImg: String?,

@@ -9,6 +9,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentLoginBinding
+import com.finpo.app.di.FinpoApplication
+import com.finpo.app.model.remote.TokenResponse
 import com.finpo.app.network.GoogleLoginApi
 import com.finpo.app.repository.GoogleLoginRepository
 import com.finpo.app.ui.MainActivity
@@ -55,34 +57,39 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             googleLogin()
         }
 
-        viewModel.loginLiveData.isLoginSuccessfulEvent.observe(this) { tokenResponse ->
+        viewModel.loginLiveData.needRegisterEvent.observe(this) { tokenResponse ->
             if (tokenResponse.data.accessToken == null) {
                 CoroutineScope(Main).launch {
-                    //TODO REFACTOR - KAKAO, GOOGLE
-                    if(tokenResponse.data.oAuthType == getString(R.string.kakao_eng)) {
-                        viewModel.loginLiveData.oAuthType = tokenResponse.data.oAuthType ?: ""
-                        hideLoadingDialog()
-                        viewModel.nextPage()
-                        return@launch
-                    }
-                    viewModel.defaultInfoLiveData.gender = tokenResponse.data.gender ?: ""
-                    viewModel.defaultInfoLiveData.isMaleRadioButtonChecked.value = (tokenResponse.data.gender == getString(R.string.male_eng))
-                    viewModel.defaultInfoLiveData.isFemaleRadioButtonChecked.value = (tokenResponse.data.gender == getString(R.string.female_eng))
-                    viewModel.defaultInfoLiveData.nameInputText.value = tokenResponse.data.name ?: ""
-                    viewModel.defaultInfoLiveData.setBirth(tokenResponse.data.birth ?: "")
-                    viewModel.loginLiveData.profileImage = ImageUtils().imageUrlToBitmap(requireContext(), tokenResponse.data.profileImg)
-                    viewModel.loginLiveData.oAuthType = tokenResponse.data.oAuthType ?: ""
+                    setUserInfo(tokenResponse)
                     hideLoadingDialog()
                     viewModel.nextPage()
                 }
-            } else {
-                viewModel.loginLiveData.acToken = ""
-                hideLoadingDialog()
-                startActivity(Intent(requireActivity(), MainActivity::class.java))
-                activity?.finish()
             }
         }
 
+        viewModel.loginLiveData.isLoginSuccessfulEvent.observe(this) { tokenResponse ->
+            FinpoApplication.encryptedPrefs.saveTokens(tokenResponse.data.accessToken ?: "", tokenResponse.data.refreshToken ?: "")
+            viewModel.loginLiveData.acToken = ""
+            hideLoadingDialog()
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
+            activity?.finish()
+        }
+
+    }
+
+    private suspend fun setUserInfo(tokenResponse: TokenResponse) {
+        with(viewModel.defaultInfoLiveData) {
+            gender = tokenResponse.data.gender ?: ""
+            isMaleRadioButtonChecked.value = (tokenResponse.data.gender == getString(R.string.male_eng))
+            isFemaleRadioButtonChecked.value = (tokenResponse.data.gender == getString(R.string.female_eng))
+            nameInputText.value = tokenResponse.data.name ?: ""
+            nickNameInputText.value = tokenResponse.data.nickname ?: ""
+            setBirth(tokenResponse.data.birth ?: "")
+        }
+        with(viewModel.loginLiveData) {
+            oAuthType = tokenResponse.data.oAuthType ?: ""
+            profileImage = ImageUtils().imageUrlToBitmap(requireContext(), tokenResponse.data.profileImg?.replace("http:", "https:"))
+        }
     }
 
     private fun googleLogin() {
@@ -91,7 +98,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             .requestServerAuthCode(getString(R.string.GOOGLE_CLIENT_ID))
             .build()
         val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-
         activityLauncher.launch(googleSignInClient.signInIntent)
     }
 
@@ -109,31 +115,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     }
 
     private fun kakaoLoginCallback(): (OAuthToken?, Throwable?) -> Unit = { token, error ->
-        if (error != null) {
-            hideLoadingDialog()
-        } else if (token != null) {
-            //TODO 서버 api 변경된 후 수정 필요
-            UserApiClient.instance.me { user, error ->
-                CoroutineScope(Main).launch {
-                    viewModel.defaultInfoLiveData.nickNameInputText.value =
-                        user?.kakaoAccount?.profile?.nickname ?: ""
-                    //TODO 생년월일
-                    user?.kakaoAccount?.gender?.let {
-                        viewModel.defaultInfoLiveData.gender = it.toString()
-                        viewModel.defaultInfoLiveData.isMaleRadioButtonChecked.value =
-                            (it.toString() == getString(R.string.male_eng))
-                        viewModel.defaultInfoLiveData.isFemaleRadioButtonChecked.value =
-                            (it.toString() == getString(R.string.female_eng))
-                    }
-                    viewModel.loginLiveData.profileImage =
-                        ImageUtils().imageUrlToBitmap(
-                            requireContext(),
-                            user?.kakaoAccount?.profile?.thumbnailImageUrl
-                        )
-                    viewModel.loginLiveData.acToken = token.accessToken
-                    viewModel.loginLiveData.loginFinpoByKakao(token.accessToken)
-                }
-            }
+        if (error != null) hideLoadingDialog()
+        else if (token != null) {
+            viewModel.loginLiveData.acToken = token.accessToken
+            viewModel.loginLiveData.loginFinpoByKakao(token.accessToken)
         }
     }
 }
