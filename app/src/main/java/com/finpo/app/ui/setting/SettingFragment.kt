@@ -13,8 +13,12 @@ import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.intro.IntroActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
@@ -29,26 +33,36 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         }
 
         viewModel.withdrawalClickEvent.observe {
-            showAlertDialog("회원 탈퇴", "회원 탈퇴 하시겠어요?") { viewModel.withdrawal() }
+            showAlertDialog("회원 탈퇴", "회원 탈퇴 하시겠어요?") {
+                showLoadingDialog()
+                withdrawal()
+            }
         }
 
         viewModel.withdrawalSuccessfulEvent.observe { isSuccessful ->
-            if (isSuccessful) {
-                //TODO REFACTOR - 서버에서 oauth 연결 해제 예정
-                if (args.oAuthType == getString(R.string.google_eng)) {
-                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestServerAuthCode(getString(R.string.GOOGLE_CLIENT_ID))
-                        .build()
-                    val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-                    // GoogleSignIn.getLastSignedInAccount(requireActivity())?.serverAuthCode
-                    googleSignInClient.revokeAccess()
-                        .addOnCompleteListener(requireActivity()) { }
-                        .addOnFailureListener { longShowToast(
-                            "구글 계정 연결 끊기 실패! 구글 > 연결한 계정 페이지 이동 후 직접" +
-                                    " 연결을 끊어주세요!"
-                        )  }
-                }
-                logout()
+            hideLoadingDialog()
+            if (isSuccessful) logout()
+            else longShowToast("회원 탈퇴 실패! 문의하기를 통해 연락주세요!")
+        }
+    }
+
+    private fun withdrawal() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestServerAuthCode(getString(R.string.GOOGLE_CLIENT_ID))
+            .build()
+        val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+        val task = googleSignInClient.silentSignIn()
+        task.addOnSuccessListener {
+            CoroutineScope(IO).launch {
+                val googleAccessToken =
+                    if (args.oAuthType == getString(R.string.google_eng))
+                        viewModel.getGoogleAccessToken(getString(R.string.GOOGLE_CLIENT_ID), getString(R.string.GOOGLE_SECRET_ID), task.result.serverAuthCode ?: "")
+                    else ""
+                viewModel.withdrawal(googleAccessToken)
+            }
+        }.addOnFailureListener {
+            CoroutineScope(IO).launch {
+                viewModel.withdrawal()
             }
         }
     }

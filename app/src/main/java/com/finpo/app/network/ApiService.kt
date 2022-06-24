@@ -22,8 +22,10 @@ interface ApiService {
         @Part profileImg: MultipartBody.Part?
     ) : ApiResponse<MyInfoResponse>
 
-    @DELETE("/user/me")
-    suspend fun withdrawal() : ApiResponse<JsonElement>
+    @HTTP(method = "DELETE",path = "/user/me", hasBody = true)
+    suspend fun withdrawal(
+        @Body googleToken: GoogleToken
+    ) : ApiResponse<JsonElement>
 
     @GET("/policy/search")
     suspend fun getPolicy(

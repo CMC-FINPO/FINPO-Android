@@ -17,7 +17,6 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
     @Inject lateinit var additionalRegionAdapter: AdditionalRegionAdapter
     @Inject lateinit var additionalRegionDetailAdapter: AdditionalRegionDetailAdapter
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -37,6 +36,7 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun observeRecyclerViewData() {
         viewModel.additionalRegionLiveData.additionalRegionData.observe(viewLifecycleOwner) {
             additionalRegionAdapter.submitList(it.data)
