@@ -71,7 +71,7 @@
                         tools:text="1/6" />
 
                     <TextView
-                        android:onClick="@{() -> viewModel.goToLastPage()}"
+                        android:onClick="@{() -> viewModel.nextPage()}"
                         android:id="@+id/tv_skip"
                         style="@style/l1_13"
                         introSkipVisibility="@{viewModel.currentPage}"
@@ -107,6 +107,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/appCompatButton"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginBottom="15dp"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatButton

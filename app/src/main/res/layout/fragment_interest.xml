@@ -10,52 +10,57 @@
             type="com.finpo.app.ui.intro.IntroViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.intro.interest.InterestFragment">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_header"
-            style="@style/h2_24_mid"
-            interestText="@{viewModel.defaultInfoLiveData.nickNameInputText}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="핀포님의\n관심 분야를 선택해주세요" />
-
-        <TextView
-            android:id="@+id/tv_interest"
-            style="@style/l1_13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/interest"
-            android:textColor="@color/gray_g01"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_header" />
-
-        <TextView
-            android:id="@+id/tv_select_multi"
-            style="@style/l1_13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/select_multi"
-            android:textColor="@color/point_p01"
-            app:layout_constraintStart_toEndOf="@id/tv_interest"
-            app:layout_constraintTop_toBottomOf="@id/tv_header" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_interest"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_interest" />
+            android:layout_height="match_parent"
+            tools:context=".ui.intro.interest.InterestFragment">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_header"
+                style="@style/h2_24_mid"
+                interestText="@{viewModel.defaultInfoLiveData.nickNameInputText}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="핀포님의\n관심 분야를 선택해주세요" />
+
+            <TextView
+                android:id="@+id/tv_interest"
+                style="@style/l1_13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/interest"
+                android:textColor="@color/gray_g01"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_header" />
+
+            <TextView
+                android:id="@+id/tv_select_multi"
+                style="@style/l1_13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/select_multi"
+                android:textColor="@color/point_p01"
+                app:layout_constraintStart_toEndOf="@id/tv_interest"
+                app:layout_constraintTop_toBottomOf="@id/tv_header" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_interest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_interest" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
