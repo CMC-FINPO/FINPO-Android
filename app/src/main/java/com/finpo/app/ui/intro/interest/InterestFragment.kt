@@ -1,6 +1,8 @@
 package com.finpo.app.ui.intro.interest
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +23,7 @@ class InterestFragment : BaseFragment<FragmentInterestBinding>(R.layout.fragment
     private val viewModel by activityViewModels<IntroViewModel>()
     @Inject lateinit var interestAdapter: InterestAdapter
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -30,7 +33,8 @@ class InterestFragment : BaseFragment<FragmentInterestBinding>(R.layout.fragment
         binding.rvInterest.adapter = interestAdapter
 
         viewModel.interestLiveData.categoryData.observe(this) {
-            interestAdapter.submitList(it.data)
+            interestAdapter.submitList(it.toMutableList())
+            interestAdapter.notifyDataSetChanged()
         }
 
     }

@@ -8,5 +8,5 @@ data class ParentCategory(
     val id: Int,
     val name: String,
     val img: String,
-    val isChecked: Boolean = false
+    var isChecked: Boolean = false
 )

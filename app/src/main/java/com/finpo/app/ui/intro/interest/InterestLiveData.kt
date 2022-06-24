@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.finpo.app.model.remote.ParentCategory
 import com.finpo.app.model.remote.ParentCategoryResponse
 import com.finpo.app.model.remote.Region
 import com.finpo.app.model.remote.RegionResponse
@@ -21,8 +22,8 @@ import javax.inject.Inject
 class InterestLiveData@Inject constructor(
     private val introRepository: IntroRepository
 ) : ViewModel() {
-    private val _categoryData = MutableLiveData<ParentCategoryResponse>()
-    val categoryData: LiveData<ParentCategoryResponse> = _categoryData
+    private val _categoryData = MutableLiveData<List<ParentCategory>>()
+    val categoryData: LiveData<List<ParentCategory>> = _categoryData
 
     init {
         getParentCategoryData()
@@ -32,9 +33,16 @@ class InterestLiveData@Inject constructor(
         viewModelScope.launch {
             val parentCategoryResponse = introRepository.getParentCategory()
             parentCategoryResponse.onSuccess {
-                _categoryData.value = data!!
-                Log.d("interest","${_categoryData.value}")
+                _categoryData.value = data.data
             }
         }
+    }
+
+    fun interestItemClick(id: Int) {
+        val interestList = _categoryData.value
+        val clickedItem = interestList?.indexOfFirst { it.id == id } ?: -1
+        if(clickedItem == -1 || interestList == null)   return
+        interestList[clickedItem].isChecked = !interestList[clickedItem].isChecked
+        _categoryData.value = interestList!!
     }
 }

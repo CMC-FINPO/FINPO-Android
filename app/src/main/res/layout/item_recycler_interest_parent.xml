@@ -18,6 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="135dp"
         android:background="@drawable/bg_solid_none_rounded_g06_5"
+        android:onClick="@{() -> viewModel.interestItemClick(data.id)}"
+        isInterestChecked="@{data.checked}"
         android:padding="12dp">
 
         <ImageView
@@ -33,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{data.name}"
+            isInterestChecked="@{data.checked}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
