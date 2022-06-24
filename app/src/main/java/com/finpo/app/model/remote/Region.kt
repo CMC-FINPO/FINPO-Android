@@ -6,7 +6,8 @@ data class RegionResponse(
 
 data class Region(
     val id: Int,
-    val name: String
+    val name: String,
+    val status: Boolean = false
 )
 
 data class RegionRequest(

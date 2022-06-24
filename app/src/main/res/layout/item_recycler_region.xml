@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="data"
             type="com.finpo.app.model.remote.Region" />
-        
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.intro.living_area.LivingAreaLiveData" />
@@ -15,25 +18,62 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp">
+        android:layout_height="55dp"
+        android:background="@color/gray_g08">
 
         <RadioButton
             android:id="@+id/rb_region"
             style="@style/h3_16_mid"
+            regionId="@{data.id}"
+            regionSelectedId="@{viewModel.regionSel}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/selector_radio_button_region"
             android:button="@null"
             android:gravity="center"
+            android:onClick="@{() -> viewModel.selectRegion(data.id)}"
+            android:text="@{data.name}"
             android:textColor="@drawable/selector_radio_button_region_text"
+            android:visibility="@{data.status ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:text="서울"
+            tools:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/tv_disabled_region"
+            style="@style/h3_16_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:gravity="center"
             android:text="@{data.name}"
-            regionSelectedId="@{viewModel.regionSel}"
-            regionId="@{data.id}"
-            android:onClick="@{() -> viewModel.selectRegion(data.id)}"
+            android:textColor="@color/gray_g04"
+            android:visibility="@{data.status ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_disabled_label"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="서울" />
+
+        <TextView
+            android:id="@+id/tv_disabled_label"
+            style="@style/l1_13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_solid_g05_rounded_5"
+            android:gravity="center"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp"
+            android:text="@string/preparing"
+            android:textColor="@color/white_w01"
+            android:visibility="@{data.status ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_disabled_region"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:layout_width="match_parent"
