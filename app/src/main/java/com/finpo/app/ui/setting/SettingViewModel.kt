@@ -9,6 +9,8 @@ import com.finpo.app.repository.SettingRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.onError
+import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.Main
@@ -27,8 +29,8 @@ class SettingViewModel @Inject constructor(
     private val _withdrawalClickEvent = MutableSingleLiveData<Boolean>()
     val withdrawalClickEvent: SingleLiveData<Boolean> = _withdrawalClickEvent
 
-    private val _withdrawalSuccessfulEvent = MutableSingleLiveData<Boolean>()
-    val withdrawalSuccessfulEvent: SingleLiveData<Boolean> = _withdrawalSuccessfulEvent
+    private val _withdrawalSuccessfulEvent = MutableSingleLiveData<Int?>()
+    val withdrawalSuccessfulEvent: SingleLiveData<Int?> = _withdrawalSuccessfulEvent
 
     fun logoutClick() {
         _logoutClickEvent.setValue(true)
@@ -50,7 +52,9 @@ class SettingViewModel @Inject constructor(
     suspend fun withdrawal(googleAccessToken: String? = null) {
         val withdrawalResponse = settingRepository.withdrawal(GoogleToken(googleAccessToken))
         withContext(Main) {
-            _withdrawalSuccessfulEvent.setValue(withdrawalResponse is ApiResponse.Success)
+            val statusCode = if(withdrawalResponse is ApiResponse.Success) withdrawalResponse.statusCode.code
+            else null
+            _withdrawalSuccessfulEvent.setValue(statusCode)
         }
     }
 }

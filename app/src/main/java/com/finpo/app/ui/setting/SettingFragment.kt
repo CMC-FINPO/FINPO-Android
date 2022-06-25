@@ -39,32 +39,45 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
             }
         }
 
-        viewModel.withdrawalSuccessfulEvent.observe { isSuccessful ->
+        viewModel.withdrawalSuccessfulEvent.observe { statusCode ->
             hideLoadingDialog()
-            if (isSuccessful) logout()
-            else longShowToast("회원 탈퇴 실패! 문의하기를 통해 연락주세요!")
+            when(statusCode) {
+                200 -> logout()
+                202 -> {
+                    longShowToast("소셜 계정 해제 실패! 문의하기를 통해 연락주세요!")
+                    logout()
+                }
+                else -> longShowToast("회원 탈퇴 실패! 문의하기를 통해 연락주세요!")
+            }
         }
     }
 
     private fun withdrawal() {
-        //TODO REFACTOR
+        if (args.oAuthType == getString(R.string.google_eng)) googleWithdrawal()
+         else kakaoWithdrawal()
+    }
+
+    private fun googleWithdrawal() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestServerAuthCode(getString(R.string.GOOGLE_CLIENT_ID))
             .build()
         val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
         val task = googleSignInClient.silentSignIn()
-        task.addOnSuccessListener {
+        task.addOnCompleteListener {
             CoroutineScope(IO).launch {
-                val googleAccessToken =
-                    if (args.oAuthType == getString(R.string.google_eng))
-                        viewModel.getGoogleAccessToken(getString(R.string.GOOGLE_CLIENT_ID), getString(R.string.GOOGLE_SECRET_ID), task.result.serverAuthCode ?: "")
-                    else null
+                val googleAccessToken = viewModel.getGoogleAccessToken(
+                    getString(R.string.GOOGLE_CLIENT_ID),
+                    getString(R.string.GOOGLE_SECRET_ID),
+                    task.result.serverAuthCode ?: ""
+                )
                 viewModel.withdrawal(googleAccessToken)
             }
-        }.addOnFailureListener {
-            CoroutineScope(IO).launch {
-                viewModel.withdrawal()
-            }
+        }
+    }
+
+    private fun kakaoWithdrawal() {
+        CoroutineScope(IO).launch {
+            viewModel.withdrawal()
         }
     }
 
