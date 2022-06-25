@@ -64,6 +64,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
+                            android:id="@+id/et_search"
                             style="@style/h3_16_mid"
                             android:layout_width="0dp"
                             android:layout_height="22dp"

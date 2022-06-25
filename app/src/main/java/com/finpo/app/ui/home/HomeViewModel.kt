@@ -1,5 +1,6 @@
 package com.finpo.app.ui.home
 
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -11,8 +12,10 @@ import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.model.remote.PolicyResponse
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.repository.PolicyRepository
+import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SORT
+import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,6 +38,9 @@ class HomeViewModel @Inject constructor(
     val spinnerPosition = MutableLiveData<Int>()
     var prevSpinnerPosition = 0
 
+    private val _keyBoardSearchEvent = MutableSingleLiveData<Boolean>()
+    val keyBoardSearchEvent: SingleLiveData<Boolean> = _keyBoardSearchEvent
+
     val searchText = MutableLiveData<String>()
 
     init {
@@ -46,13 +52,13 @@ class HomeViewModel @Inject constructor(
             val myRegionResponse = myInfoRepository.getMyRegion()
             myRegionResponse.onSuccess {
                 _regionIds.value = List(data.data.size) { data.data[it].region.id ?: 0 }
-                addPolicy()
+                changePolicy()
             }
         }
     }
 
     fun addPolicy() {
-        if (paging.isLastPage) return
+        if (paging.isLastPage || paging.page.value == 0) return
 
         viewModelScope.launch {
             val policyResponse = getPolicyResponse()
@@ -93,6 +99,7 @@ class HomeViewModel @Inject constructor(
     fun onEditTextSearchClick(actionId: Int): Boolean {
         return if(actionId == EditorInfo.IME_ACTION_SEARCH) {
             changePolicy()
+            _keyBoardSearchEvent.setValue(true)
             true
         } else false
     }

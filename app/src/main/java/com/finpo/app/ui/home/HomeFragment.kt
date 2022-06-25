@@ -1,6 +1,9 @@
 package com.finpo.app.ui.home
 
+import android.content.Context
 import android.util.Log
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +39,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             if(currentPosition == viewModel.prevSpinnerPosition) return@observe
             viewModel.prevSpinnerPosition = currentPosition
             viewModel.changePolicy()
+        }
+
+        viewModel.keyBoardSearchEvent.observe {
+            val inputMethodManager =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
         }
     }
 }
