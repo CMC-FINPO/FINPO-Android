@@ -28,9 +28,11 @@ class StatusPurposeFragment : BaseFragment<FragmentStatusPurposeBinding>(R.layou
         binding.rvStatus.adapter = statusAdapter
         binding.rvStatus.itemAnimator = null
 
+        purposeAdapter.setHasStableIds(true)
         binding.rvPurpose.layoutManager = FlexboxLayoutManager(requireActivity())
         binding.rvPurpose.addItemDecoration(GridSpacingItemDecoration(3, 12.dp, false))
         binding.rvPurpose.adapter = purposeAdapter
+        binding.rvPurpose.itemAnimator = null
 
         viewModel.statusPurposeLiveData.statusData.observe(viewLifecycleOwner) {
             statusAdapter.submitList(it)

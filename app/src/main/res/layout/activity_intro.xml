@@ -121,6 +121,7 @@
                     selectedDetailRegionText="@{viewModel.livingAreaLiveData.regionDetailText}"
                     userInterestData="@{viewModel.interestLiveData.userInterestData}"
                     additionalRegionSelCount="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelCount}"
+                    isStatusPurposeButtonEnabled="@{viewModel.statusPurposeLiveData.isStatusPurposeButtonEnabled}"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginBottom="43dp"

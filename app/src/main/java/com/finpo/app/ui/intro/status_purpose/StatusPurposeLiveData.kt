@@ -1,14 +1,12 @@
 package com.finpo.app.ui.intro.status_purpose
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.finpo.app.model.remote.StatusPurpose
 import com.finpo.app.repository.StatusPurposeRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.finpo.app.utils.addSourceList
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.launch
@@ -30,7 +28,20 @@ class StatusPurposeLiveData @Inject constructor(
     private val _purposeData = MutableLiveData<List<StatusPurpose>>()
     val purposeData: LiveData<List<StatusPurpose>> = _purposeData
 
-    private val purposeIds = mutableSetOf<Int>()
+    private val _purposeIds = MutableLiveData<MutableSet<Int>>()
+    val purposeIds: LiveData<MutableSet<Int>> = _purposeIds
+
+    val isStatusPurposeButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSourceList(_statusSelectedId, _purposeIds) {
+            isStatusPurposeValid()
+        }
+    }
+
+    private fun isStatusPurposeValid(): Boolean = !(_statusSelectedId.value == null && _purposeIds.value.isNullOrEmpty())
+
+    init {
+        _purposeIds.value = mutableSetOf()
+    }
 
     fun setStatusData() {
         if(!_statusData.value.isNullOrEmpty()) return
@@ -58,7 +69,9 @@ class StatusPurposeLiveData @Inject constructor(
     }
 
     fun purposeClick(id: Int) {
-        if(id in purposeIds)    purposeIds.remove(id)
-        else purposeIds.add(id)
+        if(id in purposeIds.value!!)    purposeIds.value!!.remove(id)
+        else purposeIds.value!!.add(id)
+
+        _purposeIds.value = _purposeIds.value
     }
 }
