@@ -39,4 +39,10 @@ interface ApiService {
 
     @GET("/region/me")
     suspend fun getMyRegion() : ApiResponse<MyRegionResponse>
+
+    @GET("/user/status/name")
+    suspend fun getStatusList() : ApiResponse<StatusPurposeResponse>
+
+    @GET("/user/purpose/name")
+    suspend fun getPurposeList() : ApiResponse<StatusPurposeResponse>
 }

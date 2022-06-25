@@ -69,4 +69,6 @@
     <string name="filter">필터</string>
     <string name="region_text">%s %s</string>
     <string name="preparing">준비중</string>
+    <string name="status">현재 상태</string>
+    <string name="purpose">이용 목적&#160;</string>
 </resources>

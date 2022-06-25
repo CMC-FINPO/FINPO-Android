@@ -14,6 +14,7 @@ import com.finpo.app.ui.intro.interest.InterestLiveData
 import com.finpo.app.ui.intro.living_area.LivingAreaLiveData
 import com.finpo.app.ui.intro.login.LoginLiveData
 import com.finpo.app.ui.intro.register_complete.RegisterCompleteLiveData
+import com.finpo.app.ui.intro.status_purpose.StatusPurposeLiveData
 import com.finpo.app.ui.intro.terms_conditions.TermsConditionsLiveData
 import com.finpo.app.utils.*
 import com.finpo.app.utils.PAGE.FINISH
@@ -38,6 +39,7 @@ class IntroViewModel @Inject constructor(
     val additionalRegionLiveData: AdditionalRegionLiveData,
     val registerCompleteLiveData: RegisterCompleteLiveData,
     val interestLiveData: InterestLiveData,
+    val statusPurposeLiveData: StatusPurposeLiveData,
     private val introRepository: IntroRepository,
     private val additionalInfoRepository: AdditionalInfoRepository
 ) : ViewModel() {

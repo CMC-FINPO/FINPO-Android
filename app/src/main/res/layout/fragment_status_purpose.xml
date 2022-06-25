@@ -12,11 +12,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".ui.intro.status_purpose.StatusPurposeFragment">
 
             <TextView
@@ -29,6 +30,67 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="핀포님의 현재 상태와\n이용 목적을 선택해주세요" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                style="@style/l1_13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/status"
+                android:textColor="@color/gray_g01"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_header" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                tools:listitem="@layout/item_recycler_status"
+                android:id="@+id/rv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_status" />
+
+            <View
+                android:id="@+id/view_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/gray_g06"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_status" />
+
+            <TextView
+                android:id="@+id/tv_purpose"
+                style="@style/l1_13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/purpose"
+                android:textColor="@color/gray_g01"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_divider" />
+
+            <TextView
+                android:id="@+id/tv_select_multi"
+                style="@style/l1_13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_multi"
+                android:textColor="@color/point_p01"
+                app:layout_constraintBottom_toBottomOf="@id/tv_purpose"
+                app:layout_constraintStart_toEndOf="@id/tv_purpose"
+                app:layout_constraintTop_toTopOf="@id/tv_purpose" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_purpose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_purpose" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
