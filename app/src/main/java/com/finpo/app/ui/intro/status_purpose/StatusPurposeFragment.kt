@@ -16,6 +16,7 @@ import javax.inject.Inject
 class StatusPurposeFragment : BaseFragment<FragmentStatusPurposeBinding>(R.layout.fragment_status_purpose) {
     private val viewModel by activityViewModels<IntroViewModel>()
     @Inject lateinit var statusAdapter: StatusAdapter
+    @Inject lateinit var purposeAdapter: PurposeAdapter
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
@@ -27,12 +28,20 @@ class StatusPurposeFragment : BaseFragment<FragmentStatusPurposeBinding>(R.layou
         binding.rvStatus.adapter = statusAdapter
         binding.rvStatus.itemAnimator = null
 
+        binding.rvPurpose.layoutManager = FlexboxLayoutManager(requireActivity())
+        binding.rvPurpose.addItemDecoration(GridSpacingItemDecoration(3, 12.dp, false))
+        binding.rvPurpose.adapter = purposeAdapter
+
         viewModel.statusPurposeLiveData.statusData.observe(viewLifecycleOwner) {
             statusAdapter.submitList(it)
         }
 
         viewModel.statusPurposeLiveData.statusClickEvent.observe {
             statusAdapter.notifyDataSetChanged()
+        }
+
+        viewModel.statusPurposeLiveData.purposeData.observe(viewLifecycleOwner) {
+            purposeAdapter.submitList(it)
         }
     }
 }

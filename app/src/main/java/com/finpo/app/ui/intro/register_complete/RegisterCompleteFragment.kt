@@ -21,6 +21,7 @@ class RegisterCompleteFragment : BaseFragment<FragmentRegisterCompleteBinding>(R
         viewModel.registerCompleteLiveData.additionalInfoButtonEvent.observe {
             viewModel.registerCompleteLiveData.setAdditionalRegionData()
             viewModel.statusPurposeLiveData.setStatusData()
+            viewModel.statusPurposeLiveData.setPurposeData()
             viewModel.nextPage()
         }
     }
