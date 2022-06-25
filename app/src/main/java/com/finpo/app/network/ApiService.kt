@@ -45,4 +45,9 @@ interface ApiService {
 
     @GET("/user/purpose/name")
     suspend fun getPurposeList() : ApiResponse<StatusPurposeResponse>
+
+    @PUT("/user/me")
+    suspend fun setStatusPurpose(
+        @Body statusPurposeBody: StatusPurposeBody,
+    ) : ApiResponse<JsonElement>
 }

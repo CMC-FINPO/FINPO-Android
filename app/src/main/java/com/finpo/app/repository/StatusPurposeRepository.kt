@@ -2,6 +2,7 @@ package com.finpo.app.repository
 
 import com.finpo.app.model.remote.RequestTokenBody
 import com.finpo.app.model.remote.StatusPurpose
+import com.finpo.app.model.remote.StatusPurposeBody
 import com.finpo.app.model.remote.TokenResponse
 import com.finpo.app.network.ApiService
 import com.finpo.app.network.ApiServiceWithoutToken
@@ -17,4 +18,9 @@ class StatusPurposeRepository @Inject constructor(private val apiService: ApiSer
     suspend fun getStatusList() = apiService.getStatusList()
 
     suspend fun getPurposeList() = apiService.getPurposeList()
+
+    suspend fun setStatusPurpose(
+        statusId: Int? = null,
+        purposeIds: List<Int>? = null
+    ) = apiService.setStatusPurpose(StatusPurposeBody(statusId, purposeIds))
 }

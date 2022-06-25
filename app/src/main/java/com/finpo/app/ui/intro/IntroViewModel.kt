@@ -8,6 +8,7 @@ import com.finpo.app.di.FinpoApplication
 import com.finpo.app.model.remote.TokenResponse
 import com.finpo.app.repository.AdditionalInfoRepository
 import com.finpo.app.repository.IntroRepository
+import com.finpo.app.repository.StatusPurposeRepository
 import com.finpo.app.ui.intro.additional_region.AdditionalRegionLiveData
 import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
 import com.finpo.app.ui.intro.interest.InterestLiveData
@@ -22,6 +23,7 @@ import com.google.gson.Gson
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
+import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -41,7 +43,8 @@ class IntroViewModel @Inject constructor(
     val interestLiveData: InterestLiveData,
     val statusPurposeLiveData: StatusPurposeLiveData,
     private val introRepository: IntroRepository,
-    private val additionalInfoRepository: AdditionalInfoRepository
+    private val additionalInfoRepository: AdditionalInfoRepository,
+    private val statusPurposeRepository: StatusPurposeRepository
 ) : ViewModel() {
 
     private val _currentPage = MutableLiveData<Int>()
@@ -72,10 +75,13 @@ class IntroViewModel @Inject constructor(
 
     fun postAdditionalInfo() {
         viewModelScope.launch {
-            val response = additionalInfoRepository.addMyInterestRegion(additionalRegionLiveData.additionalRegionDetailIdList)
-            response.onSuccess {
-                goToMainActivity()
-            }
+            val additionalResponse = additionalInfoRepository.addMyInterestRegion(additionalRegionLiveData.additionalRegionDetailIdList)
+            val statusPurposeResponse = statusPurposeRepository.setStatusPurpose(
+                statusPurposeLiveData.statusSelectedId.value,
+                statusPurposeLiveData.purposeIds.value?.toList()
+            )
+            if((additionalResponse !is ApiResponse.Success) || (statusPurposeResponse !is ApiResponse.Success)) return@launch
+            goToMainActivity()
         }
     }
 

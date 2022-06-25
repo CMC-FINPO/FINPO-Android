@@ -39,8 +39,8 @@ class LoginLiveData @Inject constructor(
         viewModelScope.launch {
             val googleResponse = googleApiRepository.getGoogleAccessToken(clientId, secretId, authCode)
             googleResponse.onSuccess {
-                acToken = data.accessToken
-                loginFinpoByGoogle(data.accessToken)
+                acToken = data.accessToken ?: ""
+                loginFinpoByGoogle(data.accessToken ?: "")
             }
         }
     }

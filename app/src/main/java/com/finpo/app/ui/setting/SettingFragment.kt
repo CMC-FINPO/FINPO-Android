@@ -47,6 +47,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
     }
 
     private fun withdrawal() {
+        //TODO REFACTOR
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestServerAuthCode(getString(R.string.GOOGLE_CLIENT_ID))
             .build()
@@ -57,7 +58,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
                 val googleAccessToken =
                     if (args.oAuthType == getString(R.string.google_eng))
                         viewModel.getGoogleAccessToken(getString(R.string.GOOGLE_CLIENT_ID), getString(R.string.GOOGLE_SECRET_ID), task.result.serverAuthCode ?: "")
-                    else ""
+                    else null
                 viewModel.withdrawal(googleAccessToken)
             }
         }.addOnFailureListener {

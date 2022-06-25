@@ -42,12 +42,12 @@ class SettingViewModel @Inject constructor(
         var googleAccessToken = ""
         withContext(viewModelScope.coroutineContext) {
             val googleResponse = googleApiRepository.getGoogleAccessToken(clientId, secretId, authCode)
-            googleResponse.onSuccess { googleAccessToken = data.accessToken }
+            googleResponse.onSuccess { googleAccessToken = data.accessToken ?: "" }
         }
         return googleAccessToken
     }
 
-    suspend fun withdrawal(googleAccessToken: String = "") {
+    suspend fun withdrawal(googleAccessToken: String? = null) {
         val withdrawalResponse = settingRepository.withdrawal(GoogleToken(googleAccessToken))
         withContext(Main) {
             _withdrawalSuccessfulEvent.setValue(withdrawalResponse is ApiResponse.Success)
