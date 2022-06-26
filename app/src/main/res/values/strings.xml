@@ -71,4 +71,7 @@
     <string name="preparing">준비중</string>
     <string name="status">현재 상태</string>
     <string name="purpose">이용 목적&#160;</string>
+    <string name="sort">정렬</string>
+    <string name="recent">최신순</string>
+    <string name="popular">인기순</string>
 </resources>

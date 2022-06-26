@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentHomeBinding
 import com.finpo.app.ui.common.BaseFragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,13 +21,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        val bottomDialogFragment = BottomSheetSortDialog(viewModel)
 
         policyAdapter = PolicyAdapter(viewModel)
         binding.rvPolicy.adapter = policyAdapter
-
-        val itemList = listOf("최신순", "인기순")
-        val adapter = ArrayAdapter(requireActivity(), R.layout.item_spinner_sort, itemList)
-        binding.spinner.adapter = adapter
 
         viewModel.policyList.observe(viewLifecycleOwner) {
             policyAdapter.submitList(it.toMutableList()) {
@@ -35,10 +33,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             }
         }
 
-        viewModel.spinnerPosition.observe(viewLifecycleOwner) { currentPosition ->
-            if(currentPosition == viewModel.prevSpinnerPosition) return@observe
-            viewModel.prevSpinnerPosition = currentPosition
-            viewModel.changePolicy()
+        viewModel.bottomSheetShowEvent.observe {
+            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
+        }
+
+        viewModel.bottomSheetDismissEvent.observe {
+            bottomDialogFragment.dismiss()
         }
 
         viewModel.keyBoardSearchEvent.observe {

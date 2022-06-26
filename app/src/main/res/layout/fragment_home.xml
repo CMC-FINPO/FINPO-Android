@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.home.HomeViewModel" />
@@ -71,11 +72,11 @@
                             android:layout_marginStart="15dp"
                             android:background="@null"
                             android:hint="@string/search_policy"
-                            android:text="@={viewModel.searchText}"
+                            android:imeOptions="actionSearch"
                             android:inputType="text"
                             android:maxLines="1"
-                            android:imeOptions="actionSearch"
                             android:onEditorAction="@{(view,actionId,event) -> viewModel.onEditTextSearchClick(actionId)}"
+                            android:text="@={viewModel.searchText}"
                             android:textColorHint="@color/gray_g05"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -105,17 +106,40 @@
                         app:layout_constraintTop_toTopOf="@id/tv_result_count"
                         tools:text="개의 정책 결과" />
 
-                    <com.finpo.app.utils.DynamicWidthSpinner
-                        android:selectedItemPosition="@={viewModel.spinnerPosition}"
-                        android:id="@+id/spinner"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
+                        android:onClick="@{() -> viewModel.showBottomSheetDialog()}"
                         android:layout_marginEnd="11dp"
-                        android:background="@drawable/selector_spinner_down"
-                        android:paddingEnd="20dp"
+                        android:background="@drawable/bg_solid_none_rounded_b01_5"
+                        android:paddingStart="7dp"
                         app:layout_constraintBottom_toBottomOf="@id/cl_filter"
                         app:layout_constraintEnd_toStartOf="@id/cl_filter"
-                        app:layout_constraintTop_toTopOf="@id/cl_filter" />
+                        app:layout_constraintTop_toTopOf="@id/cl_filter">
+
+                        <TextView
+                            android:id="@+id/tv_spinner"
+                            style="@style/b2_13_reg"
+                            spinnerText="@{viewModel.spinnerPosition}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="최신순" />
+
+                        <ImageView
+                            android:id="@+id/iv_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_arrow_down"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/tv_spinner"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cl_filter"
@@ -159,12 +183,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_policy"
+            doScrollBottom="@{() -> viewModel.addPolicy()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_recycler_policy"
             app:layoutManager=".utils.LinearLayoutManagerWrapper"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            doScrollBottom="@{() -> viewModel.addPolicy()}"/>
+            tools:listitem="@layout/item_recycler_policy" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -7,6 +7,11 @@ const val MAX_ADDITIONAL_COUNT = 5
 const val RETROFIT_TAG = "retrofit2"
 val SORT = listOf("modifiedAt,desc", "countOfInterest,desc")
 
+object SORT_TYPE {
+    const val RECENT = 0
+    const val POPULAR = 1
+}
+
 object PAGE {
     const val LOGIN = 0
     const val AGREE = 1

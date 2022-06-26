@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="sortType"
+            type="com.finpo.app.utils.SORT_TYPE" />
+
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.home.HomeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/h3_16_mid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="13dp"
+            android:text="@string/sort" />
+
+        <View
+            android:id="@+id/view_divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_g07" />
+
+        <TextView
+            android:id="@+id/tv_recent"
+            style="@style/h3_16_mid"
+            userSortType="@{viewModel.spinnerPosition}"
+            viewSortType="@{sortType.RECENT}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.spinnerItemClick(sortType.RECENT)}"
+            android:paddingVertical="13dp"
+            android:text="@string/recent" />
+
+        <View
+            android:id="@+id/view_divider2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_g07" />
+
+        <TextView
+            android:id="@+id/tv_popular"
+            style="@style/h3_16_mid"
+            userSortType="@{viewModel.spinnerPosition}"
+            viewSortType="@{sortType.POPULAR}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:onClick="@{() -> viewModel.spinnerItemClick(sortType.POPULAR)}"
+            android:paddingVertical="13dp"
+            android:text="@string/popular" />
+
+    </LinearLayout>
+</layout>

@@ -35,8 +35,14 @@ class HomeViewModel @Inject constructor(
     private val _regionIds = MutableLiveData<List<Int>>()
     val regionIds: LiveData<List<Int>> = _regionIds
 
-    val spinnerPosition = MutableLiveData<Int>()
-    var prevSpinnerPosition = 0
+    private val _spinnerPosition = MutableLiveData<Int>()
+    val spinnerPosition: LiveData<Int> = _spinnerPosition
+
+    private val _bottomSheetShowEvent = MutableSingleLiveData<Boolean>()
+    val bottomSheetShowEvent: SingleLiveData<Boolean> = _bottomSheetShowEvent
+
+    private val _bottomSheetDismissEvent = MutableSingleLiveData<Boolean>()
+    val bottomSheetDismissEvent: SingleLiveData<Boolean> = _bottomSheetDismissEvent
 
     private val _keyBoardSearchEvent = MutableSingleLiveData<Boolean>()
     val keyBoardSearchEvent: SingleLiveData<Boolean> = _keyBoardSearchEvent
@@ -45,6 +51,16 @@ class HomeViewModel @Inject constructor(
 
     init {
         getInitData()
+    }
+
+    fun showBottomSheetDialog() {
+        _bottomSheetShowEvent.setValue(true)
+    }
+
+    fun spinnerItemClick(position: Int) {
+        _spinnerPosition.value = position
+        _bottomSheetDismissEvent.setValue(true)
+        changePolicy()
     }
 
     private fun getInitData() {
