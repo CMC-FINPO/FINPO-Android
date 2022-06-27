@@ -146,6 +146,7 @@
                         android:layout_width="66dp"
                         android:layout_height="30dp"
                         android:layout_marginTop="15dp"
+                        android:onClick="@{() -> viewModel.goToFilterFragment()}"
                         android:background="@drawable/bg_solid_none_rounded_b01_5"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cl_search">

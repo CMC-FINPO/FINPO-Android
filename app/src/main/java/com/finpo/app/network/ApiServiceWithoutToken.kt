@@ -55,4 +55,7 @@ interface ApiServiceWithoutToken {
 
     @GET("/policy/category/name")
     suspend fun getParentCategory(): ApiResponse<ParentCategoryResponse>
+
+    @GET("/policy/category/name/child-format")
+    suspend fun getCategoryChildFormat() : ApiResponse<CategoryChildFormatResponse>
 }

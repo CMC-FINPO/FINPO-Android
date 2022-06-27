@@ -9,7 +9,12 @@
         android:id="@+id/homeFragment"
         android:name="com.finpo.app.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_filterFragment"
+            app:destination="@id/filterFragment"
+            app:enterAnim="@android:anim/fade_in" />
+    </fragment>
     <fragment
         android:id="@+id/communityFragment"
         android:name="com.finpo.app.ui.community.CommunityFragment"
@@ -38,5 +43,16 @@
             android:name="oAuthType"
             app:argType="string"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.finpo.app.ui.filter.FilterFragment"
+        android:label="FilterFragment"
+        tools:layout="@layout/fragment_filter">
+        <action
+            android:id="@+id/action_filterFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

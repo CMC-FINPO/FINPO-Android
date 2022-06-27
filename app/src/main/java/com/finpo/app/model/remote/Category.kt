@@ -10,3 +10,18 @@ data class ParentCategory(
     val img: String,
     var isChecked: Boolean = false
 )
+
+data class CategoryChildFormatResponse(
+    val data: List<CategoryChildFormat>
+)
+
+data class CategoryChildFormat(
+    val id: Int,
+    val name: String,
+    val childs: List<CategoryChild>
+)
+
+data class CategoryChild(
+    val id: Int,
+    val name: String
+)

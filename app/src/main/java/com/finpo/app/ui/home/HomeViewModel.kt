@@ -47,10 +47,17 @@ class HomeViewModel @Inject constructor(
     private val _keyBoardSearchEvent = MutableSingleLiveData<Boolean>()
     val keyBoardSearchEvent: SingleLiveData<Boolean> = _keyBoardSearchEvent
 
+    private val _goToFilterFragmentEvent = MutableSingleLiveData<Boolean>()
+    val goToFilterFragmentEvent: SingleLiveData<Boolean> = _goToFilterFragmentEvent
+
     val searchText = MutableLiveData<String>()
 
     init {
         getInitData()
+    }
+
+    fun goToFilterFragment() {
+        _goToFilterFragmentEvent.setValue(true)
     }
 
     fun showBottomSheetDialog() {
