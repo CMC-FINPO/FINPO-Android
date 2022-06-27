@@ -1,5 +1,6 @@
 package com.finpo.app.ui.filter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -33,18 +34,32 @@ class FilterAdapter (val viewModel: FilterViewModel) :
         holder.bind(currentList[position])
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     inner class FilterViewHolder(private val binding: ItemRecyclerFilterBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: CategoryChildFormat) {
             binding.data = data
 
+            if(binding.rvCategoryChildren.adapter == null) initRecyclerView(data)
+            else notifyDataSetChange()
+        }
+
+        private fun initRecyclerView(data: CategoryChildFormat) {
             val filterDetailAdapter = FilterDetailAdapter(viewModel)
+            filterDetailAdapter.setHasStableIds(true)
             binding.rvCategoryChildren.layoutManager = FlexboxLayoutManager(binding.root.context)
-            binding.rvCategoryChildren.addItemDecoration(GridSpacingItemDecoration(3, 12.dp, false))
             binding.rvCategoryChildren.adapter = filterDetailAdapter
             binding.rvCategoryChildren.itemAnimator = null
             filterDetailAdapter.submitList(data.childs)
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        private fun notifyDataSetChange() {
+            binding.rvCategoryChildren.adapter?.notifyDataSetChanged()
         }
     }
 

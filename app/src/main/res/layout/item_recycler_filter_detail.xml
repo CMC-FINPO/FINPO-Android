@@ -14,10 +14,13 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingEnd="12dp"
         android:layout_width="wrap_content"
         android:layout_height="35dp">
 
         <CheckBox
+            checkboxId="@{data.id}"
+            InterestIds="@{viewModel.userCategoryData}"
             android:id="@+id/rb_region"
             style="@style/b3_15_mid"
             android:layout_width="wrap_content"

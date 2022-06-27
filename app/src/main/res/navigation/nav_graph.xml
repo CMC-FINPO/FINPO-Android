@@ -57,5 +57,8 @@
         <argument
             android:name="regions"
             app:argType="com.finpo.app.model.remote.MyRegionResponse" />
+        <argument
+            android:name="categories"
+            app:argType="integer[]" />
     </fragment>
 </navigation>

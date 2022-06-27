@@ -32,6 +32,10 @@ class FilterDetailAdapter (val viewModel: FilterViewModel) :
         holder.bind(currentList[position])
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
     inner class FilterDetailViewHolder(private val binding: ItemRecyclerFilterDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

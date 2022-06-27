@@ -52,6 +52,8 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:onClick="@{() -> viewModel.clearFilter()}"
+                        android:padding="4dp"
                         android:id="@+id/tv_clear"
                         style="@style/l1_13"
                         android:layout_width="wrap_content"
@@ -146,7 +148,7 @@
                         android:background="@drawable/bg_solid_p03_rounded_p01_5"
                         android:paddingStart="10dp"
                         android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.filterRegionSelTextList[0].empty ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{viewModel.filterRegionSelTextList[0].name.empty ? View.GONE : View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_header">
 
@@ -155,7 +157,7 @@
                             style="@style/b3_15_mid"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.filterRegionSelTextList[0]}"
+                            android:text="@{viewModel.filterRegionSelTextList[0].name}"
                             android:textColor="@color/point_p01"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -183,7 +185,7 @@
                         android:background="@drawable/bg_solid_p03_rounded_p01_5"
                         android:paddingStart="10dp"
                         android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.filterRegionSelTextList[1].empty ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{viewModel.filterRegionSelTextList[1].name.empty ? View.GONE : View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_header">
 
@@ -192,7 +194,7 @@
                             style="@style/b3_15_mid"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.filterRegionSelTextList[1]}"
+                            android:text="@{viewModel.filterRegionSelTextList[1].name}"
                             android:textColor="@color/point_p01"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -220,7 +222,7 @@
                         android:background="@drawable/bg_solid_p03_rounded_p01_5"
                         android:paddingStart="10dp"
                         android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.filterRegionSelTextList[2].empty ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{viewModel.filterRegionSelTextList[2].name.empty ? View.GONE : View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_header">
 
@@ -229,7 +231,7 @@
                             style="@style/b3_15_mid"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.filterRegionSelTextList[2]}"
+                            android:text="@{viewModel.filterRegionSelTextList[2].name}"
                             android:textColor="@color/point_p01"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -257,7 +259,7 @@
                         android:background="@drawable/bg_solid_p03_rounded_p01_5"
                         android:paddingStart="10dp"
                         android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.filterRegionSelTextList[3].empty ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{viewModel.filterRegionSelTextList[3].name.empty ? View.GONE : View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_header">
 
@@ -266,7 +268,7 @@
                             style="@style/b3_15_mid"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.filterRegionSelTextList[3]}"
+                            android:text="@{viewModel.filterRegionSelTextList[3].name}"
                             android:textColor="@color/point_p01"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -294,7 +296,7 @@
                         android:background="@drawable/bg_solid_p03_rounded_p01_5"
                         android:paddingStart="10dp"
                         android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.filterRegionSelTextList[4].empty ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{viewModel.filterRegionSelTextList[4].name.empty ? View.GONE : View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_header">
 
@@ -303,7 +305,7 @@
                             style="@style/b3_15_mid"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.filterRegionSelTextList[4]}"
+                            android:text="@{viewModel.filterRegionSelTextList[4].name}"
                             android:textColor="@color/point_p01"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -331,7 +333,7 @@
                         android:background="@drawable/bg_solid_p03_rounded_p01_5"
                         android:paddingStart="10dp"
                         android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.filterRegionSelTextList[5].empty ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{viewModel.filterRegionSelTextList[5].name.empty ? View.GONE : View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_header">
 
@@ -340,7 +342,7 @@
                             style="@style/b3_15_mid"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.filterRegionSelTextList[5]}"
+                            android:text="@{viewModel.filterRegionSelTextList[5].name}"
                             android:textColor="@color/point_p01"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
