@@ -1,20 +1,14 @@
 package com.finpo.app.ui.filter
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.finpo.app.model.local.IdName
 import com.finpo.app.model.remote.CategoryChild
 import com.finpo.app.model.remote.CategoryChildFormat
 import com.finpo.app.model.remote.MyRegionResponse
 import com.finpo.app.model.remote.RegionRequest
 import com.finpo.app.repository.FilterRepository
-import com.finpo.app.utils.MAX_ADDITIONAL_COUNT
-import com.finpo.app.utils.MAX_FILTER_REGION_COUNT
-import com.finpo.app.utils.MutableSingleLiveData
-import com.finpo.app.utils.SingleLiveData
+import com.finpo.app.utils.*
 import com.skydoves.sandwich.message
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
@@ -41,28 +35,52 @@ class FilterViewModel @Inject constructor(
     private val _clearEvent = MutableSingleLiveData<Boolean>()
     val clearEvent: SingleLiveData<Boolean> = _clearEvent
 
+    private val _backEvent = MutableSingleLiveData<Boolean>()
+    val backEvent: SingleLiveData<Boolean> = _backEvent
+
+    private val _goToHomeFragmentEvent = MutableSingleLiveData<Boolean>()
+    val goToHomeFragmentEvent: SingleLiveData<Boolean> = _goToHomeFragmentEvent
+
+    val isFilterButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSourceList(_filterRegionSelCount, _userCategoryData) {
+            isStatusPurposeValid()
+        }
+    }
+
+    private fun isStatusPurposeValid(): Boolean = (_filterRegionSelCount.value != 0 && _userCategoryData.value?.isEmpty() == false)
+
+    fun backClick() {
+        _backEvent.setValue(true)
+    }
+
+    fun goToHomeFragment() {
+        _goToHomeFragmentEvent.setValue(true)
+    }
+
     fun clearFilter() {
         _clearEvent.setValue(true)
+    }
+
+    fun categoryClick(id: Int) {
+        val userCategoryData = _userCategoryData.value?.toMutableList() ?: mutableListOf()
+        if(id in userCategoryData)  userCategoryData.remove(id)
+        else    userCategoryData.add(id)
+        _userCategoryData.value = userCategoryData.toIntArray()
     }
 
     fun setCategories(data: IntArray) {
         _userCategoryData.value = data
     }
 
-    fun setRegion(data: MyRegionResponse) {
-        val regions = mutableListOf<IdName>()
+    fun clearRegion() {
+        val detailRegionTextList = MutableList(MAX_FILTER_REGION_COUNT){IdName(0, "")}
+        _filterRegionSelTextList.value = detailRegionTextList
+        _filterRegionSelCount.value = 0
+    }
 
-        for(idx in 0 until data.data.size) {
-            val myRegion = data.data[idx]
-            if(myRegion.region.parent == null) regions.add(IdName(myRegion.region.id ?: 0 ,"${myRegion.region.name} 전체"))
-            else regions.add(IdName(myRegion.region.id ?: 0 ,"${myRegion.region.parent.name} ${myRegion.region.name}"))
-        }
-
-        for(idx in data.data.size until MAX_FILTER_REGION_COUNT)
-            regions.add(IdName(0, ""))
-
-        _filterRegionSelTextList.value = regions
-        _filterRegionSelCount.value = data.data.size
+    fun setRegion(data: List<IdName>) {
+        _filterRegionSelTextList.value = data.toMutableList()
+        _filterRegionSelCount.value = data.size
     }
 
     fun getCategory() {

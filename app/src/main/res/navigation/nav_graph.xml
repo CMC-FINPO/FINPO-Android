@@ -14,6 +14,21 @@
             android:id="@+id/action_homeFragment_to_filterFragment"
             app:destination="@id/filterFragment"
             app:enterAnim="@android:anim/fade_in" />
+        <argument
+            android:name="categories"
+            app:argType="integer[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="regionIds"
+            app:argType="integer[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="regions"
+            app:argType="com.finpo.app.model.local.IdName[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/communityFragment"
@@ -56,7 +71,7 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="regions"
-            app:argType="com.finpo.app.model.remote.MyRegionResponse" />
+            app:argType="com.finpo.app.model.local.IdName[]" />
         <argument
             android:name="categories"
             app:argType="integer[]" />

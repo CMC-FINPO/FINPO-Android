@@ -1,6 +1,11 @@
 package com.finpo.app.model.local
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import java.io.Serializable
+
+@Parcelize
 data class IdName(
-    val id: Int,
-    val name: String
-)
+    var id: Int,
+    var name: String
+) : Parcelable

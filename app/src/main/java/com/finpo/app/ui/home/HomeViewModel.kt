@@ -1,20 +1,18 @@
 package com.finpo.app.ui.home
 
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.finpo.app.model.local.IdName
 import com.finpo.app.model.remote.MyRegion
-import com.finpo.app.model.remote.MyRegionResponse
 import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.model.remote.PolicyResponse
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.repository.PolicyRepository
-import com.finpo.app.utils.MutableSingleLiveData
-import com.finpo.app.utils.Paging
-import com.finpo.app.utils.SORT
-import com.finpo.app.utils.SingleLiveData
+import com.finpo.app.utils.*
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,12 +47,8 @@ class HomeViewModel @Inject constructor(
     val searchText = MutableLiveData<String>()
 
     lateinit var regionIds: List<Int>
-    lateinit var regions: MyRegionResponse
+    lateinit var regions: List<IdName>
     lateinit var categoryIds: List<Int>
-
-    init {
-        getInitData()
-    }
 
     fun goToFilterFragment() {
         _goToFilterFragmentEvent.setValue(true)
@@ -70,16 +64,27 @@ class HomeViewModel @Inject constructor(
         changePolicy()
     }
 
-    private fun getInitData() {
+    fun getInitData() {
         viewModelScope.launch {
             val myRegionResponse = myInfoRepository.getMyRegion()
             val myCategoryResponse = myInfoRepository.getMyCategory()
             if(myRegionResponse !is ApiResponse.Success || myCategoryResponse !is ApiResponse.Success)   return@launch
             regionIds = List(myRegionResponse.data.data.size) { myRegionResponse.data.data[it].region.id ?: 0 }
-            regions = myRegionResponse.data
+            initRegions(myRegionResponse.data.data)
             categoryIds = List(myCategoryResponse.data.data.size) { myCategoryResponse.data.data[it].category.id }
             changePolicy()
         }
+    }
+
+    private fun initRegions(data: List<MyRegion>) {
+        val tempRegions = mutableListOf<IdName>()
+        for(element in data) {
+            if(element.region.parent == null) tempRegions.add(IdName(element.region.id ?: 0 ,"${element.region.name} 전체"))
+            else tempRegions.add(IdName(element.region.id ?: 0 ,"${element.region.parent.name} ${element.region.name}"))
+        }
+        for(idx in data.size until MAX_FILTER_REGION_COUNT)
+            tempRegions.add(IdName(0, ""))
+        regions = tempRegions
     }
 
     fun addPolicy() {
@@ -97,7 +102,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun changePolicy() {
+    fun changePolicy() {
         paging.resetPage()
 
         viewModelScope.launch {
