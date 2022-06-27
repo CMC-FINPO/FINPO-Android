@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.filter.FilterViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.filter.FilterFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:paddingHorizontal="20dp">
+
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_back"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        style="@style/h3_16_mid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/filter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_clear"
+                        style="@style/l1_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/clear_all"
+                        android:textColor="@color/gray_g03"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="13dp">
+
+                <TextView
+                    android:id="@+id/tv_select_region"
+                    style="@style/l1_13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/select_region"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/fl_filter_region"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="20dp"
+                    app:alignContent="stretch"
+                    app:alignItems="stretch"
+                    app:dividerDrawable="@drawable/shape_flexbox_divider"
+                    app:flexWrap="wrap"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_select_region"
+                    app:showDivider="middle">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_filter_region_none"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:background="@drawable/bg_solid_g09_rounded_g04_5"
+                        android:paddingHorizontal="10dp"
+                        android:visibility="@{viewModel.filterRegionSelCount == 0 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_header"
+                        tools:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tv_filter_region_none"
+                            style="@style/b3_15_mid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_selected_area"
+                            android:textColor="@color/gray_g04"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_filter_region1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="4dp"
+                        android:visibility="@{viewModel.filterRegionSelTextList[0].empty ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_header">
+
+                        <TextView
+                            android:id="@+id/tv_filter_region1"
+                            style="@style/b3_15_mid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.filterRegionSelTextList[0]}"
+                            android:textColor="@color/point_p01"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/iv_filter_region_remove1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="서울 강동구" />
+
+                        <ImageView
+                            android:id="@+id/iv_filter_region_remove1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:onClick="@{() -> viewModel.deleteFilterRegion(0)}"
+                            android:src="@drawable/ic_delete_point"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_filter_region1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tv_filter_region1" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_filter_region2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="4dp"
+                        android:visibility="@{viewModel.filterRegionSelTextList[1].empty ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_header">
+
+                        <TextView
+                            android:id="@+id/tv_filter_region2"
+                            style="@style/b3_15_mid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.filterRegionSelTextList[1]}"
+                            android:textColor="@color/point_p01"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/iv_filter_region_remove2"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="서울 강동구" />
+
+                        <ImageView
+                            android:id="@+id/iv_filter_region_remove2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:onClick="@{() -> viewModel.deleteFilterRegion(1)}"
+                            android:src="@drawable/ic_delete_point"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_filter_region2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tv_filter_region2" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_filter_region3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="4dp"
+                        android:visibility="@{viewModel.filterRegionSelTextList[2].empty ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_header">
+
+                        <TextView
+                            android:id="@+id/tv_filter_region3"
+                            style="@style/b3_15_mid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.filterRegionSelTextList[2]}"
+                            android:textColor="@color/point_p01"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/iv_filter_region_remove3"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="서울 강동구" />
+
+                        <ImageView
+                            android:id="@+id/iv_filter_region_remove3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:onClick="@{() -> viewModel.deleteFilterRegion(2)}"
+                            android:src="@drawable/ic_delete_point"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_filter_region3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tv_filter_region3" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_filter_region4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="4dp"
+                        android:visibility="@{viewModel.filterRegionSelTextList[3].empty ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_header">
+
+                        <TextView
+                            android:id="@+id/tv_filter_region4"
+                            style="@style/b3_15_mid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.filterRegionSelTextList[3]}"
+                            android:textColor="@color/point_p01"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/iv_filter_region_remove4"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="서울 강동구" />
+
+                        <ImageView
+                            android:id="@+id/iv_filter_region_remove4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:onClick="@{() -> viewModel.deleteFilterRegion(3)}"
+                            android:src="@drawable/ic_delete_point"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_filter_region4"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tv_filter_region4" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_filter_region5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="4dp"
+                        android:visibility="@{viewModel.filterRegionSelTextList[4].empty ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_header">
+
+                        <TextView
+                            android:id="@+id/tv_filter_region5"
+                            style="@style/b3_15_mid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.filterRegionSelTextList[4]}"
+                            android:textColor="@color/point_p01"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/iv_filter_region_remove5"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="서울 강동구" />
+
+                        <ImageView
+                            android:id="@+id/iv_filter_region_remove5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:onClick="@{() -> viewModel.deleteFilterRegion(4)}"
+                            android:src="@drawable/ic_delete_point"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_filter_region5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tv_filter_region5" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_filter_region6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="4dp"
+                        android:visibility="@{viewModel.filterRegionSelTextList[5].empty ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_header">
+
+                        <TextView
+                            android:id="@+id/tv_filter_region6"
+                            style="@style/b3_15_mid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.filterRegionSelTextList[5]}"
+                            android:textColor="@color/point_p01"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/iv_filter_region_remove6"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="서울 강동구" />
+
+                        <ImageView
+                            android:id="@+id/iv_filter_region_remove6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:onClick="@{() -> viewModel.deleteFilterRegion(5)}"
+                            android:src="@drawable/ic_delete_point"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_filter_region6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tv_filter_region6" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_search"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/bg_solid_w01_rounded_g07_5"
+                    android:paddingHorizontal="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fl_filter_region">
+
+                    <ImageView
+                        android:id="@+id/iv_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_search"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/et_search"
+                        style="@style/h3_16_mid"
+                        android:layout_width="0dp"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="15dp"
+                        android:background="@null"
+                        android:hint="@string/add_region_search"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColorHint="@color/gray_g05"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_search"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/view_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/gray_g07"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cl_search" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:paddingBottom="20dp"
+                    android:id="@+id/rv_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_divider" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_filter"
+                    style="@style/finpo_main_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="33dp"
+                    android:text="@string/do_filter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
