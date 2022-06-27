@@ -35,6 +35,9 @@ class HomeViewModel @Inject constructor(
     private val _regionIds = MutableLiveData<List<Int>>()
     val regionIds: LiveData<List<Int>> = _regionIds
 
+    private val _categoryIds = MutableLiveData<List<Int>>()
+    val categoryIds: LiveData<List<Int>> = _categoryIds
+
     private val _spinnerPosition = MutableLiveData<Int>()
     val spinnerPosition: LiveData<Int> = _spinnerPosition
 
@@ -73,10 +76,11 @@ class HomeViewModel @Inject constructor(
     private fun getInitData() {
         viewModelScope.launch {
             val myRegionResponse = myInfoRepository.getMyRegion()
-            myRegionResponse.onSuccess {
-                _regionIds.value = List(data.data.size) { data.data[it].region.id ?: 0 }
-                changePolicy()
-            }
+            val myCategoryResponse = myInfoRepository.getMyCategory()
+            if(myRegionResponse !is ApiResponse.Success || myCategoryResponse !is ApiResponse.Success)   return@launch
+            _regionIds.value = List(myRegionResponse.data.data.size) { myRegionResponse.data.data[it].region.id ?: 0 }
+            _categoryIds.value = List(myCategoryResponse.data.data.size) { myCategoryResponse.data.data[it].category.id }
+            changePolicy()
         }
     }
 
@@ -95,7 +99,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun changePolicy() {
+    private fun changePolicy() {
         paging.resetPage()
 
         viewModelScope.launch {
@@ -114,6 +118,7 @@ class HomeViewModel @Inject constructor(
         return policyRepository.getPolicy(
             title = searchText.value ?: "",
             region = _regionIds.value ?: listOf(),
+            category = _categoryIds.value ?: listOf(),
             page = paging.page.value ?: 0,
             sort = listOf(SORT[spinnerPosition.value ?: 0])
         )

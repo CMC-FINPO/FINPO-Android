@@ -11,6 +11,19 @@ data class ParentCategory(
     var isChecked: Boolean = false
 )
 
+data class MyCategoryResponse(
+    val data: List<MyCategory>
+)
+
+data class MyCategory(
+    val category: Category
+)
+
+data class Category(
+    val id: Int,
+    val name: String
+)
+
 data class CategoryChildFormatResponse(
     val data: List<CategoryChildFormat>
 )

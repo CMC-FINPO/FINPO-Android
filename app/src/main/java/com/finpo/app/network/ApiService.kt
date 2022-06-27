@@ -50,4 +50,7 @@ interface ApiService {
     suspend fun setStatusPurpose(
         @Body statusPurposeBody: StatusPurposeBody,
     ) : ApiResponse<JsonElement>
+
+    @GET("/policy/category/me")
+    suspend fun getMyCategory() : ApiResponse<MyCategoryResponse>
 }

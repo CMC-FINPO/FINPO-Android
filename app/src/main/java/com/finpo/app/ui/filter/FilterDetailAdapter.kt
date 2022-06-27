@@ -37,6 +37,7 @@ class FilterDetailAdapter (val viewModel: FilterViewModel) :
 
         fun bind(data: CategoryChild) {
             binding.data = data
+            binding.viewModel = viewModel
         }
     }
 
