@@ -54,5 +54,8 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="regions"
+            app:argType="com.finpo.app.model.remote.MyRegionResponse" />
     </fragment>
 </navigation>

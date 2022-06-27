@@ -35,7 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
 
         viewModel.goToFilterFragmentEvent.observe {
-            val action = HomeFragmentDirections.actionHomeFragmentToFilterFragment()
+            val action = HomeFragmentDirections.actionHomeFragmentToFilterFragment(viewModel.regions)
             findNavController().navigate(action)
         }
 

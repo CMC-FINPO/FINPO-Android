@@ -1,13 +1,12 @@
 package com.finpo.app.ui.home
 
-import android.util.Log
-import android.view.KeyEvent
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.finpo.app.model.remote.MyRegion
+import com.finpo.app.model.remote.MyRegionResponse
 import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.model.remote.PolicyResponse
 import com.finpo.app.repository.MyInfoRepository
@@ -32,12 +31,6 @@ class HomeViewModel @Inject constructor(
     private val _policyList = MutableLiveData<List<PolicyContent?>>()
     val policyList: LiveData<List<PolicyContent?>> = _policyList
 
-    private val _regionIds = MutableLiveData<List<Int>>()
-    val regionIds: LiveData<List<Int>> = _regionIds
-
-    private val _categoryIds = MutableLiveData<List<Int>>()
-    val categoryIds: LiveData<List<Int>> = _categoryIds
-
     private val _spinnerPosition = MutableLiveData<Int>()
     val spinnerPosition: LiveData<Int> = _spinnerPosition
 
@@ -54,6 +47,10 @@ class HomeViewModel @Inject constructor(
     val goToFilterFragmentEvent: SingleLiveData<Boolean> = _goToFilterFragmentEvent
 
     val searchText = MutableLiveData<String>()
+
+    lateinit var regionIds: List<Int>
+    lateinit var regions: MyRegionResponse
+    lateinit var categoryIds: List<Int>
 
     init {
         getInitData()
@@ -78,8 +75,9 @@ class HomeViewModel @Inject constructor(
             val myRegionResponse = myInfoRepository.getMyRegion()
             val myCategoryResponse = myInfoRepository.getMyCategory()
             if(myRegionResponse !is ApiResponse.Success || myCategoryResponse !is ApiResponse.Success)   return@launch
-            _regionIds.value = List(myRegionResponse.data.data.size) { myRegionResponse.data.data[it].region.id ?: 0 }
-            _categoryIds.value = List(myCategoryResponse.data.data.size) { myCategoryResponse.data.data[it].category.id }
+            regionIds = List(myRegionResponse.data.data.size) { myRegionResponse.data.data[it].region.id ?: 0 }
+            regions = myRegionResponse.data
+            categoryIds = List(myCategoryResponse.data.data.size) { myCategoryResponse.data.data[it].category.id }
             changePolicy()
         }
     }
@@ -117,8 +115,8 @@ class HomeViewModel @Inject constructor(
     private suspend fun getPolicyResponse(): ApiResponse<PolicyResponse> {
         return policyRepository.getPolicy(
             title = searchText.value ?: "",
-            region = _regionIds.value ?: listOf(),
-            category = _categoryIds.value ?: listOf(),
+            region = regionIds,
+            category = categoryIds,
             page = paging.page.value ?: 0,
             sort = listOf(SORT[spinnerPosition.value ?: 0])
         )

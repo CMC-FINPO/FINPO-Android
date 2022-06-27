@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.CategoryChild
 import com.finpo.app.model.remote.CategoryChildFormat
+import com.finpo.app.model.remote.MyRegionResponse
 import com.finpo.app.model.remote.RegionRequest
 import com.finpo.app.repository.FilterRepository
 import com.finpo.app.utils.MAX_ADDITIONAL_COUNT
@@ -31,13 +32,23 @@ class FilterViewModel @Inject constructor(
     private val _filterCategoryData = MutableLiveData<List<CategoryChildFormat>>()
     val filterCategoryData: LiveData<List<CategoryChildFormat>> = _filterCategoryData
 
-    init {
-        getCategory()
-        _filterRegionSelTextList.value = MutableList(6){""}
-        _filterRegionSelCount.value = 0
+    fun setRegion(data: MyRegionResponse) {
+        val regions = mutableListOf<String>()
+
+        for(idx in 0 until data.data.size) {
+            val myRegion = data.data[idx]
+            if(myRegion.region.parent == null) regions.add("${myRegion.region.name} 전체")
+            else regions.add("${myRegion.region.parent.name} ${myRegion.region.name}")
+        }
+
+        for(idx in data.data.size until MAX_FILTER_REGION_COUNT)
+            regions.add("")
+
+        _filterRegionSelTextList.value = regions
+        _filterRegionSelCount.value = data.data.size
     }
 
-    private fun getCategory() {
+    fun getCategory() {
         viewModelScope.launch {
             val filterResponse = filterRepository.getCategoryChildFormat()
             filterResponse.onSuccess {

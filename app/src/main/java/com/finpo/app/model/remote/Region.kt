@@ -1,5 +1,8 @@
 package com.finpo.app.model.remote
 
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+
 data class RegionResponse(
     val data: List<Region>
 )
@@ -20,7 +23,7 @@ data class RegionInterestResponse(
 
 data class MyRegionResponse(
     val data: List<MyRegion>
-)
+) : Serializable
 
 data class MyRegion(
     val region: RegionInterest
