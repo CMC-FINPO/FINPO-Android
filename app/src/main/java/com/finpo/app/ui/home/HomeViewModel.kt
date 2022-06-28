@@ -10,6 +10,7 @@ import com.finpo.app.model.local.IdName
 import com.finpo.app.model.remote.MyRegion
 import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.model.remote.PolicyResponse
+import com.finpo.app.repository.BookmarkRepository
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.repository.PolicyRepository
 import com.finpo.app.utils.*
@@ -23,6 +24,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val policyRepository: PolicyRepository,
     private val myInfoRepository: MyInfoRepository,
+    private val bookmarkRepository: BookmarkRepository,
     val paging: Paging<PolicyContent>
 ) : ViewModel() {
 
@@ -43,6 +45,9 @@ class HomeViewModel @Inject constructor(
 
     private val _goToFilterFragmentEvent = MutableSingleLiveData<Boolean>()
     val goToFilterFragmentEvent: SingleLiveData<Boolean> = _goToFilterFragmentEvent
+
+    private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, PolicyContent>>()
+    val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, PolicyContent>> = _updateRecyclerViewItemEvent
 
     val searchText = MutableLiveData<String>()
 
@@ -133,5 +138,19 @@ class HomeViewModel @Inject constructor(
             _keyBoardSearchEvent.setValue(true)
             true
         } else false
+    }
+
+    fun bookmarkClick(data: PolicyContent, position: Int) {
+        viewModelScope.launch {
+            if(!data.isInterest) {
+                val addInterestPolicyResponse = bookmarkRepository.addInterestPolicy(data.id)
+                data.isInterest = !data.isInterest
+                if(addInterestPolicyResponse is ApiResponse.Success)    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+            } else {
+                val deleteInterestPolicyResponse = bookmarkRepository.deleteInterestPolicy(data.id)
+                data.isInterest = !data.isInterest
+                if(deleteInterestPolicyResponse is ApiResponse.Success)    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+            }
+        }
     }
 }

@@ -34,10 +34,14 @@ class PolicyAdapter(val viewModel: HomeViewModel)
         }
     }
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if(payloads.isNullOrEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else (holder as PolicyHolder).setData(payloads[0] as PolicyContent, position)
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        currentList[position]?.let {
-            (holder as PolicyHolder).setData(it)
-        }
+        currentList[position]?.let { (holder as PolicyHolder).setData(it, position) }
     }
 
     inner class LoadingHolder(private val binding: ItemRecyclerPolicyLoadingBinding) :
@@ -45,8 +49,10 @@ class PolicyAdapter(val viewModel: HomeViewModel)
 
     inner class PolicyHolder(private val binding: ItemRecyclerPolicyBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun setData(data: PolicyContent) {
+        fun setData(data: PolicyContent, position: Int) {
             binding.data = data
+            binding.viewModel = viewModel
+            binding.position = position
             binding.executePendingBindings()
         }
     }

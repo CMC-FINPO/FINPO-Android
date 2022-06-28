@@ -77,5 +77,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
         }
+
+        viewModel.updateRecyclerViewItemEvent.observe {
+            policyAdapter.notifyItemChanged(it.first, it.second)
+        }
     }
 }

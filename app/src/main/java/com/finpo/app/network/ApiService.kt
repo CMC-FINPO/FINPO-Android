@@ -1,6 +1,7 @@
 package com.finpo.app.network
 
 import com.finpo.app.model.remote.*
+import com.google.android.gms.common.api.Api
 import com.google.gson.JsonElement
 import com.skydoves.sandwich.ApiResponse
 import okhttp3.MultipartBody
@@ -53,4 +54,14 @@ interface ApiService {
 
     @GET("/policy/category/me")
     suspend fun getMyCategory() : ApiResponse<MyCategoryResponse>
+
+    @POST("/policy/interest")
+    suspend fun addInterestPolicy(
+        @Body policyId: PolicyId
+    ) : ApiResponse<JsonElement>
+
+    @DELETE("/policy/interest/{id}")
+    suspend fun deleteInterestPolicy(
+        @Path("id") id: Int
+    ) : ApiResponse<JsonElement>
 }

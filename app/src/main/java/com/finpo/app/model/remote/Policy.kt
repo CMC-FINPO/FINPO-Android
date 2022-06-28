@@ -14,5 +14,10 @@ data class PolicyContent(
     val id: Int,
     val title: String,
     val institution: String,
-    val region: RegionInterest
+    val region: RegionInterest,
+    var isInterest: Boolean
+)
+
+data class PolicyId(
+    val policyId: Int
 )
