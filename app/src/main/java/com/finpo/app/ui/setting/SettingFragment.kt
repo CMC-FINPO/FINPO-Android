@@ -81,19 +81,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         }
     }
 
-    private fun showAlertDialog(title: String, message: String, positiveClick: () -> Unit) {
-        val builder = AlertDialog.Builder(requireActivity())
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("확인") { _, _ ->
-                positiveClick()
-            }
-            .setNegativeButton("취소") { _, _ ->
-
-            }
-        builder.show()
-    }
-
     private fun logout() {
         FinpoApplication.encryptedPrefs.saveAccessToken("")
         FinpoApplication.encryptedPrefs.saveRefreshToken("")

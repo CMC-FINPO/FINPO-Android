@@ -1,5 +1,6 @@
 package com.finpo.app.ui.common
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,5 +50,18 @@ abstract class BaseFragment<B : ViewDataBinding>(
 
     fun hideLoadingDialog() {
         FinpoApplication.instance.hideLoadingDialog()
+    }
+
+    fun showAlertDialog(title: String, message: String, positiveClick: () -> Unit) {
+        val builder = AlertDialog.Builder(requireActivity())
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("확인") { _, _ ->
+                positiveClick()
+            }
+            .setNegativeButton("취소") { _, _ ->
+
+            }
+        builder.show()
     }
 }
