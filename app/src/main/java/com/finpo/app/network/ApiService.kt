@@ -9,7 +9,7 @@ import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiService {
-    @POST("/region/me")
+    @PUT("/region/me")
     suspend fun addMyInterestRegion(
         @Body regionList: List<RegionRequest>
     ) : ApiResponse<RegionInterestResponse>
