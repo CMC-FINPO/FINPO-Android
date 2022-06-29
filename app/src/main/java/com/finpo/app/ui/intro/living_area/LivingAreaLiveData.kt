@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.Region
 import com.finpo.app.model.remote.RegionResponse
 import com.finpo.app.repository.IntroRepository
+import com.finpo.app.repository.RegionRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.ApiResponse
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @ActivityRetainedScoped
 class LivingAreaLiveData@Inject constructor(
-    private val introRepository: IntroRepository
+    private val regionRepository: RegionRepository
 ) : ViewModel() {
     private val _regionData = MutableLiveData<RegionResponse>()
     val regionData: LiveData<RegionResponse> = _regionData
@@ -49,7 +50,7 @@ class LivingAreaLiveData@Inject constructor(
 
     private fun getRegionAll() {
         viewModelScope.launch {
-            val getRegionAllResponse = introRepository.getRegionAll()
+            val getRegionAllResponse = regionRepository.getRegionAll()
             if(getRegionAllResponse is ApiResponse.Success) {
                 _regionData.value = getRegionAllResponse.data!!
                 setRegion(getRegionAllResponse.data.data[0].id)
@@ -75,7 +76,7 @@ class LivingAreaLiveData@Inject constructor(
 
     fun getRegionDetail(regionId: Int, nowRegion: MutableLiveData<String>,mutableLiveData: MutableLiveData<RegionResponse>) {
         viewModelScope.launch {
-            val getRegionDetailResponse = introRepository.getRegionDetail(regionId)
+            val getRegionDetailResponse = regionRepository.getRegionDetail(regionId)
             if(getRegionDetailResponse is ApiResponse.Success) {
                 mutableLiveData.value = RegionResponse(listOf(Region(regionId,
                     "${nowRegion.value} 전체"

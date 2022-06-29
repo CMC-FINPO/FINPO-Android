@@ -367,43 +367,41 @@
                     </com.google.android.flexbox.FlexboxLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:onClick="@{() -> viewModel.showBottomSheet()}"
                         android:id="@+id/cl_search"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="20dp"
-                        android:background="@drawable/bg_solid_w01_rounded_g07_5"
+                        android:background="@drawable/bg_solid_g08_rounded_5"
                         android:paddingHorizontal="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/fl_filter_region">
 
-                        <ImageView
-                            android:id="@+id/iv_search"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_search"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <EditText
+                        <TextView
                             android:id="@+id/et_search"
                             style="@style/h3_16_mid"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="22dp"
                             android:layout_marginStart="15dp"
                             android:background="@null"
-                            android:hint="@string/add_region_search"
-                            android:imeOptions="actionSearch"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:textColorHint="@color/gray_g05"
+                            android:text="@string/add_region_search"
+                            android:textColor="@color/gray_g05"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/iv_arrow_down"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/iv_arrow_down"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/iv_search"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:src="@drawable/ic_arrow_down"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

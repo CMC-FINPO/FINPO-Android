@@ -2,18 +2,13 @@ package com.finpo.app.ui.filter
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentFilterBinding
-import com.finpo.app.model.remote.MyRegion
-import com.finpo.app.model.remote.MyRegionResponse
 import com.finpo.app.ui.common.BaseFragment
+import com.finpo.app.ui.filter.bottom_sheet.BottomSheetRegionDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,6 +32,23 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(R.layout.fragment_fil
         filterAdapter.setHasStableIds(true)
         binding.rvFilter.adapter = filterAdapter
         binding.rvFilter.itemAnimator = null
+
+        val bottomDialogFragment = BottomSheetRegionDialog(viewModel)
+        viewModel.showBottomSheetEvent.observe {
+            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
+        }
+
+        viewModel.dismissBottomSheetEvent.observe {
+            bottomDialogFragment.dismiss()
+        }
+
+        viewModel.bottomSheetRegionViewModel.chooseMaxToastEvent.observe {
+            shortShowToast("최대 6개까지 선택할 수 있어요!")
+        }
+
+        viewModel.bottomSheetRegionViewModel.regionOverlapToastEvent.observe {
+            shortShowToast("이미 선택된 지역입니다!")
+        }
 
         viewModel.goToHomeFragmentEvent.observe {
             val action = FilterFragmentDirections.actionFilterFragmentToHomeFragment(

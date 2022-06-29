@@ -1,16 +1,12 @@
 package com.finpo.app.ui.filter
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.finpo.app.model.local.IdName
-import com.finpo.app.model.remote.CategoryChild
 import com.finpo.app.model.remote.CategoryChildFormat
-import com.finpo.app.model.remote.MyRegionResponse
-import com.finpo.app.model.remote.RegionRequest
 import com.finpo.app.repository.FilterRepository
+import com.finpo.app.repository.RegionRepository
+import com.finpo.app.ui.filter.bottom_sheet.BottomSheetRegionViewModel
 import com.finpo.app.utils.*
-import com.skydoves.sandwich.message
-import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,8 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FilterViewModel @Inject constructor(
-    private val filterRepository: FilterRepository
-): ViewModel() {
+    private val filterRepository: FilterRepository,
+    val bottomSheetRegionViewModel: BottomSheetRegionViewModel
+) : ViewModel() {
     private val _filterRegionSelTextList = MutableLiveData<MutableList<IdName>>()
     val filterRegionSelTextList: LiveData<MutableList<IdName>> = _filterRegionSelTextList
 
@@ -37,6 +34,12 @@ class FilterViewModel @Inject constructor(
 
     private val _backEvent = MutableSingleLiveData<Boolean>()
     val backEvent: SingleLiveData<Boolean> = _backEvent
+
+    private val _showBottomSheetEvent = MutableSingleLiveData<Boolean>()
+    val showBottomSheetEvent: SingleLiveData<Boolean> = _showBottomSheetEvent
+
+    private val _dismissBottomSheetEvent = MutableSingleLiveData<Boolean>()
+    val dismissBottomSheetEvent: SingleLiveData<Boolean> = _dismissBottomSheetEvent
 
     private val _goToHomeFragmentEvent = MutableSingleLiveData<Boolean>()
     val goToHomeFragmentEvent: SingleLiveData<Boolean> = _goToHomeFragmentEvent
@@ -63,8 +66,8 @@ class FilterViewModel @Inject constructor(
 
     fun categoryClick(id: Int) {
         val userCategoryData = _userCategoryData.value?.toMutableList() ?: mutableListOf()
-        if(id in userCategoryData)  userCategoryData.remove(id)
-        else    userCategoryData.add(id)
+        if (id in userCategoryData) userCategoryData.remove(id)
+        else userCategoryData.add(id)
         _userCategoryData.value = userCategoryData.toIntArray()
     }
 
@@ -73,14 +76,14 @@ class FilterViewModel @Inject constructor(
     }
 
     fun clearRegion() {
-        val detailRegionTextList = MutableList(MAX_FILTER_REGION_COUNT){IdName(0, "")}
+        val detailRegionTextList = MutableList(MAX_FILTER_REGION_COUNT) { IdName(0, "") }
         _filterRegionSelTextList.value = detailRegionTextList
         _filterRegionSelCount.value = 0
     }
 
     fun setRegion(data: List<IdName>) {
         _filterRegionSelTextList.value = data.toMutableList()
-        _filterRegionSelCount.value = data.size
+        _filterRegionSelCount.value = data.count { it.id != 0 }
     }
 
     fun getCategory() {
@@ -94,11 +97,21 @@ class FilterViewModel @Inject constructor(
 
     fun deleteFilterRegion(deleteIndex: Int) {
         val detailRegionTextList = _filterRegionSelTextList.value!!
-        for(i in deleteIndex until MAX_FILTER_REGION_COUNT - 1) {
+        for (i in deleteIndex until MAX_FILTER_REGION_COUNT - 1) {
             detailRegionTextList[i] = detailRegionTextList[i + 1]
         }
         detailRegionTextList[MAX_FILTER_REGION_COUNT - 1] = IdName(0, "")
         _filterRegionSelTextList.value = detailRegionTextList
         _filterRegionSelCount.value = _filterRegionSelCount.value!! - 1
+    }
+
+    fun editFinishClick() {
+        _filterRegionSelTextList.value = bottomSheetRegionViewModel.editRegionSelTextList.value
+        _filterRegionSelCount.value = bottomSheetRegionViewModel.editRegionSelCount.value
+        _dismissBottomSheetEvent.setValue(true)
+    }
+
+    fun showBottomSheet() {
+        _showBottomSheetEvent.setValue(true)
     }
 }

@@ -78,6 +78,7 @@
     <string name="filter">필터</string>
     <string name="clear_all">모두 초기화</string>
     <string name="select_region">지역 선택</string>
-    <string name="add_region_search">추가할 지역을 검색해주세요</string>
+    <string name="add_region_search">추가할 지역을 선택하기</string>
     <string name="do_filter">필터링하기</string>
+    <string name="select_finish">선택 완료</string>
 </resources>
