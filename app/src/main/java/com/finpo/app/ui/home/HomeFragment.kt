@@ -41,9 +41,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     override fun doViewCreated() {
-        try {
-            Log.d("filter","homeViewCreated ${viewModel.regions}")
-        } catch (e: Exception) {}
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         val bottomDialogFragment = BottomSheetSortDialog(viewModel)
@@ -59,8 +56,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
 
         viewModel.goToFilterFragmentEvent.observe {
-            Log.d("filter","filter로 전달 ${viewModel.regions}")
             val action = HomeFragmentDirections.actionHomeFragmentToFilterFragment(viewModel.regions.toTypedArray(), viewModel.categoryIds.toIntArray())
+            findNavController().navigate(action)
+        }
+
+        viewModel.goToDetailFragmentEvent.observe { id ->
+            val action = HomeFragmentDirections.actionHomeFragmentToPolicyDetailFragment(id)
             findNavController().navigate(action)
         }
 

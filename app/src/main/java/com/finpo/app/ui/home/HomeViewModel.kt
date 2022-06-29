@@ -46,6 +46,9 @@ class HomeViewModel @Inject constructor(
     private val _goToFilterFragmentEvent = MutableSingleLiveData<Boolean>()
     val goToFilterFragmentEvent: SingleLiveData<Boolean> = _goToFilterFragmentEvent
 
+    private val _goToDetailFragmentEvent = MutableSingleLiveData<Int>()
+    val goToDetailFragmentEvent: SingleLiveData<Int> = _goToDetailFragmentEvent
+
     private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, PolicyContent>>()
     val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, PolicyContent>> = _updateRecyclerViewItemEvent
 
@@ -54,6 +57,10 @@ class HomeViewModel @Inject constructor(
     lateinit var regionIds: List<Int>
     lateinit var regions: List<IdName>
     lateinit var categoryIds: List<Int>
+
+    fun goToDetailFragment(id: Int) {
+        _goToDetailFragmentEvent.setValue(id)
+    }
 
     fun goToFilterFragment() {
         _goToFilterFragmentEvent.setValue(true)

@@ -64,4 +64,9 @@ interface ApiService {
     suspend fun deleteInterestPolicy(
         @Path("id") id: Int
     ) : ApiResponse<JsonElement>
+
+    @GET("/policy/{id}")
+    suspend fun getPolicyDetail(
+        @Path("id") id: Int
+    ) : ApiResponse<PolicyDetailResponse>
 }

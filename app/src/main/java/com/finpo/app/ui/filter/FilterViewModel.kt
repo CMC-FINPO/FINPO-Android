@@ -76,14 +76,14 @@ class FilterViewModel @Inject constructor(
     }
 
     fun clearRegion() {
-        val detailRegionTextList = MutableList(MAX_FILTER_REGION_COUNT) { IdName(0, "") }
+        val detailRegionTextList = MutableList(MAX_FILTER_REGION_COUNT) { IdName(null, "") }
         _filterRegionSelTextList.value = detailRegionTextList
         _filterRegionSelCount.value = 0
     }
 
     fun setRegion(data: List<IdName>) {
         _filterRegionSelTextList.value = data.toMutableList()
-        _filterRegionSelCount.value = data.count { it.id != 0 }
+        _filterRegionSelCount.value = data.count { it.id != null }
     }
 
     fun getCategory() {
@@ -100,7 +100,7 @@ class FilterViewModel @Inject constructor(
         for (i in deleteIndex until MAX_FILTER_REGION_COUNT - 1) {
             detailRegionTextList[i] = detailRegionTextList[i + 1]
         }
-        detailRegionTextList[MAX_FILTER_REGION_COUNT - 1] = IdName(0, "")
+        detailRegionTextList[MAX_FILTER_REGION_COUNT - 1] = IdName(null, "")
         _filterRegionSelTextList.value = detailRegionTextList
         _filterRegionSelCount.value = _filterRegionSelCount.value!! - 1
     }

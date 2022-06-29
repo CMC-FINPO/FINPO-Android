@@ -29,6 +29,9 @@
             app:argType="com.finpo.app.model.local.IdName[]"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_homeFragment_to_policyDetailFragment"
+            app:destination="@id/policyDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/communityFragment"
@@ -75,5 +78,13 @@
         <argument
             android:name="categories"
             app:argType="integer[]" />
+    </fragment>
+    <fragment
+        android:id="@+id/policyDetailFragment"
+        android:name="com.finpo.app.ui.policy_detail.PolicyDetailFragment"
+        android:label="PolicyDetailFragment"
+        tools:layout="@layout/fragment_policy_detail">
+        <argument android:name="id"
+            app:argType="integer" />
     </fragment>
 </navigation>

@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="position"
             type="Integer" />
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.home.HomeViewModel" />
+
         <variable
             name="data"
             type="com.finpo.app.model.remote.PolicyContent" />
@@ -21,11 +24,13 @@
         android:layout_marginTop="7.5dp"
         android:layout_marginBottom="7.5dp"
         android:background="@drawable/bg_solid_w01_rounded_none_5"
+        android:onClick="@{() -> viewModel.goToDetailFragment(data.id)}"
         android:padding="15dp">
 
         <TextView
             android:id="@+id/tv_region"
             style="@style/l1_13"
+            regionData="@{data.region}"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
             android:background="@drawable/bg_solid_p02_rounded_5"
@@ -34,7 +39,6 @@
             android:textColor="@color/point_p01"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            regionData="@{data.region}"
             tools:text="서울 동대문구" />
 
         <TextView
@@ -43,31 +47,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:text="@{data.title}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_region"
-            android:text="@{data.title}"
             tools:text="공고명-정책이름" />
 
         <TextView
             android:id="@+id/tv_institution_name"
             style="@style/l1_13"
-            android:textColor="@color/gray_g02"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:text="@{data.institution}"
+            android:textColor="@color/gray_g02"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_policy_name"
-            android:text="@{data.institution}"
             tools:text="기관명" />
 
         <ImageView
-            android:onClick="@{() -> viewModel.bookmarkClick(data, position)}"
             android:id="@+id/iv_scrap"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            isBookmarkChecked="@{data.isInterest}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            isBookmarkChecked="@{data.isInterest}"/>
+            android:onClick="@{() -> viewModel.bookmarkClick(data, position)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

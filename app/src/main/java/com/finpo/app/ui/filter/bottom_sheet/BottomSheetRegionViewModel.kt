@@ -92,7 +92,7 @@ class BottomSheetRegionViewModel @Inject constructor(
         for (i in deleteIndex until MAX_FILTER_REGION_COUNT - 1) {
             editRegionTextList[i] = editRegionTextList[i + 1]
         }
-        editRegionTextList[MAX_FILTER_REGION_COUNT - 1] = IdName(0, "")
+        editRegionTextList[MAX_FILTER_REGION_COUNT - 1] = IdName(null, "")
         _editRegionSelTextList.value = editRegionTextList
         _editRegionSelCount.value = _editRegionSelCount.value!! - 1
     }
