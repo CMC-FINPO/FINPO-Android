@@ -81,4 +81,6 @@
     <string name="add_region_search">추가할 지역을 선택하기</string>
     <string name="do_filter">필터링하기</string>
     <string name="select_finish">선택 완료</string>
+    <string name="hits_interest_num">스크랩수 %d · 조회수 %d</string>
+    <string name="policy_type">정책 유형</string>
 </resources>

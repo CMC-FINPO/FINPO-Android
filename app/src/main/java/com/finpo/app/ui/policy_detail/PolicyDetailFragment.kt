@@ -6,6 +6,7 @@ import androidx.navigation.fragment.navArgs
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentPolicyDetailBinding
 import com.finpo.app.ui.common.BaseFragment
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,5 +22,14 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.viewPagerPolicyDetail.adapter = PolicyDetailViewPagerAdapter(childFragmentManager, lifecycle)
+
+        TabLayoutMediator(binding.tbPolicyDetail, binding.viewPagerPolicyDetail) {  tab, position ->
+            tab.text = when(position) {
+                0 -> "사업 내용"
+                else -> "신청 방법"
+            }
+        }.attach()
     }
 }
