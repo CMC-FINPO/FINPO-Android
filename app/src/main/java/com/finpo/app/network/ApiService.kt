@@ -60,9 +60,9 @@ interface ApiService {
         @Body policyId: PolicyId
     ) : ApiResponse<JsonElement>
 
-    @DELETE("/policy/interest/{id}")
+    @DELETE("/policy/interest/me")
     suspend fun deleteInterestPolicy(
-        @Path("id") id: Int
+        @Query("policyId") id: Int
     ) : ApiResponse<JsonElement>
 
     @GET("/policy/{id}")
