@@ -91,11 +91,11 @@ class HomeViewModel @Inject constructor(
     private fun initRegions(data: List<MyRegion>) {
         val tempRegions = mutableListOf<IdName>()
         for(element in data) {
-            if(element.region.parent == null) tempRegions.add(IdName(element.region.id ?: 0 ,"${element.region.name} 전체"))
-            else tempRegions.add(IdName(element.region.id ?: 0 ,"${element.region.parent.name} ${element.region.name}"))
+            if(element.region.parent == null) tempRegions.add(IdName(element.region.id,"${element.region.name} 전체"))
+            else tempRegions.add(IdName(element.region.id,"${element.region.parent.name} ${element.region.name}"))
         }
         for(idx in data.size until MAX_FILTER_REGION_COUNT)
-            tempRegions.add(IdName(0, ""))
+            tempRegions.add(IdName(null, ""))
         regions = tempRegions
     }
 
