@@ -8,6 +8,7 @@ import com.finpo.app.di.FinpoApplication
 import com.finpo.app.model.remote.TokenResponse
 import com.finpo.app.repository.AdditionalInfoRepository
 import com.finpo.app.repository.IntroRepository
+import com.finpo.app.repository.NotificationRepository
 import com.finpo.app.repository.StatusPurposeRepository
 import com.finpo.app.ui.intro.additional_region.AdditionalRegionLiveData
 import com.finpo.app.ui.intro.default_info.DefaultInfoLiveData
@@ -19,6 +20,8 @@ import com.finpo.app.ui.intro.status_purpose.StatusPurposeLiveData
 import com.finpo.app.ui.intro.terms_conditions.TermsConditionsLiveData
 import com.finpo.app.utils.*
 import com.finpo.app.utils.PAGE.FINISH
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onFailure
@@ -31,6 +34,8 @@ import okhttp3.RequestBody
 import org.json.JSONArray
 import retrofit2.http.Multipart
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 @HiltViewModel
 class IntroViewModel @Inject constructor(
@@ -44,7 +49,8 @@ class IntroViewModel @Inject constructor(
     val statusPurposeLiveData: StatusPurposeLiveData,
     private val introRepository: IntroRepository,
     private val additionalInfoRepository: AdditionalInfoRepository,
-    private val statusPurposeRepository: StatusPurposeRepository
+    private val statusPurposeRepository: StatusPurposeRepository,
+    private val notificationRepository: NotificationRepository
 ) : ViewModel() {
 
     private val _currentPage = MutableLiveData<Int>()
@@ -71,6 +77,19 @@ class IntroViewModel @Inject constructor(
 
     private fun goToMainActivity() {
         _goToMainActivityEvent.setValue(true)
+    }
+
+    fun setNotification(subscribe: Boolean?) {
+        viewModelScope.launch {
+            notificationRepository.setNotification(getTokenResult(), subscribe)
+        }
+    }
+
+    private suspend fun getTokenResult() = suspendCoroutine<String?> { continuation ->
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (it.isSuccessful) continuation.resume(it.result)
+             else continuation.resume(null)
+        }
     }
 
     fun postAdditionalInfo() {

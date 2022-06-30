@@ -21,6 +21,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +31,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
@@ -58,18 +61,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         }
 
         viewModel.loginLiveData.needRegisterEvent.observe(this) { tokenResponse ->
-            if (tokenResponse.data.accessToken == null) {
-                CoroutineScope(Main).launch {
-                    setUserInfo(tokenResponse)
-                    hideLoadingDialog()
-                    viewModel.nextPage()
-                }
+            CoroutineScope(Main).launch {
+                setUserInfo(tokenResponse)
+                hideLoadingDialog()
+                viewModel.nextPage()
             }
         }
 
         viewModel.loginLiveData.isLoginSuccessfulEvent.observe(this) { tokenResponse ->
             FinpoApplication.encryptedPrefs.saveTokens(tokenResponse.data.accessToken ?: "", tokenResponse.data.refreshToken ?: "")
             viewModel.loginLiveData.acToken = ""
+            viewModel.setNotification(null)
             hideLoadingDialog()
             startActivity(Intent(requireActivity(), MainActivity::class.java))
             activity?.finish()

@@ -28,6 +28,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro
         viewPager.isUserInputEnabled = false
 
         viewModel.registerSuccessEvent.observe(this) {
+            viewModel.setNotification(true)
             hideLoadingDialog()
             viewModel.nextPage()
         }

@@ -69,4 +69,9 @@ interface ApiService {
     suspend fun getPolicyDetail(
         @Path("id") id: Int
     ) : ApiResponse<PolicyDetailResponse>
+
+    @PUT("/notification/me")
+    suspend fun setNotification(
+        @Body notificationBody: NotificationBody
+    ) : ApiResponse<JsonElement>
 }
