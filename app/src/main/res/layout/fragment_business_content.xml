@@ -18,12 +18,76 @@
         tools:context=".ui.policy_detail.BusinessContentFragment">
 
         <TextView
-            android:id="@+id/tv_policy_type"
+            android:id="@+id/tv_policy_type_title"
+            style="@style/b3_15_mid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/policy_type"
+            android:textColor="@color/gray_g01"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_policy_type"
+            style="@style/b2_13_reg"
+            safeNullText="@{viewModel.policyDetailData.category.name}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_solid_g08_rounded_5"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp"
+            android:textColor="@color/point_p01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_policy_type_title"
+            tools:text="진로" />
+
+        <TextView
+            android:id="@+id/tv_support_content_title"
+            style="@style/b3_15_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/support_content"
+            android:textColor="@color/gray_g01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_policy_type" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_support_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_solid_p03_rounded_5"
+            android:padding="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_support_content_title"
+            tools:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/iv_check"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/ic_check_active"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_support_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_support_content" />
+
+            <TextView
+                android:id="@+id/tv_support_content"
+                style="@style/h5_14_mid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@{viewModel.policyDetailData.support}"
+                android:textColor="@color/gray_g01"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_check"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -83,4 +83,5 @@
     <string name="select_finish">선택 완료</string>
     <string name="hits_interest_num">스크랩수 %d · 조회수 %d</string>
     <string name="policy_type">정책 유형</string>
+    <string name="support_content">지원 내용</string>
 </resources>
