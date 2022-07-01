@@ -45,12 +45,3 @@ fun setSpinnerText(
     textView.text = if(sortType == SORT_TYPE.RECENT)    textView.context.getString(R.string.recent)
     else textView.context.getString(R.string.popular)
 }
-
-@BindingAdapter("isBookmarkChecked")
-fun setSpinnerText(
-    imageView: ImageView,
-    isBookmarkChecked: Boolean
-) {
-    if(isBookmarkChecked) imageView.setBackgroundResource(R.drawable.ic_scrap_active)
-    else imageView.setBackgroundResource(R.drawable.ic_scrap_inactive)
-}

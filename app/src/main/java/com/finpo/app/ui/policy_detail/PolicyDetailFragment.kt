@@ -63,9 +63,4 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
 
         balloon.showAlignBottom(binding.ivPlus, -28.dp, 10.dp)
     }
-
-    override fun onResume() {
-        super.onResume()
-        binding.root.requestLayout()
-    }
 }

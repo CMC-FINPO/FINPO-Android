@@ -23,5 +23,5 @@ data class PolicyDetail(
     val region: RegionInterest?,
     val countOfInterest: Int = 0,
     val hits: Int = 0,
-    val isInterest: Boolean = false
+    var isInterest: Boolean = false
 )

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.PolicyDetail
+import com.finpo.app.repository.BookmarkRepository
 import com.finpo.app.repository.PolicyDetailRepository
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PolicyDetailViewModel @Inject constructor(
-    private val policyDetailRepository: PolicyDetailRepository
+    private val policyDetailRepository: PolicyDetailRepository,
+    private val bookmarkRepository: BookmarkRepository
 ): ViewModel() {
     private val _policyDetailData = MutableLiveData<PolicyDetail>()
     val policyDetailData: LiveData<PolicyDetail> = _policyDetailData
@@ -24,6 +26,19 @@ class PolicyDetailViewModel @Inject constructor(
             val policyDetailResponse = policyDetailRepository.getPolicyDetail(id)
             policyDetailResponse.onSuccess {
                 _policyDetailData.value = data.data!!
+            }
+        }
+    }
+
+    fun setBookmark() {
+        viewModelScope.launch {
+            val bookmarkResponse = if (policyDetailData.value?.isInterest == true)
+                bookmarkRepository.deleteInterestPolicy(policyDetailData.value?.id ?: 0)
+            else bookmarkRepository.addInterestPolicy(policyDetailData.value?.id ?: 0)
+
+            bookmarkResponse.onSuccess {
+                policyDetailData.value!!.isInterest = !policyDetailData.value!!.isInterest
+                _policyDetailData.value = policyDetailData.value
             }
         }
     }
