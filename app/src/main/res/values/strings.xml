@@ -89,4 +89,7 @@
     <string name="apply_period">신청 기간</string>
     <string name="hyphen">-</string>
     <string name="operation_period">운영 기간</string>
+    <string name="apply_site">신청 사이트</string>
+    <string name="shortcut">바로가기</string>
+    <string name="process">신청 절차</string>
 </resources>

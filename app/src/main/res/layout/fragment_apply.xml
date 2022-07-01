@@ -1,21 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.policy_detail.PolicyDetailViewModel" />
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="16dp"
         tools:context=".ui.policy_detail.ApplyFragment">
 
-        <!-- TODO: Update blank fragment layout -->
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:id="@+id/tv_apply_site_title"
+            style="@style/body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/apply_site"
+            android:textColor="@color/gray_g01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/tv_apply_shortcut"
+            style="@style/label2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:background="@drawable/bg_solid_none_rounded_p01_5"
+            android:linksClickable="true"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp"
+            android:text="@string/shortcut"
+            android:textColor="@color/point_p01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_apply_shortcut_value"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:text="@{viewModel.policyDetailData.detailUrl}"
+            android:textColorLink="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="@id/tv_apply_shortcut"
+            app:layout_constraintEnd_toEndOf="@id/tv_apply_shortcut"
+            app:layout_constraintStart_toStartOf="@id/tv_apply_shortcut"
+            app:layout_constraintTop_toTopOf="@id/tv_apply_shortcut" />
+
+        <TextView
+            android:id="@+id/tv_apply_site_value"
+            style="@style/header5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|start"
+            android:minHeight="34dp"
+            android:text="@{viewModel.policyDetailData.detailUrl}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_site_title"
+            tools:text="www.finpo.kr" />
+
+        <TextView
+            android:id="@+id/tv_progress_title"
+            style="@style/body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/process"
+            android:textColor="@color/gray_g01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_site_value" />
+
+        <TextView
+            android:id="@+id/tv_progress_value"
+            style="@style/body3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@{viewModel.policyDetailData.process}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_progress_title"
+            tools:text="신청절차어쩌구저쩌구신청절차어쩌구저쩌구신청절차어쩌구저쩌구신청절차어쩌구저쩌구" />
+
+        <TextView
+            android:id="@+id/tv_etc_title"
+            style="@style/body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/apply_site"
+            android:textColor="@color/gray_g01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_progress_value" />
+
+        <TextView
+            android:id="@+id/tv_etc_shortcut"
+            style="@style/label2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:autoLink="web"
+            android:background="@drawable/bg_solid_none_rounded_p01_5"
+            android:linksClickable="true"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp"
+            android:text="@string/shortcut"
+            android:textColor="@color/point_p01"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_progress_value" />
+
+        <TextView
+            android:id="@+id/tv_etc_shortcut_value"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:text="@{viewModel.policyDetailData.detailUrl}"
+            android:textColorLink="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="@id/tv_etc_shortcut"
+            app:layout_constraintEnd_toEndOf="@id/tv_etc_shortcut"
+            app:layout_constraintStart_toStartOf="@id/tv_etc_shortcut"
+            app:layout_constraintTop_toTopOf="@id/tv_etc_shortcut" />
+
+        <TextView
+            android:id="@+id/tv_etc_site_value"
+            style="@style/header5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center|start"
+            android:minHeight="34dp"
+            android:text="@string/ask"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_etc_title"
+            tools:text="문의하기" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
