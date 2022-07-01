@@ -1,12 +1,16 @@
 package com.finpo.app.ui.policy_detail
 
 import android.os.Bundle
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentPolicyDetailBinding
+import com.finpo.app.di.FinpoApplication
 import com.finpo.app.ui.common.BaseFragment
+import com.finpo.app.utils.dp
 import com.google.android.material.tabs.TabLayoutMediator
+import com.skydoves.balloon.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,6 +27,11 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        if(FinpoApplication.prefs.getBoolean("showBalloon", true)) {
+            showBalloon()
+            FinpoApplication.prefs.setBoolean("showBalloon", false)
+        }
+
         binding.viewPagerPolicyDetail.adapter = PolicyDetailViewPagerAdapter(childFragmentManager, lifecycle)
 
         TabLayoutMediator(binding.tbPolicyDetail, binding.viewPagerPolicyDetail) {  tab, position ->
@@ -31,6 +40,28 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
                 else -> "신청 방법"
             }
         }.attach()
+    }
+
+    private fun showBalloon() {
+        val balloon = createBalloon(requireContext()) {
+            setWidth(145)
+            setHeight(65)
+            setText(
+                "이 정책에 참여했었다면\n" +
+                        "참여 버튼을 눌러 추가해보세요!"
+            )
+            setTextColorResource(R.color.white_w01)
+            setTextTypeface(ResourcesCompat.getFont(requireContext(), R.font.notosans_medium)!!)
+            setTextSize(10f)
+            setArrowSize(10)
+            setArrowPosition(0.7f)
+            setCornerRadius(8f)
+            setBackgroundColorResource(R.color.point_p01)
+            setLifecycleOwner(viewLifecycleOwner)
+            build()
+        }
+
+        balloon.showAlignBottom(binding.ivPlus, -28.dp, 10.dp)
     }
 
     override fun onResume() {

@@ -68,4 +68,12 @@ class PrefsManager(context: Context) {
     fun setString(key: String, value: String) {
         prefs.edit().putString(key, value).apply()
     }
+
+    fun getBoolean(key: String, defValue: Boolean): Boolean {
+        return prefs.getBoolean(key, defValue)
+    }
+
+    fun setBoolean(key: String, value: Boolean) {
+        prefs.edit().putBoolean(key, value).apply()
+    }
 }
