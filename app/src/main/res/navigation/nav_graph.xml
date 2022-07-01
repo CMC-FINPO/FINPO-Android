@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_myPageFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_editRegionFragment"
+            app:destination="@id/editRegionFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -87,4 +90,9 @@
         <argument android:name="id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/editRegionFragment"
+        android:name="com.finpo.app.ui.edit_region.EditRegionFragment"
+        android:label="EditRegionFragment"
+        tools:layout="@layout/fragment_edit_region"/>
 </navigation>

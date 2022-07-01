@@ -37,9 +37,16 @@ class MyPageViewModel @Inject constructor(
     private val _settingClickEvent = MutableSingleLiveData<Boolean>()
     val settingClickEvent: SingleLiveData<Boolean> = _settingClickEvent
 
+    private val _regionClickEvent = MutableSingleLiveData<Boolean>()
+    val regionClickEvent: SingleLiveData<Boolean> = _regionClickEvent
+
     init {
         _nickname.value = ""
         getMyInfo()
+    }
+
+    fun regionClick() {
+        _regionClickEvent.setValue(true)
     }
 
     fun settingClick() {
