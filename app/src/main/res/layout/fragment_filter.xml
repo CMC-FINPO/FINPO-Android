@@ -43,7 +43,7 @@
 
                     <TextView
                         android:id="@+id/tv_title"
-                        style="@style/h3_16_mid"
+                        style="@style/header5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/filter"
@@ -54,7 +54,7 @@
 
                     <TextView
                         android:id="@+id/tv_clear"
-                        style="@style/l1_13"
+                        style="@style/label2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="@{() -> viewModel.clearFilter()}"
@@ -94,7 +94,7 @@
 
                     <TextView
                         android:id="@+id/tv_select_region"
-                        style="@style/l1_13"
+                        style="@style/label2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -130,7 +130,7 @@
 
                             <TextView
                                 android:id="@+id/tv_filter_region_none"
-                                style="@style/b3_15_mid"
+                                style="@style/body2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/no_selected_area"
@@ -155,7 +155,7 @@
 
                             <TextView
                                 android:id="@+id/tv_filter_region1"
-                                style="@style/b3_15_mid"
+                                style="@style/body2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{viewModel.filterRegionSelTextList[0].name}"
@@ -192,7 +192,7 @@
 
                             <TextView
                                 android:id="@+id/tv_filter_region2"
-                                style="@style/b3_15_mid"
+                                style="@style/body2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{viewModel.filterRegionSelTextList[1].name}"
@@ -229,7 +229,7 @@
 
                             <TextView
                                 android:id="@+id/tv_filter_region3"
-                                style="@style/b3_15_mid"
+                                style="@style/body2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{viewModel.filterRegionSelTextList[2].name}"
@@ -266,7 +266,7 @@
 
                             <TextView
                                 android:id="@+id/tv_filter_region4"
-                                style="@style/b3_15_mid"
+                                style="@style/body2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{viewModel.filterRegionSelTextList[3].name}"
@@ -303,7 +303,7 @@
 
                             <TextView
                                 android:id="@+id/tv_filter_region5"
-                                style="@style/b3_15_mid"
+                                style="@style/body2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{viewModel.filterRegionSelTextList[4].name}"
@@ -340,7 +340,7 @@
 
                             <TextView
                                 android:id="@+id/tv_filter_region6"
-                                style="@style/b3_15_mid"
+                                style="@style/body2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{viewModel.filterRegionSelTextList[5].name}"
@@ -382,7 +382,7 @@
 
                         <TextView
                             android:id="@+id/et_search"
-                            style="@style/h3_16_mid"
+                            style="@style/header5"
                             android:layout_width="wrap_content"
                             android:layout_height="22dp"
                             android:layout_marginStart="15dp"

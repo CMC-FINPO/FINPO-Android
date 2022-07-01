@@ -22,7 +22,7 @@
 
         <CheckBox
             android:id="@+id/rb_region"
-            style="@style/b3_15_mid"
+            style="@style/body2"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:background="@drawable/selector_checkbox_status_purpose"

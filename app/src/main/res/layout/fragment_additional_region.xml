@@ -18,12 +18,12 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".ui.intro.additional_region.AdditionalRegionFragment">
 
             <TextView
                 android:id="@+id/tv_header"
-                style="@style/h2_24_mid"
+                style="@style/header2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
@@ -58,7 +58,7 @@
 
                     <TextView
                         android:id="@+id/tv_additional_region_none"
-                        style="@style/b3_15_mid"
+                        style="@style/body2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/no_selected_area"
@@ -83,7 +83,7 @@
 
                     <TextView
                         android:id="@+id/tv_additional_region1"
-                        style="@style/b3_15_mid"
+                        style="@style/body2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[0]}"
@@ -120,7 +120,7 @@
 
                     <TextView
                         android:id="@+id/tv_additional_region2"
-                        style="@style/b3_15_mid"
+                        style="@style/body2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[1]}"
@@ -157,7 +157,7 @@
 
                     <TextView
                         android:id="@+id/tv_additional_region3"
-                        style="@style/b3_15_mid"
+                        style="@style/body2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[2]}"
@@ -194,7 +194,7 @@
 
                     <TextView
                         android:id="@+id/tv_additional_region4"
-                        style="@style/b3_15_mid"
+                        style="@style/body2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[3]}"
@@ -231,7 +231,7 @@
 
                     <TextView
                         android:id="@+id/tv_additional_region5"
-                        style="@style/b3_15_mid"
+                        style="@style/body2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.additionalRegionLiveData.additionalDetailRegionSelTextList[4]}"

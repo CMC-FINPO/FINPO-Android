@@ -24,7 +24,7 @@
 
             <TextView
                 android:id="@+id/tv_header"
-                style="@style/h2_24_mid"
+                style="@style/header2"
                 statusPurposeHeaderText="@{viewModel.defaultInfoLiveData.nickNameInputText}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
 
             <TextView
                 android:id="@+id/tv_status"
-                style="@style/l1_13"
+                style="@style/label2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -65,7 +65,7 @@
 
             <TextView
                 android:id="@+id/tv_purpose"
-                style="@style/l1_13"
+                style="@style/label2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -76,7 +76,7 @@
 
             <TextView
                 android:id="@+id/tv_select_multi"
-                style="@style/l1_13"
+                style="@style/label2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/select_multi"

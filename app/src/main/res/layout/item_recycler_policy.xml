@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/tv_region"
-            style="@style/l1_13"
+            style="@style/label2"
             regionData="@{data.region}"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
@@ -43,7 +43,7 @@
 
         <TextView
             android:id="@+id/tv_policy_name"
-            style="@style/h3_16_mid"
+            style="@style/header5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -54,7 +54,7 @@
 
         <TextView
             android:id="@+id/tv_institution_name"
-            style="@style/l1_13"
+            style="@style/label2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

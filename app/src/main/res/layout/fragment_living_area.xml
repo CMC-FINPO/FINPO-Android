@@ -17,12 +17,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".ui.intro.living_area.LivingAreaFragment">
 
         <TextView
             android:id="@+id/tv_header"
-            style="@style/h2_24_mid"
+            style="@style/header2"
             livingAreaText="@{viewModel.defaultInfoLiveData.nickNameInputText}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
 
             <TextView
                 android:id="@+id/tv_live_area_none"
-                style="@style/b3_15_mid"
+                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/where_you_live"
@@ -71,7 +71,7 @@
 
             <TextView
                 android:id="@+id/tv_live_area"
-                style="@style/b3_15_mid"
+                style="@style/body2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/point_p01"

@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/l1_13"
+            style="@style/label2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{data.name}"

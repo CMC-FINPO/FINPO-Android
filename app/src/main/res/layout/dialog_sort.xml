@@ -19,7 +19,7 @@
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/h3_16_mid"
+            style="@style/header5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -34,7 +34,7 @@
 
         <TextView
             android:id="@+id/tv_recent"
-            style="@style/h3_16_mid"
+            style="@style/header5"
             userSortType="@{viewModel.spinnerPosition}"
             viewSortType="@{sortType.RECENT}"
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
 
         <TextView
             android:id="@+id/tv_popular"
-            style="@style/h3_16_mid"
+            style="@style/header5"
             userSortType="@{viewModel.spinnerPosition}"
             viewSortType="@{sortType.POPULAR}"
             android:layout_width="match_parent"

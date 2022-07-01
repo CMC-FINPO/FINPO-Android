@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/tv_header"
-            style="@style/h2_24_mid"
+            style="@style/header2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/tv_agree_all"
-            style="@style/mid_18"
+            style="@style/header3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -71,7 +71,7 @@
 
         <TextView
             android:id="@+id/tv_required_terms_conditions"
-            style="@style/l1_13"
+            style="@style/label2"
             android:layout_width="32dp"
             android:layout_height="22dp"
             android:layout_marginStart="15dp"
@@ -85,7 +85,7 @@
 
         <TextView
             android:id="@+id/tv_terms_conditions"
-            style="@style/h3_16_mid"
+            style="@style/header5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -117,7 +117,7 @@
 
         <TextView
             android:id="@+id/tv_required_personal_information"
-            style="@style/l1_13"
+            style="@style/label2"
             android:layout_width="32dp"
             android:layout_height="22dp"
             android:layout_marginStart="15dp"
@@ -131,7 +131,7 @@
 
         <TextView
             android:id="@+id/tv_personal_information"
-            style="@style/h3_16_mid"
+            style="@style/header5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -164,7 +164,7 @@
 
         <TextView
             android:id="@+id/tv_required_marketing"
-            style="@style/l1_13"
+            style="@style/label2"
             android:layout_width="32dp"
             android:layout_height="22dp"
             android:layout_marginStart="15dp"
@@ -178,7 +178,7 @@
 
         <TextView
             android:id="@+id/tv_marketing"
-            style="@style/h3_16_mid"
+            style="@style/header5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"

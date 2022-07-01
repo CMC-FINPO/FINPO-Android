@@ -85,7 +85,7 @@
 
                 <TextView
                     android:id="@+id/tv_region"
-                    style="@style/l1_13"
+                    style="@style/label2"
                     regionData="@{viewModel.policyDetailData.region}"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
@@ -100,7 +100,7 @@
 
                 <TextView
                     android:id="@+id/tv_policy_name"
-                    style="@style/h2_24_mid"
+                    style="@style/header2"
                     safeNullText="@{viewModel.policyDetailData.title}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
 
                 <TextView
                     android:id="@+id/tv_policy_content"
-                    style="@style/b1_14_reg"
+                    style="@style/body3"
                     safeNullText="@{viewModel.policyDetailData.content}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
 
                 <TextView
                     android:id="@+id/tv_hits_interest_num"
-                    style="@style/b4_10"
+                    style="@style/body6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

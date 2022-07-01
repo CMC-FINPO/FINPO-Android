@@ -1,83 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="h1_28_mid">
-        <item name="android:fontFamily">@font/notosans_medium</item>
-        <item name="android:textSize">28sp</item>
+    <style name="default_font">
+        <item name="android:letterSpacing">-0.03</item>
         <item name="android:textColor">@color/black_b01</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="h2_24_mid" parent="h1_28_mid">
-        <item name="android:textSize">24sp</item>
-    </style>
-
-    <style name="h3_16_mid" parent="h1_28_mid">
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="h5_14_mid" parent="h1_28_mid">
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="b1_16_reg">
+    <style name="default_font.regular">
         <item name="android:fontFamily">@font/notosans_regular</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/black_b01</item>
-        <item name="android:includeFontPadding">false</item>
     </style>
 
-    <style name="b2_16_reg" parent="b1_16_reg">
-        <item name="android:textColor">@color/gray_g01</item>
+    <style name="default_font.regular.26">
+        <item name="lineHeight">26sp</item>
     </style>
 
-    <style name="b1_14_reg" parent="b1_16_reg">
-        <item name="android:textSize">14sp</item>
+    <style name="default_font.regular.22">
+        <item name="lineHeight">22sp</item>
     </style>
 
-    <style name="b2_13_reg" parent="b1_16_reg">
-        <item name="android:textSize">13sp</item>
+    <style name="default_font.regular.20">
+        <item name="lineHeight">20sp</item>
     </style>
 
-    <style name="b3_10_bold" parent="b1_16_reg">
-        <item name="android:textSize">10sp</item>
+    <style name="default_font.regular.15">
+        <item name="lineHeight">15sp</item>
+    </style>
+
+    <style name="default_font.medium">
+        <item name="android:fontFamily">@font/notosans_medium</item>
+    </style>
+
+    <style name="default_font.medium.42">
+        <item name="lineHeight">42sp</item>
+    </style>
+
+    <style name="default_font.medium.36">
+        <item name="lineHeight">36sp</item>
+    </style>
+
+    <style name="default_font.medium.27">
+        <item name="lineHeight">27sp</item>
+    </style>
+
+    <style name="default_font.medium.24">
+        <item name="lineHeight">24sp</item>
+    </style>
+
+    <style name="default_font.medium.23">
+        <item name="lineHeight">23sp</item>
+    </style>
+
+    <style name="default_font.medium.21">
+        <item name="lineHeight">21sp</item>
+    </style>
+
+    <style name="default_font.bold">
         <item name="android:fontFamily">@font/notosans_bold</item>
     </style>
 
-    <style name="b3_15_mid" parent="b4_10_mid">
-        <item name="android:textSize">15sp</item>
+    <style name="default_font.bold.26">
+        <item name="lineHeight">26sp</item>
     </style>
 
-    <style name="b4_10_mid" parent="b1_16_reg">
-        <item name="android:textSize">10sp</item>
-        <item name="android:fontFamily">@font/notosans_medium</item>
+    <style name="default_font.bold.15">
+        <item name="lineHeight">15sp</item>
     </style>
 
-    <style name="b4_10" parent="b1_16_reg">
-        <item name="android:textSize">10sp</item>
+    <style name="header1" parent="default_font.medium.42">
+        <item name="android:textSize">28sp</item>
     </style>
 
-    <style name="l1_13" parent="b1_16_reg">
-        <item name="android:textSize">13sp</item>
+    <style name="header2" parent="default_font.medium.36">
+        <item name="android:textSize">24sp</item>
     </style>
 
-    <style name="l1_12" parent="b1_16_reg">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/gray_g05</item>
-    </style>
-
-    <style name="t1_16">
-        <item name="android:fontFamily">@font/notosans_regular</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/black_b01</item>
-        <item name="android:includeFontPadding">false</item>
-    </style>
-    
-    <style name="mid_18" parent="h1_28_mid">
+    <style name="header3" parent="default_font.medium.27">
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="reg_11" parent="b1_16_reg">
+    <style name="header4" parent="default_font.bold.26">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="header5" parent="default_font.medium.24">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="header6" parent="default_font.medium.21">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="body1" parent="default_font.regular.26">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="body2" parent="default_font.medium.23">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="body3" parent="default_font.regular.22">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="body4" parent="default_font.regular.20">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="body5" parent="default_font.bold.15">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="body6" parent="default_font.regular.15">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="label1" parent="default_font.regular.26">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="label2" parent="default_font.regular.20">
+        <item name="android:textSize">13sp</item>
+    </style>
+    
+    <style name="not_defined_12_reg" parent="default_font.regular">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="not_defined_11_reg" parent="default_font.regular">
         <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="not_defined_11_reg.16" parent="default_font.regular">
+        <item name="lineHeight">16sp</item>
     </style>
 
     <style name="finpo_main_button" parent="Widget.AppCompat.Button.Borderless">
@@ -119,12 +173,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="TabTextSelected" parent="b3_10_bold">
+    <style name="TabTextSelected" parent="body3">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/point_p01</item>
     </style>
 
-    <style name="TabTextUnSelected" parent="b1_16_reg">
+    <style name="TabTextUnSelected" parent="body1">
         <item name="android:textColor">@color/black_b01</item>
     </style>
 

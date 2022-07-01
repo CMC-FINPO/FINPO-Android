@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/tv_nickname"
-            style="@style/h2_24_mid"
+            style="@style/header2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
@@ -60,7 +60,7 @@
 
         <TextView
             android:id="@+id/tv_interest"
-            style="@style/b2_16_reg"
+            style="@style/body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
@@ -86,7 +86,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                style="@style/h5_14_mid"
+                style="@style/header6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="65dp"
@@ -116,7 +116,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                style="@style/h5_14_mid"
+                style="@style/header6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="65dp"
@@ -145,7 +145,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                style="@style/h5_14_mid"
+                style="@style/header6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="65dp"

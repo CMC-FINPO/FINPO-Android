@@ -19,7 +19,7 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                style="@style/h3_16_mid"
+                style="@style/header5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -50,7 +50,7 @@
 
                 <TextView
                     android:id="@+id/tv_region_select"
-                    style="@style/b2_13_reg"
+                    style="@style/label2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -86,7 +86,7 @@
 
                         <TextView
                             android:id="@+id/tv_edit_region_none"
-                            style="@style/b3_15_mid"
+                            style="@style/body2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/no_selected_area"
@@ -111,7 +111,7 @@
 
                         <TextView
                             android:id="@+id/tv_edit_region1"
-                            style="@style/b3_15_mid"
+                            style="@style/body2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[0].name}"
@@ -148,7 +148,7 @@
 
                         <TextView
                             android:id="@+id/tv_edit_region2"
-                            style="@style/b3_15_mid"
+                            style="@style/body2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[1].name}"
@@ -185,7 +185,7 @@
 
                         <TextView
                             android:id="@+id/tv_edit_region3"
-                            style="@style/b3_15_mid"
+                            style="@style/body2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[2].name}"
@@ -222,7 +222,7 @@
 
                         <TextView
                             android:id="@+id/tv_edit_region4"
-                            style="@style/b3_15_mid"
+                            style="@style/body2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[3].name}"
@@ -259,7 +259,7 @@
 
                         <TextView
                             android:id="@+id/tv_edit_region5"
-                            style="@style/b3_15_mid"
+                            style="@style/body2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[4].name}"
@@ -296,7 +296,7 @@
 
                         <TextView
                             android:id="@+id/tv_edit_region6"
-                            style="@style/b3_15_mid"
+                            style="@style/body2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[5].name}"

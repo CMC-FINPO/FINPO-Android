@@ -61,7 +61,8 @@
 
                     <TextView
                         android:id="@+id/tv_progress"
-                        style="@style/l1_12"
+                        style="@style/not_defined_12_reg"
+                        android:textColor="@color/gray_g05"
                         introProgressText="@{viewModel.currentPage}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -72,7 +73,7 @@
 
                     <TextView
                         android:id="@+id/tv_skip"
-                        style="@style/l1_13"
+                        style="@style/label2"
                         introSkipVisibility="@{viewModel.currentPage}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

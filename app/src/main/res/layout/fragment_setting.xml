@@ -21,7 +21,7 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                style="@style/h3_16_mid"
+                style="@style/header5"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
@@ -33,7 +33,7 @@
 
             <TextView
                 android:id="@+id/tv_edit_my_info"
-                style="@style/h3_16_mid"
+                style="@style/header5"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
@@ -49,20 +49,18 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_receive_advertising_info"
-                style="@style/h3_16_mid"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:gravity="start|center"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/edit_my_info"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_edit_my_info">
 
                 <TextView
-                    style="@style/h3_16_mid"
+                    style="@style/header5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/receive_advertising_info"
@@ -84,7 +82,7 @@
 
             <TextView
                 android:id="@+id/tv_community_rule"
-                style="@style/h3_16_mid"
+                style="@style/header5"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
@@ -100,7 +98,7 @@
 
             <TextView
                 android:id="@+id/tv_report_reason"
-                style="@style/h3_16_mid"
+                style="@style/header5"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
@@ -116,7 +114,7 @@
 
             <TextView
                 android:id="@+id/tv_terms"
-                style="@style/h3_16_mid"
+                style="@style/header5"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
@@ -132,7 +130,7 @@
 
             <TextView
                 android:id="@+id/tv_ask"
-                style="@style/h3_16_mid"
+                style="@style/header5"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
@@ -148,7 +146,7 @@
 
             <TextView
                 android:id="@+id/tv_personal_info"
-                style="@style/h3_16_mid"
+                style="@style/header5"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
@@ -164,7 +162,7 @@
 
             <TextView
                 android:id="@+id/tv_open_source"
-                style="@style/h3_16_mid"
+                style="@style/header5"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
@@ -180,7 +178,7 @@
 
             <TextView
                 android:id="@+id/tv_logout"
-                style="@style/h3_16_mid"
+                style="@style/header5"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
@@ -197,7 +195,7 @@
 
             <TextView
                 android:id="@+id/tv_withdrawal"
-                style="@style/h3_16_mid"
+                style="@style/header5"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"

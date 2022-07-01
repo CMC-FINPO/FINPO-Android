@@ -22,7 +22,7 @@
         <RadioButton
             android:visibility="@{data.status ? View.VISIBLE : View.GONE}"
             android:id="@+id/rb_region"
-            style="@style/h3_16_mid"
+            style="@style/header5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/selector_radio_button_region"
@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/tv_disabled_region"
-            style="@style/h3_16_mid"
+            style="@style/header5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"
@@ -57,7 +57,7 @@
 
         <TextView
             android:id="@+id/tv_disabled_label"
-            style="@style/l1_13"
+            style="@style/label2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_solid_g05_rounded_5"

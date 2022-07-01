@@ -16,12 +16,12 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".ui.intro.interest.InterestFragment">
 
             <TextView
                 android:id="@+id/tv_header"
-                style="@style/h2_24_mid"
+                style="@style/header2"
                 interestText="@{viewModel.defaultInfoLiveData.nickNameInputText}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
 
             <TextView
                 android:id="@+id/tv_interest"
-                style="@style/l1_13"
+                style="@style/label2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -43,7 +43,7 @@
 
             <TextView
                 android:id="@+id/tv_select_multi"
-                style="@style/l1_13"
+                style="@style/label2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

@@ -66,7 +66,7 @@
 
                         <EditText
                             android:id="@+id/et_search"
-                            style="@style/h3_16_mid"
+                            style="@style/header5"
                             android:layout_width="0dp"
                             android:layout_height="22dp"
                             android:layout_marginStart="15dp"
@@ -87,7 +87,7 @@
 
                     <TextView
                         android:id="@+id/tv_result_count"
-                        style="@style/h3_16_mid"
+                        style="@style/header5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -98,7 +98,7 @@
 
                     <TextView
                         android:id="@+id/tv_result"
-                        style="@style/h3_16_mid"
+                        style="@style/header5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="@id/tv_result_count"
@@ -120,7 +120,7 @@
 
                         <TextView
                             android:id="@+id/tv_spinner"
-                            style="@style/b2_13_reg"
+                            style="@style/body4"
                             spinnerText="@{viewModel.spinnerPosition}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            style="@style/b2_13_reg"
+                            style="@style/body4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="3dp"
