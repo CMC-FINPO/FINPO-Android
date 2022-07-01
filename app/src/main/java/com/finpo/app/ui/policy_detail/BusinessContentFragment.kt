@@ -18,4 +18,9 @@ class BusinessContentFragment : BaseFragment<FragmentBusinessContentBinding>(R.l
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
     }
+
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
+    }
 }
