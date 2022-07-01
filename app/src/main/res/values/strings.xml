@@ -84,4 +84,9 @@
     <string name="hits_interest_num">스크랩수 %d · 조회수 %d</string>
     <string name="policy_type">정책 유형</string>
     <string name="support_content">지원 내용</string>
+    <string name="institution">주최/주관기관</string>
+    <string name="support_scale">지원 규모</string>
+    <string name="apply_period">신청 기간</string>
+    <string name="hyphen">-</string>
+    <string name="operation_period">운영 기간</string>
 </resources>

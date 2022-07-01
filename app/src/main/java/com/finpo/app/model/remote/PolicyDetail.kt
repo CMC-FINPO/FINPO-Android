@@ -12,6 +12,8 @@ data class PolicyDetail(
     val supportScale: String?,
     val support: String?,
     val period: String?,
+    val startDate: String?,
+    val endDate: String?,
     val process: String?,
     val announcement: String?,
     val detailUrl: String?,
