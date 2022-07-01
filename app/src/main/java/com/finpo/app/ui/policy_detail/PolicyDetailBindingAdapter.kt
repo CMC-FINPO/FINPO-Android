@@ -42,3 +42,9 @@ fun TabLayout.tabTextStyle(tabTextStyleBold: String?) {
     onTabSelectedListener.onTabSelected(mTabLayout.getTabAt(mTabLayout.selectedTabPosition))
     mTabLayout.addOnTabSelectedListener(onTabSelectedListener)
 }
+
+@BindingAdapter("policyStartDate", "policyEndDate", "policyPeriod")
+fun setPeriod(textView: TextView, policyStartDate: String?, policyEndDate: String?, policyPeriod: String?) {
+    textView.text = if(policyStartDate != null && policyEndDate != null) "$policyStartDate  -  $policyEndDate"
+    else policyPeriod ?: ""
+}

@@ -104,9 +104,9 @@
             style="@style/header5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="34dp"
             android:layout_marginTop="4dp"
             android:gravity="center|start"
+            android:minHeight="34dp"
             android:text="@{viewModel.policyDetailData.institution}"
             app:layout_constraintEnd_toStartOf="@+id/view_divider2"
             app:layout_constraintStart_toStartOf="parent"
@@ -140,10 +140,10 @@
             style="@style/header5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="34dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="4dp"
             android:gravity="center|start"
+            android:minHeight="34dp"
             android:text="@{viewModel.policyDetailData.supportScale}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/view_divider2"
@@ -162,61 +162,18 @@
             app:layout_constraintTop_toBottomOf="@id/view_divider2" />
 
         <TextView
-            android:id="@+id/tv_apply_period_start"
+            android:id="@+id/tv_apply_period_value"
             style="@style/header5"
-            safeNullText="@{viewModel.policyDetailData.startDate}"
-            android:layout_width="wrap_content"
-            android:layout_height="34dp"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_apply_period_title"
-            tools:text="2020/01/01" />
-
-        <TextView
-            android:id="@+id/tv_apply_period_hyphen"
-            style="@style/header5"
-            android:layout_width="wrap_content"
-            android:layout_height="34dp"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:text="@string/hyphen"
-            app:layout_constraintStart_toEndOf="@id/tv_apply_period_start"
-            app:layout_constraintTop_toBottomOf="@id/tv_apply_period_title" />
-
-        <TextView
-            android:id="@+id/tv_apply_period_end"
-            style="@style/header5"
-            safeNullText="@{viewModel.policyDetailData.endDate}"
-            android:layout_width="wrap_content"
-            android:layout_height="34dp"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            app:layout_constraintStart_toEndOf="@id/tv_apply_period_hyphen"
-            app:layout_constraintTop_toBottomOf="@id/tv_apply_period_title"
-            tools:text="2020/01/01" />
-
-        <TextView
-            android:id="@+id/tv_operation_period_title"
-            style="@style/body2"
-            android:layout_width="wrap_content"
+            policyEndDate="@{viewModel.policyDetailData.endDate}"
+            policyPeriod="@{viewModel.policyDetailData.period}"
+            policyStartDate="@{viewModel.policyDetailData.startDate}"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/operation_period"
-            android:textColor="@color/gray_g01"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_apply_period_start" />
-
-        <TextView
-            android:id="@+id/tv_operation_period_value"
-            style="@style/header5"
-            safeNullText="@{viewModel.policyDetailData.period}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center|start"
             android:minHeight="34dp"
-            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_operation_period_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_apply_period_title"
             tools:text="2020/01/01" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
