@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.PolicyDetail
 import com.finpo.app.repository.BookmarkRepository
 import com.finpo.app.repository.PolicyDetailRepository
+import com.finpo.app.utils.MutableSingleLiveData
+import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -20,6 +22,13 @@ class PolicyDetailViewModel @Inject constructor(
 ): ViewModel() {
     private val _policyDetailData = MutableLiveData<PolicyDetail>()
     val policyDetailData: LiveData<PolicyDetail> = _policyDetailData
+
+    private val _backClickEvent = MutableSingleLiveData<Boolean>()
+    val backClickEvent: SingleLiveData<Boolean> = _backClickEvent
+
+    fun backClick() {
+        _backClickEvent.setValue(true)
+    }
 
     fun getPolicyDetail(id: Int) {
         viewModelScope.launch {

@@ -3,6 +3,7 @@ package com.finpo.app.ui.policy_detail
 import android.os.Bundle
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentPolicyDetailBinding
@@ -30,6 +31,10 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
         if(FinpoApplication.prefs.getBoolean("showBalloon", true)) {
             showBalloon()
             FinpoApplication.prefs.setBoolean("showBalloon", false)
+        }
+
+        viewModel.backClickEvent.observe {
+            findNavController().popBackStack()
         }
 
         binding.viewPagerPolicyDetail.adapter = PolicyDetailViewPagerAdapter(childFragmentManager, lifecycle)
