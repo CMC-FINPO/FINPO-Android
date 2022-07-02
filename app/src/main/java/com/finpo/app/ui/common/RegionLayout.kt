@@ -21,9 +21,7 @@ class RegionLayout @JvmOverloads constructor(
 ) :
     FlexboxLayout(context, attrs, defStyleAttr) {
     private val binding: CustomRegionLayoutBinding
-    private val regionTextViewList: List<TextView>
-    private val regionContainerList: List<ConstraintLayout>
-    private val regionDeleteList: List<ImageView>
+    private val regionContainerList: List<RegionBox>
     var regionCount: Int? = 0
     set(value) {
         field = value
@@ -36,7 +34,7 @@ class RegionLayout @JvmOverloads constructor(
         field = value
         if(value == null) return
         for (idx in 0 until value.size) {
-            regionTextViewList[idx].text = value[idx]
+            regionContainerList[idx].regionText = value[idx]
             regionContainerList[idx].visibility = if(value[idx].isEmpty()) View.GONE else View.VISIBLE
         }
     }
@@ -44,8 +42,8 @@ class RegionLayout @JvmOverloads constructor(
     var regionDelete: (id: Int) -> Unit = {}
     set(value) {
         field = value
-        for(idx in regionDeleteList.indices) {
-            regionDeleteList[idx].setOnClickListener { value(idx) }
+        for(idx in regionContainerList.indices) {
+            regionContainerList[idx].setOnClickListener { value(idx) }
         }
     }
 
@@ -54,12 +52,7 @@ class RegionLayout @JvmOverloads constructor(
         binding = DataBindingUtil.inflate(inflater, R.layout.custom_region_layout, this, true)
 
         with(binding) {
-            regionTextViewList = listOf(tvRegion1, tvRegion2, tvRegion3, tvRegion4, tvRegion5)
-            regionContainerList = listOf(clRegion1, clRegion2, clRegion3, clRegion4, clRegion5)
-            regionDeleteList = listOf(ivRegionRemove1, ivRegionRemove2, ivRegionRemove3, ivRegionRemove4, ivRegionRemove5)
+            regionContainerList = listOf(regionBox1, regionBox2, regionBox3, regionBox4, regionBox5)
         }
     }
-
-
-
 }
