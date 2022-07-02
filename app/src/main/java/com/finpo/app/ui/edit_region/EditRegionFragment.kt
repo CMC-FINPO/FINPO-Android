@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentEditRegionBinding
 import com.finpo.app.ui.common.BaseFragment
@@ -15,6 +16,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class EditRegionFragment : BaseFragment<FragmentEditRegionBinding>(R.layout.fragment_edit_region) {
     private val viewModel by viewModels<EditRegionViewModel>()
+    private val args by navArgs<EditRegionFragmentArgs>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.nickname = args.nickname
+        viewModel.getMyInterestRegion()
+    }
 
     override fun doViewCreated() {
         binding.viewModel = viewModel

@@ -88,10 +88,12 @@
                             app:tabRippleColor="@color/white_w01"
                             app:tabTextAppearance="@style/TabTextStyle"
                             app:tabTextColor="@color/selector_tab_indicator_text"
-                            app:tabTextStyleBold="@{viewModel.testString}" />
+                            app:tabTextStyleBold="@{viewModel.nickname}" />
                     </FrameLayout>
 
                     <androidx.viewpager2.widget.ViewPager2
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:id="@+id/view_pager_edit_region"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

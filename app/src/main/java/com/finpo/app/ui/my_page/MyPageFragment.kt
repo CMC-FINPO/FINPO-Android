@@ -35,7 +35,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         }
 
         viewModel.regionClickEvent.observe {
-            val action = MyPageFragmentDirections.actionMyPageFragmentToEditRegionFragment()
+            val action = MyPageFragmentDirections.actionMyPageFragmentToEditRegionFragment(viewModel.nickname.value ?: "")
             findNavController().navigate(action)
         }
     }

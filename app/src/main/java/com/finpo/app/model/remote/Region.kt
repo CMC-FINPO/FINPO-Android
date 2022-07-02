@@ -26,7 +26,8 @@ data class MyRegionResponse(
 ) : Serializable
 
 data class MyRegion(
-    val region: RegionInterest
+    val region: RegionInterest,
+    val isDefault: Boolean?
 )
 
 data class RegionInterest(

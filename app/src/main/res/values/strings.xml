@@ -92,4 +92,6 @@
     <string name="apply_site">신청 사이트</string>
     <string name="shortcut">바로가기</string>
     <string name="process">신청 절차</string>
+    <string name="select_interest_region_please">%s님의\n관심 지역을 선택해주세요</string>
+    <string name="select_living_region_please">%s님이 현재 거주하고 있는 지역을 선택해주세요</string>
 </resources>
