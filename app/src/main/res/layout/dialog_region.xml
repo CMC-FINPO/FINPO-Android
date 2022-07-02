@@ -338,7 +338,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:nestedScrollingEnabled="true"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_recycler_region" />
 

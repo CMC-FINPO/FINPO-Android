@@ -10,32 +10,47 @@
             type="com.finpo.app.ui.edit_region.EditRegionViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.edit_region.edit_region_interest.EditRegionInterestFragment">
 
-        <TextView
-            android:id="@+id/tv_header"
-            style="@style/header2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:text="@{@string/select_interest_region_please(viewModel.nickname)}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="핀포님의\n관심 지역을 선택해주세요" />
-
-        <com.finpo.app.ui.common.RegionLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_header"
-            app:regionTextList="@{viewModel.myInterestRegionTextList}"
-            app:regionCount="@{viewModel.myInterestRegionCount}"
-            app:regionDelete="@{viewModel.deleteInterestRegion}" />
+            android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_header"
+                style="@style/header2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@{@string/select_interest_region_please(viewModel.nickname)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="핀포님의\n관심 지역을 선택해주세요" />
+
+            <com.finpo.app.ui.common.RegionLayout
+                android:id="@+id/region_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_header"
+                app:regionCount="@{viewModel.interestRegionViewModel.regionCount}"
+                app:regionDelete="@{viewModel.interestRegionViewModel.deleteRegion}"
+                app:regionTextList="@{viewModel.interestRegionViewModel.regionTextList}" />
+
+            <com.finpo.app.ui.common.RegionRecyclerView
+                android:id="@+id/region_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/region_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

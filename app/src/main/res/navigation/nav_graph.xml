@@ -53,7 +53,8 @@
             app:destination="@id/settingFragment" />
         <action
             android:id="@+id/action_myPageFragment_to_editRegionFragment"
-            app:destination="@id/editRegionFragment" />
+            app:destination="@id/editRegionFragment"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
