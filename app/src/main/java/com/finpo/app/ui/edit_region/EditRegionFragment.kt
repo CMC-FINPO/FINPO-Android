@@ -41,7 +41,7 @@ class EditRegionFragment : BaseFragment<FragmentEditRegionBinding>(R.layout.frag
         }.attach()
 
         viewModel.goToMyInfoFragmentEvent.observe {
-            startActivity(Intent(requireContext(), MainActivity::class.java))
+            startActivity(Intent(requireContext(), MainActivity::class.java).apply { putExtra("startId",R.id.myPageFragment) })
             activity?.finish()
         }
     }

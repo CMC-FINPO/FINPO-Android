@@ -9,12 +9,13 @@ import androidx.navigation.ui.NavigationUI
 import com.finpo.app.R
 import com.finpo.app.databinding.ActivityMainBinding
 import com.finpo.app.ui.common.BaseActivity
+import com.skydoves.balloon.balloon
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     override fun init() {
         binding.navBar.itemIconTintList = null
@@ -31,6 +32,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             window.statusBarColor = if(destination.id == R.id.homeFragment || destination.id == R.id.policyDetailFragment) ContextCompat.getColor(this, R.color.gray_g09)
             else ContextCompat.getColor(this, R.color.white_w01)
         }
+
+        val startId = intent.getIntExtra("startId", R.id.homeFragment)
+        navController.navigate(startId)
     }
 
     override fun onBackPressed() {
