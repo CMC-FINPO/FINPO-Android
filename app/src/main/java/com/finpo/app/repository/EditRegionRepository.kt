@@ -7,5 +7,6 @@ import javax.inject.Singleton
 
 @Singleton
 class EditRegionRepository @Inject constructor(private val apiService: ApiService) {
-    suspend fun addMyInterestRegion(regionList: List<RegionRequest>) = apiService.addMyInterestRegion(regionList)
+    suspend fun editMyInterestRegion(regionList: List<RegionRequest>) = apiService.editMyInterestRegion(regionList)
+    suspend fun editMyLivingRegion(regionId: Int) = apiService.editMyLivingRegion(RegionRequest(regionId))
 }

@@ -9,7 +9,6 @@ import com.finpo.app.model.remote.RegionInterest
 import com.finpo.app.model.remote.RegionResponse
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.repository.RegionRepository
-import com.finpo.app.utils.MAX_ADDITIONAL_COUNT
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.onSuccess
@@ -81,7 +80,7 @@ class RegionViewModel @Inject constructor(
     }
 
     fun selectEditRegionDetail(editRegionDetailId: Int, editRegionDetailText: String) {
-        if(_regionCount.value!! >= MAX_ADDITIONAL_COUNT) {
+        if(_regionCount.value!! >= MAX_COUNT) {
             _chooseMaxToastEvent.setValue(true)
             return
         }
@@ -103,10 +102,10 @@ class RegionViewModel @Inject constructor(
     val deleteRegion: (idx: Int) -> Unit = { idx ->
         regionIds.removeAt(idx)
         val regionTextList = _regionTextList.value!!
-        for (i in idx until MAX_ADDITIONAL_COUNT - 1) {
+        for (i in idx until MAX_COUNT - 1) {
             regionTextList[i] = regionTextList[i + 1]
         }
-        regionTextList[MAX_ADDITIONAL_COUNT - 1] = ""
+        regionTextList[MAX_COUNT - 1] = ""
         _regionTextList.value = regionTextList
         _regionCount.value = _regionCount.value!! - 1
     }

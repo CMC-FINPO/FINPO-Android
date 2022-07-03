@@ -10,9 +10,14 @@ import retrofit2.http.*
 
 interface ApiService {
     @PUT("/region/me")
-    suspend fun addMyInterestRegion(
+    suspend fun editMyInterestRegion(
         @Body regionList: List<RegionRequest>
     ) : ApiResponse<RegionInterestResponse>
+
+    @PUT("/region/my-default")
+    suspend fun editMyLivingRegion(
+        @Body regionList: RegionRequest
+    ): ApiResponse<JsonElement>
 
     @GET("/user/me")
     suspend fun getMyInfo() : ApiResponse<MyInfoResponse>

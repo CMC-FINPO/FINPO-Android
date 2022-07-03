@@ -87,7 +87,7 @@ class IntroViewModel @Inject constructor(
 
     fun postAdditionalInfo() {
         viewModelScope.launch {
-            val additionalResponse = editRegionRepository.addMyInterestRegion(additionalRegionLiveData.additionalRegionDetailIdList)
+            val additionalResponse = editRegionRepository.editMyInterestRegion(additionalRegionLiveData.additionalRegionDetailIdList)
             val statusPurposeResponse = statusPurposeRepository.setStatusPurpose(
                 statusPurposeLiveData.statusSelectedId.value,
                 statusPurposeLiveData.purposeIds.value?.toList()
