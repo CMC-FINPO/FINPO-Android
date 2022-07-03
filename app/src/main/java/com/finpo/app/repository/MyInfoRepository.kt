@@ -12,4 +12,5 @@ class MyInfoRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun changeProfileImg(profileImg: MultipartBody.Part?) = apiService.changeProfileImg(profileImg)
     suspend fun getMyRegion() = apiService.getMyRegion()
     suspend fun getMyCategory() = apiService.getMyCategory()
+    suspend fun getMyParentCategory() = apiService.getMyParentCategory()
 }

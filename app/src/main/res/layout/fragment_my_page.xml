@@ -38,6 +38,7 @@
             tools:background="@color/point_p01" />
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="-4dp"
@@ -69,14 +70,27 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_profile"
             app:layout_constraintStart_toEndOf="@id/iv_profile" />
 
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/fl_interest"
+            interestList="@{viewModel.interestList}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_interest"
+            app:layout_constraintTop_toTopOf="@id/tv_interest" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_select_interest_region"
             android:layout_width="93dp"
             android:layout_height="97dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="24dp"
             android:onClick="@{() -> viewModel.regionClick()}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_profile">
+            app:layout_constraintTop_toBottomOf="@+id/fl_interest">
 
             <ImageView
                 android:layout_width="60dp"
@@ -103,10 +117,10 @@
             android:id="@+id/cl_interest_list"
             android:layout_width="93dp"
             android:layout_height="97dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_profile">
+            app:layout_constraintTop_toTopOf="@+id/cl_select_interest_region">
 
             <ImageView
                 android:layout_width="60dp"
@@ -133,9 +147,8 @@
             android:id="@+id/cl_participation"
             android:layout_width="93dp"
             android:layout_height="97dp"
-            android:layout_marginTop="22dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_profile">
+            app:layout_constraintTop_toTopOf="@+id/cl_interest_list">
 
             <ImageView
                 android:layout_width="60dp"

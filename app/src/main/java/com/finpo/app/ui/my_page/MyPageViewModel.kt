@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.finpo.app.model.remote.ParentCategory
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.utils.ImageUtils
 import com.finpo.app.utils.MutableSingleLiveData
@@ -40,9 +41,20 @@ class MyPageViewModel @Inject constructor(
     private val _regionClickEvent = MutableSingleLiveData<Boolean>()
     val regionClickEvent: SingleLiveData<Boolean> = _regionClickEvent
 
+    private val _interestList = MutableLiveData<List<ParentCategory>>()
+    val interestList: LiveData<List<ParentCategory>> = _interestList
+
     init {
         _nickname.value = ""
         getMyInfo()
+        getMyInterestCategory()
+    }
+
+    private fun getMyInterestCategory() {
+        viewModelScope.launch {
+            val interestResponse = myInfoRepository.getMyParentCategory()
+            interestResponse.onSuccess { _interestList.value = data.data }
+        }
     }
 
     fun regionClick() {
