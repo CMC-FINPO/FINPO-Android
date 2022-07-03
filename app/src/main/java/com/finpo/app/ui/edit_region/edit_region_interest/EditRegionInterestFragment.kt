@@ -6,7 +6,9 @@ import com.finpo.app.R
 import com.finpo.app.databinding.FragmentEditRegionInterestBinding
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.edit_region.EditRegionViewModel
+import com.finpo.app.utils.MAX_ADDITIONAL_COUNT
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.format
 
 @AndroidEntryPoint
 class EditRegionInterestFragment : BaseFragment<FragmentEditRegionInterestBinding>(R.layout.fragment_edit_region_interest) {
@@ -20,6 +22,14 @@ class EditRegionInterestFragment : BaseFragment<FragmentEditRegionInterestBindin
 
         initRecyclerView()
         observeRecyclerView()
+
+        viewModel.interestRegionViewModel.chooseMaxToastEvent.observe {
+            shortShowToast(format(getString(R.string.can_select_max), MAX_ADDITIONAL_COUNT))
+        }
+
+        viewModel.interestRegionViewModel.regionOverlapToastEvent.observe {
+            shortShowToast(getString(R.string.overlap_region))
+        }
     }
 
     override fun onResume() {

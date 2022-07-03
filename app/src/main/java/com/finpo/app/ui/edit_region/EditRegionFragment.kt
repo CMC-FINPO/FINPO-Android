@@ -12,6 +12,7 @@ import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.utils.MAX_ADDITIONAL_COUNT
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.format
 
 @AndroidEntryPoint
 class EditRegionFragment : BaseFragment<FragmentEditRegionBinding>(R.layout.fragment_edit_region) {

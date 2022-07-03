@@ -10,7 +10,9 @@ import com.finpo.app.R
 import com.finpo.app.databinding.FragmentFilterBinding
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.filter.bottom_sheet.BottomSheetRegionDialog
+import com.finpo.app.utils.MAX_ADDITIONAL_COUNT
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.format
 
 @AndroidEntryPoint
 class FilterFragment : BaseFragment<FragmentFilterBinding>(R.layout.fragment_filter) {
@@ -44,11 +46,11 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(R.layout.fragment_fil
         }
 
         viewModel.bottomSheetRegionViewModel.chooseMaxToastEvent.observe {
-            shortShowToast("최대 6개까지 선택할 수 있어요!")
+            shortShowToast(format(getString(R.string.can_select_max), MAX_ADDITIONAL_COUNT + 1))
         }
 
         viewModel.bottomSheetRegionViewModel.regionOverlapToastEvent.observe {
-            shortShowToast("이미 선택된 지역입니다!")
+            shortShowToast(getString(R.string.overlap_region))
         }
 
         viewModel.goToHomeFragmentEvent.observe {

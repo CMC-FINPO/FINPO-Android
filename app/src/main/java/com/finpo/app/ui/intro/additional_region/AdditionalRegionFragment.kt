@@ -8,7 +8,9 @@ import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.intro.IntroViewModel
 import com.finpo.app.ui.intro.living_area.RegionAdapter
 import com.finpo.app.ui.intro.living_area.RegionDetailAdapter
+import com.finpo.app.utils.MAX_ADDITIONAL_COUNT
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.format
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -28,7 +30,7 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
 
     private fun observeRecyclerViewEvent() {
         viewModel.additionalRegionLiveData.chooseMaxToastEvent.observe {
-            shortShowToast(getString(R.string.can_select_max))
+            shortShowToast(format(getString(R.string.can_select_max), MAX_ADDITIONAL_COUNT))
         }
 
         viewModel.additionalRegionLiveData.regionOverlapToastEvent.observe {

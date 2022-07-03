@@ -15,6 +15,7 @@ import com.finpo.app.ui.edit_region.EditRegionViewModel
 import com.finpo.app.ui.edit_region.edit_region_interest.EditInterestRegionAdapter
 import com.finpo.app.ui.edit_region.edit_region_interest.EditInterestRegionDetailAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.format
 
 @AndroidEntryPoint
 class EditRegionLivingFragment : BaseFragment<FragmentEditRegionLivingBinding>(R.layout.fragment_edit_region_living) {
@@ -31,6 +32,14 @@ class EditRegionLivingFragment : BaseFragment<FragmentEditRegionLivingBinding>(R
 
         initRecyclerView()
         observeRecyclerView()
+
+        viewModel.livingRegionViewModel.chooseMaxToastEvent.observe {
+            shortShowToast(format(getString(R.string.can_select_max), 1))
+        }
+
+        viewModel.livingRegionViewModel.regionOverlapToastEvent.observe {
+            shortShowToast(getString(R.string.overlap_region))
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
