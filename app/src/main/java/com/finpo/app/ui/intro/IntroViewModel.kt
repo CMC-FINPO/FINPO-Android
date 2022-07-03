@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.di.FinpoApplication
 import com.finpo.app.model.remote.TokenResponse
-import com.finpo.app.repository.AdditionalInfoRepository
+import com.finpo.app.repository.EditRegionRepository
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.repository.NotificationRepository
 import com.finpo.app.repository.StatusPurposeRepository
@@ -20,19 +20,12 @@ import com.finpo.app.ui.intro.status_purpose.StatusPurposeLiveData
 import com.finpo.app.ui.intro.terms_conditions.TermsConditionsLiveData
 import com.finpo.app.utils.*
 import com.finpo.app.utils.PAGE.FINISH
-import com.google.android.gms.tasks.Tasks
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.skydoves.sandwich.ApiResponse
-import com.skydoves.sandwich.onFailure
-import com.skydoves.sandwich.onSuccess
-import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.json.JSONArray
-import retrofit2.http.Multipart
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -48,7 +41,7 @@ class IntroViewModel @Inject constructor(
     val interestLiveData: InterestLiveData,
     val statusPurposeLiveData: StatusPurposeLiveData,
     private val introRepository: IntroRepository,
-    private val additionalInfoRepository: AdditionalInfoRepository,
+    private val editRegionRepository: EditRegionRepository,
     private val statusPurposeRepository: StatusPurposeRepository,
     private val notificationRepository: NotificationRepository
 ) : ViewModel() {
@@ -94,7 +87,7 @@ class IntroViewModel @Inject constructor(
 
     fun postAdditionalInfo() {
         viewModelScope.launch {
-            val additionalResponse = additionalInfoRepository.addMyInterestRegion(additionalRegionLiveData.additionalRegionDetailIdList)
+            val additionalResponse = editRegionRepository.addMyInterestRegion(additionalRegionLiveData.additionalRegionDetailIdList)
             val statusPurposeResponse = statusPurposeRepository.setStatusPurpose(
                 statusPurposeLiveData.statusSelectedId.value,
                 statusPurposeLiveData.purposeIds.value?.toList()

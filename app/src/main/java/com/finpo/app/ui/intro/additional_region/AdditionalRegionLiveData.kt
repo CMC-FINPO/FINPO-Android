@@ -4,11 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.finpo.app.model.remote.Region
 import com.finpo.app.model.remote.RegionRequest
 import com.finpo.app.model.remote.RegionResponse
-import com.finpo.app.repository.AdditionalInfoRepository
-import com.finpo.app.repository.IntroRepository
 import com.finpo.app.ui.intro.living_area.LivingAreaLiveData
 import com.finpo.app.utils.MAX_ADDITIONAL_COUNT
 import com.finpo.app.utils.MutableSingleLiveData

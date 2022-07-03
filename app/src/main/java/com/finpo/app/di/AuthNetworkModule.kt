@@ -1,11 +1,8 @@
 package com.finpo.app.di
 
 import com.finpo.app.network.ApiService
-import com.finpo.app.network.ApiServiceWithoutToken
 import com.finpo.app.network.AuthenticationInterceptor
 import com.finpo.app.network.TokenAuthenticator
-import com.finpo.app.repository.AdditionalInfoRepository
-import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.API
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module

@@ -103,6 +103,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
+                android:enabled="@{viewModel.isEditRegionButtonEnabled}"
+                android:onClick="@{() -> viewModel.editButtonClick()}"
                 android:text="@string/select_finish"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

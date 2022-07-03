@@ -22,6 +22,11 @@ class EditRegionInterestFragment : BaseFragment<FragmentEditRegionInterestBindin
         observeRecyclerView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setViewpagerTypeInterest()
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun observeRecyclerView() {
         viewModel.interestRegionViewModel.regionData.observe(viewLifecycleOwner) {

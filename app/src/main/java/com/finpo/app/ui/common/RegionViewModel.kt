@@ -26,7 +26,7 @@ class RegionViewModel @Inject constructor(
 
     val regionIds: MutableList<Int?> = mutableListOf()
 
-    private val _regionCount = MutableLiveData<Int>()
+    val _regionCount = MutableLiveData<Int>()
     val regionCount: LiveData<Int> = _regionCount
 
     private val _regionData = MutableLiveData<RegionResponse>()

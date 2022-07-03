@@ -1,10 +1,13 @@
 package com.finpo.app.ui.edit_region
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentEditRegionBinding
+import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.utils.MAX_ADDITIONAL_COUNT
 import com.google.android.material.tabs.TabLayoutMediator
@@ -35,5 +38,10 @@ class EditRegionFragment : BaseFragment<FragmentEditRegionBinding>(R.layout.frag
                 else -> "거주 지역"
             }
         }.attach()
+
+        viewModel.goToMyInfoFragmentEvent.observe {
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+            activity?.finish()
+        }
     }
 }

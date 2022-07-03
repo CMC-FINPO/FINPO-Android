@@ -6,6 +6,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AdditionalInfoRepository @Inject constructor(private val apiService: ApiService) {
+class EditRegionRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun addMyInterestRegion(regionList: List<RegionRequest>) = apiService.addMyInterestRegion(regionList)
 }

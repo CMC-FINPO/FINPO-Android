@@ -8,6 +8,10 @@ const val MAX_FILTER_REGION_COUNT = 6
 const val RETROFIT_TAG = "retrofit2"
 val SORT = listOf("modifiedAt,desc", "countOfInterest,desc")
 
+enum class EditRegionType {
+    LIVING, INTEREST
+}
+
 object SORT_TYPE {
     const val RECENT = 0
     const val POPULAR = 1
