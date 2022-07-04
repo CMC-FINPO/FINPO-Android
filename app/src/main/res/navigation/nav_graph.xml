@@ -39,10 +39,10 @@
         android:label="fragment_community"
         tools:layout="@layout/fragment_community" />
     <fragment
-        android:id="@+id/alarmFragment"
-        android:name="com.finpo.app.ui.alarm.AlarmFragment"
+        android:id="@+id/bookmarkFragment"
+        android:name="com.finpo.app.ui.bookmark.BookmarkFragment"
         android:label="fragment_notification"
-        tools:layout="@layout/fragment_alarm" />
+        tools:layout="@layout/fragment_bookmark" />
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.finpo.app.ui.my_page.MyPageFragment"

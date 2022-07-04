@@ -9,7 +9,6 @@ import androidx.navigation.ui.NavigationUI
 import com.finpo.app.R
 import com.finpo.app.databinding.ActivityMainBinding
 import com.finpo.app.ui.common.BaseActivity
-import com.skydoves.balloon.balloon
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -25,7 +24,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         binding.navBar.setOnItemReselectedListener {  }
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.navBar.visibility = if(destination.id == R.id.homeFragment || destination.id == R.id.communityFragment || destination.id == R.id.alarmFragment || destination.id == R.id.myPageFragment)
+            binding.navBar.visibility = if(destination.id == R.id.homeFragment || destination.id == R.id.communityFragment || destination.id == R.id.bookmarkFragment || destination.id == R.id.myPageFragment)
                  View.VISIBLE
             else View.GONE
 

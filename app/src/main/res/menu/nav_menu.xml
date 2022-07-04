@@ -12,9 +12,9 @@
         android:title="@string/community"/>
 
     <item
-        android:id="@+id/alarmFragment"
-        android:icon="@drawable/selector_alarm"
-        android:title="@string/alarm"/>
+        android:id="@+id/bookmarkFragment"
+        android:icon="@drawable/selector_bookmark"
+        android:title="@string/bookmark"/>
 
     <item
         android:id="@+id/myPageFragment"
