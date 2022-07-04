@@ -32,6 +32,20 @@ class SettingViewModel @Inject constructor(
     private val _withdrawalSuccessfulEvent = MutableSingleLiveData<Int?>()
     val withdrawalSuccessfulEvent: SingleLiveData<Int?> = _withdrawalSuccessfulEvent
 
+    private val _goToInterestAlarmSettingFragmentEvent = MutableSingleLiveData<Boolean>()
+    val goToInterestAlarmSettingFragmentEvent: SingleLiveData<Boolean> = _goToInterestAlarmSettingFragmentEvent
+
+    private val _backEvent = MutableSingleLiveData<Boolean>()
+    val backEvent: SingleLiveData<Boolean> = _backEvent
+
+    fun backClick() {
+        _backEvent.setValue(true)
+    }
+
+    fun goToInterestAlarmSettingFragment() {
+        _goToInterestAlarmSettingFragmentEvent.setValue(true)
+    }
+
     fun logoutClick() {
         _logoutClickEvent.setValue(true)
     }

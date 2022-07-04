@@ -15,19 +15,41 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             tools:context=".ui.setting.SettingFragment">
 
-            <TextView
-                android:id="@+id/tv_title"
-                style="@style/header5"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/bg_ripple_borderline_g05"
-                android:gravity="center"
-                android:text="@string/setting" />
+                android:layout_height="45dp">
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:onClick="@{() -> viewModel.backClick()}"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    style="@style/header5"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/bg_ripple_borderline_g05"
+                    android:gravity="center"
+                    android:text="@string/setting"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tv_edit_my_info"
@@ -81,6 +103,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="start|center"
+                android:onClick="@{() -> viewModel.goToInterestAlarmSettingFragment()}"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/interest_category_alarm" />

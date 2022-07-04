@@ -65,6 +65,9 @@
             android:name="oAuthType"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_settingFragment_to_interestAlarmSettingFragment"
+            app:destination="@id/interestAlarmSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
@@ -100,4 +103,9 @@
             android:name="nickname"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/interestAlarmSettingFragment"
+        android:name="com.finpo.app.ui.setting.interest_alarm_setting.InterestAlarmSettingFragment"
+        android:label="InterestAlarmSettingFragment"
+        tools:layout="@layout/fragment_interest_alarm_setting"/>
 </navigation>

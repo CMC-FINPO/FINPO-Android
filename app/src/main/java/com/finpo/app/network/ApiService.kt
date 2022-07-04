@@ -80,6 +80,9 @@ interface ApiService {
         @Body notificationBody: NotificationBody
     ) : ApiResponse<JsonElement>
 
+    @GET("/notification/me")
+    suspend fun getMyNotification() : ApiResponse<MyNotificationResponse>
+
     @GET("/policy/category/me/parent")
     suspend fun getMyParentCategory() : ApiResponse<ParentCategoryResponse>
 }

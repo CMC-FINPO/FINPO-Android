@@ -10,4 +10,5 @@ import javax.inject.Singleton
 class NotificationRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun setNotification(registrationToken: String? = null, subscribe: Boolean? = null)
     = apiService.setNotification(NotificationBody(registrationToken, subscribe))
+    suspend fun getMyNotification() = apiService.getMyNotification()
 }

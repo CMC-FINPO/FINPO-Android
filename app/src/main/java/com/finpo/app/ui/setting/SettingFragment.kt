@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentSettingBinding
@@ -27,6 +28,14 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
+
+        viewModel.backEvent.observe {
+            findNavController().popBackStack()
+        }
+
+        viewModel.goToInterestAlarmSettingFragmentEvent.observe {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToInterestAlarmSettingFragment())
+        }
 
         viewModel.logoutClickEvent.observe {
             showAlertDialog("로그아웃", "로그아웃 하시겠어요?") { logout() }
