@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:context=".ui.setting.SettingFragment">
@@ -22,19 +23,16 @@
             <TextView
                 android:id="@+id/tv_title"
                 style="@style/header5"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:gravity="center"
-                android:text="@string/setting"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="@string/setting" />
 
             <TextView
                 android:id="@+id/tv_edit_my_info"
                 style="@style/header5"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:clickable="true"
@@ -42,22 +40,16 @@
                 android:gravity="start|center"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/edit_my_info"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+                android:text="@string/edit_my_info" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_receive_advertising_info"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:gravity="start|center"
                 android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_edit_my_info">
+                android:paddingEnd="20dp">
 
                 <TextView
                     style="@style/header5"
@@ -81,9 +73,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tv_community_rule"
+                android:id="@+id/tv_interest_alarm"
                 style="@style/header5"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:clickable="true"
@@ -91,15 +83,38 @@
                 android:gravity="start|center"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/community_rule"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_receive_advertising_info" />
+                android:text="@string/interest_category_alarm" />
+
+            <TextView
+                android:id="@+id/tv_region_alarm"
+                style="@style/header5"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_ripple_borderline_g05"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="start|center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/region_alarm" />
+
+            <TextView
+                android:id="@+id/tv_community_rule"
+                style="@style/header5"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_ripple_borderline_g05"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="start|center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/community_rule" />
 
             <TextView
                 android:id="@+id/tv_report_reason"
                 style="@style/header5"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:clickable="true"
@@ -107,15 +122,12 @@
                 android:gravity="start|center"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/report_reason"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_community_rule" />
+                android:text="@string/report_reason" />
 
             <TextView
                 android:id="@+id/tv_terms"
                 style="@style/header5"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:clickable="true"
@@ -123,15 +135,12 @@
                 android:gravity="start|center"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/terms"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_report_reason" />
+                android:text="@string/terms" />
 
             <TextView
                 android:id="@+id/tv_ask"
                 style="@style/header5"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:clickable="true"
@@ -139,15 +148,12 @@
                 android:gravity="start|center"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/ask"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_terms" />
+                android:text="@string/ask" />
 
             <TextView
                 android:id="@+id/tv_personal_info"
                 style="@style/header5"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:clickable="true"
@@ -155,15 +161,12 @@
                 android:gravity="start|center"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/personal_info"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_ask" />
+                android:text="@string/personal_info" />
 
             <TextView
                 android:id="@+id/tv_open_source"
                 style="@style/header5"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:clickable="true"
@@ -171,15 +174,12 @@
                 android:gravity="start|center"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/open_source"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_personal_info" />
+                android:text="@string/open_source" />
 
             <TextView
                 android:id="@+id/tv_logout"
                 style="@style/header5"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:clickable="true"
@@ -188,15 +188,12 @@
                 android:onClick="@{() -> viewModel.logoutClick()}"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/logout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_open_source" />
+                android:text="@string/logout" />
 
             <TextView
                 android:id="@+id/tv_withdrawal"
                 style="@style/header5"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_ripple_borderline_g05"
                 android:clickable="true"
@@ -206,12 +203,9 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/withdrawal"
-                android:textColor="@color/gray_g03"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_logout" />
+                android:textColor="@color/gray_g03" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </ScrollView>
 </layout>

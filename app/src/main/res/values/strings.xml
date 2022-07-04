@@ -97,4 +97,6 @@
     <string name="bookmark">북마크</string>
     <string name="user_name">%s님은</string>
     <string name="user_interest_num">개의 정책에 관심이 있네요!</string>
+    <string name="interest_category_alarm">관심 분야 알림 설정</string>
+    <string name="region_alarm">지역 알림 설정</string>
 </resources>
