@@ -11,12 +11,13 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class InterestAlarmSettingFragment : BaseFragment<FragmentInterestAlarmSettingBinding>(R.layout.fragment_interest_alarm_setting) {
     private val viewModel by viewModels<InterestAlarmSettingViewModel>()
-    @Inject lateinit var interestAlarmAdapter: InterestAlarmAdapter
+    private lateinit var interestAlarmAdapter: InterestAlarmAdapter
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        interestAlarmAdapter = InterestAlarmAdapter(viewModel)
         interestAlarmAdapter.setHasStableIds(true)
         binding.rvInterestAlarm.adapter = interestAlarmAdapter
 

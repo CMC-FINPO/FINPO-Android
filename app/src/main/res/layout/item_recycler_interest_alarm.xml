@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.setting.interest_alarm_setting.InterestAlarmSettingViewModel" />
 
         <variable
             name="data"
@@ -31,6 +34,7 @@
 
         <androidx.appcompat.widget.SwitchCompat
             android:checked="@{data.subscribe}"
+            android:onClick="@{() -> viewModel.alarmCheckClick(data.id, data.subscribe)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"

@@ -26,3 +26,14 @@ data class InterestRegion(
     val region: RegionInterest,
     val subscribe: Boolean
 )
+
+data class MyNotificationBody(
+    val subscribe: Boolean?,
+    val interestRegions: List<IdSubscribe>?,
+    val interestCategories: List<IdSubscribe>?
+)
+
+data class IdSubscribe(
+    val id: Int,
+    val subscribe: Boolean
+)

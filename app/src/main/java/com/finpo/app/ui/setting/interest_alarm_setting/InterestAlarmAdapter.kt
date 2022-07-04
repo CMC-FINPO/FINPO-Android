@@ -14,7 +14,7 @@ import com.finpo.app.model.remote.ParentCategory
 import com.finpo.app.model.remote.Region
 import javax.inject.Inject
 
-class InterestAlarmAdapter @Inject constructor() :
+class InterestAlarmAdapter(private val viewModel: InterestAlarmSettingViewModel) :
     ListAdapter<InterestCategory, InterestAlarmAdapter.ParentCategoryViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParentCategoryViewHolder {
@@ -39,6 +39,7 @@ class InterestAlarmAdapter @Inject constructor() :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: InterestCategory) {
+            binding.viewModel = viewModel
             binding.data = data
         }
     }
