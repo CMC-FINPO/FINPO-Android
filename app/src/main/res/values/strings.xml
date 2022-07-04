@@ -95,4 +95,6 @@
     <string name="select_interest_region_please">%s님의\n관심 지역을 선택해주세요</string>
     <string name="select_living_region_please">%s님이 현재 거주하고 있는\n지역을 선택해주세요</string>
     <string name="bookmark">북마크</string>
+    <string name="user_name">%s님은</string>
+    <string name="user_interest_num">개의 정책에 관심이 있네요!</string>
 </resources>

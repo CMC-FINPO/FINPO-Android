@@ -12,15 +12,6 @@ fun setInterestText(textView: TextView, nickname: String) {
     textView.text = String.format(textView.context.getString(R.string.interest_text), nickname)
 }
 
-@BindingAdapter("imageUrl")
-fun loadImage(view: ImageView, imageUrl: String?) {
-    if(!imageUrl.isNullOrEmpty()) {
-        Glide.with(view)
-            .load(imageUrl)
-            .into(view)
-    }
-}
-
 @BindingAdapter("isInterestChecked")
 fun checkInterestChecked(constraintLayout: ConstraintLayout, isInterestChecked: Boolean) {
     if(isInterestChecked)

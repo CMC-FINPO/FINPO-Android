@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.finpo.app.model.remote.ParentCategory" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="107dp"
+        android:layout_marginEnd="12dp">
+
+        <ImageView
+            android:id="@+id/iv"
+            imageUrl="@{data.img}"
+            android:layout_width="95dp"
+            android:layout_height="85dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv"
+            style="@style/header6"
+            android:layout_width="0dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            android:text="@{data.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv"
+            tools:text="일자리" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
