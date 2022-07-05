@@ -38,6 +38,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             val action = MyPageFragmentDirections.actionMyPageFragmentToEditRegionFragment(viewModel.nickname.value ?: "")
             findNavController().navigate(action)
         }
+
+        viewModel.interestSettingClickEvent.observe {
+            val action = MyPageFragmentDirections.actionMyPageFragmentToInterestSettingFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun setPermissionListener(): PermissionListener {

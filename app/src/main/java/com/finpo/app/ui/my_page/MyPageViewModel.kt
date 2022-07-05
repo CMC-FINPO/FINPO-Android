@@ -35,6 +35,9 @@ class MyPageViewModel @Inject constructor(
     private val _profileEditClickEvent = MutableSingleLiveData<Boolean>()
     val profileEditClickEvent: SingleLiveData<Boolean> = _profileEditClickEvent
 
+    private val _interestSettingClickEvent = MutableSingleLiveData<Boolean>()
+    val interestSettingClickEvent: SingleLiveData<Boolean> = _interestSettingClickEvent
+
     private val _settingClickEvent = MutableSingleLiveData<Boolean>()
     val settingClickEvent: SingleLiveData<Boolean> = _settingClickEvent
 
@@ -55,6 +58,10 @@ class MyPageViewModel @Inject constructor(
             val interestResponse = myInfoRepository.getMyParentCategory()
             interestResponse.onSuccess { _interestList.value = data.data }
         }
+    }
+
+    fun interestSettingClick() {
+        _interestSettingClickEvent.setValue(true)
     }
 
     fun regionClick() {

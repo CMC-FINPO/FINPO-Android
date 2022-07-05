@@ -32,9 +32,6 @@
         <action
             android:id="@+id/action_homeFragment_to_policyDetailFragment"
             app:destination="@id/policyDetailFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_myPageFragment"
-            app:destination="@id/myPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/communityFragment"
@@ -58,6 +55,9 @@
             android:id="@+id/action_myPageFragment_to_editRegionFragment"
             app:destination="@id/editRegionFragment"
             app:enterAnim="@android:anim/fade_in" />
+        <action
+            android:id="@+id/action_myPageFragment_to_interestSettingFragment"
+            app:destination="@id/interestSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -119,4 +119,9 @@
         android:name="com.finpo.app.ui.setting.region_alarm_setting.RegionAlarmSettingFragment"
         android:label="RegionAlarmSettingFragment"
         tools:layout="@layout/fragment_region_alarm_setting"/>
+    <fragment
+        android:id="@+id/interestSettingFragment"
+        android:name="com.finpo.app.ui.interest_setting.InterestSettingFragment"
+        android:label="InterestSettingFragment"
+        tools:layout="@layout/fragment_interest_setting"/>
 </navigation>

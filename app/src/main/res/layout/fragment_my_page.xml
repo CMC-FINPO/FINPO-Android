@@ -118,6 +118,7 @@
             android:layout_width="93dp"
             android:layout_height="97dp"
             android:layout_marginTop="3dp"
+            android:onClick="@{() -> viewModel.interestSettingClick()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cl_select_interest_region">
