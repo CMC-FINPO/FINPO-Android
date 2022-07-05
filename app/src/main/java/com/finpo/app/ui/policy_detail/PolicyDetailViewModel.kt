@@ -26,6 +26,62 @@ class PolicyDetailViewModel @Inject constructor(
     private val _backClickEvent = MutableSingleLiveData<Boolean>()
     val backClickEvent: SingleLiveData<Boolean> = _backClickEvent
 
+    private val _showBottomDialogEvent = MutableSingleLiveData<Boolean>()
+    val showBottomDialogEvent: SingleLiveData<Boolean> = _showBottomDialogEvent
+
+    private val _dismissBottomDialogEvent = MutableSingleLiveData<Boolean>()
+    val dismissBottomDialogEvent: SingleLiveData<Boolean> = _dismissBottomDialogEvent
+
+    private val _overlapParticipationEvent = MutableSingleLiveData<Boolean>()
+    val overlapParticipationEvent: SingleLiveData<Boolean> = _overlapParticipationEvent
+
+    private val _bottomSheetPage = MutableLiveData<Int>()
+    val bottomSheetPage: LiveData<Int> = _bottomSheetPage
+
+    val participationPolicyMemo = MutableLiveData<String>()
+
+    private var participationPolicyId = 0
+
+    fun addParticipationPolicyMemo() {
+        viewModelScope.launch {
+            val addParticipationPolicyMemoResponse = policyDetailRepository.editParticipationPolicyMemo(participationPolicyId, participationPolicyMemo.value ?: "")
+            addParticipationPolicyMemoResponse.onSuccess { _dismissBottomDialogEvent.setValue(true) }
+        }
+    }
+
+    fun goToParticipationPolicyMemoPage() {
+        _bottomSheetPage.value = _bottomSheetPage.value?.plus(1)
+    }
+
+    fun addParticipationPolicy() {
+        viewModelScope.launch {
+            val addParticipationResponse = policyDetailRepository.addParticipationPolicy(_policyDetailData.value?.id ?: 0)
+            addParticipationResponse.onSuccess {
+                if(data.data == null) {
+                    _dismissBottomDialogEvent.setValue(true)
+                    _overlapParticipationEvent.setValue(true)
+                } else {
+                    participationPolicyId = data.data!!.id
+                    _bottomSheetPage.value = _bottomSheetPage.value?.plus(1)
+                }
+            }
+        }
+    }
+
+    fun dismissBottomDialog() {
+        _dismissBottomDialogEvent.setValue(true)
+    }
+
+    fun showBottomDialog() {
+        resetBottomSheetPage()
+        participationPolicyMemo.value = ""
+        _showBottomDialogEvent.setValue(true)
+    }
+
+    private fun resetBottomSheetPage() {
+        _bottomSheetPage.value = 0
+    }
+
     fun backClick() {
         _backClickEvent.setValue(true)
     }

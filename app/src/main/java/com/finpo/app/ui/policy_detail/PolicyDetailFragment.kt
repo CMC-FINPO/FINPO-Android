@@ -9,6 +9,7 @@ import com.finpo.app.R
 import com.finpo.app.databinding.FragmentPolicyDetailBinding
 import com.finpo.app.di.FinpoApplication
 import com.finpo.app.ui.common.BaseFragment
+import com.finpo.app.ui.home.BottomSheetSortDialog
 import com.finpo.app.utils.dp
 import com.google.android.material.tabs.TabLayoutMediator
 import com.skydoves.balloon.*
@@ -31,6 +32,20 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
         if(FinpoApplication.prefs.getBoolean("showBalloon", true)) {
             showBalloon()
             FinpoApplication.prefs.setBoolean("showBalloon", false)
+        }
+
+        val bottomDialogFragment = BottomSheetAddParticipationDialog(viewModel)
+
+        viewModel.showBottomDialogEvent.observe {
+            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
+        }
+
+        viewModel.dismissBottomDialogEvent.observe {
+            bottomDialogFragment.dismiss()
+        }
+
+        viewModel.overlapParticipationEvent.observe {
+            longShowToast("이미 참여 목록에 추가되어있는 정책입니다!")
         }
 
         viewModel.backClickEvent.observe {

@@ -36,10 +36,10 @@
                     android:layout_height="45dp">
 
                     <ImageView
-                        android:onClick="@{() -> viewModel.backClick()}"
                         android:id="@+id/iv_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.backClick()}"
                         android:src="@drawable/ic_back"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -50,17 +50,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
+                        android:onClick="@{() -> viewModel.showBottomDialog()}"
                         android:src="@drawable/ic_plus"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/iv_bookmark"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:onClick="@{() -> viewModel.setBookmark()}"
-                        isBookmarkChecked="@{viewModel.policyDetailData.interest}"
                         android:id="@+id/iv_bookmark"
+                        isBookmarkChecked="@{viewModel.policyDetailData.interest}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.setBookmark()}"
                         android:src="@drawable/ic_scrap_inactive"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

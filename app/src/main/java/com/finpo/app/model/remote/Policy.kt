@@ -4,6 +4,15 @@ data class PolicyResponse(
     val data: PolicyList
 )
 
+data class ParticipationPolicyResponse(
+    val data: PolicyContent?
+)
+
+data class ParticipationPolicy(
+    val id: Int,
+    val policy: PolicyContent?
+)
+
 data class PolicyList(
     val content: List<PolicyContent>,
     val totalElements: Int,
@@ -15,7 +24,7 @@ data class PolicyContent(
     val title: String,
     val institution: String,
     val region: RegionInterest,
-    var isInterest: Boolean
+    var isInterest: Boolean = false
 )
 
 data class PolicyId(
