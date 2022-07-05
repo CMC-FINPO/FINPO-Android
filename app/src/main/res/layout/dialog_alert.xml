@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_solid_w01_rounded_10"
+        android:background="@drawable/insect_dialog"
         tools:layout_height="wrap_content">
 
         <TextView
