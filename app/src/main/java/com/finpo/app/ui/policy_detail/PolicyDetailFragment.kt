@@ -44,6 +44,10 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
             bottomDialogFragment.dismiss()
         }
 
+        viewModel.addParticipationMemoSuccessEvent.observe {
+            showConfirmDialog("메모가 등록되었습니다")
+        }
+
         viewModel.overlapParticipationEvent.observe {
             longShowToast("이미 참여 목록에 추가되어있는 정책입니다!")
         }

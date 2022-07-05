@@ -35,6 +35,9 @@ class PolicyDetailViewModel @Inject constructor(
     private val _overlapParticipationEvent = MutableSingleLiveData<Boolean>()
     val overlapParticipationEvent: SingleLiveData<Boolean> = _overlapParticipationEvent
 
+    private val _addParticipationMemoSuccessEvent = MutableSingleLiveData<Boolean>()
+    val addParticipationMemoSuccessEvent: SingleLiveData<Boolean> = _addParticipationMemoSuccessEvent
+
     private val _bottomSheetPage = MutableLiveData<Int>()
     val bottomSheetPage: LiveData<Int> = _bottomSheetPage
 
@@ -45,7 +48,10 @@ class PolicyDetailViewModel @Inject constructor(
     fun addParticipationPolicyMemo() {
         viewModelScope.launch {
             val addParticipationPolicyMemoResponse = policyDetailRepository.editParticipationPolicyMemo(participationPolicyId, participationPolicyMemo.value ?: "")
-            addParticipationPolicyMemoResponse.onSuccess { _dismissBottomDialogEvent.setValue(true) }
+            addParticipationPolicyMemoResponse.onSuccess {
+                _dismissBottomDialogEvent.setValue(true)
+                _addParticipationMemoSuccessEvent.setValue(true)
+            }
         }
     }
 

@@ -16,5 +16,6 @@ class BottomSheetAddParticipationDialog(val viewModel: PolicyDetailViewModel) : 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         dialog.setContentView(binding.root)
+        dialog.setCanceledOnTouchOutside(false)
     }
 }
