@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_homeFragment_to_policyDetailFragment"
             app:destination="@id/policyDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/communityFragment"

@@ -3,12 +3,13 @@ package com.finpo.app.ui
 import android.view.View
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavController
+import androidx.navigation.*
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.finpo.app.R
 import com.finpo.app.databinding.ActivityMainBinding
 import com.finpo.app.ui.common.BaseActivity
+import com.finpo.app.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -33,7 +34,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
 
         val startId = intent.getIntExtra("startId", R.id.homeFragment)
-        navController.navigate(startId)
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.homeFragment, true)
+            .build()
+        navController.navigate(startId, null, navOptions)
     }
 
     override fun onBackPressed() {
