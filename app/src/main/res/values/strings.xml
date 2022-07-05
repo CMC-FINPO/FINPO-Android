@@ -101,4 +101,5 @@
     <string name="region_alarm">지역 알림 설정</string>
     <string name="notification_all">전체 알림</string>
     <string name="setting_interest_category">관심 분야 알림 설정</string>
+    <string name="setting_region_alarm">지역 알림 설정</string>
 </resources>

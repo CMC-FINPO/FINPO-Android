@@ -35,6 +35,9 @@ class SettingViewModel @Inject constructor(
     private val _goToInterestAlarmSettingFragmentEvent = MutableSingleLiveData<Boolean>()
     val goToInterestAlarmSettingFragmentEvent: SingleLiveData<Boolean> = _goToInterestAlarmSettingFragmentEvent
 
+    private val _goToRegionAlarmSettingFragmentEvent = MutableSingleLiveData<Boolean>()
+    val goToRegionAlarmSettingFragmentEvent: SingleLiveData<Boolean> = _goToRegionAlarmSettingFragmentEvent
+
     private val _backEvent = MutableSingleLiveData<Boolean>()
     val backEvent: SingleLiveData<Boolean> = _backEvent
 
@@ -44,6 +47,10 @@ class SettingViewModel @Inject constructor(
 
     fun goToInterestAlarmSettingFragment() {
         _goToInterestAlarmSettingFragmentEvent.setValue(true)
+    }
+
+    fun goToRegionAlarmSettingFragment() {
+        _goToRegionAlarmSettingFragmentEvent.setValue(true)
     }
 
     fun logoutClick() {

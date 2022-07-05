@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_settingFragment_to_interestAlarmSettingFragment"
             app:destination="@id/interestAlarmSettingFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_regionAlarmSettingFragment"
+            app:destination="@id/regionAlarmSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
@@ -108,4 +111,9 @@
         android:name="com.finpo.app.ui.setting.interest_alarm_setting.InterestAlarmSettingFragment"
         android:label="InterestAlarmSettingFragment"
         tools:layout="@layout/fragment_interest_alarm_setting"/>
+    <fragment
+        android:id="@+id/regionAlarmSettingFragment"
+        android:name="com.finpo.app.ui.setting.region_alarm_setting.RegionAlarmSettingFragment"
+        android:label="RegionAlarmSettingFragment"
+        tools:layout="@layout/fragment_region_alarm_setting"/>
 </navigation>

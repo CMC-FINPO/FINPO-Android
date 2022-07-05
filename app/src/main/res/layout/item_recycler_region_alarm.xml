@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.setting.region_alarm_setting.RegionAlarmSettingViewModel" />
+
+        <variable
+            name="data"
+            type="com.finpo.app.model.remote.InterestRegion" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_interest_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_ripple_borderline_g05"
+        android:gravity="start|center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            style="@style/header5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            regionData="@{data.region}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="생활 안정"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:checked="@{data.subscribe}"
+            android:onClick="@{() -> viewModel.alarmCheckClick(data.id, data.subscribe)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:thumb="@drawable/selector_switch_thumb"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:track="@drawable/shape_switch_background" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -37,6 +37,10 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToInterestAlarmSettingFragment())
         }
 
+        viewModel.goToRegionAlarmSettingFragmentEvent.observe {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToRegionAlarmSettingFragment())
+        }
+
         viewModel.logoutClickEvent.observe {
             showAlertDialog("로그아웃", "로그아웃 하시겠어요?") { logout() }
         }
