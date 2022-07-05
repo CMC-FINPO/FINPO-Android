@@ -69,10 +69,10 @@
                 android:id="@+id/iv_check"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
+                android:layout_marginTop="4dp"
                 android:src="@drawable/ic_check_active"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_support_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_support_content" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_support_content"

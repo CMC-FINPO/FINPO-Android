@@ -114,4 +114,5 @@
     <string name="memo_hint">정책을 참여한 날짜, 이유 등 메모를 남겨보세요</string>
     <string name="write_memo_title">메모 작성</string>
     <string name="write">작성하기</string>
+    <string name="setting_interest">관심 설정</string>
 </resources>
