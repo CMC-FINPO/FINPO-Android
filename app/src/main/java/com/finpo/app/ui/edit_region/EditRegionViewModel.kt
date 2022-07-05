@@ -30,10 +30,17 @@ class EditRegionViewModel @Inject constructor(
     private val _goToMyInfoFragmentEvent = MutableSingleLiveData<Boolean>()
     val goToMyInfoFragmentEvent: SingleLiveData<Boolean> = _goToMyInfoFragmentEvent
 
+    private val _backEvent = MutableSingleLiveData<Boolean>()
+    val backEvent: SingleLiveData<Boolean> = _backEvent
+
     val isEditRegionButtonEnabled = MediatorLiveData<Boolean>().apply {
         addSourceList(_viewpagerPosition, interestRegionViewModel._regionCount, livingRegionViewModel._regionCount) {
             isEditRegionValid()
         }
+    }
+
+    fun backClick() {
+        _backEvent.setValue(true)
     }
 
     private fun isEditRegionValid(): Boolean

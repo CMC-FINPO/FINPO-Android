@@ -44,5 +44,9 @@ class EditRegionFragment : BaseFragment<FragmentEditRegionBinding>(R.layout.frag
             startActivity(Intent(requireContext(), MainActivity::class.java).apply { putExtra("startId",R.id.myPageFragment) })
             activity?.finish()
         }
+
+        viewModel.backEvent.observe {
+            findNavController().popBackStack()
+        }
     }
 }
