@@ -42,11 +42,11 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         }
 
         viewModel.logoutClickEvent.observe {
-            showAlertDialog("로그아웃", "로그아웃 하시겠어요?") { logout() }
+            showAlertDialog("로그아웃 하시겠어요?") { logout() }
         }
 
         viewModel.withdrawalClickEvent.observe {
-            showAlertDialog("회원 탈퇴", "회원 탈퇴 하시겠어요?") {
+            showAlertDialog("회원 탈퇴 하시겠어요?") {
                 showLoadingDialog()
                 withdrawal()
             }

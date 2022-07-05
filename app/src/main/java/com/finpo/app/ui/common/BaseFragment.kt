@@ -17,6 +17,7 @@ abstract class BaseFragment<B : ViewDataBinding>(
     @LayoutRes val layoutId: Int
 ) : Fragment() {
     lateinit var binding: B
+    lateinit var builder: CustomAlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,16 +53,26 @@ abstract class BaseFragment<B : ViewDataBinding>(
         FinpoApplication.instance.hideLoadingDialog()
     }
 
-    fun showAlertDialog(title: String, message: String, positiveClick: () -> Unit) {
-        val builder = AlertDialog.Builder(requireActivity())
-            .setTitle(title)
+    fun showAlertDialog(message: String, positiveText: String = "확인", negativeText: String = "취소", positiveClick: () -> Unit) {
+        builder = CustomAlertDialog(requireActivity())
             .setMessage(message)
-            .setPositiveButton("확인") { _, _ ->
+            .setPositiveButton(positiveText) {
                 positiveClick()
+                builder.dismiss()
             }
-            .setNegativeButton("취소") { _, _ ->
+            .setNegativeButton(negativeText) {
+                builder.dismiss()
+            }
+        builder.show()
+    }
 
+    fun showConfirmDialog(message: String, positiveText: String = "확인") {
+        builder = CustomAlertDialog(requireActivity())
+            .setMessage(message)
+            .setPositiveButton(positiveText) {
+                builder.dismiss()
             }
+            .hideNegativeButton()
         builder.show()
     }
 }

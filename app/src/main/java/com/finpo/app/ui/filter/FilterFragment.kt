@@ -66,7 +66,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(R.layout.fragment_fil
         }
 
         viewModel.clearEvent.observe {
-            showAlertDialog("초기화", "초기화 하시겠어요?") {
+            showAlertDialog("초기화 하시겠어요?") {
                 clearFilter()
             }
         }
