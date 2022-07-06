@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.finpo.app.model.remote.CategoryChildFormat
 import com.finpo.app.model.remote.CategoryRequest
 import com.finpo.app.model.remote.StatusPurpose
+import com.finpo.app.network.ApiService
 import com.finpo.app.repository.CategoryRepository
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.repository.StatusPurposeRepository
@@ -95,6 +96,8 @@ class InterestSettingViewModel @Inject constructor(
         viewModelScope.launch {
             val statusPurposeResponse = statusPurposeRepository.setStatusPurpose(purposeIds = purposeIds.value?.toList())
             val editMyCategoryResponse = myInfoRepository.editMyCategory(_userCategoryData.value ?: listOf())
+            if(statusPurposeResponse is ApiResponse.Success && editMyCategoryResponse is ApiResponse.Success)
+                _goToMyInfoFragmentEvent.setValue(true)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.finpo.app.ui.interest_setting
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentInterestSettingBinding
+import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.filter.FilterAdapter
 import com.finpo.app.utils.GridSpacingItemDecoration
@@ -42,6 +44,11 @@ class InterestSettingFragment : BaseFragment<FragmentInterestSettingBinding>(R.l
 
         viewModel.purposeData.observe(viewLifecycleOwner) {
             purposeAdapter.submitList(it)
+        }
+
+        viewModel.goToMyInfoFragmentEvent.observe {
+            startActivity(Intent(requireContext(), MainActivity::class.java).apply { putExtra("startId",R.id.myPageFragment) })
+            activity?.finish()
         }
 
     }
