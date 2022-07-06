@@ -1,6 +1,8 @@
 package com.finpo.app.ui.policy_detail
 
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,6 +21,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.fragment_policy_detail) {
     private val viewModel by viewModels<PolicyDetailViewModel>()
     private val args: PolicyDetailFragmentArgs by navArgs()
+
+    private val backPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            popBackStack()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +61,10 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
         }
 
         viewModel.backClickEvent.observe {
-            findNavController().popBackStack()
+            popBackStack()
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
 
         binding.viewPagerPolicyDetail.adapter = PolicyDetailViewPagerAdapter(childFragmentManager, lifecycle)
 
@@ -64,6 +74,16 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
                 else -> "신청 방법"
             }
         }.attach()
+    }
+
+    private fun popBackStack() {
+        findNavController().previousBackStackEntry?.savedStateHandle?.set(
+            "isBookmarked", Pair(
+                args.id,
+                viewModel.policyDetailData.value!!.isInterest
+            )
+        )
+        findNavController().popBackStack()
     }
 
     private fun showBalloon() {

@@ -160,4 +160,12 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun checkBookmarkChanged(id: Int, isBookmarked: Boolean) {
+        val position = policyList.value?.indexOfFirst { it?.id == id } ?: return
+        if(position == -1)   return
+        val data = policyList.value!![position]
+        data!!.isInterest = isBookmarked
+        _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+    }
 }
