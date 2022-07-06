@@ -23,7 +23,9 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment
         binding.rvUserCategory.adapter = interestCategoryAdapter
 
         interestPolicyAdapter = InterestPolicyAdapter(viewModel)
+        interestPolicyAdapter.setHasStableIds(true)
         binding.rvPolicy.adapter = interestPolicyAdapter
+        binding.rvPolicy.itemAnimator = null
 
         viewModel.categoryData.observe(viewLifecycleOwner) {
             interestCategoryAdapter.submitList(it)

@@ -114,9 +114,14 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun clearPolicy() {
+        _policyList.value = listOf()
+    }
+
     fun changePolicy() {
         paging.resetPage()
 
+        if(::regionIds.isInitialized && ::regions.isInitialized && ::categoryIds.isInitialized)
         viewModelScope.launch {
             val policyResponse = getPolicyResponse()
             policyResponse.onSuccess {

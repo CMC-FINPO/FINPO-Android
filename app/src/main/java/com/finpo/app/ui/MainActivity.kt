@@ -16,6 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var navController: NavController
+    var isMovedHomeBySelectedItem = false
+    private val bottomItemIds = listOf(R.id.homeFragment, R.id.communityFragment, R.id.bookmarkFragment, R.id.myPageFragment)
 
     override fun init() {
         binding.navBar.itemIconTintList = null
@@ -24,8 +26,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         NavigationUI.setupWithNavController(binding.navBar, navController)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         binding.navBar.setOnItemReselectedListener {  }
+
+        binding.navBar.setOnItemSelectedListener { item ->
+            NavigationUI.onNavDestinationSelected(item, navController)
+            if(item.itemId == R.id.homeFragment) isMovedHomeBySelectedItem = true
+            true
+        }
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.navBar.visibility = if(destination.id == R.id.homeFragment || destination.id == R.id.communityFragment || destination.id == R.id.bookmarkFragment || destination.id == R.id.myPageFragment)
+            if(destination.id != R.id.homeFragment) isMovedHomeBySelectedItem = false
+
+            binding.navBar.visibility = if(destination.id in bottomItemIds)
                  View.VISIBLE
             else View.GONE
 
@@ -41,7 +52,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     override fun onBackPressed() {
-        if(navController.currentDestination?.id == R.id.homeFragment)  doDelayFinish()
+        if(navController.currentDestination?.id in bottomItemIds) doDelayFinish()
         else super.onBackPressed()
     }
 }

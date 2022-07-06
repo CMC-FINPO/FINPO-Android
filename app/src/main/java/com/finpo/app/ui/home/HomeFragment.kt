@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentHomeBinding
 import com.finpo.app.model.local.IdName
+import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -77,6 +78,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             val inputMethodManager =
                 requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+        }
+
+        if((activity as MainActivity).isMovedHomeBySelectedItem) {
+            viewModel.clearPolicy()
+            viewModel.changePolicy()
         }
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Pair<Int, Boolean>>("isBookmarked")

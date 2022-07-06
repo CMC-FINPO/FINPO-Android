@@ -18,8 +18,7 @@ class InterestPolicyAdapter(val viewModel: BookmarkViewModel)
     : ListAdapter<PolicyContent, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun getItemViewType(position: Int): Int {
-        return if(currentList[position] == null) LOADING
-        else CONTENT
+        return CONTENT
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -35,6 +34,10 @@ class InterestPolicyAdapter(val viewModel: BookmarkViewModel)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         currentList[position]?.let { (holder as PolicyHolder).setData(it, position) }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
     inner class PolicyHolder(private val binding: ItemRecyclerInterestPolicyBinding) :
