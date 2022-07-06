@@ -12,12 +12,3 @@ fun setChecked(
 ) {
     checkBox.isChecked = checkboxId in InterestIds
 }
-
-@BindingAdapter("checkboxId", "InterestIds")
-fun setChecked(
-    checkBox: CheckBox,
-    checkboxId: Int,
-    InterestIds: List<CategoryRequest>
-) {
-    checkBox.isChecked = CategoryRequest(checkboxId) in InterestIds
-}

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentInterestSettingBinding
 import com.finpo.app.ui.MainActivity
@@ -49,6 +50,18 @@ class InterestSettingFragment : BaseFragment<FragmentInterestSettingBinding>(R.l
         viewModel.goToMyInfoFragmentEvent.observe {
             startActivity(Intent(requireContext(), MainActivity::class.java).apply { putExtra("startId",R.id.myPageFragment) })
             activity?.finish()
+        }
+
+        viewModel.backEvent.observe {
+            findNavController().popBackStack()
+        }
+
+        viewModel.clearEvent.observe {
+            showAlertDialog("초기화 하시겠어요?") {
+                viewModel.clearData()
+                interestEditAdapter.notifyDataSetChanged()
+                purposeAdapter.notifyDataSetChanged()
+            }
         }
 
     }

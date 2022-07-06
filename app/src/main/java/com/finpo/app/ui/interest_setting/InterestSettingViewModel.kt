@@ -42,6 +42,9 @@ class InterestSettingViewModel @Inject constructor(
     private val _backEvent = MutableSingleLiveData<Boolean>()
     val backEvent: SingleLiveData<Boolean> = _backEvent
 
+    private val _clearEvent = MutableSingleLiveData<Boolean>()
+    val clearEvent: SingleLiveData<Boolean> = _clearEvent
+
     val isEditInterestButtonEnabled = MediatorLiveData<Boolean>().apply {
         addSourceList(_userCategoryData, _purposeIds) {
             isEditInterestValid()
@@ -54,7 +57,7 @@ class InterestSettingViewModel @Inject constructor(
     init {
         initData()
         getPurposeData()
-        _purposeIds.value = mutableSetOf()
+        _purposeIds.value = mutableSetOf() //TODO REFACTOR 서버에서 받아오게 수정
     }
 
     private fun initData() {
@@ -99,5 +102,18 @@ class InterestSettingViewModel @Inject constructor(
             if(statusPurposeResponse is ApiResponse.Success && editMyCategoryResponse is ApiResponse.Success)
                 _goToMyInfoFragmentEvent.setValue(true)
         }
+    }
+
+    fun backClick() {
+        _backEvent.setValue(true)
+    }
+
+    fun clearClick() {
+        _clearEvent.setValue(true)
+    }
+
+    fun clearData() {
+        _purposeIds.value = mutableSetOf()
+        _userCategoryData.value = listOf()
     }
 }
