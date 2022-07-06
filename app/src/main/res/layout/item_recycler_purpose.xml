@@ -17,8 +17,9 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:paddingEnd="12dp"
         android:layout_width="wrap_content"
-        android:layout_height="38dp">
+        android:layout_height="50dp">
 
         <CheckBox
             android:id="@+id/rb_region"

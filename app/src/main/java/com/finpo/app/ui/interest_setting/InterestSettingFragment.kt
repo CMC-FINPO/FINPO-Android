@@ -15,6 +15,7 @@ import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.filter.FilterAdapter
 import com.finpo.app.utils.GridSpacingItemDecoration
 import com.finpo.app.utils.dp
+import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,8 +35,7 @@ class InterestSettingFragment : BaseFragment<FragmentInterestSettingBinding>(R.l
 
         purposeAdapter = PurposeAdapter(viewModel)
         purposeAdapter.setHasStableIds(true)
-        binding.rvPurpose.layoutManager = FlexboxLayoutManager(requireActivity())
-        binding.rvPurpose.addItemDecoration(GridSpacingItemDecoration(3, 12.dp, false))
+        binding.rvPurpose.layoutManager = FlexboxLayoutManager(requireActivity(), FlexDirection.ROW)
         binding.rvPurpose.adapter = purposeAdapter
         binding.rvPurpose.itemAnimator = null
 
