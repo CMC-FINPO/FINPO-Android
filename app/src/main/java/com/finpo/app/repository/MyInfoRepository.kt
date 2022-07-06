@@ -15,4 +15,5 @@ class MyInfoRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun getMyCategory() = apiService.getMyCategory()
     suspend fun getMyParentCategory() = apiService.getMyParentCategory()
     suspend fun editMyCategory(categoryList: List<CategoryRequest>) = apiService.editMyInterestCategory(categoryList)
+    suspend fun getMyInterestPolicy() = apiService.getMyInterestPolicy()
 }

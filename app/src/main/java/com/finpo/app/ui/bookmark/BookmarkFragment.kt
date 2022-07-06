@@ -12,15 +12,25 @@ import javax.inject.Inject
 class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment_bookmark) {
     private val viewModel by viewModels<BookmarkViewModel>()
     @Inject lateinit var interestCategoryAdapter: InterestCategoryAdapter
+    private lateinit var interestPolicyAdapter: InterestPolicyAdapter
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        viewModel.getMyInterestPolicy()
+
         binding.rvUserCategory.adapter = interestCategoryAdapter
+
+        interestPolicyAdapter = InterestPolicyAdapter(viewModel)
+        binding.rvPolicy.adapter = interestPolicyAdapter
 
         viewModel.categoryData.observe(viewLifecycleOwner) {
             interestCategoryAdapter.submitList(it)
+        }
+
+        viewModel.policyList.observe(viewLifecycleOwner) {
+            interestPolicyAdapter.submitList(it.toList())
         }
     }
 }

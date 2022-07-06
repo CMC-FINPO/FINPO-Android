@@ -81,7 +81,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Pair<Int, Boolean>>("isBookmarked")
             ?.observe(viewLifecycleOwner) {
-                Log.d("isChanged","${it.first} ${it.second}")
                 viewModel.checkBookmarkChanged(it.first, it.second)
             }
 

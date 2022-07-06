@@ -30,3 +30,7 @@ data class PolicyContent(
 data class PolicyId(
     val policyId: Int
 )
+
+data class MyInterestPolicyResponse(
+    val data: List<ParticipationPolicy>
+)

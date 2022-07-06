@@ -9,6 +9,7 @@ import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiService {
+    //REGION
     @PUT("/region/me")
     suspend fun editMyInterestRegion(
         @Body regionList: List<RegionRequest>
@@ -19,6 +20,10 @@ interface ApiService {
         @Body regionList: RegionRequest
     ): ApiResponse<JsonElement>
 
+    @GET("/region/me")
+    suspend fun getMyRegion() : ApiResponse<MyRegionResponse>
+
+    //USER
     @GET("/user/me")
     suspend fun getMyInfo() : ApiResponse<MyInfoResponse>
 
@@ -33,19 +38,6 @@ interface ApiService {
         @Body googleToken: GoogleToken
     ) : ApiResponse<JsonElement>
 
-    @GET("/policy/search")
-    suspend fun getPolicy(
-        @Query("title") title: String,
-        @Query("region", encoded = true) region: List<Int> ,
-        @Query("category", encoded = true) category: List<Int>,
-        @Query("page") page: Int,
-        @Query("sort", encoded = true) sort: List<String>,
-        @Query("size") size: Int = 10
-    ) : ApiResponse<PolicyResponse>
-
-    @GET("/region/me")
-    suspend fun getMyRegion() : ApiResponse<MyRegionResponse>
-
     @GET("/user/status/name")
     suspend fun getStatusList() : ApiResponse<StatusPurposeResponse>
 
@@ -56,6 +48,17 @@ interface ApiService {
     suspend fun setStatusPurpose(
         @Body statusPurposeBody: StatusPurposeBody,
     ) : ApiResponse<JsonElement>
+
+    //POLICY
+    @GET("/policy/search")
+    suspend fun getPolicy(
+        @Query("title") title: String,
+        @Query("region", encoded = true) region: List<Int> ,
+        @Query("category", encoded = true) category: List<Int>,
+        @Query("page") page: Int,
+        @Query("sort", encoded = true) sort: List<String>,
+        @Query("size") size: Int = 10
+    ) : ApiResponse<PolicyResponse>
 
     @GET("/policy/category/me")
     suspend fun getMyCategory() : ApiResponse<MyCategoryResponse>
@@ -75,19 +78,6 @@ interface ApiService {
         @Path("id") id: Int
     ) : ApiResponse<PolicyDetailResponse>
 
-    @PUT("/notification/me")
-    suspend fun setNotification(
-        @Body notificationBody: NotificationBody
-    ) : ApiResponse<JsonElement>
-
-    @GET("/notification/me")
-    suspend fun getMyNotification() : ApiResponse<MyNotificationResponse>
-
-    @PUT("/notification/me")
-    suspend fun putMyNotification(
-        @Body myNotificationBody: MyNotificationBody
-    ) : ApiResponse<JsonElement>
-
     @GET("/policy/category/me/parent")
     suspend fun getMyParentCategory() : ApiResponse<ParentCategoryResponse>
 
@@ -105,5 +95,23 @@ interface ApiService {
     suspend fun editParticipationPolicyMemo(
         @Path("id") id: Int,
         @Body memo: Memo
+    ) : ApiResponse<JsonElement>
+
+    //TODO REFACTOR endPoint 변경
+    @GET("/policy/interest/me")
+    suspend fun getMyInterestPolicy(): ApiResponse<MyInterestPolicyResponse>
+
+    //NOTI
+    @PUT("/notification/me")
+    suspend fun setNotification(
+        @Body notificationBody: NotificationBody
+    ) : ApiResponse<JsonElement>
+
+    @GET("/notification/me")
+    suspend fun getMyNotification() : ApiResponse<MyNotificationResponse>
+
+    @PUT("/notification/me")
+    suspend fun putMyNotification(
+        @Body myNotificationBody: MyNotificationBody
     ) : ApiResponse<JsonElement>
 }
