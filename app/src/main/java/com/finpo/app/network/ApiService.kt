@@ -91,6 +91,11 @@ interface ApiService {
     @GET("/policy/category/me/parent")
     suspend fun getMyParentCategory() : ApiResponse<ParentCategoryResponse>
 
+    @PUT("/policy/category/me")
+    suspend fun editMyInterestCategory(
+        @Body categoryList: List<CategoryRequest>
+    ) : ApiResponse<JsonElement>
+
     @POST("/policy/joined")
     suspend fun addParticipationPolicy(
         @Body policyId: PolicyId

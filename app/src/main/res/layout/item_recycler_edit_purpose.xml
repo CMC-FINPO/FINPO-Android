@@ -19,7 +19,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="38dp">
-<!--        android:onClick="@{() -> viewModel.purposeClick(data.id)}"-->
+
         <CheckBox
             android:id="@+id/rb_region"
             style="@style/body2"
@@ -27,6 +27,7 @@
             android:layout_height="35dp"
             android:background="@drawable/selector_checkbox_status_purpose"
             android:button="@null"
+            android:onClick="@{() -> viewModel.purposeClick(data.id)}"
             android:paddingHorizontal="12dp"
             android:paddingVertical="6dp"
             android:text="@{data.name}"

@@ -28,6 +28,10 @@ data class CategoryChildFormatResponse(
     val data: List<CategoryChildFormat>
 )
 
+data class CategoryRequest(
+    val categoryId: Int
+)
+
 data class CategoryChildFormat(
     val id: Int,
     val name: String,

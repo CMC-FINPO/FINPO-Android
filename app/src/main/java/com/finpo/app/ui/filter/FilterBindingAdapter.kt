@@ -2,6 +2,7 @@ package com.finpo.app.ui.filter
 
 import android.widget.CheckBox
 import androidx.databinding.BindingAdapter
+import com.finpo.app.model.remote.CategoryRequest
 
 @BindingAdapter("checkboxId", "InterestIds")
 fun setChecked(
@@ -10,4 +11,13 @@ fun setChecked(
     InterestIds: IntArray
 ) {
     checkBox.isChecked = checkboxId in InterestIds
+}
+
+@BindingAdapter("checkboxId", "InterestIds")
+fun setChecked(
+    checkBox: CheckBox,
+    checkboxId: Int,
+    InterestIds: List<CategoryRequest>
+) {
+    checkBox.isChecked = CategoryRequest(checkboxId) in InterestIds
 }

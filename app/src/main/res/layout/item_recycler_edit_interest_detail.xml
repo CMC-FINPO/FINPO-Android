@@ -18,9 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="35dp">
 
-<!--        android:onClick="@{() -> viewModel.categoryClick(data.id)}"-->
-
         <CheckBox
+            android:onClick="@{() -> viewModel.categoryClick(data.id)}"
             InterestIds="@{viewModel.userCategoryData}"
             checkboxId="@{data.id}"
             android:id="@+id/rb_region"

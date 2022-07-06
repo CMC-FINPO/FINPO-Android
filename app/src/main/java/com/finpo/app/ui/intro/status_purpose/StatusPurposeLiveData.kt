@@ -69,8 +69,8 @@ class StatusPurposeLiveData @Inject constructor(
     }
 
     fun purposeClick(id: Int) {
-        if(id in purposeIds.value!!)    purposeIds.value!!.remove(id)
-        else purposeIds.value!!.add(id)
+        if(id in _purposeIds.value!!)    _purposeIds.value!!.remove(id)
+        else _purposeIds.value!!.add(id)
 
         _purposeIds.value = _purposeIds.value
     }
