@@ -3,8 +3,7 @@ package com.finpo.app.ui.filter
 import androidx.lifecycle.*
 import com.finpo.app.model.local.IdName
 import com.finpo.app.model.remote.CategoryChildFormat
-import com.finpo.app.repository.FilterRepository
-import com.finpo.app.repository.RegionRepository
+import com.finpo.app.repository.CategoryRepository
 import com.finpo.app.ui.filter.bottom_sheet.BottomSheetRegionViewModel
 import com.finpo.app.utils.*
 import com.skydoves.sandwich.onSuccess
@@ -14,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FilterViewModel @Inject constructor(
-    private val filterRepository: FilterRepository,
+    private val categoryRepository: CategoryRepository,
     val bottomSheetRegionViewModel: BottomSheetRegionViewModel
 ) : ViewModel() {
     private val _filterRegionSelTextList = MutableLiveData<MutableList<IdName>>()
@@ -88,7 +87,7 @@ class FilterViewModel @Inject constructor(
 
     fun getCategory() {
         viewModelScope.launch {
-            val filterResponse = filterRepository.getCategoryChildFormat()
+            val filterResponse = categoryRepository.getCategoryChildFormat()
             filterResponse.onSuccess {
                 _filterCategoryData.value = data.data
             }

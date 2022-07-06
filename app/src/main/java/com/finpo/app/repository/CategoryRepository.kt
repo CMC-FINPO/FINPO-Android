@@ -5,6 +5,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FilterRepository @Inject constructor(private val apiServiceWithoutToken: ApiServiceWithoutToken) {
+class CategoryRepository @Inject constructor(private val apiServiceWithoutToken: ApiServiceWithoutToken) {
     suspend fun getCategoryChildFormat() = apiServiceWithoutToken.getCategoryChildFormat()
 }
