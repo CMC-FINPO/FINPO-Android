@@ -13,7 +13,7 @@
         <action
             android:id="@+id/action_homeFragment_to_filterFragment"
             app:destination="@id/filterFragment"
-            app:enterAnim="@android:anim/fade_in" />
+            app:enterAnim="@android:anim/slide_in_left" />
         <argument
             android:name="categories"
             app:argType="integer[]"
@@ -54,10 +54,11 @@
         <action
             android:id="@+id/action_myPageFragment_to_editRegionFragment"
             app:destination="@id/editRegionFragment"
-            app:enterAnim="@android:anim/fade_in" />
+            app:enterAnim="@android:anim/slide_in_left" />
         <action
             android:id="@+id/action_myPageFragment_to_interestSettingFragment"
-            app:destination="@id/interestSettingFragment" />
+            app:destination="@id/interestSettingFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
