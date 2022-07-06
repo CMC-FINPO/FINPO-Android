@@ -8,15 +8,18 @@ import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.ParentCategory
 import com.finpo.app.model.remote.ParticipationPolicy
 import com.finpo.app.model.remote.PolicyContent
+import com.finpo.app.repository.BookmarkRepository
 import com.finpo.app.repository.MyInfoRepository
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.security.Policy
 import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
-    private val myInfoRepository: MyInfoRepository
+    private val myInfoRepository: MyInfoRepository,
+    private val bookmarkRepository: BookmarkRepository
 ): ViewModel() {
     private val _nickname = MutableLiveData<String>()
     val nickname: LiveData<String> = _nickname
@@ -24,8 +27,8 @@ class BookmarkViewModel @Inject constructor(
     private val _categoryData = MutableLiveData<List<ParentCategory>>()
     val categoryData: LiveData<List<ParentCategory>> = _categoryData
 
-    private val _policyList = MutableLiveData<List<PolicyContent>>()
-    val policyList: LiveData<List<PolicyContent>> = _policyList
+    private val _policyList = MutableLiveData<MutableList<PolicyContent>>()
+    val policyList: LiveData<MutableList<PolicyContent>> = _policyList
 
     private val _policySize = MutableLiveData<Int>()
     val policySize: LiveData<Int> = _policySize
@@ -55,8 +58,19 @@ class BookmarkViewModel @Inject constructor(
         viewModelScope.launch {
             val myInterestPolicyResponse = myInfoRepository.getMyInterestPolicy()
             myInterestPolicyResponse.onSuccess {
-                _policyList.value = List(data.data.size) { data.data[it].policy!! }
+                _policyList.value = MutableList(data.data.size) { data.data[it].policy!! }
                 _policySize.value = data.data.size
+            }
+        }
+    }
+
+    fun deleteInterestPolicy(data: PolicyContent) {
+        viewModelScope.launch {
+            val deleteInterestPolicyResponse = bookmarkRepository.deleteInterestPolicy(data.id)
+            deleteInterestPolicyResponse.onSuccess {
+                _policyList.value?.remove(data)
+                _policyList.value = _policyList.value
+                _policySize.value = _policyList.value?.size ?: 0
             }
         }
     }
