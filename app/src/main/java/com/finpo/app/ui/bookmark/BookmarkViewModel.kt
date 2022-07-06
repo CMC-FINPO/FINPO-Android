@@ -10,6 +10,8 @@ import com.finpo.app.model.remote.ParticipationPolicy
 import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.repository.BookmarkRepository
 import com.finpo.app.repository.MyInfoRepository
+import com.finpo.app.utils.MutableSingleLiveData
+import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -32,6 +34,9 @@ class BookmarkViewModel @Inject constructor(
 
     private val _policySize = MutableLiveData<Int>()
     val policySize: LiveData<Int> = _policySize
+
+    private val _goToDetailFragmentEvent = MutableSingleLiveData<Int>()
+    val goToDetailFragmentEvent: SingleLiveData<Int> = _goToDetailFragmentEvent
 
     init {
         getMyNickname()
@@ -73,5 +78,9 @@ class BookmarkViewModel @Inject constructor(
                 _policySize.value = _policyList.value?.size ?: 0
             }
         }
+    }
+
+    fun goToDetailFragment(id: Int) {
+        _goToDetailFragmentEvent.setValue(id)
     }
 }

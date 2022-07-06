@@ -42,7 +42,11 @@
         android:id="@+id/bookmarkFragment"
         android:name="com.finpo.app.ui.bookmark.BookmarkFragment"
         android:label="fragment_notification"
-        tools:layout="@layout/fragment_bookmark" />
+        tools:layout="@layout/fragment_bookmark" >
+        <action
+            android:id="@+id/action_bookmarkFragment_to_policyDetailFragment"
+            app:destination="@id/policyDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.finpo.app.ui.my_page.MyPageFragment"

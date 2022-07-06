@@ -80,7 +80,7 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
         findNavController().previousBackStackEntry?.savedStateHandle?.set(
             "isBookmarked", Pair(
                 args.id,
-                viewModel.policyDetailData.value!!.isInterest
+                viewModel.policyDetailData.value?.isInterest ?: false
             )
         )
         findNavController().popBackStack()
