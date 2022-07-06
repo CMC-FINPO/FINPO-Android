@@ -1,6 +1,5 @@
 package com.finpo.app.ui.home
 
-import android.util.Log
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -52,7 +51,8 @@ class HomeViewModel @Inject constructor(
     private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, PolicyContent>>()
     val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, PolicyContent>> = _updateRecyclerViewItemEvent
 
-    val searchText = MutableLiveData<String>()
+    val searchInputText = MutableLiveData<String>()
+    var searchText = ""
 
     lateinit var regionIds: List<Int>
     lateinit var regions: List<IdName>
@@ -136,7 +136,7 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun getPolicyResponse(): ApiResponse<PolicyResponse> {
         return policyRepository.getPolicy(
-            title = searchText.value ?: "",
+            title = searchText,
             region = regionIds,
             category = categoryIds,
             page = paging.page.value ?: 0,
@@ -146,6 +146,7 @@ class HomeViewModel @Inject constructor(
 
     fun onEditTextSearchClick(actionId: Int): Boolean {
         return if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+            searchText = searchInputText.value ?: ""
             changePolicy()
             _keyBoardSearchEvent.setValue(true)
             true

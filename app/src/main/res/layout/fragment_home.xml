@@ -76,7 +76,7 @@
                             android:inputType="text"
                             android:maxLines="1"
                             android:onEditorAction="@{(view,actionId,event) -> viewModel.onEditTextSearchClick(actionId)}"
-                            android:text="@={viewModel.searchText}"
+                            android:text="@={viewModel.searchInputText}"
                             android:textColorHint="@color/gray_g05"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
