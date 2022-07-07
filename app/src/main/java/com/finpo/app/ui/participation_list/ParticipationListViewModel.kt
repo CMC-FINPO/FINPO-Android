@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.ParticipationPolicy
 import com.finpo.app.repository.MyInfoRepository
+import com.finpo.app.repository.PolicyDetailRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.onSuccess
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ParticipationListViewModel @Inject constructor(
-    private val myInfoRepository: MyInfoRepository
+    private val myInfoRepository: MyInfoRepository,
+    private val policyDetailRepository: PolicyDetailRepository
 ) : ViewModel() {
     private val _nickname = MutableLiveData<String>()
     val nickname: LiveData<String> = _nickname
@@ -35,13 +37,56 @@ class ParticipationListViewModel @Inject constructor(
     private val _deleteItemClickEvent = MutableSingleLiveData<ParticipationPolicy>()
     val deleteItemClickEvent: SingleLiveData<ParticipationPolicy> = _deleteItemClickEvent
 
+    val editMemoText = MutableLiveData<String?>()
+
+    private val _memoId = MutableLiveData<Int>()
+    val memoId: LiveData<Int> = _memoId
+
+    private val _isEditMode = MutableLiveData<Boolean>()
+    val isEditMode: LiveData<Boolean> = _isEditMode
+
+    private val _showBottomSheetEvent = MutableSingleLiveData<Boolean>()
+    val showBottomSheetEvent: SingleLiveData<Boolean> = _showBottomSheetEvent
+
+    private val _dismissBottomSheetEvent = MutableSingleLiveData<Boolean>()
+    val dismissBottomSheetEvent: SingleLiveData<Boolean> = _dismissBottomSheetEvent
+
+    private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, ParticipationPolicy>>()
+    val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, ParticipationPolicy>> = _updateRecyclerViewItemEvent
+
     fun initData() {
         _policySize.value = 0
         _isDeleteMode.value = false
+        _isEditMode.value = false
     }
 
     fun setNickname(nickname: String) {
         _nickname.value = nickname
+    }
+
+    fun dismissBottomDialog() {
+        _dismissBottomSheetEvent.setValue(true)
+    }
+
+    fun editMemoClick(id: Int, memo: String?) {
+        editMemoText.value = memo ?: ""
+        _isEditMode.value = memo != null
+        _memoId.value = id
+        _showBottomSheetEvent.setValue(true)
+    }
+
+    fun editMemo() {
+        viewModelScope.launch {
+            val editMemoResponse = policyDetailRepository.editParticipationPolicyMemo(_memoId.value ?: 0, editMemoText.value ?: "")
+            editMemoResponse.onSuccess {
+                val changeIdx = _policyList.value?.indexOfFirst { it.id == _memoId.value } ?: -1
+                if(changeIdx == -1) return@onSuccess
+                _policyList.value!![changeIdx].memo = editMemoText.value
+                _policyList.value = _policyList.value
+                _updateRecyclerViewItemEvent.setValue(Pair(changeIdx, _policyList.value!![changeIdx]))
+                _dismissBottomSheetEvent.setValue(true)
+            }
+        }
     }
 
     fun deleteClick() {

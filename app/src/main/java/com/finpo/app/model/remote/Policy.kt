@@ -11,7 +11,7 @@ data class ParticipationPolicyResponse(
 data class ParticipationPolicy(
     val id: Int,
     val policy: PolicyContent?,
-    val memo: String?
+    var memo: String?
 )
 
 data class PolicyList(

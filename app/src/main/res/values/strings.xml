@@ -116,5 +116,6 @@
     <string name="write_memo_title">메모 작성</string>
     <string name="edit_memo_title">메모 수정</string>
     <string name="write">작성하기</string>
+    <string name="edit">수정하기</string>
     <string name="setting_interest">관심 설정</string>
 </resources>

@@ -7,6 +7,7 @@ import com.finpo.app.R
 import com.finpo.app.databinding.FragmentParticipationListBinding
 import com.finpo.app.ui.bookmark.InterestPolicyAdapter
 import com.finpo.app.ui.common.BaseFragment
+import com.finpo.app.ui.policy_detail.BottomSheetAddParticipationDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +32,20 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
         policyAdapter.setHasStableIds(true)
         binding.rvPolicy.adapter = policyAdapter
         binding.rvPolicy.itemAnimator = null
+
+        viewModel.updateRecyclerViewItemEvent.observe {
+            policyAdapter.notifyItemChanged(it.first, it.second)
+        }
+
+        val bottomDialogFragment = BottomSheetEditMemoDialog(viewModel)
+
+        viewModel.showBottomSheetEvent.observe {
+            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
+        }
+
+        viewModel.dismissBottomSheetEvent.observe {
+            bottomDialogFragment.dismiss()
+        }
 
         viewModel.policyList.observe(viewLifecycleOwner) {
             policyAdapter.submitList(it.toMutableList())
