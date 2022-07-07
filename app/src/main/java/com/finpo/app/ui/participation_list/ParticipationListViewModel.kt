@@ -24,8 +24,12 @@ class ParticipationListViewModel @Inject constructor(
     private val _policyList = MutableLiveData<MutableList<ParticipationPolicy>>()
     val policyList: LiveData<MutableList<ParticipationPolicy>> = _policyList
 
+    private val _isDeleteMode = MutableLiveData<Boolean>()
+    val isDeleteMode: LiveData<Boolean> = _isDeleteMode
+
     fun initData() {
         _policySize.value = 0
+        _isDeleteMode.value = false
     }
 
     fun setNickname(nickname: String) {

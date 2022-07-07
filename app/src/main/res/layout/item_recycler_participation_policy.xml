@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.participation_list.ParticipationListViewModel" />
+
+        <variable
+            name="data"
+            type="com.finpo.app.model.remote.ParticipationPolicy" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7.5dp"
+        android:layout_marginBottom="7.5dp"
+        android:background="@drawable/bg_solid_w01_rounded_none_5"
+        android:padding="15dp">
+        <!--        android:onClick="@{() -> viewModel.goToDetailFragment(data.id)}"-->
+
+        <TextView
+            android:id="@+id/tv_region"
+            style="@style/label2"
+            regionData="@{data.policy.region}"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:background="@drawable/bg_solid_p02_rounded_5"
+            android:gravity="center"
+            android:paddingHorizontal="4dp"
+            android:textColor="@color/point_p01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="서울 동대문구" />
+
+        <TextView
+            android:id="@+id/tv_policy_name"
+            style="@style/header5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@{data.policy.title}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_region"
+            tools:text="공고명-정책이름" />
+
+        <TextView
+            android:id="@+id/tv_institution_name"
+            style="@style/label2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@{data.policy.institution}"
+            android:textColor="@color/gray_g02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_policy_name"
+            tools:text="기관명" />
+
+        <ImageView
+            android:id="@+id/iv_scrap"
+            isBookmarkChecked="@{data.policy.isInterest}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.isDeleteMode ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--        android:onClick="@{() -> viewModel.bookmarkClick(data, position)}"-->
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.isDeleteMode ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_solid_g09_rounded_5"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_institution_name">
+
+            <TextView
+                android:id="@+id/tv_memo"
+                style="@style/not_defined_10_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{data.memo}"
+                android:textColor="@color/gray_g01"
+                android:visibility="@{data.memo == null ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="메모메모메모메모메모메모 메모입니다 메모메모 메모메모 메모입니다 메모메모 메모메모 메모입니다 메모메모" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_memo"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_memo">
+
+                <ImageView
+                    android:id="@+id/iv_memo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_memo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_edit_memo"
+                    style="@style/not_defined_10_reg"
+                    memoEditText="@{data.memo}"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="6dp"
+                    android:gravity="center|start"
+                    android:textColor="@color/point_p01"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_memo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="메모 작성" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

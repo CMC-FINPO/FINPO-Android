@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentParticipationListBinding
+import com.finpo.app.ui.bookmark.InterestPolicyAdapter
 import com.finpo.app.ui.common.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -12,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>(R.layout.fragment_participation_list) {
     private val viewModel by viewModels<ParticipationListViewModel>()
     private val args: ParticipationListFragmentArgs by navArgs()
+    private lateinit var policyAdapter: ParticipationPolicyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,5 +26,14 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.getMyParticipationPolicy()
+
+        policyAdapter = ParticipationPolicyAdapter(viewModel)
+        policyAdapter.setHasStableIds(true)
+        binding.rvPolicy.adapter = policyAdapter
+        binding.rvPolicy.itemAnimator = null
+
+        viewModel.policyList.observe(viewLifecycleOwner) {
+            policyAdapter.submitList(it.toMutableList())
+        }
     }
 }
