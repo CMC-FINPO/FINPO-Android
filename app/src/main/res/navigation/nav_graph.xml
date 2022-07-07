@@ -136,5 +136,9 @@
         android:id="@+id/participationListFragment"
         android:name="com.finpo.app.ui.participation_list.ParticipationListFragment"
         android:label="ParticipationListFragment"
-        tools:layout="@layout/fragment_participation_list"/>
+        tools:layout="@layout/fragment_participation_list">
+        <argument
+            android:name="nickname"
+            app:argType="string" />
+    </fragment>
 </navigation>

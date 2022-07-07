@@ -40,7 +40,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         }
 
         viewModel.participationClickEvent.observe {
-            findNavController().navigate(MyPageFragmentDirections.actionMyPageFragmentToParticipationListFragment())
+            findNavController().navigate(MyPageFragmentDirections.actionMyPageFragmentToParticipationListFragment(viewModel.nickname.value ?: ""))
         }
 
         viewModel.interestSettingClickEvent.observe {
