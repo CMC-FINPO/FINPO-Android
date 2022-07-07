@@ -148,6 +148,7 @@
             android:id="@+id/cl_participation"
             android:layout_width="93dp"
             android:layout_height="97dp"
+            android:onClick="@{() -> viewModel.participationClick()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cl_interest_list">
 

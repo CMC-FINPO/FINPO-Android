@@ -10,7 +10,8 @@ data class ParticipationPolicyResponse(
 
 data class ParticipationPolicy(
     val id: Int,
-    val policy: PolicyContent?
+    val policy: PolicyContent?,
+    val memo: String?
 )
 
 data class PolicyList(

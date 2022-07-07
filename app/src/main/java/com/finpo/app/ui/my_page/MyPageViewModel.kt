@@ -47,6 +47,9 @@ class MyPageViewModel @Inject constructor(
     private val _interestList = MutableLiveData<List<ParentCategory>>()
     val interestList: LiveData<List<ParentCategory>> = _interestList
 
+    private val _participationClickEvent = MutableSingleLiveData<Boolean>()
+    val participationClickEvent: SingleLiveData<Boolean> = _participationClickEvent
+
     init {
         _nickname.value = ""
         getMyInfo()
@@ -58,6 +61,10 @@ class MyPageViewModel @Inject constructor(
             val interestResponse = myInfoRepository.getMyParentCategory()
             interestResponse.onSuccess { _interestList.value = data.data }
         }
+    }
+
+    fun participationClick() {
+        _participationClickEvent.setValue(true)
     }
 
     fun interestSettingClick() {

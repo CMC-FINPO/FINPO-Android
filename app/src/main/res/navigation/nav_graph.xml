@@ -63,6 +63,9 @@
             android:id="@+id/action_myPageFragment_to_interestSettingFragment"
             app:destination="@id/interestSettingFragment"
             app:enterAnim="@android:anim/slide_in_left" />
+        <action
+            android:id="@+id/action_myPageFragment_to_participationListFragment"
+            app:destination="@id/participationListFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -129,4 +132,9 @@
         android:name="com.finpo.app.ui.interest_setting.InterestSettingFragment"
         android:label="InterestSettingFragment"
         tools:layout="@layout/fragment_interest_setting"/>
+    <fragment
+        android:id="@+id/participationListFragment"
+        android:name="com.finpo.app.ui.participation_list.ParticipationListFragment"
+        android:label="ParticipationListFragment"
+        tools:layout="@layout/fragment_participation_list"/>
 </navigation>

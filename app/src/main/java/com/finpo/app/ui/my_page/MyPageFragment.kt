@@ -39,6 +39,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             findNavController().navigate(action)
         }
 
+        viewModel.participationClickEvent.observe {
+            findNavController().navigate(MyPageFragmentDirections.actionMyPageFragmentToParticipationListFragment())
+        }
+
         viewModel.interestSettingClickEvent.observe {
             val action = MyPageFragmentDirections.actionMyPageFragmentToInterestSettingFragment()
             findNavController().navigate(action)
