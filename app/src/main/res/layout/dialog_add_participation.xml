@@ -226,6 +226,7 @@
                 android:layout_marginEnd="20dp"
                 android:background="@null"
                 android:gravity="top"
+                android:maxLength="@integer/memo_max_length"
                 android:hint="@string/memo_hint"
                 android:text="@={viewModel.participationPolicyMemo}"
                 android:textColor="@color/gray_g01"
