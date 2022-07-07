@@ -2,6 +2,7 @@ package com.finpo.app.ui.participation_list
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentParticipationListBinding
@@ -20,18 +21,21 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
         super.onCreate(savedInstanceState)
         viewModel.setNickname(args.nickname)
         viewModel.initData()
+        viewModel.getMyParticipationPolicy()
     }
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.getMyParticipationPolicy()
-
         policyAdapter = ParticipationPolicyAdapter(viewModel)
         policyAdapter.setHasStableIds(true)
         binding.rvPolicy.adapter = policyAdapter
         binding.rvPolicy.itemAnimator = null
+
+        viewModel.goToPolicyDetailEvent.observe {
+            findNavController().navigate(ParticipationListFragmentDirections.actionParticipationListFragmentToPolicyDetailFragment(it))
+        }
 
         viewModel.updateRecyclerViewItemEvent.observe {
             policyAdapter.notifyItemChanged(it.first, it.second)

@@ -26,8 +26,8 @@
         android:layout_marginTop="7.5dp"
         android:layout_marginBottom="7.5dp"
         android:background="@drawable/bg_solid_w01_rounded_none_5"
+        android:onClick="@{() -> viewModel.goToPolicyDetail(data.policy.id)}"
         android:padding="15dp">
-        <!--        android:onClick="@{() -> viewModel.goToDetailFragment(data.id)}"-->
 
         <TextView
             android:id="@+id/tv_region"

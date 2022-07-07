@@ -140,5 +140,8 @@
         <argument
             android:name="nickname"
             app:argType="string" />
+        <action
+            android:id="@+id/action_participationListFragment_to_policyDetailFragment"
+            app:destination="@id/policyDetailFragment" />
     </fragment>
 </navigation>

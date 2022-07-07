@@ -54,10 +54,17 @@ class ParticipationListViewModel @Inject constructor(
     private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, ParticipationPolicy>>()
     val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, ParticipationPolicy>> = _updateRecyclerViewItemEvent
 
+    private val _goToPolicyDetailEvent = MutableSingleLiveData<Int>()
+    val goToPolicyDetailEvent: SingleLiveData<Int> = _goToPolicyDetailEvent
+
     fun initData() {
         _policySize.value = 0
         _isDeleteMode.value = false
         _isEditMode.value = false
+    }
+
+    fun goToPolicyDetail(id: Int) {
+        _goToPolicyDetailEvent.setValue(id)
     }
 
     fun setNickname(nickname: String) {
