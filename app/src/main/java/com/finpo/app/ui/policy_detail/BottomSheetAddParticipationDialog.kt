@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import com.finpo.app.databinding.DialogAddParticipationBinding
 import com.finpo.app.databinding.DialogSortBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetAddParticipationDialog(val viewModel: PolicyDetailViewModel) : BottomSheetDialogFragment() {
@@ -17,5 +18,6 @@ class BottomSheetAddParticipationDialog(val viewModel: PolicyDetailViewModel) : 
         binding.viewModel = viewModel
         dialog.setContentView(binding.root)
         dialog.setCanceledOnTouchOutside(false)
+        (dialog as BottomSheetDialog).behavior.isDraggable = false
     }
 }
