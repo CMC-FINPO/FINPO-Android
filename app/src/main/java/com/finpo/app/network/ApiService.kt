@@ -101,6 +101,10 @@ interface ApiService {
     @GET("/policy/interest/me")
     suspend fun getMyInterestPolicy(): ApiResponse<MyInterestPolicyResponse>
 
+    //TODO REFACTOR endPoint 변경
+    @GET("/policy/joined/me")
+    suspend fun getMyParticipationPolicy(): ApiResponse<MyInterestPolicyResponse>
+
     //NOTI
     @PUT("/notification/me")
     suspend fun setNotification(

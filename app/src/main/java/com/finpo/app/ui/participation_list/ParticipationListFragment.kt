@@ -22,5 +22,7 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.getMyParticipationPolicy()
     }
 }
