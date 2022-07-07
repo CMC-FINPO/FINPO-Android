@@ -35,5 +35,15 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
         viewModel.policyList.observe(viewLifecycleOwner) {
             policyAdapter.submitList(it.toMutableList())
         }
+
+        viewModel.deleteBtnClickEvent.observe {
+            policyAdapter.notifyDataSetChanged()
+        }
+
+        viewModel.deleteItemClickEvent.observe { data ->
+            showAlertDialog("참여한 정책을 삭제하시겠습니까?", "삭제") {
+                viewModel.deleteParticipationPolicy(data)
+            }
+        }
     }
 }

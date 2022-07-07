@@ -17,4 +17,5 @@ class MyInfoRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun editMyCategory(categoryList: List<CategoryRequest>) = apiService.editMyInterestCategory(categoryList)
     suspend fun getMyInterestPolicy() = apiService.getMyInterestPolicy()
     suspend fun getMyParticipationPolicy() = apiService.getMyParticipationPolicy()
+    suspend fun deleteMyParticipationPolicy(id: Int) = apiService.deleteParticipationPolicy(id)
 }

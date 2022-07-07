@@ -105,6 +105,11 @@ interface ApiService {
     @GET("/policy/joined/me")
     suspend fun getMyParticipationPolicy(): ApiResponse<MyInterestPolicyResponse>
 
+    @DELETE("/policy/joined/{id}")
+    suspend fun deleteParticipationPolicy(
+        @Path("id") id: Int
+    ) : ApiResponse<JsonElement>
+
     //NOTI
     @PUT("/notification/me")
     suspend fun setNotification(

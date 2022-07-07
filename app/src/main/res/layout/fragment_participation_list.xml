@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.participation_list.ParticipationListViewModel" />
@@ -40,6 +42,28 @@
                         android:layout_marginTop="10dp"
                         android:src="@drawable/ic_back"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:onClick="@{() -> viewModel.deleteClick()}"
+                        android:src="@drawable/ic_delete"
+                        android:visibility="@{viewModel.isDeleteMode ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- TODO REFACTOR -->
+                    <TextView
+                        android:id="@+id/tv_complete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.deleteClick()}"
+                        android:text="완료"
+                        android:visibility="@{viewModel.isDeleteMode ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
