@@ -7,6 +7,7 @@ import android.view.View
 import com.finpo.app.databinding.DialogAddParticipationBinding
 import com.finpo.app.databinding.DialogEditMemoBinding
 import com.finpo.app.databinding.DialogSortBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -20,5 +21,6 @@ class BottomSheetEditMemoDialog(val viewModel: ParticipationListViewModel) : Bot
         dialog.setContentView(binding.root)
         dialog.setCanceledOnTouchOutside(false)
         (dialog as BottomSheetDialog).behavior.isDraggable = false
+        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 }
