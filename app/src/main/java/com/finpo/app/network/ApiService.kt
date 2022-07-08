@@ -49,6 +49,9 @@ interface ApiService {
         @Body statusPurposeBody: StatusPurposeBody,
     ) : ApiResponse<JsonElement>
 
+    @GET("/user/me/purpose")
+    suspend fun getMyPurpose() : ApiResponse<MyPurpose>
+
     //POLICY
     @GET("/policy/search")
     suspend fun getPolicy(
@@ -97,11 +100,9 @@ interface ApiService {
         @Body memo: Memo
     ) : ApiResponse<JsonElement>
 
-    //TODO REFACTOR endPoint 변경
     @GET("/policy/interest/me")
     suspend fun getMyInterestPolicy(): ApiResponse<MyInterestPolicyResponse>
 
-    //TODO REFACTOR endPoint 변경
     @GET("/policy/joined/me")
     suspend fun getMyParticipationPolicy(): ApiResponse<MyInterestPolicyResponse>
 

@@ -1,5 +1,6 @@
 package com.finpo.app.ui.interest_setting
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.finpo.app.model.remote.CategoryChildFormat
 import com.finpo.app.model.remote.CategoryRequest
@@ -55,12 +56,12 @@ class InterestSettingViewModel @Inject constructor(
             = !_userCategoryData.value.isNullOrEmpty() && !_purposeIds.value.isNullOrEmpty()
 
     init {
-        initData()
+        _purposeIds.value = mutableSetOf()
+        getCategoryData()
         getPurposeData()
-        _purposeIds.value = mutableSetOf() //TODO REFACTOR 서버에서 받아오게 수정
     }
 
-    private fun initData() {
+    private fun getCategoryData() {
         viewModelScope.launch {
             val myCategoryResponse = myInfoRepository.getMyCategory()
             if(myCategoryResponse !is ApiResponse.Success)  return@launch
@@ -81,6 +82,10 @@ class InterestSettingViewModel @Inject constructor(
 
     private fun getPurposeData() {
         viewModelScope.launch {
+            val myPurposeResponse = myInfoRepository.getMyPurpose()
+            if(myPurposeResponse !is ApiResponse.Success)     return@launch
+            _purposeIds.value = myPurposeResponse.data.data.toMutableSet()
+
             val purposeResponse = statusPurposeRepository.getPurposeList()
             purposeResponse.onSuccess {
                 _purposeData.value = data.data

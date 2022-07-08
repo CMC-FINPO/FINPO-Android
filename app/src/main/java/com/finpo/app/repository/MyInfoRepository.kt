@@ -18,4 +18,5 @@ class MyInfoRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun getMyInterestPolicy() = apiService.getMyInterestPolicy()
     suspend fun getMyParticipationPolicy() = apiService.getMyParticipationPolicy()
     suspend fun deleteMyParticipationPolicy(id: Int) = apiService.deleteParticipationPolicy(id)
+    suspend fun getMyPurpose() = apiService.getMyPurpose()
 }

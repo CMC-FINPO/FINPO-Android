@@ -15,3 +15,7 @@ data class StatusPurposeBody(
     val statusId: Int?,
     val purposeIds: List<Int>?
 )
+
+data class MyPurpose(
+    val data: List<Int>
+)
