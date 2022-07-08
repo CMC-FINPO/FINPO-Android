@@ -23,7 +23,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(R.layout.fragment_fil
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getCategory()
-        viewModel.setRegion(args.regions.toMutableList())
+        viewModel.setRegion(args.regionTextList.toMutableList(), args.regionIds.toList())
         viewModel.setCategories(args.categories)
     }
 
@@ -45,19 +45,19 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(R.layout.fragment_fil
             bottomDialogFragment.dismiss()
         }
 
-        viewModel.bottomSheetRegionViewModel.chooseMaxToastEvent.observe {
+        viewModel.bottomSheetRegionViewModel.bottomFilterRegionViewModel.chooseMaxToastEvent.observe {
             shortShowToast(format(getString(R.string.can_select_max), MAX_ADDITIONAL_COUNT + 1))
         }
 
-        viewModel.bottomSheetRegionViewModel.regionOverlapToastEvent.observe {
+        viewModel.bottomSheetRegionViewModel.bottomFilterRegionViewModel.regionOverlapToastEvent.observe {
             shortShowToast(getString(R.string.overlap_region))
         }
 
         viewModel.goToHomeFragmentEvent.observe {
             val action = FilterFragmentDirections.actionFilterFragmentToHomeFragment(
-                viewModel.userCategoryData.value ?: intArrayOf(),
-            IntArray(viewModel.filterRegionSelCount.value ?: 0) { viewModel.filterRegionSelTextList.value?.get(it)?.id ?: 0 },
-            viewModel.filterRegionSelTextList.value?.toTypedArray() ?: arrayOf())
+                categories = viewModel.userCategoryData.value,
+            regionIds = IntArray(viewModel.filterRegionViewModel.regionIds.size) { viewModel.filterRegionViewModel.regionIds[it] ?: 0 },
+            regionTextList = viewModel.filterRegionViewModel.regionTextList.value?.toTypedArray())
             findNavController().navigate(action)
         }
 

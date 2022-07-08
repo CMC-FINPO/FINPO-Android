@@ -1,5 +1,6 @@
 package com.finpo.app.ui.common
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +24,7 @@ class RegionViewModel @Inject constructor(
     private val _regionTextList = MutableLiveData<MutableList<String>>()
     val regionTextList: LiveData<MutableList<String>> = _regionTextList
 
-    val regionIds: MutableList<Int?> = mutableListOf()
+    var regionIds: MutableList<Int?> = mutableListOf()
 
     val _regionCount = MutableLiveData<Int>()
     val regionCount: LiveData<Int> = _regionCount
@@ -46,6 +47,9 @@ class RegionViewModel @Inject constructor(
     private val regionName = MutableLiveData<String>()
 
     fun setRegionTextList(textList: MutableList<String>) {
+        repeat(MAX_COUNT - textList.size) {
+            textList.add("")
+        }
         _regionTextList.value = textList
     }
 

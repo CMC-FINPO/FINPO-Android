@@ -30,13 +30,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(args.categories == null || args.regionIds == null || args.regions == null) {
+        if(args.categories == null || args.regionIds == null || args.regionTextList == null) {
             viewModel.getInitData()
         }
         else {
             viewModel.regionIds = args.regionIds!!.toList()
             viewModel.categoryIds = args.categories!!.toList()
-            viewModel.regions = args.regions!!.toList()
+            viewModel.regionTextList = args.regionTextList!!.toList()
             viewModel.changePolicy()
         }
     }
@@ -57,7 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
 
         viewModel.goToFilterFragmentEvent.observe {
-            val action = HomeFragmentDirections.actionHomeFragmentToFilterFragment(viewModel.regions.toTypedArray(), viewModel.categoryIds.toIntArray())
+            val action = HomeFragmentDirections.actionHomeFragmentToFilterFragment(viewModel.regionTextList.toTypedArray(), viewModel.categoryIds.toIntArray(), viewModel.regionIds.toIntArray())
             findNavController().navigate(action)
         }
 

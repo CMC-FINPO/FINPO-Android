@@ -25,8 +25,8 @@
             app:nullable="true"
             android:defaultValue="@null" />
         <argument
-            android:name="regions"
-            app:argType="com.finpo.app.model.local.IdName[]"
+            android:name="regionTextList"
+            app:argType="string[]"
             app:nullable="true"
             android:defaultValue="@null" />
         <action
@@ -94,10 +94,13 @@
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
         <argument
-            android:name="regions"
-            app:argType="com.finpo.app.model.local.IdName[]" />
+            android:name="regionTextList"
+            app:argType="string[]" />
         <argument
             android:name="categories"
+            app:argType="integer[]" />
+        <argument
+            android:name="regionIds"
             app:argType="integer[]" />
     </fragment>
     <fragment

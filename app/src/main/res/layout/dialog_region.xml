@@ -12,363 +12,90 @@
             type="com.finpo.app.ui.filter.FilterViewModel" />
     </data>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/header5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="13dp"
+            android:text="@string/select_region"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_g07"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="15dp"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="33dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_divider1">
 
             <TextView
-                android:id="@+id/tv_title"
-                style="@style/header5"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_region_select"
+                style="@style/label2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingVertical="13dp"
                 android:text="@string/select_region"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/gray_g01"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/view_divider1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_g07"
+            <com.finpo.app.ui.common.RegionLayout
+                android:id="@+id/fl_edit_region"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_region_select"
+                app:regionCount="@{viewModel.bottomSheetRegionViewModel.bottomFilterRegionViewModel.regionCount}"
+                app:regionDelete="@{viewModel.bottomSheetRegionViewModel.bottomFilterRegionViewModel.deleteRegion}"
+                app:regionTextList="@{viewModel.bottomSheetRegionViewModel.bottomFilterRegionViewModel.regionTextList}"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+
+
+            <com.finpo.app.ui.common.RegionRecyclerView
+                android:id="@+id/region_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:paddingHorizontal="20dp"
-                android:paddingBottom="33dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fl_edit_region"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                style="@style/finpo_main_button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="27dp"
+                android:enabled="@{viewModel.bottomSheetRegionViewModel.bottomFilterRegionViewModel.regionCount != 0}"
+                android:onClick="@{() -> viewModel.editFinishClick()}"
+                android:text="@string/select_finish"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view_divider1">
-
-                <TextView
-                    android:id="@+id/tv_region_select"
-                    style="@style/label2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/select_region"
-                    android:textColor="@color/gray_g01"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.flexbox.FlexboxLayout
-                    android:id="@+id/fl_edit_region"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    app:alignContent="stretch"
-                    app:alignItems="stretch"
-                    app:dividerDrawable="@drawable/shape_flexbox_divider"
-                    app:flexWrap="wrap"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_region_select"
-                    app:showDivider="middle">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_edit_region_none"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:background="@drawable/bg_solid_g09_rounded_g04_5"
-                        android:paddingHorizontal="10dp"
-                        android:visibility="@{viewModel.bottomSheetRegionViewModel.editRegionSelCount == 0 ? View.VISIBLE : View.GONE}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_header"
-                        tools:visibility="visible">
-
-                        <TextView
-                            android:id="@+id/tv_edit_region_none"
-                            style="@style/body2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/no_selected_area"
-                            android:textColor="@color/gray_g04"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_edit_region1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[0].name.empty ? View.GONE : View.VISIBLE}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_header">
-
-                        <TextView
-                            android:id="@+id/tv_edit_region1"
-                            style="@style/body2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[0].name}"
-                            android:textColor="@color/point_p01"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/iv_edit_region_remove1"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="서울 강동구" />
-
-                        <ImageView
-                            android:id="@+id/iv_edit_region_remove1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:onClick="@{() -> viewModel.bottomSheetRegionViewModel.deleteEditRegion(0)}"
-                            android:src="@drawable/ic_delete_point"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_edit_region1"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/tv_edit_region1" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_edit_region2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[1].name.empty ? View.GONE : View.VISIBLE}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_header">
-
-                        <TextView
-                            android:id="@+id/tv_edit_region2"
-                            style="@style/body2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[1].name}"
-                            android:textColor="@color/point_p01"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/iv_edit_region_remove2"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="서울 강동구" />
-
-                        <ImageView
-                            android:id="@+id/iv_edit_region_remove2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:onClick="@{() -> viewModel.bottomSheetRegionViewModel.deleteEditRegion(1)}"
-                            android:src="@drawable/ic_delete_point"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_edit_region2"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/tv_edit_region2" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_edit_region3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[2].name.empty ? View.GONE : View.VISIBLE}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_header">
-
-                        <TextView
-                            android:id="@+id/tv_edit_region3"
-                            style="@style/body2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[2].name}"
-                            android:textColor="@color/point_p01"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/iv_edit_region_remove3"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="서울 강동구" />
-
-                        <ImageView
-                            android:id="@+id/iv_edit_region_remove3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:onClick="@{() -> viewModel.bottomSheetRegionViewModel.deleteEditRegion(2)}"
-                            android:src="@drawable/ic_delete_point"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_edit_region3"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/tv_edit_region3" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_edit_region4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[3].name.empty ? View.GONE : View.VISIBLE}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_header">
-
-                        <TextView
-                            android:id="@+id/tv_edit_region4"
-                            style="@style/body2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[3].name}"
-                            android:textColor="@color/point_p01"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/iv_edit_region_remove4"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="서울 강동구" />
-
-                        <ImageView
-                            android:id="@+id/iv_edit_region_remove4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:onClick="@{() -> viewModel.bottomSheetRegionViewModel.deleteEditRegion(3)}"
-                            android:src="@drawable/ic_delete_point"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_edit_region4"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/tv_edit_region4" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_edit_region5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[4].name.empty ? View.GONE : View.VISIBLE}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_header">
-
-                        <TextView
-                            android:id="@+id/tv_edit_region5"
-                            style="@style/body2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[4].name}"
-                            android:textColor="@color/point_p01"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/iv_edit_region_remove5"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="서울 강동구" />
-
-                        <ImageView
-                            android:id="@+id/iv_edit_region_remove5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:onClick="@{() -> viewModel.bottomSheetRegionViewModel.deleteEditRegion(4)}"
-                            android:src="@drawable/ic_delete_point"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_edit_region5"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/tv_edit_region5" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_edit_region6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:background="@drawable/bg_solid_p03_rounded_p01_5"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="4dp"
-                        android:visibility="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[5].name.empty ? View.GONE : View.VISIBLE}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_header">
-
-                        <TextView
-                            android:id="@+id/tv_edit_region6"
-                            style="@style/body2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.bottomSheetRegionViewModel.editRegionSelTextList[5].name}"
-                            android:textColor="@color/point_p01"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/iv_edit_region_remove6"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="서울 강동구" />
-
-                        <ImageView
-                            android:id="@+id/iv_edit_region_remove6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:onClick="@{() -> viewModel.bottomSheetRegionViewModel.deleteEditRegion(5)}"
-                            android:src="@drawable/ic_delete_point"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_edit_region6"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/tv_edit_region6" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.flexbox.FlexboxLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="330dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/ll_line_top_bot_g05"
-                    android:paddingVertical="1dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fl_edit_region">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_edit_region_all"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_recycler_region" />
-
-                    <View
-                        android:layout_width="2dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray_g05" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_edit_region_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_recycler_region_detail" />
-
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    style="@style/finpo_main_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="27dp"
-                    android:enabled="@{viewModel.bottomSheetRegionViewModel.editRegionSelCount != 0}"
-                    android:onClick="@{() -> viewModel.editFinishClick()}"
-                    android:text="@string/select_finish"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/linearLayout" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@id/region_recyclerview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

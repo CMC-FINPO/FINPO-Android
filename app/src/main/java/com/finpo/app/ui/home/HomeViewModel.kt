@@ -55,7 +55,7 @@ class HomeViewModel @Inject constructor(
     var searchText = ""
 
     lateinit var regionIds: List<Int>
-    lateinit var regions: List<IdName>
+    lateinit var regionTextList: List<String>
     lateinit var categoryIds: List<Int>
 
     fun goToDetailFragment(id: Int) {
@@ -89,14 +89,14 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun initRegions(data: List<MyRegion>) {
-        val tempRegions = mutableListOf<IdName>()
+        val tempRegions = mutableListOf<String>()
         for(element in data) {
-            if(element.region.parent == null) tempRegions.add(IdName(element.region.id,"${element.region.name} 전체"))
-            else tempRegions.add(IdName(element.region.id,"${element.region.parent.name} ${element.region.name}"))
+            if(element.region.parent == null) tempRegions.add("${element.region.name} 전체")
+            else tempRegions.add("${element.region.parent.name} ${element.region.name}")
         }
         for(idx in data.size until MAX_FILTER_REGION_COUNT)
-            tempRegions.add(IdName(null, ""))
-        regions = tempRegions
+            tempRegions.add("")
+        regionTextList = tempRegions
     }
 
     fun addPolicy() {
@@ -121,7 +121,7 @@ class HomeViewModel @Inject constructor(
     fun changePolicy() {
         paging.resetPage()
 
-        if(::regionIds.isInitialized && ::regions.isInitialized && ::categoryIds.isInitialized)
+        if(::regionIds.isInitialized && ::regionTextList.isInitialized && ::categoryIds.isInitialized)
         viewModelScope.launch {
             val policyResponse = getPolicyResponse()
             policyResponse.onSuccess {

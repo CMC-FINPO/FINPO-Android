@@ -52,7 +52,7 @@ class RegionLayout @JvmOverloads constructor(
         binding = DataBindingUtil.inflate(inflater, R.layout.custom_region_layout, this, true)
 
         with(binding) {
-            regionContainerList = listOf(regionBox1, regionBox2, regionBox3, regionBox4, regionBox5)
+            regionContainerList = listOf(regionBox1, regionBox2, regionBox3, regionBox4, regionBox5, regionBox6)
         }
     }
 }
