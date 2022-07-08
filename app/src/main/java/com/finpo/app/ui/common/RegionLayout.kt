@@ -1,6 +1,7 @@
 package com.finpo.app.ui.common
 
 import android.content.Context
+import android.transition.TransitionManager
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,9 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.indices
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.finpo.app.R
 import com.finpo.app.databinding.CustomRegionLayoutBinding
+import com.finpo.app.utils.MAX_FILTER_REGION_COUNT
 import com.google.android.flexbox.FlexboxLayout
 
 class RegionLayout @JvmOverloads constructor(
@@ -37,13 +40,16 @@ class RegionLayout @JvmOverloads constructor(
             regionContainerList[idx].regionText = value[idx]
             regionContainerList[idx].visibility = if(value[idx].isEmpty()) View.GONE else View.VISIBLE
         }
+
+        for(idx in value.size until MAX_FILTER_REGION_COUNT)
+            regionContainerList[idx].visibility = View.GONE
     }
 
     var regionDelete: (id: Int) -> Unit = {}
     set(value) {
         field = value
         for(idx in regionContainerList.indices) {
-            regionContainerList[idx].setOnClickListener { value(idx) }
+            regionContainerList[idx].regionDelete = { value(idx) }
         }
     }
 

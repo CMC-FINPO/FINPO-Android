@@ -43,32 +43,32 @@
         <com.finpo.app.ui.common.RegionBox
             android:id="@+id/region_box1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <com.finpo.app.ui.common.RegionBox
             android:id="@+id/region_box2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <com.finpo.app.ui.common.RegionBox
             android:id="@+id/region_box3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <com.finpo.app.ui.common.RegionBox
             android:id="@+id/region_box4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <com.finpo.app.ui.common.RegionBox
             android:id="@+id/region_box5"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <com.finpo.app.ui.common.RegionBox
             android:id="@+id/region_box6"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </com.google.android.flexbox.FlexboxLayout>
 </layout>

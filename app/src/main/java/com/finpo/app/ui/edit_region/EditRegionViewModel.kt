@@ -79,7 +79,7 @@ class EditRegionViewModel @Inject constructor(
 
     fun getMyInterestRegion() {
         val interestRegionText = MutableList(MAX_ADDITIONAL_COUNT) {""}
-        val livingRegionText = MutableList(MAX_ADDITIONAL_COUNT) {""}
+        val livingRegionText = MutableList(1) {""}
         viewModelScope.launch {
             val myRegionResponse = myInfoRepository.getMyRegion()
             if(myRegionResponse !is ApiResponse.Success) return@launch
