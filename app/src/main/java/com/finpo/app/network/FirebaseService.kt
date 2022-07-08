@@ -23,11 +23,27 @@ class FirebaseService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
-        val title = message.data["title"].toString()
-        val body = message.data["content"].toString()
+        var notiTitle = ""
+        var notiBody = ""
+
+        when(message.data["type"].toString()) {
+            "policy" -> {
+                val category1 = message.data["category1"].toString()
+                val category2 = message.data["category2"].toString()
+                val id = message.data["id"]?.toInt()
+                val region1 = message.data["region1"].toString()
+                val region2 = message.data["region2"].toString()
+                val title = message.data["title"].toString()
+
+                notiTitle = "$region1 $region2/$category1 $category2"
+                notiBody = "새로 올라온 $title 정책을 확인해보시고 혜택 받아보세요!"
+            }
+            "comment" -> { }
+            "childComment" -> { }
+        }
 
         createNotificationChannel()
-        sendNotification(title, body)
+        sendNotification(notiTitle, notiBody)
     }
 
     private fun createNotificationChannel() {
@@ -70,6 +86,7 @@ class FirebaseService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
             .setFullScreenIntent(pendingIntent, true)
+            .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(this)) {
             notify(1, builder.build())
