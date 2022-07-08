@@ -27,12 +27,13 @@ class EditRegionLivingFragment : BaseFragment<FragmentEditRegionLivingBinding>(R
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.livingRegionViewModel.getRegionDataByLocal(viewModel.interestRegionViewModel.regionData.value?.copy() ?: RegionResponse(
-            listOf()))
-
+        initData()
         initRecyclerView()
         observeRecyclerView()
+        observeToastViewModel()
+    }
 
+    private fun observeToastViewModel() {
         viewModel.livingRegionViewModel.chooseMaxToastEvent.observe {
             shortShowToast(format(getString(R.string.can_select_max), 1))
         }
@@ -40,6 +41,12 @@ class EditRegionLivingFragment : BaseFragment<FragmentEditRegionLivingBinding>(R
         viewModel.livingRegionViewModel.regionOverlapToastEvent.observe {
             shortShowToast(getString(R.string.overlap_region))
         }
+    }
+
+    private fun initData() {
+        viewModel.livingRegionViewModel.getRegionDataByLocal(
+            viewModel.interestRegionViewModel.regionData.value?.copy() ?: RegionResponse(listOf())
+        )
     }
 
     @SuppressLint("NotifyDataSetChanged")

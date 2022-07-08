@@ -22,7 +22,10 @@ class EditRegionInterestFragment : BaseFragment<FragmentEditRegionInterestBindin
 
         initRecyclerView()
         observeRecyclerView()
+        observeToastViewModel()
+    }
 
+    private fun observeToastViewModel() {
         viewModel.interestRegionViewModel.chooseMaxToastEvent.observe {
             shortShowToast(format(getString(R.string.can_select_max), MAX_ADDITIONAL_COUNT))
         }

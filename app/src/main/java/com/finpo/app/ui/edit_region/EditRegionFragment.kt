@@ -21,6 +21,10 @@ class EditRegionFragment : BaseFragment<FragmentEditRegionBinding>(R.layout.frag
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initData()
+    }
+
+    private fun initData() {
         viewModel.nickname = args.nickname
         viewModel.getMyInterestRegion()
         viewModel.interestRegionViewModel.MAX_COUNT = MAX_ADDITIONAL_COUNT
@@ -32,21 +36,33 @@ class EditRegionFragment : BaseFragment<FragmentEditRegionBinding>(R.layout.frag
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.viewPagerEditRegion.adapter = EditRegionViewPagerAdapter(childFragmentManager, lifecycle)
-        TabLayoutMediator(binding.tbEditRegion, binding.viewPagerEditRegion) {  tab, position ->
-            tab.text = when(position) {
-                0 -> "관심 지역"
-                else -> "거주 지역"
-            }
-        }.attach()
+        initViewPager()
+        observeButtonEvent()
+    }
 
+    private fun observeButtonEvent() {
         viewModel.goToMyInfoFragmentEvent.observe {
-            startActivity(Intent(requireContext(), MainActivity::class.java).apply { putExtra("startId",R.id.myPageFragment) })
+            startActivity(
+                Intent(
+                    requireContext(),
+                    MainActivity::class.java
+                ).apply { putExtra("startId", R.id.myPageFragment) })
             activity?.finish()
         }
 
         viewModel.backEvent.observe {
             findNavController().popBackStack()
         }
+    }
+
+    private fun initViewPager() {
+        binding.viewPagerEditRegion.adapter =
+            EditRegionViewPagerAdapter(childFragmentManager, lifecycle)
+        TabLayoutMediator(binding.tbEditRegion, binding.viewPagerEditRegion) { tab, position ->
+            tab.text = when (position) {
+                0 -> "관심 지역"
+                else -> "거주 지역"
+            }
+        }.attach()
     }
 }

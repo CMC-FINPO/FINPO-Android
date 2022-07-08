@@ -66,7 +66,6 @@ class EditRegionViewModel @Inject constructor(
         viewModelScope.launch {
             val editLivingRegionResponse = editRegionRepository.editMyLivingRegion(livingRegionViewModel.regionIds[0] ?: 0)
             editLivingRegionResponse.onSuccess { _goToMyInfoFragmentEvent.setValue(true) }
-                .onFailure { Log.d("editRegion", message()) }
         }
     }
 
