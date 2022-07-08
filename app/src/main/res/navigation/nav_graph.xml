@@ -5,6 +5,9 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
+    <action android:id="@+id/action_global_policyDetailFragment"
+        app:destination="@id/policyDetailFragment"/>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.finpo.app.ui.home.HomeFragment"

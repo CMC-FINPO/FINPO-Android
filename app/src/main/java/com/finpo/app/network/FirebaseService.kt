@@ -9,12 +9,19 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.NavDeepLinkBuilder
 import com.finpo.app.R
 import com.finpo.app.ui.MainActivity
+import com.finpo.app.ui.splash.SplashActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class FirebaseService : FirebaseMessagingService() {
+    private lateinit var notiTitle: String
+    private lateinit var notiBody: String
+    private var startId = R.id.homeFragment
+    private var bulletinId: Int = -1
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -23,20 +30,16 @@ class FirebaseService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 
-        var notiTitle = ""
-        var notiBody = ""
-
         when(message.data["type"].toString()) {
             "policy" -> {
-                val category1 = message.data["category1"].toString()
-                val category2 = message.data["category2"].toString()
-                val id = message.data["id"]?.toInt()
-                val region1 = message.data["region1"].toString()
-                val region2 = message.data["region2"].toString()
+                val category = message.data["category"].toString()
+                val region = message.data["region"].toString()
                 val title = message.data["title"].toString()
 
-                notiTitle = "$region1 $region2/$category1 $category2"
+                notiTitle = "$region/$category"
                 notiBody = "새로 올라온 $title 정책을 확인해보시고 혜택 받아보세요!"
+                startId = R.id.policyDetailFragment
+                bulletinId = message.data["id"]?.toInt() ?: -1
             }
             "comment" -> { }
             "childComment" -> { }
@@ -72,7 +75,9 @@ class FirebaseService : FirebaseMessagingService() {
     private fun sendNotification(title: String, body: String) {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        intent.putExtra("startId", startId)
+        intent.putExtra("bulletinId", bulletinId)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationCompat.Builder(this, "channel")

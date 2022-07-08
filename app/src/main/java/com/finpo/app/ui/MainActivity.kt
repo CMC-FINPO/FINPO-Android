@@ -1,11 +1,17 @@
 package com.finpo.app.ui
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.navigation.*
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.ActivityMainBinding
 import com.finpo.app.ui.common.BaseActivity
@@ -44,11 +50,29 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             else ContextCompat.getColor(this, R.color.white_w01)
         }
 
-        val startId = intent.getIntExtra("startId", R.id.homeFragment)
+        processIntent(intent)
+    }
+
+    private fun processIntent(intent: Intent?) {
+        val startId = intent?.getIntExtra("startId", R.id.homeFragment) ?: R.id.homeFragment
+        val bulletinId = intent?.getIntExtra("bulletinId", -1) ?: -1
+
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.homeFragment, true)
             .build()
-        navController.navigate(startId, null, navOptions)
+        when (startId) {
+            R.id.policyDetailFragment -> navController.navigate(
+                NavGraphDirections.actionGlobalPolicyDetailFragment(
+                    bulletinId
+                )
+            )
+            else -> navController.navigate(startId, null, navOptions)
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        processIntent(intent)
     }
 
     override fun onBackPressed() {
