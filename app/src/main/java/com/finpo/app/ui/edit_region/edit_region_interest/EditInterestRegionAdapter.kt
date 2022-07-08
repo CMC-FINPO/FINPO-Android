@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.finpo.app.databinding.ItemRecyclerEditInterestRegionBinding
 import com.finpo.app.model.remote.Region
 import com.finpo.app.ui.edit_region.EditRegionViewModel
-import com.finpo.app.ui.intro.living_area.RegionDiffUtil
+import com.finpo.app.ui.common.RegionDiffUtil
 
 class EditInterestRegionAdapter (val viewModel: EditRegionViewModel) :
     ListAdapter<Region, EditInterestRegionAdapter.RegionViewHolder>(RegionDiffUtil()) {

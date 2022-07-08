@@ -1,6 +1,5 @@
 package com.finpo.app.ui.bookmark
 
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.finpo.app.R
@@ -21,13 +20,22 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment
 
         viewModel.getMyInterestPolicy()
 
-        binding.rvUserCategory.adapter = interestCategoryAdapter
+        initRecyclerView()
+        observeRecyclerView()
+        observeGotoDetailFragmentEvent()
+    }
 
-        interestPolicyAdapter = InterestPolicyAdapter(viewModel)
-        interestPolicyAdapter.setHasStableIds(true)
-        binding.rvPolicy.adapter = interestPolicyAdapter
-        binding.rvPolicy.itemAnimator = null
+    private fun observeGotoDetailFragmentEvent() {
+        viewModel.goToDetailFragmentEvent.observe { id ->
+            findNavController().navigate(
+                BookmarkFragmentDirections.actionBookmarkFragmentToPolicyDetailFragment(
+                    id
+                )
+            )
+        }
+    }
 
+    private fun observeRecyclerView() {
         viewModel.categoryData.observe(viewLifecycleOwner) {
             interestCategoryAdapter.submitList(it)
         }
@@ -35,9 +43,13 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment
         viewModel.policyList.observe(viewLifecycleOwner) {
             interestPolicyAdapter.submitList(it.toList())
         }
+    }
 
-        viewModel.goToDetailFragmentEvent.observe { id ->
-            findNavController().navigate(BookmarkFragmentDirections.actionBookmarkFragmentToPolicyDetailFragment(id))
-        }
+    private fun initRecyclerView() {
+        binding.rvUserCategory.adapter = interestCategoryAdapter
+        interestPolicyAdapter = InterestPolicyAdapter(viewModel)
+        interestPolicyAdapter.setHasStableIds(true)
+        binding.rvPolicy.adapter = interestPolicyAdapter
+        binding.rvPolicy.itemAnimator = null
     }
 }

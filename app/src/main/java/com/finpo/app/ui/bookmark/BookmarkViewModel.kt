@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.ParentCategory
-import com.finpo.app.model.remote.ParticipationPolicy
 import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.repository.BookmarkRepository
 import com.finpo.app.repository.MyInfoRepository
@@ -15,7 +14,6 @@ import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.security.Policy
 import javax.inject.Inject
 
 @HiltViewModel

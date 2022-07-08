@@ -5,9 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.finpo.app.databinding.ItemRecyclerAdditionalRegionBinding
-import com.finpo.app.databinding.ItemRecyclerRegionBinding
 import com.finpo.app.model.remote.Region
-import com.finpo.app.ui.intro.living_area.RegionDiffUtil
+import com.finpo.app.ui.common.RegionDiffUtil
 import javax.inject.Inject
 
 class AdditionalRegionAdapter @Inject constructor(val viewModel: AdditionalRegionLiveData) :
