@@ -55,13 +55,15 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <!-- TODO REFACTOR -->
                     <TextView
                         android:id="@+id/tv_complete"
+                        style="@style/header5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="11dp"
                         android:onClick="@{() -> viewModel.deleteClick()}"
-                        android:text="완료"
+                        android:text="@string/finish"
+                        android:textColor="@color/point_p01"
                         android:visibility="@{viewModel.isDeleteMode ? View.VISIBLE : View.GONE}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
