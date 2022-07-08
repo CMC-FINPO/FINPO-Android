@@ -5,10 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.ParticipationPolicy
+import com.finpo.app.model.remote.PolicyContent
+import com.finpo.app.repository.BookmarkRepository
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.repository.PolicyDetailRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ParticipationListViewModel @Inject constructor(
     private val myInfoRepository: MyInfoRepository,
-    private val policyDetailRepository: PolicyDetailRepository
+    private val policyDetailRepository: PolicyDetailRepository,
+    private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
     private val _nickname = MutableLiveData<String>()
     val nickname: LiveData<String> = _nickname
@@ -122,6 +126,20 @@ class ParticipationListViewModel @Inject constructor(
             myParticipationResponse.onSuccess {
                 _policyList.value = data.data.toMutableList()
                 _policySize.value = data.data.size
+            }
+        }
+    }
+
+    fun bookmarkClick(data: ParticipationPolicy, position: Int) {
+        viewModelScope.launch {
+            if(data.policy?.isInterest == false) {
+                val addInterestPolicyResponse = bookmarkRepository.addInterestPolicy(data.policy.id)
+                data.policy.isInterest = !data.policy.isInterest
+                if(addInterestPolicyResponse is ApiResponse.Success)    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+            } else {
+                val deleteInterestPolicyResponse = bookmarkRepository.deleteInterestPolicy(data.policy!!.id)
+                data.policy.isInterest = !data.policy.isInterest
+                if(deleteInterestPolicyResponse is ApiResponse.Success)    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
             }
         }
     }

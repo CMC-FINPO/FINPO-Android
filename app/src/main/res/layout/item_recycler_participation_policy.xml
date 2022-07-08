@@ -71,10 +71,11 @@
             isBookmarkChecked="@{data.policy.isInterest}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.bookmarkClick(data, position)}"
             android:visibility="@{viewModel.isDeleteMode ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        <!--        android:onClick="@{() -> viewModel.bookmarkClick(data, position)}"-->
+
 
         <ImageView
             android:id="@+id/iv_delete"
