@@ -33,6 +33,10 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
         binding.rvPolicy.adapter = policyAdapter
         binding.rvPolicy.itemAnimator = null
 
+        viewModel.backEvent.observe {
+            findNavController().popBackStack()
+        }
+
         viewModel.goToPolicyDetailEvent.observe {
             findNavController().navigate(ParticipationListFragmentDirections.actionParticipationListFragmentToPolicyDetailFragment(it))
         }

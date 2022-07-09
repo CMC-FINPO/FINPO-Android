@@ -66,10 +66,17 @@ class ParticipationListViewModel @Inject constructor(
     private val _goToPolicyDetailEvent = MutableSingleLiveData<Int>()
     val goToPolicyDetailEvent: SingleLiveData<Int> = _goToPolicyDetailEvent
 
+    private val _backEvent = MutableSingleLiveData<Boolean>()
+    val backEvent: SingleLiveData<Boolean> = _backEvent
+
     fun initData() {
         _policySize.value = 0
         _isDeleteMode.value = false
         _isEditMode.value = false
+    }
+
+    fun backClick() {
+        _backEvent.setValue(true)
     }
 
     fun goToPolicyDetail(id: Int) {
