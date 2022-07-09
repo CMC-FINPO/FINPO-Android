@@ -56,6 +56,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             }
         }
 
+        viewModel.showBookmarkCountMaxToastEvent.observe {
+            longShowToast(getString(R.string.bookmark_max_msg))
+        }
+
         viewModel.goToFilterFragmentEvent.observe {
             val action = HomeFragmentDirections.actionHomeFragmentToFilterFragment(viewModel.regionTextList.toTypedArray(), viewModel.categoryIds.toIntArray(), viewModel.regionIds.toIntArray())
             findNavController().navigate(action)

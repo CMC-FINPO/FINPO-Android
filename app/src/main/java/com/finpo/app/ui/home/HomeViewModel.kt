@@ -14,6 +14,8 @@ import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.repository.PolicyRepository
 import com.finpo.app.utils.*
 import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.onError
+import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -50,6 +52,9 @@ class HomeViewModel @Inject constructor(
 
     private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, PolicyContent>>()
     val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, PolicyContent>> = _updateRecyclerViewItemEvent
+
+    private val _showBookmarkCountMaxToastEvent = MutableSingleLiveData<Boolean>()
+    val showBookmarkCountMaxToastEvent: SingleLiveData<Boolean> = _showBookmarkCountMaxToastEvent
 
     val searchInputText = MutableLiveData<String>()
     var searchText = ""
@@ -157,12 +162,17 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             if(!data.isInterest) {
                 val addInterestPolicyResponse = bookmarkRepository.addInterestPolicy(data.id)
-                data.isInterest = !data.isInterest
-                if(addInterestPolicyResponse is ApiResponse.Success)    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+                addInterestPolicyResponse.onSuccess {
+                    data.isInterest = !data.isInterest
+                    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+                }.onError { if(statusCode.code == 400) _showBookmarkCountMaxToastEvent.setValue(true) }
+
             } else {
                 val deleteInterestPolicyResponse = bookmarkRepository.deleteInterestPolicy(data.id)
-                data.isInterest = !data.isInterest
-                if(deleteInterestPolicyResponse is ApiResponse.Success)    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+                deleteInterestPolicyResponse.onSuccess {
+                    data.isInterest = !data.isInterest
+                    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+                }
             }
         }
     }

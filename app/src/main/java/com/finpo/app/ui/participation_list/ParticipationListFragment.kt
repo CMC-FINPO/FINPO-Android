@@ -41,6 +41,10 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
             policyAdapter.notifyItemChanged(it.first, it.second)
         }
 
+        viewModel.showBookmarkCountMaxToastEvent.observe {
+            longShowToast(getString(R.string.bookmark_max_msg))
+        }
+
         val bottomDialogFragment = BottomSheetEditMemoDialog(viewModel)
 
         viewModel.showBottomSheetEvent.observe {

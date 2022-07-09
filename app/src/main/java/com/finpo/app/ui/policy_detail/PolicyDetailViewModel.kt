@@ -10,6 +10,7 @@ import com.finpo.app.repository.BookmarkRepository
 import com.finpo.app.repository.PolicyDetailRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -37,6 +38,9 @@ class PolicyDetailViewModel @Inject constructor(
 
     private val _addParticipationMemoSuccessEvent = MutableSingleLiveData<Boolean>()
     val addParticipationMemoSuccessEvent: SingleLiveData<Boolean> = _addParticipationMemoSuccessEvent
+
+    private val _showBookmarkCountMaxToastEvent = MutableSingleLiveData<Boolean>()
+    val showBookmarkCountMaxToastEvent: SingleLiveData<Boolean> = _showBookmarkCountMaxToastEvent
 
     private val _bottomSheetPage = MutableLiveData<Int>()
     val bottomSheetPage: LiveData<Int> = _bottomSheetPage
@@ -110,7 +114,7 @@ class PolicyDetailViewModel @Inject constructor(
             bookmarkResponse.onSuccess {
                 policyDetailData.value!!.isInterest = !policyDetailData.value!!.isInterest
                 _policyDetailData.value = policyDetailData.value
-            }
+            }.onError { if(statusCode.code == 400) _showBookmarkCountMaxToastEvent.setValue(true) }
         }
     }
 }

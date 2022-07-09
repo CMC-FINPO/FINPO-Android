@@ -12,6 +12,8 @@ import com.finpo.app.repository.PolicyDetailRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.onError
+import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -57,6 +59,9 @@ class ParticipationListViewModel @Inject constructor(
 
     private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, ParticipationPolicy>>()
     val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, ParticipationPolicy>> = _updateRecyclerViewItemEvent
+
+    private val _showBookmarkCountMaxToastEvent = MutableSingleLiveData<Boolean>()
+    val showBookmarkCountMaxToastEvent: SingleLiveData<Boolean> = _showBookmarkCountMaxToastEvent
 
     private val _goToPolicyDetailEvent = MutableSingleLiveData<Int>()
     val goToPolicyDetailEvent: SingleLiveData<Int> = _goToPolicyDetailEvent
@@ -134,12 +139,16 @@ class ParticipationListViewModel @Inject constructor(
         viewModelScope.launch {
             if(data.policy?.isInterest == false) {
                 val addInterestPolicyResponse = bookmarkRepository.addInterestPolicy(data.policy.id)
-                data.policy.isInterest = !data.policy.isInterest
-                if(addInterestPolicyResponse is ApiResponse.Success)    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+                addInterestPolicyResponse.onSuccess {
+                    data.policy.isInterest = !data.policy.isInterest
+                    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+                }.onError { if(statusCode.code == 400) _showBookmarkCountMaxToastEvent.setValue(true) }
             } else {
                 val deleteInterestPolicyResponse = bookmarkRepository.deleteInterestPolicy(data.policy!!.id)
-                data.policy.isInterest = !data.policy.isInterest
-                if(deleteInterestPolicyResponse is ApiResponse.Success)    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+                deleteInterestPolicyResponse.onSuccess {
+                    data.policy.isInterest = !data.policy.isInterest
+                    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+                }
             }
         }
     }
