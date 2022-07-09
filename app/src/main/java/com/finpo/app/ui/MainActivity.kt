@@ -1,16 +1,10 @@
 package com.finpo.app.ui
 
 import android.content.Intent
-import android.content.res.Configuration
-import android.graphics.Rect
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
@@ -23,7 +17,6 @@ import com.finpo.app.utils.dp
 import dagger.hilt.android.AndroidEntryPoint
 
 
-@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var navController: NavController
