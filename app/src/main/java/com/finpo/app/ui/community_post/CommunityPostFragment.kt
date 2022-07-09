@@ -24,5 +24,9 @@ class CommunityPostFragment : BaseFragment<FragmentCommunityPostBinding>(R.layou
         viewModel.backEvent.observe {
             findNavController().popBackStack()
         }
+
+        viewModel.showPreparationToastEvent.observe {
+            shortShowToast(getString(R.string.perparation_msg))
+        }
     }
 }

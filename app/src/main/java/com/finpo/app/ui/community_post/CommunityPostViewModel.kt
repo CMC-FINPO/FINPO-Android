@@ -10,8 +10,16 @@ import javax.inject.Inject
 @HiltViewModel
 class CommunityPostViewModel @Inject constructor() : ViewModel() {
     val editTextInput = MutableLiveData<String>()
+
     private val _backEvent = MutableSingleLiveData<Boolean>()
     val backEvent: SingleLiveData<Boolean> = _backEvent
+
+    private val _showPreparationToastEvent = MutableSingleLiveData<Boolean>()
+    val showPreparationToastEvent: SingleLiveData<Boolean> = _showPreparationToastEvent
+
+    fun showPreparationToast() {
+        _showPreparationToastEvent.setValue(true)
+    }
 
     fun backClick() {
         _backEvent.setValue(true)
