@@ -78,6 +78,7 @@
                 android:background="@null"
                 android:gravity="top"
                 android:hint="@string/input_content"
+                android:maxLength="@integer/post_max_length"
                 android:text="@={viewModel.editTextInput}"
                 android:textColorHint="@color/gray_g05" />
 
