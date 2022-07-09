@@ -56,6 +56,10 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
             longShowToast(getString(R.string.bookmark_max_msg))
         }
 
+        viewModel.showParticipationCountMaxToastEvent.observe {
+            longShowToast(getString(R.string.participation_max_msg))
+        }
+
         viewModel.addParticipationMemoSuccessEvent.observe {
             showConfirmDialog("메모가 등록되었습니다")
         }

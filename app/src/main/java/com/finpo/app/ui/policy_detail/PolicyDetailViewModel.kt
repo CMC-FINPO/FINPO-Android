@@ -42,6 +42,9 @@ class PolicyDetailViewModel @Inject constructor(
     private val _showBookmarkCountMaxToastEvent = MutableSingleLiveData<Boolean>()
     val showBookmarkCountMaxToastEvent: SingleLiveData<Boolean> = _showBookmarkCountMaxToastEvent
 
+    private val _showParticipationCountMaxToastEvent = MutableSingleLiveData<Boolean>()
+    val showParticipationCountMaxToastEvent: SingleLiveData<Boolean> = _showParticipationCountMaxToastEvent
+
     private val _bottomSheetPage = MutableLiveData<Int>()
     val bottomSheetPage: LiveData<Int> = _bottomSheetPage
 
@@ -73,6 +76,11 @@ class PolicyDetailViewModel @Inject constructor(
                 } else {
                     participationPolicyId = data.data!!.id
                     _bottomSheetPage.value = _bottomSheetPage.value?.plus(1)
+                }
+            }.onError {
+                if (statusCode.code == 400) {
+                    _showParticipationCountMaxToastEvent.setValue(true)
+                    _dismissBottomDialogEvent.setValue(true)
                 }
             }
         }

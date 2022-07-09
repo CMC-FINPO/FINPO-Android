@@ -120,4 +120,5 @@
     <string name="setting_interest">관심 설정</string>
     <string name="finish">완료</string>
     <string name="bookmark_max_msg">북마크는 최대 20개까지 추가할 수 있어요!</string>
+    <string name="participation_max_msg">참여 정책은 최대 20개까지 추가할 수 있어요!</string>
 </resources>
