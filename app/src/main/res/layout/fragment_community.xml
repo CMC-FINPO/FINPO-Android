@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.community.CommunityViewModel" />
@@ -12,8 +13,6 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_g09"
-        android:paddingHorizontal="20dp"
         tools:context=".ui.community.CommunityFragment">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -24,24 +23,43 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray_g09"
                 app:contentInsetStart="0dp"
                 app:layout_scrollFlags="scroll|enterAlways">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="7.5dp">
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:src="@drawable/ic_search_community"
+                        app:layout_constraintEnd_toStartOf="@id/iv_write"
+                        app:layout_constraintTop_toTopOf="@id/iv_write" />
+
+                    <ImageView
+                        android:id="@+id/iv_write"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:src="@drawable/ic_write"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
 
                     <TextView
                         android:id="@+id/tv_result_count"
                         style="@style/header5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="15dp"
+                        android:layout_marginBottom="12dp"
                         android:textColor="@color/point_p01"
+                        app:layout_constraintBottom_toBottomOf="@id/view_divider"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         tools:text="6" />
 
                     <TextView
@@ -49,21 +67,25 @@
                         style="@style/header5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/community_count"
                         app:layout_constraintBottom_toBottomOf="@id/tv_result_count"
                         app:layout_constraintStart_toEndOf="@id/tv_result_count"
                         app:layout_constraintTop_toTopOf="@id/tv_result_count"
-                        tools:text="개의 정책 결과" />
+                        tools:text="개의 글" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cl_spinner"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:layout_marginEnd="11dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="12dp"
                         android:background="@drawable/bg_solid_none_rounded_b01_5"
-                        android:paddingStart="7dp">
-<!--                        android:onClick="@{() -> viewModel.showBottomSheetDialog()}"-->
+                        android:paddingStart="7dp"
+                        app:layout_constraintBottom_toBottomOf="@id/view_divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_write">
+                        <!--                        android:onClick="@{() -> viewModel.showBottomSheetDialog()}"-->
 
                         <TextView
                             android:id="@+id/tv_spinner"
@@ -74,7 +96,7 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             tools:text="최신순" />
-<!--                        spinnerText="@{viewModel.spinnerPosition}"-->
+                        <!--                        spinnerText="@{viewModel.spinnerPosition}"-->
 
                         <ImageView
                             android:id="@+id/iv_spinner"
@@ -87,6 +109,15 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:id="@+id/view_divider"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/gray_g07"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -102,8 +133,7 @@
             android:layout_height="wrap_content"
             app:layoutManager=".utils.LinearLayoutManagerWrapper"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:listitem="@layout/item_recycler_policy"
-            />
+            tools:listitem="@layout/item_recycler_policy" />
         <!--            doScrollBottom="@{() -> viewModel.addPolicy()}"-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -122,4 +122,5 @@
     <string name="bookmark_max_msg">북마크는 최대 20개까지 추가할 수 있어요!</string>
     <string name="participation_max_msg">참여 정책은 최대 20개까지 추가할 수 있어요!</string>
     <string name="policy_count">개의 정책 결과</string>
+    <string name="community_count">개의 글</string>
 </resources>
