@@ -94,6 +94,7 @@
                         android:textColor="@color/point_p01"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cl_search"
+                        android:text="@{viewModel.policySize.toString()}"
                         tools:text="6" />
 
                     <TextView
@@ -104,6 +105,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/tv_result_count"
                         app:layout_constraintStart_toEndOf="@id/tv_result_count"
                         app:layout_constraintTop_toTopOf="@id/tv_result_count"
+                        android:text="@string/policy_count"
                         tools:text="개의 정책 결과" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout

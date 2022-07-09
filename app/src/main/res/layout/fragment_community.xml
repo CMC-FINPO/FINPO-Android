@@ -1,13 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.community.CommunityFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <data>
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.community.CommunityViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="커뮤니티" />
+        android:background="@color/gray_g09"
+        android:paddingHorizontal="20dp"
+        tools:context=".ui.community.CommunityFragment">
 
-</FrameLayout>
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:liftOnScroll="true">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_g09"
+                app:contentInsetStart="0dp"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="7.5dp">
+
+                    <TextView
+                        android:id="@+id/tv_result_count"
+                        style="@style/header5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/point_p01"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="6" />
+
+                    <TextView
+                        android:id="@+id/tv_result"
+                        style="@style/header5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_result_count"
+                        app:layout_constraintStart_toEndOf="@id/tv_result_count"
+                        app:layout_constraintTop_toTopOf="@id/tv_result_count"
+                        tools:text="개의 정책 결과" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_spinner"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="11dp"
+                        android:background="@drawable/bg_solid_none_rounded_b01_5"
+                        android:paddingStart="7dp">
+<!--                        android:onClick="@{() -> viewModel.showBottomSheetDialog()}"-->
+
+                        <TextView
+                            android:id="@+id/tv_spinner"
+                            style="@style/body4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="최신순" />
+<!--                        spinnerText="@{viewModel.spinnerPosition}"-->
+
+                        <ImageView
+                            android:id="@+id/iv_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_arrow_down"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/tv_spinner"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_policy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager=".utils.LinearLayoutManagerWrapper"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            tools:listitem="@layout/item_recycler_policy"
+            />
+        <!--            doScrollBottom="@{() -> viewModel.addPolicy()}"-->
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

@@ -32,6 +32,9 @@ class HomeViewModel @Inject constructor(
     private val _policyList = MutableLiveData<List<PolicyContent?>>()
     val policyList: LiveData<List<PolicyContent?>> = _policyList
 
+    private val _policySize = MutableLiveData<Int>()
+    val policySize: LiveData<Int> = _policySize
+
     private val _spinnerPosition = MutableLiveData<Int>()
     val spinnerPosition: LiveData<Int> = _spinnerPosition
 
@@ -82,6 +85,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getInitData() {
+        _policySize.value = 0
         viewModelScope.launch {
             val myRegionResponse = myInfoRepository.getMyRegion()
             val myCategoryResponse = myInfoRepository.getMyCategory()
@@ -120,6 +124,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun clearPolicy() {
+        _policySize.value = 0
         _policyList.value = listOf()
     }
 
@@ -135,6 +140,7 @@ class HomeViewModel @Inject constructor(
                     data.data.last, _policyList,
                     paging.changeData()
                 )
+                _policySize.value = data.data.totalElements
             }
         }
     }
