@@ -8,6 +8,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 
+//TODO REFACTOR 코드 분리
 interface ApiService {
     //REGION
     @PUT("/region/me")
@@ -124,4 +125,8 @@ interface ApiService {
     suspend fun putMyNotification(
         @Body myNotificationBody: MyNotificationBody
     ) : ApiResponse<JsonElement>
+
+    //COMMUNITY
+    @POST("/post")
+    suspend fun postWriting(@Body postWritingRequest: PostWritingRequest) : ApiResponse<JsonElement>
 }

@@ -28,5 +28,9 @@ class CommunityPostFragment : BaseFragment<FragmentCommunityPostBinding>(R.layou
         viewModel.showPreparationToastEvent.observe {
             shortShowToast(getString(R.string.perparation_msg))
         }
+
+        viewModel.goToCommunityHomeFragmentEvent.observe {
+            findNavController().navigate(CommunityPostFragmentDirections.actionCommunityPostFragmentToCommunityFragment())
+        }
     }
 }
