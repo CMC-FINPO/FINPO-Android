@@ -67,6 +67,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun navBarInvisible() {
+        /*View.GONE으로 한 경우
+        navBar의 visibility를 다시 View.VISIBLE로 설정해도 navBar가 보이지 않음
+        */
         binding.navBar.visibility = View.INVISIBLE
         val layoutParams = binding.navHost.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.bottomMargin = 0.dp

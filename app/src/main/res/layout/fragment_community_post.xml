@@ -36,6 +36,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
+                        android:onClick="@{() -> viewModel.backClick()}"
                         android:src="@drawable/ic_back"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -67,13 +68,13 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <EditText
-                android:layout_weight="1"
                 style="@style/body3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
+                android:layout_weight="1"
                 android:background="@null"
                 android:gravity="top"
                 android:hint="@string/input_content"
@@ -81,9 +82,9 @@
                 android:textColorHint="@color/gray_g05" />
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:orientation="vertical">
 
                 <View
                     android:id="@+id/view_divider"
@@ -92,12 +93,12 @@
                     android:background="@color/gray_g07" />
 
                 <ImageView
-                    android:layout_marginStart="20dp"
-                    android:layout_gravity="center_vertical"
                     android:id="@+id/iv_camera"
-                    android:src="@drawable/ic_camera"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_img" />
 
             </LinearLayout>
 
