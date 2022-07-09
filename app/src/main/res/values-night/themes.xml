@@ -13,10 +13,10 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
-        <item name="appBarLayoutStyle">@style/FinfoAppbar</item>
+        <item name="appBarLayoutStyle">@style/FinpoAppbar</item>
     </style>
 
-    <style name="FinfoAppbar" parent="Widget.AppCompat.Toolbar">
+    <style name="FinpoAppbar" parent="Widget.AppCompat.Toolbar">
         <item name="background">@color/white_w01</item>
     </style>
 </resources>

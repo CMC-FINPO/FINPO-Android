@@ -40,7 +40,11 @@
         android:id="@+id/communityFragment"
         android:name="com.finpo.app.ui.community.CommunityFragment"
         android:label="fragment_community"
-        tools:layout="@layout/fragment_community" />
+        tools:layout="@layout/fragment_community" >
+        <action
+            android:id="@+id/action_communityFragment_to_communityPostFragment"
+            app:destination="@id/communityPostFragment" />
+    </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
         android:name="com.finpo.app.ui.bookmark.BookmarkFragment"
@@ -150,4 +154,9 @@
             android:id="@+id/action_participationListFragment_to_policyDetailFragment"
             app:destination="@id/policyDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/communityPostFragment"
+        android:name="com.finpo.app.ui.community_post.CommunityPostFragment"
+        android:label="CommunityPostFragment"
+        tools:layout="@layout/fragment_community_post"/>
 </navigation>

@@ -13,7 +13,7 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
-        <item name="appBarLayoutStyle">@style/FinfoAppbar</item>
+        <item name="appBarLayoutStyle">@style/FinpoAppbar</item>
         <item name="android:datePickerStyle">@style/FinpoDatePicker</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
@@ -29,7 +29,7 @@
         <item name="android:statusBarColor">@color/point_p01</item>
     </style>
 
-    <style name="FinfoAppbar" parent="Widget.AppCompat.Toolbar">
+    <style name="FinpoAppbar" parent="Widget.AppCompat.Toolbar">
         <item name="background">@color/white_w01</item>
     </style>
     <style name="FinpoDatePicker" parent="android:Widget.Material.DatePicker">

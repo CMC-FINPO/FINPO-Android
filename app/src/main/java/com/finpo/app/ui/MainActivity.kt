@@ -1,28 +1,34 @@
 package com.finpo.app.ui
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Bundle
-import android.util.Log
+import android.content.res.Configuration
+import android.graphics.Rect
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.view.WindowManager
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
-import androidx.navigation.*
+import androidx.core.view.marginBottom
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.ActivityMainBinding
 import com.finpo.app.ui.common.BaseActivity
-import com.finpo.app.ui.home.HomeFragmentDirections
+import com.finpo.app.utils.dp
 import dagger.hilt.android.AndroidEntryPoint
 
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var navController: NavController
     var isMovedHomeBySelectedItem = false
+    private var destinationId = R.id.homeFragment
     private val bottomItemIds = listOf(R.id.homeFragment, R.id.communityFragment, R.id.bookmarkFragment, R.id.myPageFragment)
 
     override fun init() {
@@ -41,16 +47,37 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if(destination.id != R.id.homeFragment) isMovedHomeBySelectedItem = false
+            destinationId = destination.id
 
-            binding.navBar.visibility = if(destination.id in bottomItemIds)
-                 View.VISIBLE
-            else View.GONE
+            if(destination.id in bottomItemIds) navBarVisible()
+            else navBarInvisible()
 
             window.statusBarColor = if(destination.id == R.id.homeFragment || destination.id == R.id.policyDetailFragment || destination.id == R.id.participationListFragment) ContextCompat.getColor(this, R.color.gray_g09)
             else ContextCompat.getColor(this, R.color.white_w01)
         }
 
+        binding.navBar.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            if(destinationId !in bottomItemIds) return@addOnLayoutChangeListener
+
+            if(bottom < oldBottom) navBarInvisible()
+            else navBarVisible()
+        }
+
         processIntent(intent)
+    }
+
+    private fun navBarVisible() {
+        binding.navBar.visibility = View.VISIBLE
+        val layoutParams = binding.navHost.layoutParams as ConstraintLayout.LayoutParams
+        layoutParams.bottomMargin = 60.dp
+        binding.navHost.layoutParams = layoutParams
+    }
+
+    private fun navBarInvisible() {
+        binding.navBar.visibility = View.INVISIBLE
+        val layoutParams = binding.navHost.layoutParams as ConstraintLayout.LayoutParams
+        layoutParams.bottomMargin = 0.dp
+        binding.navHost.layoutParams = layoutParams
     }
 
     private fun processIntent(intent: Intent?) {
