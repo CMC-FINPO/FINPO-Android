@@ -17,6 +17,16 @@
         android:paddingHorizontal="20dp">
 
         <ImageView
+            android:id="@+id/iv_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{() -> viewModel.alarmClick()}"
+            android:src="@drawable/ic_alarm"
+            app:layout_constraintEnd_toStartOf="@id/iv_setting"
+            app:layout_constraintTop_toTopOf="@id/iv_setting" />
+
+        <ImageView
             android:id="@+id/iv_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

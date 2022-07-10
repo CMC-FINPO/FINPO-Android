@@ -24,6 +24,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        viewModel.alarmClickEvent.observe {
+            findNavController().navigate(MyPageFragmentDirections.actionMyPageFragmentToAlarmFragment())
+        }
+
         viewModel.profileEditClickEvent.observe {
             val permissionListener: PermissionListener = setPermissionListener()
             createPermission(permissionListener)

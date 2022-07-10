@@ -14,6 +14,9 @@ import androidx.navigation.NavDeepLinkBuilder
 import com.finpo.app.R
 import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.splash.SplashActivity
+import com.finpo.app.utils.FCM_TYPE.CHILDCOMMENT
+import com.finpo.app.utils.FCM_TYPE.COMMENT
+import com.finpo.app.utils.FCM_TYPE.POLICY
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -31,7 +34,7 @@ class FirebaseService : FirebaseMessagingService() {
         super.onMessageReceived(message)
 
         when(message.data["type"].toString()) {
-            "policy" -> {
+            POLICY -> {
                 val category = message.data["category"].toString()
                 val region = message.data["region"].toString()
                 val title = message.data["title"].toString()
@@ -41,8 +44,8 @@ class FirebaseService : FirebaseMessagingService() {
                 startId = R.id.policyDetailFragment
                 bulletinId = message.data["id"]?.toInt() ?: -1
             }
-            "comment" -> { }
-            "childComment" -> { }
+            COMMENT -> { }
+            CHILDCOMMENT -> { }
         }
 
         createNotificationChannel()
