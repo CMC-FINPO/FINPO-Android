@@ -30,12 +30,12 @@ class AlarmViewModel @Inject constructor(
         changeHistory()
     }
 
-    fun backClick() {
-        _backEvent.setValue(true)
+    fun refreshClick() {
+        changeHistory()
     }
 
-    fun clearPolicy() {
-        _historyList.value = listOf()
+    fun backClick() {
+        _backEvent.setValue(true)
     }
 
     fun changeHistory() {
