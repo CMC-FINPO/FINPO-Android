@@ -70,10 +70,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_alarm"
+            doScrollBottom="@{() -> viewModel.addPolicy()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7.5dp"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+            android:paddingBottom="7.5dp"
+            app:layoutManager=".utils.LinearLayoutManagerWrapper"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            tools:listitem="@layout/item_recycler_noti_history" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

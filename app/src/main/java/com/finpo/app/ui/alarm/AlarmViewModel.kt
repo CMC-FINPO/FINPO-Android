@@ -34,6 +34,10 @@ class AlarmViewModel @Inject constructor(
         _backEvent.setValue(true)
     }
 
+    fun clearPolicy() {
+        _historyList.value = listOf()
+    }
+
     fun changeHistory() {
         paging.resetPage()
 
@@ -44,6 +48,22 @@ class AlarmViewModel @Inject constructor(
                     data.data.content.toMutableList(),
                     data.data.last, _historyList,
                     paging.changeData()
+                )
+                Log.d("noti","${_historyList.value}")
+            }
+        }
+    }
+
+    fun addPolicy() {
+        if(paging.isLastPage || paging.page.value == 0) return
+
+        viewModelScope.launch {
+            val historyResponse = notificationRepository.getNotificationHistory(paging.page.value ?: 0)
+            historyResponse.onSuccess {
+                paging.loadData(
+                    data.data.content.toMutableList(),
+                    data.data.last, _historyList,
+                    paging.addData()
                 )
                 Log.d("noti","${_historyList.value}")
             }

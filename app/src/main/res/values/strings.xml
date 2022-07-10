@@ -121,4 +121,6 @@
     <string name="finish">완료</string>
     <string name="bookmark_max_msg">북마크는 최대 20개까지 추가할 수 있어요!</string>
     <string name="participation_max_msg">참여 정책은 최대 20개까지 추가할 수 있어요!</string>
+    <string name="noti_additional_policy_title">&#160;정책이 떴어요!</string>
+    <string name="noti_additional_comment_title">&#160;글에 댓글이 달렸어요</string>
 </resources>
