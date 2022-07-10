@@ -18,6 +18,11 @@ import java.lang.Exception
 class AlarmAdapter(val viewModel: AlarmViewModel)
     : ListAdapter<NotificationHistoryContent, RecyclerView.ViewHolder>(diffUtil) {
 
+    override fun getItemCount(): Int {
+        Log.d("infiniteScrolls", "${currentList.size} ${currentList}")
+        return super.getItemCount()
+    }
+
     override fun getItemViewType(position: Int): Int {
         return if(currentList[position] == null) LOADING
         else CONTENT

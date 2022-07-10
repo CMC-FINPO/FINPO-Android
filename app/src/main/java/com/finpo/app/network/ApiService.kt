@@ -131,4 +131,9 @@ interface ApiService {
         @Query("size") size: Int = 10,
         @Query("sort") sort: String = "id,desc"
     ) : ApiResponse<NotificationHistoryResponse>
+
+    @DELETE("/notification/history/{id}")
+    suspend fun deleteNotificationHistory(
+        @Path("id") id: Int
+    ) : ApiResponse<JsonElement>
 }

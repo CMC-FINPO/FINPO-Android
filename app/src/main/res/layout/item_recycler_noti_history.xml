@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
+
         <variable
             name="data"
             type="com.finpo.app.model.remote.NotificationHistoryContent" />
@@ -26,8 +28,21 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.isDeleteMode ? View.INVISIBLE : View.VISIBLE}"
             notiIcon="@{data.type}"
             tools:src="@drawable/ic_noti_alarm" />
+
+        <ImageView
+            android:padding="5dp"
+            android:id="@+id/iv_delete"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:onClick="@{() -> viewModel.deleteItemClick(data)}"
+            android:src="@drawable/ic_delete"
+            android:visibility="@{viewModel.isDeleteMode ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"

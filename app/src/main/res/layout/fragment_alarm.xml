@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
@@ -57,8 +58,23 @@
                         android:id="@+id/iv_delete"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:onClick="@{() -> viewModel.deleteClick()}"
                         android:src="@drawable/ic_delete"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:visibility="@{viewModel.isDeleteMode ? View.INVISIBLE : View.VISIBLE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_complete"
+                        style="@style/header5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="11dp"
+                        android:onClick="@{() -> viewModel.deleteClick()}"
+                        android:text="@string/finish"
+                        android:textColor="@color/point_p01"
+                        android:visibility="@{viewModel.isDeleteMode ? View.VISIBLE : View.GONE}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,7 +87,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_alarm"
-            doScrollBottom="@{() -> viewModel.addPolicy()}"
+            doScrollBottom="@{() -> viewModel.addHistory()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7.5dp"

@@ -26,8 +26,38 @@ class AlarmViewModel @Inject constructor(
     private val _historyList = MutableLiveData<List<NotificationHistoryContent?>>()
     val historyList: LiveData<List<NotificationHistoryContent?>> = _historyList
 
+    private val _isDeleteMode = MutableLiveData<Boolean>()
+    val isDeleteMode: LiveData<Boolean> = _isDeleteMode
+
+    private val _deleteBtnClickEvent = MutableSingleLiveData<Boolean>()
+    val deleteBtnClickEvent: SingleLiveData<Boolean> = _deleteBtnClickEvent
+
+    private val _deleteItemClickEvent = MutableSingleLiveData<Boolean>()
+    val deleteItemClickEvent: SingleLiveData<Boolean> = _deleteItemClickEvent
+
+
+
     init {
+        _isDeleteMode.value = false
         changeHistory()
+    }
+
+    fun deleteItemClick(data: NotificationHistoryContent) {
+        viewModelScope.launch {
+            val deleteResponse = notificationRepository.deleteNotificationHistory(data.id)
+            deleteResponse.onSuccess {
+                val historyList = _historyList.value?.toMutableList() ?: mutableListOf()
+                historyList.remove(data)
+                _historyList.value = historyList
+                paging.deleteData(data)
+                _deleteItemClickEvent.setValue(true)
+            }
+        }
+    }
+
+    fun deleteClick() {
+        _isDeleteMode.value = !_isDeleteMode.value!!
+        _deleteBtnClickEvent.setValue(true)
     }
 
     fun refreshClick() {
@@ -38,7 +68,7 @@ class AlarmViewModel @Inject constructor(
         _backEvent.setValue(true)
     }
 
-    fun changeHistory() {
+    private fun changeHistory() {
         paging.resetPage()
 
         viewModelScope.launch {
@@ -54,9 +84,9 @@ class AlarmViewModel @Inject constructor(
         }
     }
 
-    fun addPolicy() {
+    fun addHistory() {
         if(paging.isLastPage || paging.page.value == 0) return
-
+        Log.d("deleteAlarm","addHistory 전 : ${_historyList.value}")
         viewModelScope.launch {
             val historyResponse = notificationRepository.getNotificationHistory(paging.page.value ?: 0)
             historyResponse.onSuccess {
@@ -65,7 +95,7 @@ class AlarmViewModel @Inject constructor(
                     data.data.last, _historyList,
                     paging.addData()
                 )
-                Log.d("noti","${_historyList.value}")
+                Log.d("deleteAlarm","addHistory 후 : ${_historyList.value}")
             }
         }
     }
