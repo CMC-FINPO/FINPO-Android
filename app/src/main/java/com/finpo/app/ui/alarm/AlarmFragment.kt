@@ -21,6 +21,7 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(R.layout.fragment_alarm
 
         alarmAdapter = AlarmAdapter(viewModel)
         binding.rvAlarm.adapter = alarmAdapter
+        binding.rvAlarm.itemAnimator = null
 
         viewModel.historyList.observe(viewLifecycleOwner) {
             Log.d("deleteAlarm", "adapter에 추가 $it")
@@ -28,6 +29,7 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(R.layout.fragment_alarm
                 if(viewModel.paging.page.value == 1)
                     binding.rvAlarm.scrollToPosition(0)
 
+                //item 삭제하는 경우 recyclerview scroll bottom 감지가 되지 않아 아래의 코드를 추가함
                 try {
                     val lastVisibleItemPosition =
                         (binding.rvAlarm.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
