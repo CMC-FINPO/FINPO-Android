@@ -124,4 +124,11 @@ interface ApiService {
     suspend fun putMyNotification(
         @Body myNotificationBody: MyNotificationBody
     ) : ApiResponse<JsonElement>
+
+    @GET("/notification/history/me")
+    suspend fun getNotificationHistory(
+        @Query("page") page: Int,
+        @Query("size") size: Int = 10,
+        @Query("sort") sort: String = "id,desc"
+    ) : ApiResponse<NotificationHistoryResponse>
 }
