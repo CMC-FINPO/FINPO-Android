@@ -9,4 +9,5 @@ import javax.inject.Singleton
 @Singleton
 class CommunityRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun postWriting(postWritingRequest: PostWritingRequest) = apiService.postWriting(postWritingRequest)
+    suspend fun getWriting(content: String, page: Int, sort: List<String>) = apiService.getWriting(content, page, sort)
 }

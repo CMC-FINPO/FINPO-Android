@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.finpo.app.model.local.IdName
 import com.finpo.app.model.remote.MyRegion
 import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.model.remote.PolicyResponse
@@ -15,7 +14,6 @@ import com.finpo.app.repository.PolicyRepository
 import com.finpo.app.utils.*
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -151,7 +149,7 @@ class HomeViewModel @Inject constructor(
             region = regionIds,
             category = categoryIds,
             page = paging.page.value ?: 0,
-            sort = listOf(SORT[spinnerPosition.value ?: 0])
+            sort = listOf(SORT_POLICY[spinnerPosition.value ?: 0])
         )
     }
 

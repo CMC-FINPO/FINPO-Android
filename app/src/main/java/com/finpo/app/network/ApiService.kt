@@ -129,4 +129,12 @@ interface ApiService {
     //COMMUNITY
     @POST("/post")
     suspend fun postWriting(@Body postWritingRequest: PostWritingRequest) : ApiResponse<JsonElement>
+
+    @GET("/post/search")
+    suspend fun getWriting(
+        @Query("content") content: String,
+        @Query("page") page: Int,
+        @Query("sort", encoded = true) sort: List<String>,
+        @Query("size") size: Int = 10
+    ) : ApiResponse<WritingResponse>
 }

@@ -6,7 +6,8 @@ const val MAX_NICKNAME_LENGTH = 13
 const val MAX_ADDITIONAL_COUNT = 5
 const val MAX_FILTER_REGION_COUNT = 6
 const val RETROFIT_TAG = "retrofit2"
-val SORT = listOf("id,desc", "countOfInterest,desc")
+val SORT_POLICY = listOf("id,desc", "countOfInterest,desc")
+val SORT_COMMUNITY = listOf("id,desc", "cratedAt, likes")
 
 enum class EditRegionType {
     LIVING, INTEREST
