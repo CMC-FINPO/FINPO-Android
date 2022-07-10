@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="data"
+            type="com.finpo.app.model.remote.NotificationHistoryContent" />
+
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.alarm.AlarmViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:paddingVertical="7.5dp"
+        android:layout_height="81dp"
+        android:background="@color/gray_g09">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.isDeleteMode ? View.INVISIBLE : View.VISIBLE}"
+            notiIcon="@{data.type}"
+            tools:src="@drawable/ic_noti_alarm" />
+
+        <ImageView
+            android:padding="5dp"
+            android:id="@+id/iv_delete"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:onClick="@{() -> viewModel.deleteItemClick(data)}"
+            android:src="@drawable/ic_delete"
+            android:visibility="@{viewModel.isDeleteMode ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/bg_solid_w01_rounded_none_5"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_icon"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/header6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:maxEms="5"
+                app:layout_constraintEnd_toStartOf="@id/tv_additional_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                notiTitle="@{data}"
+                tools:text="서울 마포구 정책 dddddddddddddddddddddddddd" />
+
+            <TextView
+                android:id="@+id/tv_additional_title"
+                style="@style/header6"
+                android:layout_width="0dp"
+                android:maxLines="1"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                tools:text="정책이 떴어요!"
+                notiAdditionalTitle="@{data}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_title"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:textColor="@color/gray_g03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/body6"
+                notiDate="@{data}"
+                tools:text="2022년 5월 26일 오후 9:17"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

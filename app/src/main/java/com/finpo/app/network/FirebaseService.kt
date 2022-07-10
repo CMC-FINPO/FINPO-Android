@@ -14,6 +14,9 @@ import androidx.navigation.NavDeepLinkBuilder
 import com.finpo.app.R
 import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.splash.SplashActivity
+import com.finpo.app.utils.FCM_TYPE.CHILDCOMMENT
+import com.finpo.app.utils.FCM_TYPE.COMMENT
+import com.finpo.app.utils.FCM_TYPE.POLICY
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -31,7 +34,7 @@ class FirebaseService : FirebaseMessagingService() {
         super.onMessageReceived(message)
 
         when(message.data["type"].toString()) {
-            "policy" -> {
+            POLICY -> {
                 val category = message.data["category"].toString()
                 val region = message.data["region"].toString()
                 val title = message.data["title"].toString()
@@ -41,8 +44,8 @@ class FirebaseService : FirebaseMessagingService() {
                 startId = R.id.policyDetailFragment
                 bulletinId = message.data["id"]?.toInt() ?: -1
             }
-            "comment" -> { }
-            "childComment" -> { }
+            COMMENT -> { }
+            CHILDCOMMENT -> { }
         }
 
         createNotificationChannel()
@@ -77,7 +80,7 @@ class FirebaseService : FirebaseMessagingService() {
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         intent.putExtra("startId", startId)
         intent.putExtra("bulletinId", bulletinId)
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(this,  System.currentTimeMillis().toInt(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationCompat.Builder(this, "channel")
@@ -94,7 +97,7 @@ class FirebaseService : FirebaseMessagingService() {
             .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(this)) {
-            notify(1, builder.build())
+            notify(bulletinId, builder.build())
         }
     }
 }

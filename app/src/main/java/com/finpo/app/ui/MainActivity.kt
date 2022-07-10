@@ -45,7 +45,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             if(destination.id in bottomItemIds) navBarVisible()
             else navBarInvisible()
 
-            window.statusBarColor = if(destination.id == R.id.homeFragment || destination.id == R.id.policyDetailFragment || destination.id == R.id.participationListFragment) ContextCompat.getColor(this, R.color.gray_g09)
+            window.statusBarColor = if(destination.id == R.id.homeFragment || destination.id == R.id.policyDetailFragment || destination.id == R.id.participationListFragment || destination.id == R.id.alarmFragment) ContextCompat.getColor(this, R.color.gray_g09)
             else ContextCompat.getColor(this, R.color.white_w01)
         }
 

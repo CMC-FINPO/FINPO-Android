@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_myPageFragment_to_participationListFragment"
             app:destination="@id/participationListFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_alarmFragment"
+            app:destination="@id/alarmFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -165,4 +168,9 @@
             app:popUpTo="@id/communityFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/alarmFragment"
+        android:name="com.finpo.app.ui.alarm.AlarmFragment"
+        android:label="AlarmFragment"
+        tools:layout="@layout/fragment_alarm"/>
 </navigation>

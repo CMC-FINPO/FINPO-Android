@@ -18,4 +18,6 @@ class NotificationRepository @Inject constructor(private val apiService: ApiServ
         regionSubscribe: List<IdSubscribe>? = null,
         interestSubscribe: List<IdSubscribe>? = null
     ) = apiService.putMyNotification(MyNotificationBody(totalSubscribe, regionSubscribe, interestSubscribe))
+    suspend fun getNotificationHistory(page: Int) = apiService.getNotificationHistory(page = page)
+    suspend fun deleteNotificationHistory(id: Int) = apiService.deleteNotificationHistory(id)
 }

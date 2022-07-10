@@ -37,3 +37,31 @@ data class IdSubscribe(
     val id: Int,
     val subscribe: Boolean
 )
+
+data class NotificationHistoryResponse(
+    val data: NotificationHistory
+)
+
+data class NotificationHistory(
+    val content: List<NotificationHistoryContent>,
+    val last: Boolean
+)
+
+data class NotificationHistoryContent(
+    val id: Int,
+    val type: String,
+    val policy: NotificationPolicy?,
+    val createdAt: String?,
+    val post: NotificationPost?
+)
+
+data class NotificationPolicy(
+    val id: Int,
+    val title: String,
+    val modifiedAt: String
+)
+
+data class NotificationPost(
+    val id: Int,
+    val content: String
+)

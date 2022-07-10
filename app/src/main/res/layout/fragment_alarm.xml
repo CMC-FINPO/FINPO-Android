@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.finpo.app.ui.participation_list.ParticipationListViewModel" />
+            type="com.finpo.app.ui.alarm.AlarmViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -17,32 +17,42 @@
         android:layout_height="match_parent"
         android:background="@color/gray_g09"
         android:paddingHorizontal="20dp"
-        tools:context=".ui.participation_list.ParticipationListFragment">
+        tools:context=".ui.alarm.AlarmFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             app:liftOnScroll="true">
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:contentInsetStart="0dp"
-                app:layout_scrollFlags="scroll|enterAlways">
+                android:layout_height="45dp"
+                android:background="@color/gray_g09"
+                app:contentInsetStart="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="10dp">
+                    android:layout_height="45dp">
 
                     <ImageView
                         android:id="@+id/iv_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:onClick="@{() -> viewModel.backClick()}"
                         android:src="@drawable/ic_back"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_refresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        android:onClick="@{() -> viewModel.refreshClick()}"
+                        android:src="@drawable/ic_refresh"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/iv_delete"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
@@ -52,7 +62,7 @@
                         android:layout_marginTop="10dp"
                         android:onClick="@{() -> viewModel.deleteClick()}"
                         android:src="@drawable/ic_delete"
-                        android:visibility="@{viewModel.isDeleteMode ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{viewModel.isDeleteMode ? View.INVISIBLE : View.VISIBLE}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,37 +79,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_user_name"
-                        style="@style/header2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="23dp"
-                        android:text="@{@string/user_name(viewModel.nickname)}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/iv_back"
-                        tools:text="핀포님은" />
-
-                    <TextView
-                        android:id="@+id/tv_interest_num"
-                        style="@style/header2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.policySize.toString()}"
-                        android:textColor="@color/point_p01"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_user_name"
-                        tools:text="5" />
-
-                    <TextView
-                        android:id="@+id/tv_interest_text"
-                        style="@style/header2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/user_participation_num"
-                        app:layout_constraintStart_toEndOf="@id/tv_interest_num"
-                        app:layout_constraintTop_toTopOf="@id/tv_interest_num" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -108,13 +87,49 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_policy"
+            android:id="@+id/rv_alarm"
+            doScrollBottom="@{() -> viewModel.addHistory()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7.5dp"
+            android:paddingBottom="7.5dp"
             app:layoutManager=".utils.LinearLayoutManagerWrapper"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:listitem="@layout/item_recycler_participation_policy" />
+            tools:listitem="@layout/item_recycler_noti_history" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.historyList.empty ? View.VISIBLE : View.GONE}"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="28dp"
+                android:src="@drawable/ic_empty_alarm" />
+
+            <TextView
+                style="@style/header1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:text="@string/empty_alarm_title" />
+
+            <TextView
+                style="@style/body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:text="@string/empty_alarm_subtitle"
+                android:textColor="@color/gray_g01" />
+
+        </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

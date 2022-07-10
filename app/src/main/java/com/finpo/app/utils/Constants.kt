@@ -13,6 +13,12 @@ enum class EditRegionType {
     LIVING, INTEREST
 }
 
+object FCM_TYPE {
+    const val POLICY = "POLICY"
+    const val COMMENT = "COMMENT"
+    const val CHILDCOMMENT = "CHILDCOMMENT"
+}
+
 object SORT_TYPE {
     const val RECENT = 0
     const val POPULAR = 1

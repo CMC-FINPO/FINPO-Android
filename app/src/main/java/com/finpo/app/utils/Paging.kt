@@ -48,6 +48,11 @@ class Paging<T> @Inject constructor() {
         }
     }
 
+    fun deleteData(data: T) {
+        _itemList.value?.remove(data)
+        _itemList.value = _itemList.value
+    }
+
     fun changeData(): (data: MutableList<T?>) -> Unit = { data ->
         _itemList.value = data
     }
