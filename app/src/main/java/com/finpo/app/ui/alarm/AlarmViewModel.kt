@@ -12,6 +12,7 @@ import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_components_SingletonComponent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,8 +35,6 @@ class AlarmViewModel @Inject constructor(
 
     private val _deleteItemClickEvent = MutableSingleLiveData<Boolean>()
     val deleteItemClickEvent: SingleLiveData<Boolean> = _deleteItemClickEvent
-
-
 
     init {
         _isDeleteMode.value = false
@@ -68,11 +67,19 @@ class AlarmViewModel @Inject constructor(
         _backEvent.setValue(true)
     }
 
+    private fun getLastId(): Int? {
+        return try {
+            var lastIdx = _historyList.value?.size ?: 0
+            lastIdx -= 2 // 마지막 item은 null
+            _historyList.value?.get(lastIdx)?.id
+        } catch (e: Exception) { null }
+    }
+
     private fun changeHistory() {
         paging.resetPage()
 
         viewModelScope.launch {
-            val historyResponse = notificationRepository.getNotificationHistory(paging.page.value ?: 0)
+            val historyResponse = notificationRepository.getNotificationHistory(null)
             historyResponse.onSuccess {
                 paging.loadData(
                     data.data.content.toMutableList(),
@@ -88,7 +95,7 @@ class AlarmViewModel @Inject constructor(
         if(paging.isLastPage || paging.page.value == 0) return
         Log.d("deleteAlarm","addHistory 전 : ${_historyList.value}")
         viewModelScope.launch {
-            val historyResponse = notificationRepository.getNotificationHistory(paging.page.value ?: 0)
+            val historyResponse = notificationRepository.getNotificationHistory(getLastId())
             historyResponse.onSuccess {
                 paging.loadData(
                     data.data.content.toMutableList(),

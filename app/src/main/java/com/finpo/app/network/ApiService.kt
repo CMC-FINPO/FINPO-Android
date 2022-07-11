@@ -140,9 +140,10 @@ interface ApiService {
 
     @GET("/notification/history/me")
     suspend fun getNotificationHistory(
-        @Query("page") page: Int,
+        @Query("lastId") lastId: Int?,
+        @Query("page") page: Int = 0,
         @Query("size") size: Int = 10,
-        @Query("sort") sort: String = "id,desc"
+        @Query("sort") sort: String = "id,desc",
     ) : ApiResponse<NotificationHistoryResponse>
 
     @DELETE("/notification/history/{id}")
