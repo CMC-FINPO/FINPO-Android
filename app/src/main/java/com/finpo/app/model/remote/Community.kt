@@ -36,5 +36,6 @@ data class WritingContent(
 data class WritingUser(
     val id: Int,
     val nickname: String,
-    val profileImg: String
+    val profileImg: String?,
+    val gender: String = "MALE"
 )

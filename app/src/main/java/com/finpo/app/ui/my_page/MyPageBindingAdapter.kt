@@ -15,20 +15,6 @@ import com.finpo.app.model.remote.ParentCategory
 import com.finpo.app.utils.dp
 import com.google.android.flexbox.FlexboxLayout
 
-@BindingAdapter("circleImageUrl", "gender")
-fun loadCircleImage(view: ImageView, imageUrl: String?, gender: String?) {
-    val defaultImage = if(gender == view.context.getString(R.string.male_eng)) R.drawable.ic_profile_male_60
-    else R.drawable.ic_profile_female_60
-    view.setImageResource(defaultImage)
-    if(!imageUrl.isNullOrEmpty()) {
-        Glide.with(view)
-            .load(imageUrl)
-            .placeholder(defaultImage)
-            .circleCrop()
-            .into(view)
-    }
-}
-
 @BindingAdapter("interestList")
 fun setInterestList(flexBox: FlexboxLayout, items: List<ParentCategory>?) {
     if (items == null || flexBox.size != 0)
