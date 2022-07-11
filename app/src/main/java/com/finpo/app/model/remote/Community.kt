@@ -39,3 +39,28 @@ data class WritingUser(
     val profileImg: String?,
     val gender: String = "MALE"
 )
+
+data class CommunityDetailResponse(
+    val data: WritingContent
+)
+
+data class CommentResponse(
+    val data: Comment
+)
+
+data class Comment(
+    val content: List<CommentContent>,
+    val last: Boolean
+)
+
+data class CommentContent(
+    val status: Boolean,
+    val id: Int,
+    val content: String?,
+    val user: WritingUser,
+    val isUserWithdraw: Boolean?,
+    val isModified: Boolean?,
+    val isWriter: Boolean?,
+    val createdAt: String?,
+    val modifiedAt: String?
+)

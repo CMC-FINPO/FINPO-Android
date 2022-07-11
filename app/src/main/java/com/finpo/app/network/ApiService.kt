@@ -126,18 +126,6 @@ interface ApiService {
         @Body myNotificationBody: MyNotificationBody
     ) : ApiResponse<JsonElement>
 
-    //COMMUNITY
-    @POST("/post")
-    suspend fun postWriting(@Body postWritingRequest: PostWritingRequest) : ApiResponse<JsonElement>
-
-    @GET("/post/search")
-    suspend fun getWriting(
-        @Query("content") content: String,
-        @Query("page") page: Int,
-        @Query("sort", encoded = true) sort: List<String>,
-        @Query("size") size: Int = 10
-    ) : ApiResponse<WritingResponse>
-
     @GET("/notification/history/me")
     suspend fun getNotificationHistory(
         @Query("lastId") lastId: Int?,
@@ -150,4 +138,27 @@ interface ApiService {
     suspend fun deleteNotificationHistory(
         @Path("id") id: Int
     ) : ApiResponse<JsonElement>
+
+    //COMMUNITY
+    @POST("/post")
+    suspend fun postWriting(@Body postWritingRequest: PostWritingRequest) : ApiResponse<JsonElement>
+
+    @GET("/post/search")
+    suspend fun getWriting(
+        @Query("content") content: String,
+        @Query("page") page: Int,
+        @Query("sort", encoded = true) sort: List<String>,
+        @Query("size") size: Int = 10
+    ) : ApiResponse<WritingResponse>
+
+    @GET("/post/{id}")
+    suspend fun getWritingDetail(@Path("id") id: Int) : ApiResponse<CommunityDetailResponse>
+
+    @GET("/post/{id}/comment")
+    suspend fun getComment(
+        @Path("id") id: Int,
+        @Query("page") page: Int,
+        @Query("sort", encoded = true) sort: String = "id,asc",
+        @Query("size") size: Int = 10
+    ) : ApiResponse<CommentResponse>
 }

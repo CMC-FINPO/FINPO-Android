@@ -17,7 +17,6 @@
         android:layout_height="match_parent"
         android:background="@color/gray_g09"
         android:paddingHorizontal="20dp"
-        android:paddingTop="20dp"
         tools:context=".ui.policy_detail.PolicyDetailFragment">
 
         <com.google.android.material.appbar.AppBarLayout
