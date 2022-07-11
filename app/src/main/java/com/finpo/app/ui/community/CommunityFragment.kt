@@ -2,6 +2,7 @@ package com.finpo.app.ui.community
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentCommunityBinding
 import com.finpo.app.ui.common.BaseFragment
@@ -19,6 +20,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
         communityAdapter = CommunityAdapter(viewModel)
         binding.rvCommunity.adapter = communityAdapter
+
+        viewModel.goToDetailFragmentEvent.observe {
+            findNavController().navigate(NavGraphDirections.actionGlobalCommunityDetailFragment(it))
+        }
 
         val bottomDialogFragment = BottomSheetCommunitySortDialog(viewModel)
 

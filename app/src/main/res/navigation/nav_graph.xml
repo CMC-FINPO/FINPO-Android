@@ -8,6 +8,9 @@
     <action android:id="@+id/action_global_policyDetailFragment"
         app:destination="@id/policyDetailFragment"/>
 
+    <action android:id="@+id/action_global_communityDetailFragment"
+        app:destination="@id/communityDetailFragment"/>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.finpo.app.ui.home.HomeFragment"
@@ -32,9 +35,6 @@
             app:argType="string[]"
             app:nullable="true"
             android:defaultValue="@null" />
-        <action
-            android:id="@+id/action_homeFragment_to_policyDetailFragment"
-            app:destination="@id/policyDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/communityFragment"
@@ -49,11 +49,7 @@
         android:id="@+id/bookmarkFragment"
         android:name="com.finpo.app.ui.bookmark.BookmarkFragment"
         android:label="fragment_notification"
-        tools:layout="@layout/fragment_bookmark" >
-        <action
-            android:id="@+id/action_bookmarkFragment_to_policyDetailFragment"
-            app:destination="@id/policyDetailFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_bookmark" />
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.finpo.app.ui.my_page.MyPageFragment"
@@ -153,9 +149,6 @@
         <argument
             android:name="nickname"
             app:argType="string" />
-        <action
-            android:id="@+id/action_participationListFragment_to_policyDetailFragment"
-            app:destination="@id/policyDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/communityPostFragment"
@@ -173,4 +166,13 @@
         android:name="com.finpo.app.ui.alarm.AlarmFragment"
         android:label="AlarmFragment"
         tools:layout="@layout/fragment_alarm"/>
+    <fragment
+        android:id="@+id/communityDetailFragment"
+        android:name="com.finpo.app.ui.community_detail.CommunityDetailFragment"
+        android:label="CommunityDetailFragment"
+        tools:layout="@layout/fragment_community_detail">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

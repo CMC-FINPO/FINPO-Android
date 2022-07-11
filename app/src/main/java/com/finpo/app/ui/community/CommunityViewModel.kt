@@ -41,8 +41,15 @@ class CommunityViewModel @Inject constructor(
     private val _bottomSheetDismissEvent = MutableSingleLiveData<Boolean>()
     val bottomSheetDismissEvent: SingleLiveData<Boolean> = _bottomSheetDismissEvent
 
+    private val _goToDetailFragmentEvent = MutableSingleLiveData<Int>()
+    val goToDetailFragmentEvent: SingleLiveData<Int> = _goToDetailFragmentEvent
+
     init {
         initData()
+    }
+
+    fun goToDetailFragment(id: Int) {
+        _goToDetailFragmentEvent.setValue(id)
     }
 
     fun showBottomSheetDialog() {

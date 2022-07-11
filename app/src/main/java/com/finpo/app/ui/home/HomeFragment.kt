@@ -6,6 +6,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentHomeBinding
 import com.finpo.app.ui.MainActivity
@@ -55,7 +56,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
 
         viewModel.goToDetailFragmentEvent.observe { id ->
-            val action = HomeFragmentDirections.actionHomeFragmentToPolicyDetailFragment(id)
+            val action = NavGraphDirections.actionGlobalPolicyDetailFragment(id)
             findNavController().navigate(action)
         }
 

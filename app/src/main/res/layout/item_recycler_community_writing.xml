@@ -28,6 +28,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.goToDetailFragment(data.id)}"
             android:padding="20dp">
 
             <ImageView
@@ -43,10 +44,10 @@
             <TextView
                 android:id="@+id/tv_nickname"
                 style="@style/header6"
+                communityNickname="@{data}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                communityNickname="@{data}"
                 app:layout_constraintStart_toEndOf="@id/iv_profile"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="비비빅" />

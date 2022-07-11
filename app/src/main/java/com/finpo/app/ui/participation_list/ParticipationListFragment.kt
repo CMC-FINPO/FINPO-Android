@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentParticipationListBinding
 import com.finpo.app.ui.bookmark.InterestPolicyAdapter
@@ -38,7 +39,7 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
         }
 
         viewModel.goToPolicyDetailEvent.observe {
-            findNavController().navigate(ParticipationListFragmentDirections.actionParticipationListFragmentToPolicyDetailFragment(it))
+            findNavController().navigate(NavGraphDirections.actionGlobalPolicyDetailFragment(it))
         }
 
         viewModel.updateRecyclerViewItemEvent.observe {

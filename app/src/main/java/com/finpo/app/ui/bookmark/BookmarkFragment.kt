@@ -2,6 +2,7 @@ package com.finpo.app.ui.bookmark
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentBookmarkBinding
 import com.finpo.app.ui.common.BaseFragment
@@ -27,11 +28,7 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment
 
     private fun observeGotoDetailFragmentEvent() {
         viewModel.goToDetailFragmentEvent.observe { id ->
-            findNavController().navigate(
-                BookmarkFragmentDirections.actionBookmarkFragmentToPolicyDetailFragment(
-                    id
-                )
-            )
+            findNavController().navigate(NavGraphDirections.actionGlobalPolicyDetailFragment(id))
         }
     }
 
