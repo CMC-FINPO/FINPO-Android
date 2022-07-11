@@ -8,8 +8,10 @@
     <action android:id="@+id/action_global_policyDetailFragment"
         app:destination="@id/policyDetailFragment"/>
 
-    <action android:id="@+id/action_global_communityDetailFragment"
-        app:destination="@id/communityDetailFragment"/>
+    <action
+        android:id="@+id/action_global_communityDetailFragment"
+        app:destination="@id/communityDetailFragment"
+        app:enterAnim="@android:anim/slide_in_left" />
 
     <fragment
         android:id="@+id/homeFragment"

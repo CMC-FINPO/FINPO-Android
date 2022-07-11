@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="com.finpo.app.model.remote.WritingContent" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/iv_profile"
+                circleImageUrl="@{data.user.profileImg}"
+                gender="@{data.user.gender}"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                tools:src="@drawable/ic_profile_male_60"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                style="@style/header6"
+                communityNickname="@{data}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/iv_profile"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="비비빅" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/not_defined_10_reg"
+                writingContentDate="@{data}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/gray_g03"
+                app:layout_constraintStart_toEndOf="@id/iv_profile"
+                app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+                tools:text="2022년 5월 26일 오후9:17" />
+
+            <TextView
+                android:id="@+id/tv_modified"
+                style="@style/not_defined_10_reg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/modified"
+                android:textColor="@color/gray_g05"
+                android:visibility="@{data.isModified ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toEndOf="@id/tv_time"
+                app:layout_constraintTop_toTopOf="@id/tv_time" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                style="@style/body3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{data.content}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_profile"
+                tools:text="청년저축계좌랑 청년희망키움통장이랑 다른 거 맞죠? 어떤 점이 다른 건가요? 제가 어디에 해당되는지 모르겠는 어쩌구 저쩌구 어쩌구 저쩌구 어쩌구" />
+
+            <ImageView
+                android:id="@+id/iv_like"
+                isLiked="@{data.isLiked}"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_content"
+                tools:src="@drawable/ic_like_active" />
+
+            <ImageView
+                android:id="@+id/iv_scrap"
+                isBookmarkChecked="@{data.isBookmarked}"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="9dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_like"
+                tools:src="@drawable/ic_scrap_active" />
+            <!--        android:onClick="@{() -> viewModel.bookmarkClick(data, position)}"-->
+
+            <TextView
+                android:id="@+id/tv_count"
+                style="@style/not_defined_10_reg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@{@string/like_comment_hits_num(data.likes, data.countOfComment, data.hits)}"
+                android:textColor="@color/gray_g03"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="좋아요 2 - 댓글 1 - 조회수 30" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_g07"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </LinearLayout>
+</layout>
