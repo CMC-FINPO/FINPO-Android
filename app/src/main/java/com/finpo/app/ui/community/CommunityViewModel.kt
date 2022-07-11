@@ -61,6 +61,21 @@ class CommunityViewModel @Inject constructor(
         }
     }
 
+    fun addWriting() {
+        if (paging.isLastPage || paging.page.value == 0) return
+
+        viewModelScope.launch {
+            val writingResponse = getWritingResponse()
+            writingResponse.onSuccess {
+                paging.loadData(
+                    data.data.content.toMutableList(),
+                    data.data.last, _writingList,
+                    paging.addData()
+                )
+            }
+        }
+    }
+
     private suspend fun getWritingResponse(): ApiResponse<WritingResponse> {
         return communityRepository.getWriting(
             content = "",

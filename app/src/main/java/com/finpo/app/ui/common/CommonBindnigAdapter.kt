@@ -58,6 +58,7 @@ fun setCommunityNickname(textView: TextView, data: WritingContent?) {
         textView.setTextColor(textView.context.getColor(R.color.gray_g05)) // TODO 색상 변경 필요
     } else {
         textView.text = data.user?.nickname ?: ""
+        textView.setTextColor(textView.context.getColor(R.color.black_b01))
     }
 }
 
