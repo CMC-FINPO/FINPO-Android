@@ -1,7 +1,6 @@
 package com.finpo.app.ui.policy_detail
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
@@ -11,7 +10,6 @@ import com.finpo.app.R
 import com.finpo.app.databinding.FragmentPolicyDetailBinding
 import com.finpo.app.di.FinpoApplication
 import com.finpo.app.ui.common.BaseFragment
-import com.finpo.app.ui.home.BottomSheetSortDialog
 import com.finpo.app.utils.dp
 import com.google.android.material.tabs.TabLayoutMediator
 import com.skydoves.balloon.*

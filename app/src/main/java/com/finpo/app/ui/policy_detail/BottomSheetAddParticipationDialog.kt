@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.view.LayoutInflater
 import android.view.View
 import com.finpo.app.databinding.DialogAddParticipationBinding
-import com.finpo.app.databinding.DialogSortBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

@@ -2,12 +2,14 @@ package com.finpo.app.ui.common
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.finpo.app.R
 import com.finpo.app.model.remote.NotificationHistoryContent
 import com.finpo.app.model.remote.RegionInterest
 import com.finpo.app.model.remote.WritingContent
+import com.finpo.app.utils.SORT_TYPE
 import com.finpo.app.utils.TimeFormatter
 import com.skydoves.balloon.textForm
 
@@ -79,5 +81,30 @@ fun setRegionText(textView: TextView, regionData: RegionInterest?) {
         else arrayOf(regionData.name, regionData.parent.name)
 
     textView.text = textView.context.getString(R.string.region_text, region, detailRegion)
+}
+
+@BindingAdapter("spinnerText")
+fun setSpinnerText(
+    textView: TextView,
+    sortType: Int
+) {
+    textView.text = if(sortType == SORT_TYPE.RECENT)    textView.context.getString(R.string.recent)
+    else textView.context.getString(R.string.popular)
+}
+
+@BindingAdapter("userSortType", "viewSortType")
+fun setFont(
+    textView: TextView,
+    viewSortType: Int,
+    userSortType: Int
+) {
+    if(viewSortType == userSortType) {
+        textView.typeface = ResourcesCompat.getFont(textView.context, R.font.notosans_medium)
+        textView.setTextColor(textView.context.getColor(R.color.point_p01))
+    }
+    else {
+        textView.typeface = ResourcesCompat.getFont(textView.context, R.font.notosans_regular)
+        textView.setTextColor(textView.context.getColor(R.color.black_b01))
+    }
 }
 

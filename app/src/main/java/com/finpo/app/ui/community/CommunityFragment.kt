@@ -5,6 +5,7 @@ import androidx.navigation.fragment.findNavController
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentCommunityBinding
 import com.finpo.app.ui.common.BaseFragment
+import com.finpo.app.ui.home.BottomSheetPolicySortDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +19,16 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
         communityAdapter = CommunityAdapter(viewModel)
         binding.rvCommunity.adapter = communityAdapter
+
+        val bottomDialogFragment = BottomSheetCommunitySortDialog(viewModel)
+
+        viewModel.bottomSheetShowEvent.observe {
+            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
+        }
+
+        viewModel.bottomSheetDismissEvent.observe {
+            bottomDialogFragment.dismiss()
+        }
 
         viewModel.writingList.observe(viewLifecycleOwner) {
             communityAdapter.submitList(it.toMutableList()) {
