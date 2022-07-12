@@ -6,6 +6,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.finpo.app.R
+import com.finpo.app.model.remote.CommentContent
 import com.finpo.app.model.remote.NotificationHistoryContent
 import com.finpo.app.model.remote.RegionInterest
 import com.finpo.app.model.remote.WritingContent
@@ -51,14 +52,33 @@ fun setWritingDate(textView: TextView, data: WritingContent?) {
     textView.text= TimeFormatter.formatTime(date)
 }
 
+@BindingAdapter("commentContentDate")
+fun setCommentDate(textView: TextView, data: CommentContent?) {
+    if(data == null) return
+    val date = if(data.isModified == true) data.modifiedAt else data.createdAt
+    textView.text= TimeFormatter.formatTime(date ?: "")
+}
+
 @BindingAdapter("communityNickname")
 fun setCommunityNickname(textView: TextView, data: WritingContent?) {
     if(data == null) return
     if(data.isUserWithdraw) {
         textView.text = textView.context.getString(R.string.unknownUser)
-        textView.setTextColor(textView.context.getColor(R.color.gray_g05)) // TODO 색상 변경 필요
+        textView.setTextColor(textView.context.getColor(R.color.gray_g03))
     } else {
         textView.text = data.user?.nickname ?: ""
+        textView.setTextColor(textView.context.getColor(R.color.black_b01))
+    }
+}
+
+@BindingAdapter("commentNickname")
+fun setCommentNickname(textView: TextView, data: CommentContent?) {
+    if(data == null) return
+    if(data.isUserWithdraw == true) {
+        textView.text = textView.context.getString(R.string.unknownUser)
+        textView.setTextColor(textView.context.getColor(R.color.gray_g03))
+    } else {
+        textView.text = data.user?.nickname ?: "익명"
         textView.setTextColor(textView.context.getColor(R.color.black_b01))
     }
 }

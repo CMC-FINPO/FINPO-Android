@@ -15,13 +15,14 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
     private val args by navArgs<CommunityDetailFragmentArgs>()
 
     private lateinit var writingAdapter: WritingAdapter
+    private lateinit var commentAdapter: CommentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel.detailId = args.id
         viewModel.getWritingDetail()
-        viewModel.getComment()
+        viewModel.changeComment()
     }
 
     override fun doViewCreated() {
@@ -29,12 +30,18 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
         binding.lifecycleOwner = viewLifecycleOwner
 
         writingAdapter = WritingAdapter()
-        binding.rvCommunityDetail.adapter = ConcatAdapter(writingAdapter)
+        commentAdapter = CommentAdapter(viewModel)
+        binding.rvCommunityDetail.adapter = ConcatAdapter(writingAdapter, commentAdapter)
         binding.rvCommunityDetail.itemAnimator = null
+
 
         viewModel.writingContent.observe(viewLifecycleOwner) {
             writingAdapter.data = it
             writingAdapter.notifyItemChanged(0)
+        }
+
+        viewModel.commentList.observe(viewLifecycleOwner) {
+            commentAdapter.submitList(it.toMutableList())
         }
     }
 }

@@ -23,6 +23,9 @@ class CommunityDetailViewModel @Inject constructor(
     private val _writingContent = MutableLiveData<WritingContent>()
     val writingContent: LiveData<WritingContent> = _writingContent
 
+    private val _commentList = MutableLiveData<List<CommentContent?>>()
+    val commentList: LiveData<List<CommentContent?>> = _commentList
+
     fun getWritingDetail() {
         viewModelScope.launch {
             val detailResponse = communityRepository.getWritingDetail(detailId)
@@ -32,11 +35,17 @@ class CommunityDetailViewModel @Inject constructor(
         }
     }
 
-    fun getComment() {
+    fun changeComment() {
+        paging.resetPage()
+
         viewModelScope.launch {
             val commentResponse = communityRepository.getComment(detailId, paging.page.value ?: 0)
             commentResponse.onSuccess {
-                Log.d("CommunityDetailViewModel", "${data.data}")
+                paging.loadData(
+                    data.data.content.toMutableList(),
+                    data.data.last, _commentList,
+                    paging.changeData()
+                )
             }
         }
     }

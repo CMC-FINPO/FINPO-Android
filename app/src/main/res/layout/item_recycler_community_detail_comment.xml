@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.community_detail.CommunityDetailViewModel" />
+
+        <variable
+            name="data"
+            type="com.finpo.app.model.remote.CommentContent" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="@{data.status ? View.VISIBLE : View.GONE}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="18.5dp"
+            android:paddingVertical="15dp">
+
+            <ImageView
+                android:id="@+id/iv_profile"
+                circleImageUrl="@{data.user.profileImg}"
+                gender="@{data.user.gender}"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_profile_male_60" />
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                style="@style/header6"
+                commentNickname="@{data}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/iv_profile"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="비비빅" />
+
+            <TextView
+                android:id="@+id/tv_writer"
+                style="@style/header6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/writer"
+                android:textColor="@color/point_p01"
+                android:visibility="@{data.isWriter ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toEndOf="@id/tv_nickname"
+                app:layout_constraintTop_toTopOf="@id/tv_nickname" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/not_defined_10_reg"
+                commentContentDate="@{data}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/gray_g03"
+                app:layout_constraintStart_toEndOf="@id/iv_profile"
+                app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+                tools:text="2022년 5월 26일 오후9:17" />
+
+            <TextView
+                android:id="@+id/tv_modified"
+                style="@style/not_defined_10_reg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/modified"
+                android:textColor="@color/gray_g05"
+                android:visibility="@{data.isModified ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toEndOf="@id/tv_time"
+                app:layout_constraintTop_toTopOf="@id/tv_time" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                style="@style/body3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{data.content}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_profile"
+                tools:text="청년저축계좌랑 청년희망키움통장이랑 다른 거 맞죠? 어떤 점이 다른 건가요? 제가 어디에 해당되는지 모르겠는 어쩌구 저쩌구 어쩌구 저쩌구 어쩌구" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_g07"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </LinearLayout>
+</layout>
