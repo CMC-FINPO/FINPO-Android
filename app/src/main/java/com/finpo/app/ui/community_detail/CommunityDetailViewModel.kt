@@ -34,7 +34,14 @@ class CommunityDetailViewModel @Inject constructor(
     private val _moreClickEvent = MutableSingleLiveData<Boolean>()
     val moreClickEvent: SingleLiveData<Boolean> = _moreClickEvent
 
+    private val _editPostClickEvent = MutableSingleLiveData<Boolean>()
+    val editPostClickEvent: SingleLiveData<Boolean> = _editPostClickEvent
+
     val comment = MutableLiveData<String>()
+
+    fun editPostClick() {
+        _editPostClickEvent.setValue(true)
+    }
 
     fun moreClick() {
         _moreClickEvent.setValue(true)

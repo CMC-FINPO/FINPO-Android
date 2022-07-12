@@ -143,6 +143,12 @@ interface ApiService {
     @POST("/post")
     suspend fun postWriting(@Body postWritingRequest: PostWritingRequest) : ApiResponse<JsonElement>
 
+    @PUT("/post/{id}")
+    suspend fun putWriting(
+        @Path("id") id: Int,
+        @Body postWritingRequest: PostWritingRequest
+    ) : ApiResponse<JsonElement>
+
     @GET("/post/search")
     suspend fun getWriting(
         @Query("content") content: String,

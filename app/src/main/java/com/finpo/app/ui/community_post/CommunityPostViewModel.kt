@@ -16,6 +16,8 @@ import javax.inject.Inject
 class CommunityPostViewModel @Inject constructor(
     private val communityRepository: CommunityRepository
 ) : ViewModel() {
+    var id = -1
+
     val editTextInput = MutableLiveData<String>()
 
     private val _backEvent = MutableSingleLiveData<Boolean>()
@@ -35,11 +37,27 @@ class CommunityPostViewModel @Inject constructor(
         _backEvent.setValue(true)
     }
 
+    fun finishClick() {
+        if(id == -1) postWriting()
+        else putWriting()
+    }
+
     fun postWriting() {
         if(editTextInput.value.isNullOrEmpty()) return
 
         viewModelScope.launch {
             val postResponse = communityRepository.postWriting(PostWritingRequest(content = editTextInput.value ?: ""))
+            postResponse.onSuccess {
+                _goToCommunityHomeFragmentEvent.setValue(true)
+            }
+        }
+    }
+
+    private fun putWriting() {
+        if(editTextInput.value.isNullOrEmpty()) return
+
+        viewModelScope.launch {
+            val postResponse = communityRepository.putWriting(id, PostWritingRequest(content = editTextInput.value ?: ""))
             postResponse.onSuccess {
                 _goToCommunityHomeFragmentEvent.setValue(true)
             }
