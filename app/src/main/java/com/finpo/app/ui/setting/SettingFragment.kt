@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.kakao.sdk.user.UserApiClient
+import com.mikepenz.aboutlibraries.LibsBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -28,6 +29,10 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
+
+        viewModel.openSourceEvent.observe {
+            LibsBuilder().start(requireContext())
+        }
 
         viewModel.backEvent.observe {
             findNavController().popBackStack()
