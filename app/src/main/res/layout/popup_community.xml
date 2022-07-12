@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/delete_post"
+            android:onClick="@{() -> viewModel.deletePostClick()}"
             android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
 
         <TextView

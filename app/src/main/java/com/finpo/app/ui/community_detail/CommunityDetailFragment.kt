@@ -44,6 +44,17 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        viewModel.deletePostClickEvent.observe {
+            postPopup?.dismiss()
+            showAlertDialog("글을 삭제하시겠습니까?", "삭제") {
+                viewModel.deletePost()
+            }
+        }
+
+        viewModel.goToCommunityHomeFragmentEvent.observe {
+            findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityFragment())
+        }
+
         viewModel.editPostClickEvent.observe {
             postPopup?.dismiss()
             findNavController().navigate(

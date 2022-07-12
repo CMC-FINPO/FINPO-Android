@@ -194,5 +194,10 @@
         <action
             android:id="@+id/action_communityDetailFragment_to_communityPostFragment"
             app:destination="@id/communityPostFragment" />
+        <action
+            android:id="@+id/action_communityDetailFragment_to_communityFragment"
+            app:destination="@id/communityFragment"
+            app:popUpTo="@id/communityFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
