@@ -3,6 +3,7 @@ package com.finpo.app.ui.community_detail
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupWindow
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,10 +14,13 @@ import com.finpo.app.model.remote.CommentContent
 import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.utils.PolicyRecyclerViewType.LOADING
 import com.finpo.app.utils.PolicyRecyclerViewType.CONTENT
+import com.finpo.app.utils.PopupWindowUtil
 import java.lang.Exception
 
 class CommentAdapter(val viewModel: CommunityDetailViewModel)
     : ListAdapter<CommentContent, RecyclerView.ViewHolder>(diffUtil) {
+
+    var commentPopup: PopupWindow? = null
 
     override fun getItemViewType(position: Int): Int {
         return if(currentList[position] == null) LOADING
@@ -48,6 +52,12 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
         fun setData(data: CommentContent) {
             binding.data = data
             binding.viewModel = viewModel
+
+            //TODO MVVM 적용 시킬 방법이 안떠오름 ...
+            binding.ivMore.setOnClickListener {
+                commentPopup = PopupWindowUtil(binding.root.context).commentPopupWindow(viewModel, data, it)
+            }
+
             binding.executePendingBindings()
         }
     }

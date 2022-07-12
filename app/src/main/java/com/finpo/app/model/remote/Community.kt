@@ -74,6 +74,7 @@ data class CommentContent(
     val user: WritingUser?,
     val isUserWithdraw: Boolean?,
     val isModified: Boolean?,
+    val isMine: Boolean?,
     val isWriter: Boolean?,
     val createdAt: String?,
     val modifiedAt: String?

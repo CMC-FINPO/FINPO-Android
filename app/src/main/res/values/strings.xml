@@ -138,5 +138,6 @@
     <string name="comment_hint">댓글을 입력해주세요</string>
     <string name="edit_post">글 수정하기</string>
     <string name="delete_post">글 삭제하기</string>
+    <string name="delete">삭제하기</string>
     <string name="report">신고하기</string>
 </resources>
