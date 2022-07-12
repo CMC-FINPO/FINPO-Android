@@ -89,6 +89,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     bulletinId
                 )
             )
+            R.id.communityDetailFragment -> navController.navigate(
+                NavGraphDirections.actionGlobalCommunityDetailFragment(
+                    bulletinId
+                )
+            )
             else -> navController.navigate(startId, null, navOptions)
         }
     }

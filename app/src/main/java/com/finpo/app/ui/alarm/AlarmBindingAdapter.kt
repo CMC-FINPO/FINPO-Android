@@ -12,14 +12,14 @@ import com.skydoves.balloon.textForm
 @BindingAdapter("notiDate")
 fun setNotiDate(textView: TextView, data: NotificationHistoryContent?) {
     if(data == null) return
-    val date = data.createdAt ?: (data.policy?.modifiedAt ?: "")
+    val date = data.policy?.createdAt ?: (data.comment?.createdAt ?: "")
     textView.text=TimeFormatter.formatTime(date)
 }
 
 @BindingAdapter("notiTitle")
 fun setNotiTitle(textView: TextView, data: NotificationHistoryContent?) {
     if(data == null) return
-    textView.text = data.policy?.title ?: data.post?.content ?: ""
+    textView.text = data.policy?.title ?: data.comment?.post?.content ?: ""
 }
 
 @BindingAdapter("notiAdditionalTitle")

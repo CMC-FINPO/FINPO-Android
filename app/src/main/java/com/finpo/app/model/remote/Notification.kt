@@ -51,14 +51,18 @@ data class NotificationHistoryContent(
     val id: Int,
     val type: String,
     val policy: NotificationPolicy?,
-    val createdAt: String?,
-    val post: NotificationPost?
+    val comment: NotificationComment?
+)
+
+data class NotificationComment(
+    val post: NotificationPost?,
+    val createdAt: String
 )
 
 data class NotificationPolicy(
     val id: Int,
     val title: String,
-    val modifiedAt: String
+    val createdAt: String
 )
 
 data class NotificationPost(
