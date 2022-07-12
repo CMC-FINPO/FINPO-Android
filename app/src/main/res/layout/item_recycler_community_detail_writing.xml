@@ -28,9 +28,9 @@
                 gender="@{data.user.gender}"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                tools:src="@drawable/ic_profile_male_60"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_profile_male_60" />
 
             <TextView
                 android:id="@+id/tv_nickname"
@@ -114,6 +114,37 @@
                 tools:text="좋아요 2 - 댓글 1 - 조회수 30" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_g07"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/header6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/point_p01"
+                android:text="@{@string/int_to_string(data.countOfComment)}"
+                tools:text="1" />
+
+            <TextView
+                style="@style/header6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:text="@string/comment_num"
+                android:textColor="@color/black_b01" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
