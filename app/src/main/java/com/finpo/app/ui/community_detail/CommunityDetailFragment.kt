@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.PopupWindow
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -24,6 +25,12 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
     private lateinit var commentAdapter: CommentAdapter
 
     private var postPopup: PopupWindow? = null
+
+    private val backPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            popBackStack()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,5 +77,14 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
         viewModel.commentList.observe(viewLifecycleOwner) {
             commentAdapter.submitList(it.toMutableList())
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
+    }
+
+    private fun popBackStack() {
+        findNavController().previousBackStackEntry?.savedStateHandle?.set(
+            "writingContent", viewModel.writingContent.value
+        )
+        findNavController().popBackStack()
     }
 }

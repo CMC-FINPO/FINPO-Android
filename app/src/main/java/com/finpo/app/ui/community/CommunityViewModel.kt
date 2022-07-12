@@ -5,9 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.model.remote.WritingResponse
 import com.finpo.app.repository.CommunityRepository
+import com.finpo.app.ui.community_post.postTextStyle
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SORT_COMMUNITY
@@ -46,6 +48,9 @@ class CommunityViewModel @Inject constructor(
 
     private val _refreshed = MutableLiveData<Boolean>()
     val refreshed: LiveData<Boolean> = _refreshed
+
+    private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, WritingContent>>()
+    val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, WritingContent>> = _updateRecyclerViewItemEvent
 
     init {
         initData()
@@ -118,5 +123,14 @@ class CommunityViewModel @Inject constructor(
 
     fun goToPostFragment() {
         _goToPostFragmentEvent.setValue(true)
+    }
+
+    fun checkContentChanged(data: WritingContent) {
+        val position = _writingList.value?.indexOfFirst { data.id == it!!.id } ?: return
+        if(position == -1) return
+        val tempData = _writingList.value!!.toMutableList()
+        tempData[position] = data
+        _writingList.value = tempData
+        _updateRecyclerViewItemEvent.setValue(Pair(position, data))
     }
 }

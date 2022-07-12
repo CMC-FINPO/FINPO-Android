@@ -1,10 +1,12 @@
 package com.finpo.app.ui.community
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentCommunityBinding
+import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.home.BottomSheetPolicySortDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragment_community) {
     private val viewModel by viewModels<CommunityViewModel>()
     private lateinit var communityAdapter: CommunityAdapter
+    val TAG = "CommunityFragment"
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
@@ -44,6 +47,15 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
         viewModel.goToPostFragmentEvent.observe {
             findNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityPostFragment())
+        }
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<WritingContent>("writingContent")
+            ?.observe(viewLifecycleOwner) { data ->
+               viewModel.checkContentChanged(data)
+            }
+
+        viewModel.updateRecyclerViewItemEvent.observe {
+            communityAdapter.notifyItemChanged(it.first, it.second)
         }
     }
 }
