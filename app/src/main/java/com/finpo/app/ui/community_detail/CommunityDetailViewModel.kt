@@ -31,7 +31,14 @@ class CommunityDetailViewModel @Inject constructor(
     private val _keyBoardHideEvent = MutableSingleLiveData<Boolean>()
     val keyBoardHideEvent: SingleLiveData<Boolean> = _keyBoardHideEvent
 
+    private val _moreClickEvent = MutableSingleLiveData<Boolean>()
+    val moreClickEvent: SingleLiveData<Boolean> = _moreClickEvent
+
     val comment = MutableLiveData<String>()
+
+    fun moreClick() {
+        _moreClickEvent.setValue(true)
+    }
 
     fun postComment() {
         viewModelScope.launch {

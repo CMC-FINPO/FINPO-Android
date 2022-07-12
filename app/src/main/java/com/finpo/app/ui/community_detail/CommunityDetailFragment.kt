@@ -3,12 +3,14 @@ package com.finpo.app.ui.community_detail
 import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
+import android.widget.PopupWindow
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ConcatAdapter
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentCommunityDetailBinding
 import com.finpo.app.ui.common.BaseFragment
+import com.finpo.app.utils.PopupWindowUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +20,8 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
 
     private lateinit var writingAdapter: WritingAdapter
     private lateinit var commentAdapter: CommentAdapter
+
+    private var postPopup: PopupWindow? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +34,10 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.moreClickEvent.observe {
+            postPopup = PopupWindowUtil(requireContext()).postPopupWindow(viewModel, viewModel.writingContent.value!!, binding.ivMore)
+        }
 
         writingAdapter = WritingAdapter()
         commentAdapter = CommentAdapter(viewModel)
