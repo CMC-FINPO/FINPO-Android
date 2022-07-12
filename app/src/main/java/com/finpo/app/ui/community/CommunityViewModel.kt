@@ -44,6 +44,9 @@ class CommunityViewModel @Inject constructor(
     private val _goToDetailFragmentEvent = MutableSingleLiveData<Int>()
     val goToDetailFragmentEvent: SingleLiveData<Int> = _goToDetailFragmentEvent
 
+    private val _refreshed = MutableLiveData<Boolean>()
+    val refreshed: LiveData<Boolean> = _refreshed
+
     init {
         initData()
     }
@@ -65,6 +68,12 @@ class CommunityViewModel @Inject constructor(
     fun initData() {
         _writingSize.value = 0
         changeWriting()
+    }
+
+    fun refreshWriting() {
+        _refreshed.value = true
+        changeWriting()
+        _refreshed.value = false
     }
 
     fun changeWriting() {

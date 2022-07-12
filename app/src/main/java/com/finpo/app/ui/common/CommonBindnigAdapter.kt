@@ -1,9 +1,13 @@
 package com.finpo.app.ui.common
 
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.finpo.app.R
 import com.finpo.app.model.remote.CommentContent

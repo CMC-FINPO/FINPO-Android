@@ -45,10 +45,5 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         viewModel.goToPostFragmentEvent.observe {
             findNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityPostFragment())
         }
-
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.changeWriting()
-            binding.swipeRefreshLayout.isRefreshing = false
-        }
     }
 }
