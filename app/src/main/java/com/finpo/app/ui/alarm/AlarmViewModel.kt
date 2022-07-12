@@ -93,7 +93,6 @@ class AlarmViewModel @Inject constructor(
 
     fun addHistory() {
         if(paging.isLastPage || paging.page.value == 0) return
-        Log.d("deleteAlarm","addHistory 전 : ${_historyList.value}")
         viewModelScope.launch {
             val historyResponse = notificationRepository.getNotificationHistory(getLastId())
             historyResponse.onSuccess {
@@ -102,7 +101,6 @@ class AlarmViewModel @Inject constructor(
                     data.data.last, _historyList,
                     paging.addData()
                 )
-                Log.d("deleteAlarm","addHistory 후 : ${_historyList.value}")
             }
         }
     }

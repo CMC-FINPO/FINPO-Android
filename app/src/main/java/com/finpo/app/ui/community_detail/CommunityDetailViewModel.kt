@@ -71,4 +71,18 @@ class CommunityDetailViewModel @Inject constructor(
             }
         }
     }
+
+    fun addComment() {
+        if(paging.isLastPage || paging.page.value == 0) return
+        viewModelScope.launch {
+            val historyResponse = communityRepository.getComment(detailId, paging.page.value ?: 0)
+            historyResponse.onSuccess {
+                paging.loadData(
+                    data.data.content.toMutableList(),
+                    data.data.last, _commentList,
+                    paging.addData()
+                )
+            }
+        }
+    }
 }
