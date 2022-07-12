@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.CommentContent
 import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.repository.CommunityRepository
+import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.Paging
+import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,6 +27,26 @@ class CommunityDetailViewModel @Inject constructor(
 
     private val _commentList = MutableLiveData<List<CommentContent?>>()
     val commentList: LiveData<List<CommentContent?>> = _commentList
+
+    private val _keyBoardHideEvent = MutableSingleLiveData<Boolean>()
+    val keyBoardHideEvent: SingleLiveData<Boolean> = _keyBoardHideEvent
+
+    val comment = MutableLiveData<String>()
+
+    fun postComment() {
+        viewModelScope.launch {
+            val postResponse = communityRepository.postComment(detailId, comment.value ?: "")
+            postResponse.onSuccess {
+                if(paging.isLastPage) {
+                    val tempCommentList = _commentList.value?.toMutableList() ?: mutableListOf()
+                    tempCommentList.add(data.data)
+                    _commentList.value = tempCommentList
+                }
+                comment.value = ""
+                _keyBoardHideEvent.setValue(true)
+            }
+        }
+    }
 
     fun getWritingDetail() {
         viewModelScope.launch {

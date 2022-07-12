@@ -161,4 +161,10 @@ interface ApiService {
         @Query("sort", encoded = true) sort: String = "id,asc",
         @Query("size") size: Int = 10
     ) : ApiResponse<CommentResponse>
+
+    @POST("/post/{id}/comment")
+    suspend fun postComment(
+        @Path("id") id: Int,
+        @Body commentRequest: CommentRequest
+    ) : ApiResponse<PostCommentResponse>
 }

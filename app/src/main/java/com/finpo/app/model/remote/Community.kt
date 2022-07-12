@@ -53,6 +53,15 @@ data class Comment(
     val last: Boolean
 )
 
+data class CommentRequest(
+    val content: String,
+    val anonymity: Boolean = false
+)
+
+data class PostCommentResponse(
+    val data: CommentContent
+)
+
 data class CommentContent(
     val status: Boolean,
     val id: Int,

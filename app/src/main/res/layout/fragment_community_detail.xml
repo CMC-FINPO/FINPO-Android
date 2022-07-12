@@ -62,14 +62,16 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_community_detail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="43dp"
+                android:layout_height="0dp"
+                android:paddingBottom="20dp"
                 app:layoutManager=".utils.LinearLayoutManagerWrapper"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
@@ -82,6 +84,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <EditText
+                    android:id="@+id/et_comment"
                     style="@style/header5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -89,6 +92,8 @@
                     android:background="@null"
                     android:gravity="center"
                     android:hint="@string/comment_hint"
+                    android:maxLength="@integer/comment_max_length"
+                    android:text="@={viewModel.comment}"
                     android:textColorHint="@color/gray_g06"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/iv_send"
@@ -99,6 +104,7 @@
                     android:id="@+id/iv_send"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.postComment()}"
                     android:src="@drawable/ic_send"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

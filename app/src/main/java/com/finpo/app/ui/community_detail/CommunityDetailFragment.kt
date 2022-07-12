@@ -1,6 +1,8 @@
 package com.finpo.app.ui.community_detail
 
+import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ConcatAdapter
@@ -33,6 +35,12 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
         commentAdapter = CommentAdapter(viewModel)
         binding.rvCommunityDetail.adapter = ConcatAdapter(writingAdapter, commentAdapter)
         binding.rvCommunityDetail.itemAnimator = null
+
+        viewModel.keyBoardHideEvent.observe {
+            val inputMethodManager =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.etComment.windowToken, 0)
+        }
 
 
         viewModel.writingContent.observe(viewLifecycleOwner) {
