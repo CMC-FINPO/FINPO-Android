@@ -36,9 +36,16 @@ class AlarmViewModel @Inject constructor(
     private val _deleteItemClickEvent = MutableSingleLiveData<Boolean>()
     val deleteItemClickEvent: SingleLiveData<Boolean> = _deleteItemClickEvent
 
+    private val _alarmClickEvent = MutableSingleLiveData<NotificationHistoryContent>()
+    val alarmClickEvent: SingleLiveData<NotificationHistoryContent> = _alarmClickEvent
+
     init {
         _isDeleteMode.value = false
         changeHistory()
+    }
+
+    fun alarmClick(data: NotificationHistoryContent) {
+        _alarmClickEvent.setValue(data)
     }
 
     fun deleteItemClick(data: NotificationHistoryContent) {

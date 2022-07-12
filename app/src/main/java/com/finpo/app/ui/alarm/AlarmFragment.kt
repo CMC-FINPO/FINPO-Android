@@ -2,12 +2,15 @@ package com.finpo.app.ui.alarm
 
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentAlarmBinding
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.home.PolicyAdapter
+import com.finpo.app.utils.FCM_TYPE.POLICY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,6 +25,13 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(R.layout.fragment_alarm
         alarmAdapter = AlarmAdapter(viewModel)
         binding.rvAlarm.adapter = alarmAdapter
         binding.rvAlarm.itemAnimator = null
+
+        viewModel.alarmClickEvent.observe { data ->
+            when(data.type) {
+                POLICY -> findNavController().navigate(NavGraphDirections.actionGlobalPolicyDetailFragment(data.policy?.id ?: 0))
+                else -> findNavController().navigate(NavGraphDirections.actionGlobalCommunityDetailFragment(data.comment?.post?.id ?: 0))
+            }
+        }
 
         viewModel.historyList.observe(viewLifecycleOwner) {
             Log.d("deleteAlarm", "adapter에 추가 $it")

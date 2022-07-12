@@ -45,12 +45,12 @@ class FirebaseService : FirebaseMessagingService() {
                 bulletinId = message.data["id"]?.toInt() ?: -1
             }
             COMMENT -> {
-                var post = message.data["postComment"].toString()
+                var post = message.data["postContent"].toString()
                 if(post.length > 10) post = post.substring(10) + "..."
                 startId = R.id.communityDetailFragment
                 bulletinId = message.data["postId"]?.toInt() ?: -1
                 notiTitle = "댓글 알림"
-                notiBody = "$post 에 댓글이 달렸어요!"
+                notiBody = "$post 글에 댓글이 달렸어요!"
             }
             CHILDCOMMENT -> { }
         }
