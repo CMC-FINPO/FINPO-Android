@@ -135,4 +135,5 @@
     <string name="comment_num">개의 댓글</string>
     <string name="int_to_string">%d</string>
     <string name="writer">(글쓴이)</string>
+    <string name="comment_hint">댓글을 입력해주세요</string>
 </resources>
