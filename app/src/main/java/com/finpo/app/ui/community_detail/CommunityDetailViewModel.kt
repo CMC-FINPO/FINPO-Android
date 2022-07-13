@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.CommentContent
+import com.finpo.app.model.remote.IdReason
 import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.repository.CommunityRepository
+import com.finpo.app.repository.ReportRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SingleLiveData
@@ -22,6 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CommunityDetailViewModel @Inject constructor(
     private val communityRepository: CommunityRepository,
+    private val reportRepository: ReportRepository,
     val paging: Paging<CommentContent>
 ) : ViewModel() {
     var detailId: Int = 0
@@ -55,7 +58,31 @@ class CommunityDetailViewModel @Inject constructor(
     private val _goToCommunityCommentFragmentEvent = MutableSingleLiveData<CommentContent>()
     val goToCommunityCommentFragmentEvent: SingleLiveData<CommentContent> = _goToCommunityCommentFragmentEvent
 
+    private val _reportReasonList = MutableLiveData<List<IdReason>>()
+    val reportReason: LiveData<List<IdReason>> = _reportReasonList
+
+    private val _showReportDialog = MutableSingleLiveData<Boolean>()
+    val showReportDialog: SingleLiveData<Boolean> = _showReportDialog
+
+    private val _dismissBottomSheetEvent = MutableSingleLiveData<Boolean>()
+    val dismissBottomSheetEvent: SingleLiveData<Boolean> = _dismissBottomSheetEvent
+
     val comment = MutableLiveData<String>()
+
+    fun showReportDialog() {
+        _showReportDialog.setValue(true)
+    }
+
+    fun dismissReportDialog() {
+        _dismissBottomSheetEvent.setValue(true)
+    }
+
+    fun getReportReason() {
+        viewModelScope.launch {
+            val response = reportRepository.getReportReason()
+            response.onSuccess { _reportReasonList.value = data.data }
+        }
+    }
 
     fun refreshData() {
         _refreshed.value = true

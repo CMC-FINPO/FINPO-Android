@@ -15,6 +15,8 @@ import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentCommunityDetailBinding
 import com.finpo.app.ui.common.BaseFragment
+import com.finpo.app.ui.community_detail.bottom_sheet.BottomSheetReportDialog
+import com.finpo.app.ui.filter.bottom_sheet.BottomSheetRegionDialog
 import com.finpo.app.utils.PopupWindowUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,6 +49,17 @@ class CommunityDetailFragment :
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        val bottomDialogFragment = BottomSheetReportDialog(viewModel)
+
+        viewModel.showReportDialog.observe {
+            commentAdapter.commentPopup?.dismiss()
+            postPopup?.dismiss()
+            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
+        }
+
+        viewModel.dismissBottomSheetEvent.observe {
+            bottomDialogFragment.dismiss()
+        }
 
         viewModel.deleteItemClickEvent.observe { data ->
             commentAdapter.commentPopup?.dismiss()

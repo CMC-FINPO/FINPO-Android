@@ -158,6 +158,7 @@
     </style>
 
     <style name="finpo_main_button.disable" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:fontFamily">@font/notosans_medium</item>
         <item name="android:background">@drawable/bg_solid_g08_rounded_5</item>
         <item name="android:textColor">@color/gray_g02</item>
     </style>

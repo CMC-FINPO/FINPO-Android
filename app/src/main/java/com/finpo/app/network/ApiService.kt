@@ -185,4 +185,8 @@ interface ApiService {
         @Path("id") id: Int,
         @Body content: Content
     ): ApiResponse<JsonElement>
+
+    //REPORT
+    @GET("/report/reason")
+    suspend fun getReportReason(): ApiResponse<ReportReasonResponse>
 }

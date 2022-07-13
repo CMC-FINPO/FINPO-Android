@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.finpo.app.ui.filter.FilterViewModel" />
+            type="com.finpo.app.ui.community_detail.CommunityDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,30 +29,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/view_divider1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_g07"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="33dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_divider1">
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
 
             <androidx.recyclerview.widget.RecyclerView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/rv_report"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                app:layout_constraintBottom_toTopOf="@id/btn_cancel"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/btn_cancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/item_recycler_report"/>
 
 
             <androidx.appcompat.widget.AppCompatButton
@@ -60,12 +54,12 @@
                 style="@style/finpo_main_button.disable"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:onClick="@{() -> viewModel.editFinishClick()}"
-                android:text="@string/cancel"
                 android:layout_marginHorizontal="20dp"
+                android:onClick="@{() -> viewModel.dismissReportDialog()}"
+                android:text="@string/cancel"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
