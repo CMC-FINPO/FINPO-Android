@@ -15,7 +15,7 @@
     </data>
 
     <LinearLayout
-        android:layout_width="70dp"
+        android:layout_width="78dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_solid_w01_rounded_shadow_5"
         android:orientation="vertical"
@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/tv_edit_comment"
-            style="@style/body6"
+            style="@style/label3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -36,7 +36,7 @@
 
         <TextView
             android:id="@+id/tv_delete_comment"
-            style="@style/body6"
+            style="@style/label3"
             android:onClick="@{() -> viewModel.showDeleteCommentDialog(data)}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
 
         <TextView
             android:id="@+id/tv_report_comment"
-            style="@style/body6"
+            style="@style/label3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

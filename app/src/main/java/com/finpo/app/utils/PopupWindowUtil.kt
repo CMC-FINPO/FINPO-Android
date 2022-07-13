@@ -24,7 +24,7 @@ class PopupWindowUtil(val context: Context) {
 
         binding.root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         val mDropdown = PopupWindow(
-            binding.root, 80.dp,
+            binding.root, 88.dp,
             FrameLayout.LayoutParams.WRAP_CONTENT, true
         )
         mDropdown.showAsDropDown(view, -50.dp, -26.dp)
@@ -40,7 +40,7 @@ class PopupWindowUtil(val context: Context) {
 
         binding.root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         val mDropdown = PopupWindow(
-            binding.root, 70.dp,
+            binding.root, 78.dp,
             FrameLayout.LayoutParams.WRAP_CONTENT, true
         )
         mDropdown.showAsDropDown(view, -50.dp, -26.dp)

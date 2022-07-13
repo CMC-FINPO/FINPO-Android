@@ -22,6 +22,10 @@
         <item name="lineHeight">20sp</item>
     </style>
 
+    <style name="default_font.regular.18">
+        <item name="lineHeight">18sp</item>
+    </style>
+
     <style name="default_font.regular.15">
         <item name="lineHeight">15sp</item>
     </style>
@@ -120,6 +124,10 @@
 
     <style name="label2" parent="default_font.regular.20">
         <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="label3" parent="default_font.regular.18">
+        <item name="android:textSize">12sp</item>
     </style>
     
     <style name="not_defined_12_reg" parent="default_font.regular">
