@@ -199,5 +199,22 @@
             app:destination="@id/communityFragment"
             app:popUpTo="@id/communityFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_communityDetailFragment_to_communityCommentFragment"
+            app:destination="@id/communityCommentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/communityCommentFragment"
+        android:name="com.finpo.app.ui.community_comment.CommunityCommentFragment"
+        android:label="CommunityCommentFragment"
+        tools:layout="@layout/fragment_community_comment">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_communityCommentFragment_to_communityDetailFragment"
+            app:destination="@id/communityDetailFragment"
+            app:popUpTo="@id/communityDetailFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
