@@ -61,6 +61,10 @@ class CommunityDetailFragment :
             bottomDialogFragment.dismiss()
         }
 
+        viewModel.showReportFinishAlertDialog.observe {
+            showConfirmDialog("신고가 접수되었습니다!")
+        }
+
         viewModel.deleteItemClickEvent.observe { data ->
             commentAdapter.commentPopup?.dismiss()
             showAlertDialog("댓글을 삭제하시겠습니까?", "삭제") {

@@ -8,10 +8,13 @@ const val MAX_FILTER_REGION_COUNT = 6
 const val RETROFIT_TAG = "retrofit2"
 val SORT_POLICY = listOf("id,desc", "countOfInterest,desc")
 val SORT_COMMUNITY = listOf("id,desc", "createdAt,likes")
+const val COMMENT = 0
+const val POST = 1
 
 enum class EditRegionType {
     LIVING, INTEREST
 }
+
 
 object FCM_TYPE {
     const val POLICY = "POLICY"

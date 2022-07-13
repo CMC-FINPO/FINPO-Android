@@ -6,6 +6,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="reportType"
+            type="com.finpo.app.utils.ConstantsKt" />
+
+        <variable
             name="viewModel"
             type="com.finpo.app.ui.community_detail.CommunityDetailViewModel" />
 
@@ -50,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:onClick="@{() -> viewModel.showReportDialog()}"
+            android:onClick="@{() -> viewModel.showReportDialog(reportType.POST, data.id)}"
             android:text="@string/report"
             android:visibility="@{data.isMine ? View.GONE : View.VISIBLE}" />
 

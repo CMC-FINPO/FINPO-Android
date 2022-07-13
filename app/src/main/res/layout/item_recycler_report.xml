@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.finpo.app.ui.setting.interest_alarm_setting.InterestAlarmSettingViewModel" />
+            type="com.finpo.app.ui.community_detail.CommunityDetailViewModel" />
 
         <variable
             name="data"
@@ -16,7 +17,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_interest_alarm"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:onClick="@{() -> viewModel.report(data.id)}">
 
         <View
             android:id="@+id/view_divider1"
@@ -32,11 +34,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{data.reason}"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="신고"/>
+            tools:text="신고" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

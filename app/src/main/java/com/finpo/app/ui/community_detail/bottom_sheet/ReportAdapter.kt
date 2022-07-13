@@ -46,6 +46,8 @@ class ReportAdapter (val viewModel: CommunityDetailViewModel) :
 
         fun bind(data: IdReason) {
             binding.data = data
+            binding.viewModel = viewModel
+            binding.executePendingBindings()
         }
     }
 

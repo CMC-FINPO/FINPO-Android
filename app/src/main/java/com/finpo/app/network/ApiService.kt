@@ -189,4 +189,16 @@ interface ApiService {
     //REPORT
     @GET("/report/reason")
     suspend fun getReportReason(): ApiResponse<ReportReasonResponse>
+
+    @POST(" /comment/{id}/report")
+    suspend fun reportComment(
+        @Path("id") id: Int,
+        @Body reportRequest: ReportRequest
+    ) : ApiResponse<JsonElement>
+
+    @POST(" /post/{id}/report")
+    suspend fun reportPost(
+        @Path("id") id: Int,
+        @Body reportRequest: ReportRequest
+    ) : ApiResponse<JsonElement>
 }

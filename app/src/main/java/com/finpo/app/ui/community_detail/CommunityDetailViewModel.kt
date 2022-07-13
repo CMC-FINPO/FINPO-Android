@@ -11,6 +11,7 @@ import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.repository.CommunityRepository
 import com.finpo.app.repository.ReportRepository
 import com.finpo.app.utils.MutableSingleLiveData
+import com.finpo.app.utils.POST
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.ApiResponse
@@ -67,9 +68,31 @@ class CommunityDetailViewModel @Inject constructor(
     private val _dismissBottomSheetEvent = MutableSingleLiveData<Boolean>()
     val dismissBottomSheetEvent: SingleLiveData<Boolean> = _dismissBottomSheetEvent
 
+    private val _showReportFinishAlertDialog = MutableSingleLiveData<Boolean>()
+    val showReportFinishAlertDialog: SingleLiveData<Boolean> = _showReportFinishAlertDialog
+
     val comment = MutableLiveData<String>()
 
-    fun showReportDialog() {
+    private var reportType = 0
+    private var reportId = 0
+
+    fun report(reportContentId: Int) {
+        Log.d("report","클릭은 됨")
+        viewModelScope.launch {
+            val response = when (reportType) {
+                POST -> reportRepository.reportPost(reportId, reportContentId)
+                else -> reportRepository.reportComment(reportId, reportContentId)
+            }
+            response.onSuccess {
+                _dismissBottomSheetEvent.setValue(true)
+                _showReportFinishAlertDialog.setValue(true)
+            }
+        }
+    }
+
+    fun showReportDialog(reportType: Int, reportId: Int) {
+        this.reportType = reportType
+        this.reportId = reportId
         _showReportDialog.setValue(true)
     }
 
