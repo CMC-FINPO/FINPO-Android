@@ -176,4 +176,7 @@ interface ApiService {
 
     @DELETE("/post/{id}")
     suspend fun deleteWriting(@Path("id") id: Int) : ApiResponse<JsonElement>
+
+    @DELETE("/comment/{id}")
+    suspend fun deleteComment(@Path("id") id: Int) : ApiResponse<JsonElement>
 }

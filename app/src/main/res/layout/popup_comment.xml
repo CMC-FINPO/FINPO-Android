@@ -37,12 +37,12 @@
         <TextView
             android:id="@+id/tv_delete_comment"
             style="@style/body6"
+            android:onClick="@{() -> viewModel.showDeleteCommentDialog(data)}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/delete"
             android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
-<!--        android:onClick="@{() -> viewModel.deletePostClick()}"-->
 
         <TextView
             android:id="@+id/tv_report_comment"

@@ -16,4 +16,5 @@ class CommunityRepository @Inject constructor(private val apiService: ApiService
     suspend fun deleteWriting(id: Int) = apiService.deleteWriting(id)
     suspend fun getComment(id: Int, page: Int) = apiService.getComment(id, page)
     suspend fun postComment(id: Int, comment: String) = apiService.postComment(id, CommentRequest(comment))
+    suspend fun deleteComment(id: Int) = apiService.deleteComment(id)
 }

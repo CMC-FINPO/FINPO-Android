@@ -2,6 +2,7 @@ package com.finpo.app.ui.community_detail
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.recyclerview.widget.DiffUtil
@@ -50,6 +51,12 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
     inner class CommentHolder(private val binding: ItemRecyclerCommunityDetailCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun setData(data: CommentContent) {
+            //XML상에서 GONE 설정 시 여백이 제거 안됨
+            if(!data.status) {
+                binding.root.visibility = View.GONE
+                binding.root.layoutParams = RecyclerView.LayoutParams(0, 0)
+            }
+
             binding.data = data
             binding.viewModel = viewModel
 

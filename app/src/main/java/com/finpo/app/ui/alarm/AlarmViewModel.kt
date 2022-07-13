@@ -33,9 +33,6 @@ class AlarmViewModel @Inject constructor(
     private val _deleteBtnClickEvent = MutableSingleLiveData<Boolean>()
     val deleteBtnClickEvent: SingleLiveData<Boolean> = _deleteBtnClickEvent
 
-    private val _deleteItemClickEvent = MutableSingleLiveData<Boolean>()
-    val deleteItemClickEvent: SingleLiveData<Boolean> = _deleteItemClickEvent
-
     private val _alarmClickEvent = MutableSingleLiveData<NotificationHistoryContent>()
     val alarmClickEvent: SingleLiveData<NotificationHistoryContent> = _alarmClickEvent
 
@@ -56,7 +53,6 @@ class AlarmViewModel @Inject constructor(
                 historyList.remove(data)
                 _historyList.value = historyList
                 paging.deleteData(data)
-                _deleteItemClickEvent.setValue(true)
             }
         }
     }

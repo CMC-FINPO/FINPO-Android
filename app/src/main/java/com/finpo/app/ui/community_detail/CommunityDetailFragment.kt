@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentCommunityDetailBinding
@@ -43,6 +44,13 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.deleteItemClickEvent.observe { data ->
+            commentAdapter.commentPopup?.dismiss()
+            showAlertDialog("댓글을 삭제하시겠습니까?", "삭제") {
+                viewModel.deleteComment(data)
+            }
+        }
 
         viewModel.deletePostClickEvent.observe {
             postPopup?.dismiss()
@@ -87,6 +95,13 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
 
         viewModel.commentList.observe(viewLifecycleOwner) {
             commentAdapter.submitList(it.toMutableList())
+
+            //item 삭제하는 경우 recyclerview scroll bottom 감지가 되지 않아 아래의 코드를 추가함
+            try {
+                val lastVisibleItemPosition =
+                    (binding.rvCommunityDetail.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                if (it[lastVisibleItemPosition] == null) viewModel.addComment()
+            } catch (e: Exception) {}
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)

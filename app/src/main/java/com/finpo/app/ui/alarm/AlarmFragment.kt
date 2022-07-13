@@ -34,7 +34,6 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(R.layout.fragment_alarm
         }
 
         viewModel.historyList.observe(viewLifecycleOwner) {
-            Log.d("deleteAlarm", "adapter에 추가 $it")
             alarmAdapter.submitList(it.toMutableList()) {
                 if(viewModel.paging.page.value == 1)
                     binding.rvAlarm.scrollToPosition(0)
