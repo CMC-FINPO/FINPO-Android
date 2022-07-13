@@ -1,6 +1,8 @@
 package com.finpo.app.ui.common
 
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
@@ -128,6 +130,18 @@ fun setFont(
     else {
         textView.typeface = ResourcesCompat.getFont(textView.context, R.font.notosans_regular)
         textView.setTextColor(textView.context.getColor(R.color.black_b01))
+    }
+}
+
+@BindingAdapter("isDeleted")
+fun checkDelete(view: View, isDeleted: Boolean) {
+    //XML상에서 GONE 설정 시 여백이 제거 안됨
+    if(!isDeleted) {
+        view.visibility = View.GONE
+        view.layoutParams = RecyclerView.LayoutParams(0, 0)
+    } else {
+        view.visibility = View.VISIBLE
+        view.layoutParams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 }
 

@@ -51,19 +51,11 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
     inner class CommentHolder(private val binding: ItemRecyclerCommunityDetailCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun setData(data: CommentContent) {
-            //XML상에서 GONE 설정 시 여백이 제거 안됨
-            if(!data.status) {
-                binding.root.visibility = View.GONE
-                binding.root.layoutParams = RecyclerView.LayoutParams(0, 0)
-            } else {
-                binding.root.visibility = View.VISIBLE
-                binding.root.layoutParams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            }
-
             binding.data = data
             binding.viewModel = viewModel
 
             //TODO MVVM 적용 시킬 방법이 안떠오름 ...
+            if(data.status)
             binding.ivMore.setOnClickListener {
                 commentPopup = PopupWindowUtil(binding.root.context).commentPopupWindow(viewModel, data, it)
             }
