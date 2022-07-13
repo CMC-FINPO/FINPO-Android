@@ -15,6 +15,7 @@ fun RecyclerView.infiniteScrolls(doScrollBottom: () -> Unit) {
     this.addOnScrollListener((object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
+            Log.d("infiniteScrollsOffset", "스크롤 $dy")
             val itemTotalCount = recyclerView.adapter!!.itemCount - 1
             if (itemTotalCount == 0) return
             val lastVisibleItemPosition =

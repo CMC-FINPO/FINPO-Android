@@ -13,6 +13,7 @@ import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -52,6 +53,11 @@ class CommunityDetailViewModel @Inject constructor(
         _deleteItemClickEvent.setValue(data)
     }
 
+    private fun changeCommentCount(diff: Int) {
+        _writingContent.value?.countOfComment = _writingContent.value?.countOfComment?.plus(diff) ?: 0
+        _writingContent.value = _writingContent.value
+    }
+
     fun deleteComment(data: CommentContent) {
         viewModelScope.launch {
             val deleteResponse = communityRepository.deleteComment(data.id)
@@ -60,6 +66,7 @@ class CommunityDetailViewModel @Inject constructor(
                 commentList.remove(data)
                 _commentList.value = commentList
                 paging.deleteData(data)
+                changeCommentCount(-1)
             }
         }
     }
@@ -94,6 +101,7 @@ class CommunityDetailViewModel @Inject constructor(
                 }
                 comment.value = ""
                 _keyBoardHideEvent.setValue(true)
+                changeCommentCount(1)
             }
         }
     }

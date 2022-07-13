@@ -55,6 +55,9 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
             if(!data.status) {
                 binding.root.visibility = View.GONE
                 binding.root.layoutParams = RecyclerView.LayoutParams(0, 0)
+            } else {
+                binding.root.visibility = View.VISIBLE
+                binding.root.layoutParams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             }
 
             binding.data = data

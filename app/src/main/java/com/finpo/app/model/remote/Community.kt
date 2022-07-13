@@ -26,7 +26,7 @@ data class WritingContent(
     val anonymity: Boolean,
     val likes: Int,
     val hits: Int,
-    val countOfComment: Int,
+    var countOfComment: Int,
     val user: WritingUser?,
     val isUserWithdraw: Boolean,
     val isMine: Boolean?,

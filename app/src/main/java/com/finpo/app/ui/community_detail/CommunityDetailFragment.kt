@@ -2,6 +2,7 @@ package com.finpo.app.ui.community_detail
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.PopupWindow
 import androidx.activity.OnBackPressedCallback
@@ -18,7 +19,8 @@ import com.finpo.app.utils.PopupWindowUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.layout.fragment_community_detail) {
+class CommunityDetailFragment :
+    BaseFragment<FragmentCommunityDetailBinding>(R.layout.fragment_community_detail) {
     private val viewModel by viewModels<CommunityDetailViewModel>()
     private val args by navArgs<CommunityDetailFragmentArgs>()
 
@@ -26,6 +28,8 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
     private lateinit var commentAdapter: CommentAdapter
 
     private var postPopup: PopupWindow? = null
+
+    val TAG = "CommunityDetailFragment"
 
     private val backPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -73,7 +77,11 @@ class CommunityDetailFragment : BaseFragment<FragmentCommunityDetailBinding>(R.l
         }
 
         viewModel.moreClickEvent.observe {
-            postPopup = PopupWindowUtil(requireContext()).postPopupWindow(viewModel, viewModel.writingContent.value!!, binding.ivMore)
+            postPopup = PopupWindowUtil(requireContext()).postPopupWindow(
+                viewModel,
+                viewModel.writingContent.value!!,
+                binding.ivMore
+            )
         }
 
         writingAdapter = WritingAdapter()
