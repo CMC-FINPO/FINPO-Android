@@ -149,6 +149,11 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="finpo_main_button.disable" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/bg_solid_g08_rounded_5</item>
+        <item name="android:textColor">@color/gray_g02</item>
+    </style>
+
     <style name="finpo_close_button" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/bg_solid_none_rounded_g06_5</item>
         <item name="android:minWidth">0dp</item>
