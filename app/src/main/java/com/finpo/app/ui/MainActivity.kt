@@ -21,6 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var navController: NavController
     var isMovedHomeBySelectedItem = false
+    var isMovedCommunityBySelectedItem = false
+
     private var destinationId = R.id.homeFragment
     private val bottomItemIds = listOf(R.id.homeFragment, R.id.communityFragment, R.id.bookmarkFragment, R.id.myPageFragment)
 
@@ -35,11 +37,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         binding.navBar.setOnItemSelectedListener { item ->
             NavigationUI.onNavDestinationSelected(item, navController)
             if(item.itemId == R.id.homeFragment) isMovedHomeBySelectedItem = true
+            if(item.itemId == R.id.communityFragment) isMovedCommunityBySelectedItem = true
             true
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if(destination.id != R.id.homeFragment) isMovedHomeBySelectedItem = false
+            if(destination.id != R.id.communityFragment) isMovedCommunityBySelectedItem = false
             destinationId = destination.id
 
             if(destination.id in bottomItemIds) navBarVisible()

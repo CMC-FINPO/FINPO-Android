@@ -7,6 +7,7 @@ import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentCommunityBinding
 import com.finpo.app.model.remote.WritingContent
+import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.home.BottomSheetPolicySortDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
         communityAdapter = CommunityAdapter(viewModel)
         binding.rvCommunity.adapter = communityAdapter
+
+        if((activity as MainActivity).isMovedCommunityBySelectedItem) {
+            viewModel.clearWriting()
+            viewModel.changeWriting()
+        }
 
         viewModel.goToDetailFragmentEvent.observe {
             findNavController().navigate(NavGraphDirections.actionGlobalCommunityDetailFragment(it))

@@ -81,6 +81,11 @@ class CommunityViewModel @Inject constructor(
         _refreshed.value = false
     }
 
+    fun clearWriting() {
+        _writingSize.value = 0
+        _writingList.value = listOf()
+    }
+
     fun changeWriting() {
         paging.resetPage()
 
