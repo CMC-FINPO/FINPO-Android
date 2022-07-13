@@ -52,6 +52,9 @@ class CommunityDetailViewModel @Inject constructor(
     private val _refreshed = MutableLiveData<Boolean>()
     val refreshed: LiveData<Boolean> = _refreshed
 
+    private val _goToCommunityCommentFragmentEvent = MutableSingleLiveData<CommentContent>()
+    val goToCommunityCommentFragmentEvent: SingleLiveData<CommentContent> = _goToCommunityCommentFragmentEvent
+
     val comment = MutableLiveData<String>()
 
     fun refreshData() {
@@ -67,6 +70,10 @@ class CommunityDetailViewModel @Inject constructor(
     private fun changeCommentCount(diff: Int) {
         _writingContent.value?.countOfComment = _writingContent.value?.countOfComment?.plus(diff) ?: 0
         _writingContent.value = _writingContent.value
+    }
+
+    fun editComment(data: CommentContent) {
+        _goToCommunityCommentFragmentEvent.setValue(data)
     }
 
     fun deleteComment(data: CommentContent) {

@@ -55,6 +55,11 @@ class CommunityDetailFragment :
             }
         }
 
+        viewModel.goToCommunityCommentFragmentEvent.observe { data ->
+            commentAdapter.commentPopup?.dismiss()
+            findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityCommentFragment(data.id, data.content ?: ""))
+        }
+
         viewModel.deletePostClickEvent.observe {
             postPopup?.dismiss()
             showAlertDialog("글을 삭제하시겠습니까?", "삭제") {
