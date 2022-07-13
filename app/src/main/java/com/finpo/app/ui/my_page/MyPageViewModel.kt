@@ -10,6 +10,7 @@ import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.utils.ImageUtils
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -56,11 +57,18 @@ class MyPageViewModel @Inject constructor(
     init {
         _nickname.value = ""
         getMyInfo()
-        getMyInterestCategory()
     }
 
-    private fun getMyInterestCategory() {
+    private fun getMyInfo() {
         viewModelScope.launch {
+            val myInfoResponse = myInfoRepository.getMyInfo()
+            if(myInfoResponse !is ApiResponse.Success) return@launch
+            val myInfoData = myInfoResponse.data.data
+            _nickname.value = myInfoData.nickname ?: ""
+            _gender.value = myInfoData.gender ?: ""
+            _profileImgUrl.value = myInfoData.profileImg
+            _oAuthType.value = myInfoData.oAuthType ?: ""
+
             val interestResponse = myInfoRepository.getMyParentCategory()
             interestResponse.onSuccess { _interestList.value = data.data }
         }
@@ -99,17 +107,5 @@ class MyPageViewModel @Inject constructor(
 
     fun profileEditClick() {
         _profileEditClickEvent.setValue(true)
-    }
-
-    private fun getMyInfo() {
-        viewModelScope.launch {
-            val myInfoResponse = myInfoRepository.getMyInfo()
-            myInfoResponse.onSuccess {
-                _nickname.value = data.data.nickname ?: ""
-                _gender.value = data.data.gender ?: ""
-                _profileImgUrl.value = data.data.profileImg
-                _oAuthType.value = data.data.oAuthType ?: ""
-            }
-        }
     }
 }

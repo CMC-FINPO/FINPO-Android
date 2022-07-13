@@ -1,15 +1,12 @@
 package com.finpo.app.ui.interest_setting
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.finpo.app.model.remote.CategoryChildFormat
 import com.finpo.app.model.remote.CategoryRequest
 import com.finpo.app.model.remote.StatusPurpose
-import com.finpo.app.network.ApiService
 import com.finpo.app.repository.CategoryRepository
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.repository.StatusPurposeRepository
-import com.finpo.app.utils.EditRegionType
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
 import com.finpo.app.utils.addSourceList
@@ -57,19 +54,32 @@ class InterestSettingViewModel @Inject constructor(
 
     init {
         _purposeIds.value = mutableSetOf()
-        getCategoryData()
-        getPurposeData()
+        getUserData()
+        getInfoData()
     }
 
-    private fun getCategoryData() {
+    private fun getUserData() {
         viewModelScope.launch {
             val myCategoryResponse = myInfoRepository.getMyCategory()
             if(myCategoryResponse !is ApiResponse.Success)  return@launch
             _userCategoryData.value = List(myCategoryResponse.data.data.size) { CategoryRequest(myCategoryResponse.data.data[it].category.id) }
 
+            val myPurposeResponse = myInfoRepository.getMyPurpose()
+            if(myPurposeResponse !is ApiResponse.Success)     return@launch
+            _purposeIds.value = myPurposeResponse.data.data.toMutableSet()
+        }
+    }
+
+    private fun getInfoData() {
+        viewModelScope.launch {
             val categoryResponse = categoryRepository.getCategoryChildFormat()
             if(categoryResponse !is ApiResponse.Success)    return@launch
             _interestCategoryData.value = categoryResponse.data.data
+
+            val purposeResponse = statusPurposeRepository.getPurposeList()
+            purposeResponse.onSuccess {
+                _purposeData.value = data.data
+            }
         }
     }
 
@@ -78,19 +88,6 @@ class InterestSettingViewModel @Inject constructor(
         if (CategoryRequest(id) in userCategoryData) userCategoryData.remove(CategoryRequest(id))
         else userCategoryData.add(CategoryRequest(id))
         _userCategoryData.value = userCategoryData
-    }
-
-    private fun getPurposeData() {
-        viewModelScope.launch {
-            val myPurposeResponse = myInfoRepository.getMyPurpose()
-            if(myPurposeResponse !is ApiResponse.Success)     return@launch
-            _purposeIds.value = myPurposeResponse.data.data.toMutableSet()
-
-            val purposeResponse = statusPurposeRepository.getPurposeList()
-            purposeResponse.onSuccess {
-                _purposeData.value = data.data
-            }
-        }
     }
 
     fun purposeClick(id: Int) {

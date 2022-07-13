@@ -41,8 +41,7 @@ class CommunityDetailFragment :
         super.onCreate(savedInstanceState)
 
         viewModel.detailId = args.id
-        viewModel.getWritingDetail()
-        viewModel.changeComment()
+        viewModel.getInitData()
     }
 
     override fun doViewCreated() {

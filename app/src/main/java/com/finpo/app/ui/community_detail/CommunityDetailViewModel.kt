@@ -11,9 +11,11 @@ import com.finpo.app.repository.CommunityRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SingleLiveData
+import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -103,16 +105,25 @@ class CommunityDetailViewModel @Inject constructor(
         }
     }
 
-    fun getWritingDetail() {
+    //TODO 코루틴 학습 후 리팩토링
+    fun getInitData() {
         viewModelScope.launch {
             val detailResponse = communityRepository.getWritingDetail(detailId)
-            detailResponse.onSuccess {
-                _writingContent.value = data.data
-            }
+            if(detailResponse !is ApiResponse.Success) return@launch
+            _writingContent.value = detailResponse.data.data
+
+            paging.resetPage()
+            val commentResponse = communityRepository.getComment(detailId, paging.page.value ?: 0)
+            if(commentResponse !is ApiResponse.Success) return@launch
+            paging.loadData(
+                commentResponse.data.data.content.toMutableList(),
+                commentResponse.data.data.last, _commentList,
+                paging.changeData()
+            )
         }
     }
 
-    fun changeComment() {
+    private fun changeComment() {
         paging.resetPage()
 
         viewModelScope.launch {
