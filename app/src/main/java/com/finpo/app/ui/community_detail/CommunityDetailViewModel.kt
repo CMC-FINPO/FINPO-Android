@@ -49,7 +49,16 @@ class CommunityDetailViewModel @Inject constructor(
     private val _deleteItemClickEvent = MutableSingleLiveData<CommentContent>()
     val deleteItemClickEvent: SingleLiveData<CommentContent> = _deleteItemClickEvent
 
+    private val _refreshed = MutableLiveData<Boolean>()
+    val refreshed: LiveData<Boolean> = _refreshed
+
     val comment = MutableLiveData<String>()
+
+    fun refreshData() {
+        _refreshed.value = true
+        getInitData()
+        _refreshed.value = false
+    }
 
     fun showDeleteCommentDialog(data: CommentContent) {
         _deleteItemClickEvent.setValue(data)
