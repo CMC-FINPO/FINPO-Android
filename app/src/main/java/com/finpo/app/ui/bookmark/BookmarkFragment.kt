@@ -19,7 +19,7 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.getMyInterestPolicy()
+        viewModel.getInitData()
 
         initRecyclerView()
         observeRecyclerView()

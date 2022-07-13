@@ -11,6 +11,7 @@ import com.finpo.app.repository.BookmarkRepository
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -37,33 +38,25 @@ class BookmarkViewModel @Inject constructor(
     val goToDetailFragmentEvent: SingleLiveData<Int> = _goToDetailFragmentEvent
 
     init {
-        getMyNickname()
-        getMyCategory()
-        getMyInterestPolicy()
+        _nickname.value = ""
         _policySize.value = 0
     }
 
-    private fun getMyNickname() {
+    //TODO 코루틴 공부 후 리팩토링
+    fun getInitData() {
         viewModelScope.launch {
             val myInfoResponse = myInfoRepository.getMyInfo()
-            myInfoResponse.onSuccess { _nickname.value = data.data.nickname ?: "" }
-        }
-    }
+            if(myInfoResponse !is ApiResponse.Success) return@launch
+            _nickname.value = myInfoResponse.data.data.nickname ?: ""
 
-    private fun getMyCategory() {
-        viewModelScope.launch {
             val myCategoryResponse = myInfoRepository.getMyParentCategory()
-            myCategoryResponse.onSuccess { _categoryData.value = data.data }
-        }
-    }
+            if(myCategoryResponse !is ApiResponse.Success) return@launch
+            _categoryData.value = myCategoryResponse.data.data
 
-    fun getMyInterestPolicy() {
-        viewModelScope.launch {
             val myInterestPolicyResponse = myInfoRepository.getMyInterestPolicy()
-            myInterestPolicyResponse.onSuccess {
-                _policyList.value = MutableList(data.data.size) { data.data[it].policy!! }
-                _policySize.value = data.data.size
-            }
+            if(myInterestPolicyResponse !is ApiResponse.Success) return@launch
+            _policyList.value = MutableList(myInterestPolicyResponse.data.data.size) { myInterestPolicyResponse.data.data[it].policy!! }
+            _policySize.value = myInterestPolicyResponse.data.data.size
         }
     }
 
