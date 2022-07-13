@@ -102,14 +102,10 @@ class CommunityDetailFragment :
         }
 
         viewModel.commentList.observe(viewLifecycleOwner) {
-            commentAdapter.submitList(it.toMutableList())
-
-            //item 삭제하는 경우 recyclerview scroll bottom 감지가 되지 않아 아래의 코드를 추가함
-            try {
-                val lastVisibleItemPosition =
-                    (binding.rvCommunityDetail.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
-                if (it[lastVisibleItemPosition] == null) viewModel.addComment()
-            } catch (e: Exception) {}
+            commentAdapter.submitList(it.toMutableList()) {
+                if(viewModel.paging.page.value == 1)
+                    binding.rvCommunityDetail.scrollToPosition(0)
+            }
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)

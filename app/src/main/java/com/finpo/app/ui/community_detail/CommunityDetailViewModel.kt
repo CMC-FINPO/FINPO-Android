@@ -62,11 +62,8 @@ class CommunityDetailViewModel @Inject constructor(
         viewModelScope.launch {
             val deleteResponse = communityRepository.deleteComment(data.id)
             deleteResponse.onSuccess {
-                val commentList = _commentList.value?.toMutableList() ?: mutableListOf()
-                commentList.remove(data)
-                _commentList.value = commentList
-                paging.deleteData(data)
                 changeCommentCount(-1)
+                changeComment()
             }
         }
     }
