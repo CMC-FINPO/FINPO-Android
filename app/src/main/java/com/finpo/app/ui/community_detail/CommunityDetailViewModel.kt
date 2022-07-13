@@ -10,6 +10,7 @@ import com.finpo.app.model.remote.IdReason
 import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.repository.CommunityRepository
 import com.finpo.app.repository.ReportRepository
+import com.finpo.app.ui.common.BaseViewModel
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.POST
 import com.finpo.app.utils.Paging
@@ -27,7 +28,7 @@ class CommunityDetailViewModel @Inject constructor(
     private val communityRepository: CommunityRepository,
     private val reportRepository: ReportRepository,
     val paging: Paging<CommentContent>
-) : ViewModel() {
+) : BaseViewModel() {
     var detailId: Int = 0
     private val _writingContent = MutableLiveData<WritingContent>()
     val writingContent: LiveData<WritingContent> = _writingContent

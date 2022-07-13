@@ -34,11 +34,12 @@
                         android:id="@+id/iv_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="@{() -> viewModel.backClick()}"
                         android:src="@drawable/ic_back"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <!--                    android:onClick="@{() -> viewModel.backClick()}"-->
+
 
                     <ImageView
                         android:id="@+id/iv_more"
@@ -64,20 +65,20 @@
                 android:id="@+id/swipe_refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:onRefreshListener="@{() -> viewModel.refreshData()}"
-                app:refreshing="@{viewModel.refreshed}"
                 app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:onRefreshListener="@{() -> viewModel.refreshData()}"
+                app:refreshing="@{viewModel.refreshed}">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_community_detail"
-                doScrollBottom="@{() -> viewModel.addComment()}"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="20dp"
-                app:layoutManager=".utils.LinearLayoutManagerWrapper" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_community_detail"
+                    doScrollBottom="@{() -> viewModel.addComment()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="20dp"
+                    app:layoutManager=".utils.LinearLayoutManagerWrapper" />
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

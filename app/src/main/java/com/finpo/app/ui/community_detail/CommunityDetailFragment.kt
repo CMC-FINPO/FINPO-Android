@@ -49,6 +49,11 @@ class CommunityDetailFragment :
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.backClickEvent.observe {
+            findNavController().popBackStack()
+        }
+
         val bottomDialogFragment = BottomSheetReportDialog(viewModel)
 
         viewModel.showReportDialog.observe {
