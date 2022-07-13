@@ -209,7 +209,7 @@
         android:label="CommunityCommentFragment"
         tools:layout="@layout/fragment_community_comment">
         <argument
-            android:name="id"
+            android:name="commentId"
             app:argType="integer" />
         <action
             android:id="@+id/action_communityCommentFragment_to_communityDetailFragment"
@@ -219,5 +219,8 @@
         <argument
             android:name="content"
             app:argType="string" />
+        <argument
+            android:name="postId"
+            app:argType="integer" />
     </fragment>
 </navigation>

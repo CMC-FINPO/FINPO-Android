@@ -14,7 +14,7 @@ interface ApiService {
     @PUT("/region/me")
     suspend fun editMyInterestRegion(
         @Body regionList: List<RegionRequest>
-    ) : ApiResponse<RegionInterestResponse>
+    ): ApiResponse<RegionInterestResponse>
 
     @PUT("/region/my-default")
     suspend fun editMyLivingRegion(
@@ -22,84 +22,84 @@ interface ApiService {
     ): ApiResponse<JsonElement>
 
     @GET("/region/me")
-    suspend fun getMyRegion() : ApiResponse<MyRegionResponse>
+    suspend fun getMyRegion(): ApiResponse<MyRegionResponse>
 
     //USER
     @GET("/user/me")
-    suspend fun getMyInfo() : ApiResponse<MyInfoResponse>
+    suspend fun getMyInfo(): ApiResponse<MyInfoResponse>
 
     @Multipart
     @POST("/user/me/profile-img")
     suspend fun changeProfileImg(
         @Part profileImg: MultipartBody.Part?
-    ) : ApiResponse<MyInfoResponse>
+    ): ApiResponse<MyInfoResponse>
 
-    @HTTP(method = "DELETE",path = "/user/me", hasBody = true)
+    @HTTP(method = "DELETE", path = "/user/me", hasBody = true)
     suspend fun withdrawal(
         @Body googleToken: GoogleToken
-    ) : ApiResponse<JsonElement>
+    ): ApiResponse<JsonElement>
 
     @GET("/user/status/name")
-    suspend fun getStatusList() : ApiResponse<StatusPurposeResponse>
+    suspend fun getStatusList(): ApiResponse<StatusPurposeResponse>
 
     @GET("/user/purpose/name")
-    suspend fun getPurposeList() : ApiResponse<StatusPurposeResponse>
+    suspend fun getPurposeList(): ApiResponse<StatusPurposeResponse>
 
     @PUT("/user/me")
     suspend fun setStatusPurpose(
         @Body statusPurposeBody: StatusPurposeBody,
-    ) : ApiResponse<JsonElement>
+    ): ApiResponse<JsonElement>
 
     @GET("/user/me/purpose")
-    suspend fun getMyPurpose() : ApiResponse<MyPurpose>
+    suspend fun getMyPurpose(): ApiResponse<MyPurpose>
 
     //POLICY
     @GET("/policy/search")
     suspend fun getPolicy(
         @Query("title") title: String,
-        @Query("region", encoded = true) region: List<Int> ,
+        @Query("region", encoded = true) region: List<Int>,
         @Query("category", encoded = true) category: List<Int>,
         @Query("page") page: Int,
         @Query("sort", encoded = true) sort: List<String>,
         @Query("size") size: Int = 10
-    ) : ApiResponse<PolicyResponse>
+    ): ApiResponse<PolicyResponse>
 
     @GET("/policy/category/me")
-    suspend fun getMyCategory() : ApiResponse<MyCategoryResponse>
+    suspend fun getMyCategory(): ApiResponse<MyCategoryResponse>
 
     @POST("/policy/interest")
     suspend fun addInterestPolicy(
         @Body policyId: PolicyId
-    ) : ApiResponse<JsonElement>
+    ): ApiResponse<JsonElement>
 
     @DELETE("/policy/interest/me")
     suspend fun deleteInterestPolicy(
         @Query("policyId") id: Int
-    ) : ApiResponse<JsonElement>
+    ): ApiResponse<JsonElement>
 
     @GET("/policy/{id}")
     suspend fun getPolicyDetail(
         @Path("id") id: Int
-    ) : ApiResponse<PolicyDetailResponse>
+    ): ApiResponse<PolicyDetailResponse>
 
     @GET("/policy/category/me/parent")
-    suspend fun getMyParentCategory() : ApiResponse<ParentCategoryResponse>
+    suspend fun getMyParentCategory(): ApiResponse<ParentCategoryResponse>
 
     @PUT("/policy/category/me")
     suspend fun editMyInterestCategory(
         @Body categoryList: List<CategoryRequest>
-    ) : ApiResponse<JsonElement>
+    ): ApiResponse<JsonElement>
 
     @POST("/policy/joined")
     suspend fun addParticipationPolicy(
         @Body policyId: PolicyId
-    ) : ApiResponse<ParticipationPolicyResponse>
+    ): ApiResponse<ParticipationPolicyResponse>
 
     @PUT("/policy/joined/{id}")
     suspend fun editParticipationPolicyMemo(
         @Path("id") id: Int,
         @Body memo: Memo
-    ) : ApiResponse<JsonElement>
+    ): ApiResponse<JsonElement>
 
     @GET("/policy/interest/me")
     suspend fun getMyInterestPolicy(): ApiResponse<MyInterestPolicyResponse>
@@ -110,21 +110,21 @@ interface ApiService {
     @DELETE("/policy/joined/{id}")
     suspend fun deleteParticipationPolicy(
         @Path("id") id: Int
-    ) : ApiResponse<JsonElement>
+    ): ApiResponse<JsonElement>
 
     //NOTI
     @PUT("/notification/me")
     suspend fun setNotification(
         @Body notificationBody: NotificationBody
-    ) : ApiResponse<JsonElement>
+    ): ApiResponse<JsonElement>
 
     @GET("/notification/me")
-    suspend fun getMyNotification() : ApiResponse<MyNotificationResponse>
+    suspend fun getMyNotification(): ApiResponse<MyNotificationResponse>
 
     @PUT("/notification/me")
     suspend fun putMyNotification(
         @Body myNotificationBody: MyNotificationBody
-    ) : ApiResponse<JsonElement>
+    ): ApiResponse<JsonElement>
 
     @GET("/notification/history/me")
     suspend fun getNotificationHistory(
@@ -132,22 +132,22 @@ interface ApiService {
         @Query("page") page: Int = 0,
         @Query("size") size: Int = 10,
         @Query("sort") sort: String = "id,desc",
-    ) : ApiResponse<NotificationHistoryResponse>
+    ): ApiResponse<NotificationHistoryResponse>
 
     @DELETE("/notification/history/{id}")
     suspend fun deleteNotificationHistory(
         @Path("id") id: Int
-    ) : ApiResponse<JsonElement>
+    ): ApiResponse<JsonElement>
 
     //COMMUNITY
     @POST("/post")
-    suspend fun postWriting(@Body postWritingRequest: PostWritingRequest) : ApiResponse<JsonElement>
+    suspend fun postWriting(@Body postWritingRequest: PostWritingRequest): ApiResponse<JsonElement>
 
     @PUT("/post/{id}")
     suspend fun putWriting(
         @Path("id") id: Int,
         @Body postWritingRequest: PostWritingRequest
-    ) : ApiResponse<JsonElement>
+    ): ApiResponse<JsonElement>
 
     @GET("/post/search")
     suspend fun getWriting(
@@ -155,10 +155,10 @@ interface ApiService {
         @Query("page") page: Int,
         @Query("sort", encoded = true) sort: List<String>,
         @Query("size") size: Int = 10
-    ) : ApiResponse<WritingResponse>
+    ): ApiResponse<WritingResponse>
 
     @GET("/post/{id}")
-    suspend fun getWritingDetail(@Path("id") id: Int) : ApiResponse<CommunityDetailResponse>
+    suspend fun getWritingDetail(@Path("id") id: Int): ApiResponse<CommunityDetailResponse>
 
     @GET("/post/{id}/comment")
     suspend fun getComment(
@@ -166,17 +166,23 @@ interface ApiService {
         @Query("page") page: Int,
         @Query("sort", encoded = true) sort: String = "id,asc",
         @Query("size") size: Int = 10
-    ) : ApiResponse<CommentResponse>
+    ): ApiResponse<CommentResponse>
 
     @POST("/post/{id}/comment")
     suspend fun postComment(
         @Path("id") id: Int,
         @Body commentRequest: CommentRequest
-    ) : ApiResponse<PostCommentResponse>
+    ): ApiResponse<PostCommentResponse>
 
     @DELETE("/post/{id}")
-    suspend fun deleteWriting(@Path("id") id: Int) : ApiResponse<JsonElement>
+    suspend fun deleteWriting(@Path("id") id: Int): ApiResponse<JsonElement>
 
     @DELETE("/comment/{id}")
-    suspend fun deleteComment(@Path("id") id: Int) : ApiResponse<JsonElement>
+    suspend fun deleteComment(@Path("id") id: Int): ApiResponse<JsonElement>
+
+    @PUT("/comment/{id}")
+    suspend fun editComment(
+        @Path("id") id: Int,
+        @Body content: Content
+    ): ApiResponse<JsonElement>
 }

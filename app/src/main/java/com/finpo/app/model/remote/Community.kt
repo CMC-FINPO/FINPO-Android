@@ -79,3 +79,7 @@ data class CommentContent(
     val createdAt: String?,
     val modifiedAt: String?
 )
+
+data class Content(
+    val content: String
+)

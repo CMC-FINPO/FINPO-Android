@@ -57,7 +57,7 @@ class CommunityDetailFragment :
 
         viewModel.goToCommunityCommentFragmentEvent.observe { data ->
             commentAdapter.commentPopup?.dismiss()
-            findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityCommentFragment(data.id, data.content ?: ""))
+            findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityCommentFragment(data.id, data.content ?: "", args.id))
         }
 
         viewModel.deletePostClickEvent.observe {
