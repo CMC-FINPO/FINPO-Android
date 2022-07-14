@@ -10,6 +10,8 @@ val SORT_POLICY = listOf("id,desc", "countOfInterest,desc")
 val SORT_COMMUNITY = listOf("id,desc", "createdAt,likes")
 const val COMMENT = 0
 const val POST = 1
+const val TAB_SMALL = "SMALL"
+const val TAB_NORMAL = "NORMAL"
 
 enum class EditRegionType {
     LIVING, INTEREST

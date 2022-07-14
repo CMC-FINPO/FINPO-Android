@@ -19,21 +19,23 @@ fun safeNullText(textView: TextView, safeNullText: String?) {
 }
 
 @BindingAdapter("tabTextStyleBold")
-fun TabLayout.tabTextStyle(tabTextStyleBold: String?) {
+fun TabLayout.tabTextStyle(tabTextStyleSize: String?) {
     val mTabLayout = this
+    val (TabTextSelectedStyle, TabTextUnSelectedStyle) = if(tabTextStyleSize == "SMALL") listOf(R.style.TabTextSelected_14, R.style.TabTextUnSelected_14)
+    else listOf(R.style.TabTextSelected, R.style.TabTextUnSelected)
     val onTabSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab?) {
             val tabLayout =
                 (mTabLayout.getChildAt(0) as ViewGroup).getChildAt(tab!!.position) as LinearLayout
             val tabTextView = tabLayout.getChildAt(1) as TextView
-            tabTextView.setTextAppearance(R.style.TabTextSelected)
+            tabTextView.setTextAppearance(TabTextSelectedStyle)
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab?) {
             val tabLayout =
                 (mTabLayout.getChildAt(0) as ViewGroup).getChildAt(tab!!.position) as LinearLayout
             val tabTextView = tabLayout.getChildAt(1) as TextView
-            tabTextView.setTextAppearance(R.style.TabTextUnSelected)
+            tabTextView.setTextAppearance(TabTextUnSelectedStyle)
         }
 
         override fun onTabReselected(tab: TabLayout.Tab?) {}

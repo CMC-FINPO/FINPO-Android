@@ -9,7 +9,9 @@ import com.finpo.app.R
 import com.finpo.app.databinding.FragmentMyPageBinding
 import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseFragment
+import com.finpo.app.ui.policy_detail.PolicyDetailViewPagerAdapter
 import com.finpo.app.utils.ImageUtils
+import com.google.android.material.tabs.TabLayoutMediator
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +25,15 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.viewPagerMyPage.adapter = MyPageViewPagerAdapter(childFragmentManager, lifecycle)
+
+        TabLayoutMediator(binding.tbMyPage, binding.viewPagerMyPage) {  tab, position ->
+            tab.text = when(position) {
+                0 -> "내가 쓴 글"
+                else -> "댓글 단 글"
+            }
+        }.attach()
 
         viewModel.alarmClickEvent.observe {
             findNavController().navigate(MyPageFragmentDirections.actionMyPageFragmentToAlarmFragment())

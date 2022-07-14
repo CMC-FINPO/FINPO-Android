@@ -8,6 +8,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="boldType"
+            type="com.finpo.app.utils.ConstantsKt" />
+
+        <variable
             name="viewModel"
             type="com.finpo.app.ui.policy_detail.PolicyDetailViewModel" />
     </data>
@@ -172,7 +176,7 @@
                             app:tabRippleColor="@color/white_w01"
                             app:tabTextAppearance="@style/TabTextStyle"
                             app:tabTextColor="@color/selector_tab_indicator_text"
-                            app:tabTextStyleBold="@{viewModel.policyDetailData.content}" />
+                            app:tabTextStyleBold="@{boldType.TAB_NORMAL}" />
                     </FrameLayout>
 
                     <androidx.viewpager2.widget.ViewPager2

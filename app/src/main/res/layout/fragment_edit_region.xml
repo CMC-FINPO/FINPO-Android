@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="boldType"
+            type="com.finpo.app.utils.ConstantsKt" />
 
         <variable
             name="viewModel"
@@ -86,7 +89,7 @@
                         app:tabRippleColor="@color/white_w01"
                         app:tabTextAppearance="@style/TabTextStyle"
                         app:tabTextColor="@color/selector_tab_indicator_text"
-                        app:tabTextStyleBold="@{viewModel.nickname}" />
+                        app:tabTextStyleBold="@{boldType.TAB_NORMAL}" />
                 </FrameLayout>
 
                 <androidx.viewpager2.widget.ViewPager2
