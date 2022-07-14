@@ -6,6 +6,8 @@ data class MyInfoResponse(
 
 data class MyInfo(
     val id: Int?,
+    val name: String?,
+    val birth: String?,
     val nickname: String?,
     val gender: String?,
     val profileImg: String?,

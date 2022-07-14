@@ -29,16 +29,16 @@ class DefaultInfoLiveData @Inject constructor(
     private val _nickNameErrorText = MutableLiveData<Int?>()
     val nickNameErrorText: LiveData<Int?> = _nickNameErrorText
 
-    private val _isNicknameError = MutableLiveData<Boolean>()
+    val _isNicknameError = MutableLiveData<Boolean>()
     val isNicknameError: LiveData<Boolean> = _isNicknameError
 
-    private val _isNicknameOverlap = MutableLiveData<Boolean>()
+    internal val _isNicknameOverlap = MutableLiveData<Boolean>()
     val isNicknameOverlap: LiveData<Boolean> = _isNicknameOverlap
 
     private val _showDatePickerDialog = MutableSingleLiveData<Boolean>()
     val showDatePickerDialog: SingleLiveData<Boolean> = _showDatePickerDialog
 
-    private val _birthText = MutableLiveData<String>()
+    val _birthText = MutableLiveData<String>()
     val birthText: LiveData<String> = _birthText
 
     val isFemaleRadioButtonChecked = MutableLiveData<Boolean>()

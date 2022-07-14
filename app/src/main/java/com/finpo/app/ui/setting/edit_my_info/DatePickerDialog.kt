@@ -1,4 +1,4 @@
-package com.finpo.app.ui.intro.default_info
+package com.finpo.app.ui.setting.edit_my_info
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -11,7 +11,7 @@ class DatePickerDialog {
     var mMonth: Int = c.get(Calendar.MONTH)
     var mDay: Int = c.get(Calendar.DAY_OF_MONTH)
 
-    fun showDatePickerDialog(context: Context, viewModel: IntroViewModel) {
+    fun showDatePickerDialog(context: Context, viewModel: EditMyInfoViewModel) {
 
         val datePickerDialog = DatePickerDialog(context,
             { _, year, month, dayOfMonth ->

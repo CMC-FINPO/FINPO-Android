@@ -1,23 +1,292 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.setting.edit_my_info.EditMyInfoViewModel" />
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="10dp"
         tools:context=".ui.setting.edit_my_info.EditMyInfoFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.backClick()}"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/tv_header"
+            style="@style/header2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/please_input_edit_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_back" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header">
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/label2"
+                setErrorColor="@{viewModel.defaultInfoLiveData.isNameError}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textColor="@color/gray_g01"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_name"
+                style="@style/label1"
+                setErrorColor="@{viewModel.defaultInfoLiveData.isNameError}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:afterTextChanged="@{() -> viewModel.defaultInfoLiveData.afterNameTextChanged()}"
+                android:background="@drawable/selector_edittext"
+                android:text="@={viewModel.defaultInfoLiveData.nameInputText}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+            <ImageView
+                android:id="@+id/iv_name"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_error"
+                android:visibility="@{viewModel.defaultInfoLiveData.isNameError ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@id/et_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/et_name" />
+
+            <TextView
+                android:id="@+id/tv_name_error"
+                style="@style/not_defined_11_reg.16"
+                nameErrorMsg="@{viewModel.defaultInfoLiveData.nameErrorText}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/error_e01"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_name"
+                tools:text="중복된 닉네임입니다" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_name">
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                style="@style/label2"
+                setErrorColor="@{viewModel.defaultInfoLiveData.isNicknameError}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nickname"
+                android:textColor="@color/gray_g01"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_nickname"
+                style="@style/label1"
+                setErrorColor="@{viewModel.defaultInfoLiveData.isNicknameError}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:afterTextChanged="@{() -> viewModel.afterNicknameTextChanged()}"
+                android:background="@drawable/selector_edittext"
+                android:text="@={viewModel.defaultInfoLiveData.nickNameInputText}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
+
+            <ImageView
+                android:id="@+id/iv_nickname_ok"
+                isNicknameBlank="@{viewModel.defaultInfoLiveData.nickNameInputText}"
+                isNicknameOverlap="@{viewModel.defaultInfoLiveData.isNicknameOverlap}"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_check"
+                app:layout_constraintBottom_toBottomOf="@id/et_nickname"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/et_nickname" />
+
+            <ImageView
+                android:id="@+id/iv_nickname_error"
+                isNicknameError="@{viewModel.defaultInfoLiveData.isNicknameError}"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_error"
+                app:layout_constraintBottom_toBottomOf="@id/et_nickname"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/et_nickname" />
+
+            <TextView
+                android:id="@+id/tv_nickname_error"
+                style="@style/not_defined_11_reg.16"
+                nameErrorMsg="@{viewModel.defaultInfoLiveData.nickNameErrorText}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/error_e01"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_nickname"
+                tools:text="중복된 닉네임입니다" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_birth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_nickname">
+
+            <TextView
+                android:id="@+id/tv_birth"
+                style="@style/label2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/birth"
+                android:textColor="@color/gray_g01"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_birth"
+                style="@style/label1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:focusable="false"
+                android:hint="@string/birth_hint"
+                android:onClick="@{() -> viewModel.defaultInfoLiveData.showDialog()}"
+                android:text="@{viewModel.defaultInfoLiveData.birthText}"
+                android:textColorHint="@color/gray_g05"
+                app:layout_constraintEnd_toStartOf="@id/iv_birth"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_birth" />
+
+            <ImageView
+                android:id="@+id/iv_birth"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:layout_constraintBottom_toBottomOf="@id/et_birth"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/et_birth" />
+
+            <View
+                android:id="@+id/view_birth"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/gray_g07"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_birth" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_gender"
+            style="@style/label2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/gender"
+            android:textColor="@color/gray_g01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_birth" />
+
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_gender">
+
+            <RadioButton
+                android:id="@+id/rb_female"
+                changeFont="@{viewModel.defaultInfoLiveData.isFemaleRadioButtonChecked}"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_checkbox_gender"
+                android:button="@null"
+                android:checked="@={viewModel.defaultInfoLiveData.isFemaleRadioButtonChecked}"
+                android:gravity="center"
+                android:text="@string/female"
+                android:textColor="@drawable/selector_checkbox_gender_text"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/rb_male"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_gender" />
+
+            <RadioButton
+                android:id="@+id/rb_male"
+                changeFont="@{viewModel.defaultInfoLiveData.isMaleRadioButtonChecked}"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_checkbox_gender"
+                android:button="@null"
+                android:checked="@={viewModel.defaultInfoLiveData.isMaleRadioButtonChecked}"
+                android:gravity="center"
+                android:text="@string/male"
+                android:textColor="@drawable/selector_checkbox_gender_text"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/rb_female"
+                app:layout_constraintTop_toBottomOf="@id/tv_gender" />
+
+        </RadioGroup>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_edit"
+            style="@style/finpo_main_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="43dp"
+            android:enabled="@{viewModel.defaultInfoLiveData.isDefaultInfoButtonEnabled}"
+            android:text="@string/edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
