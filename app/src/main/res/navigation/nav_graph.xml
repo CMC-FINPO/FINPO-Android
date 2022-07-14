@@ -90,6 +90,9 @@
         <action
             android:id="@+id/action_settingFragment_to_regionAlarmSettingFragment"
             app:destination="@id/regionAlarmSettingFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_editMyInfoFragment"
+            app:destination="@id/editMyInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
@@ -223,4 +226,9 @@
             android:name="postId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/editMyInfoFragment"
+        android:name="com.finpo.app.ui.setting.edit_my_info.EditMyInfoFragment"
+        android:label="EditMyInfoFragment"
+        tools:layout="@layout/fragment_edit_my_info"/>
 </navigation>

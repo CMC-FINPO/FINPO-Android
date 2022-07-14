@@ -44,6 +44,13 @@ class SettingViewModel @Inject constructor(
     private val _openSourceEvent = MutableSingleLiveData<Boolean>()
     val openSourceEvent: SingleLiveData<Boolean> = _openSourceEvent
 
+    private val _editMyInfoEvent = MutableSingleLiveData<Boolean>()
+    val editMyInfoEvent: SingleLiveData<Boolean> = _editMyInfoEvent
+
+    fun editMyInfoClick() {
+        _editMyInfoEvent.setValue(true)
+    }
+
     fun openSourceClick() {
         _openSourceEvent.setValue(true)
     }

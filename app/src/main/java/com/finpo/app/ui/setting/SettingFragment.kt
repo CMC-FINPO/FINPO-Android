@@ -30,6 +30,10 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
     override fun doViewCreated() {
         binding.viewModel = viewModel
 
+        viewModel.editMyInfoEvent.observe {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToEditMyInfoFragment())
+        }
+
         viewModel.openSourceEvent.observe {
             LibsBuilder().start(requireContext())
         }

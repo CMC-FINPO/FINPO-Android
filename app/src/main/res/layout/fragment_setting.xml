@@ -60,6 +60,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="start|center"
+                android:onClick="@{() -> viewModel.editMyInfoClick()}"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/edit_my_info" />
