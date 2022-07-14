@@ -28,7 +28,7 @@ class InterestSettingViewModel @Inject constructor(
     private val _userCategoryData = MutableLiveData<List<CategoryRequest>>()
     val userCategoryData: LiveData<List<CategoryRequest>> = _userCategoryData
 
-    private val _purposeData = MutableLiveData<List<StatusPurpose>>()
+    private val _purposeData = MutableLiveData<List<StatusPurpose>>(listOf())
     val purposeData: LiveData<List<StatusPurpose>> = _purposeData
 
     private val _purposeIds = MutableLiveData<MutableSet<Int>>()
@@ -54,11 +54,11 @@ class InterestSettingViewModel @Inject constructor(
 
     init {
         _purposeIds.value = mutableSetOf()
-        getUserData()
-        getInfoData()
+        getInitData()
     }
 
-    private fun getUserData() {
+    //TODO REFACTOR
+    private fun getInitData() {
         viewModelScope.launch {
             val myCategoryResponse = myInfoRepository.getMyCategory()
             if(myCategoryResponse !is ApiResponse.Success)  return@launch
@@ -67,11 +67,7 @@ class InterestSettingViewModel @Inject constructor(
             val myPurposeResponse = myInfoRepository.getMyPurpose()
             if(myPurposeResponse !is ApiResponse.Success)     return@launch
             _purposeIds.value = myPurposeResponse.data.data.toMutableSet()
-        }
-    }
 
-    private fun getInfoData() {
-        viewModelScope.launch {
             val categoryResponse = categoryRepository.getCategoryChildFormat()
             if(categoryResponse !is ApiResponse.Success)    return@launch
             _interestCategoryData.value = categoryResponse.data.data

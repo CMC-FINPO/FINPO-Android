@@ -75,6 +75,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="@{viewModel.purposeData.empty ? View.INVISIBLE : View.VISIBLE}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.core.widget.NestedScrollView

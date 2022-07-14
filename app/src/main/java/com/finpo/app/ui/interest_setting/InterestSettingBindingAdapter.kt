@@ -9,8 +9,9 @@ import com.finpo.app.model.remote.CategoryRequest
 fun setChecked(
     checkBox: CheckBox,
     checkboxId: Int,
-    InterestIds: List<CategoryRequest>
+    InterestIds: List<CategoryRequest>?
 ) {
+    if(InterestIds == null) return
     checkBox.isChecked = CategoryRequest(checkboxId) in InterestIds
 }
 
