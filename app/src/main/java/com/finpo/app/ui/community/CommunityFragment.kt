@@ -31,6 +31,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         communityAdapter = CommunityAdapter(viewModel)
         binding.rvCommunity.adapter = communityAdapter
 
+        viewModel.writingList.observe(viewLifecycleOwner) {
+            communityAdapter.submitList(it.toMutableList()) {
+                if(viewModel.paging.page.value == 1)
+                    binding.rvCommunity.scrollToPosition(0)
+            }
+        }
+
         if((activity as MainActivity).isMovedCommunityBySelectedItem) {
             viewModel.clearWriting()
             viewModel.changeWriting()
@@ -52,13 +59,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
         viewModel.bottomSheetDismissEvent.observe {
             bottomDialogFragment.dismiss()
-        }
-
-        viewModel.writingList.observe(viewLifecycleOwner) {
-            communityAdapter.submitList(it.toMutableList()) {
-                if(viewModel.paging.page.value == 1)
-                    binding.rvCommunity.scrollToPosition(0)
-            }
         }
 
         viewModel.goToPostFragmentEvent.observe {

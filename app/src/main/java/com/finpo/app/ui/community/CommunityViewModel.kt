@@ -127,7 +127,7 @@ class CommunityViewModel @Inject constructor(
 
     private suspend fun getWritingResponse(): ApiResponse<WritingResponse> {
         return communityRepository.getWriting(
-            content = searchLiveData.searchInputText.value ?: "",
+            content = searchLiveData.searchText,
             page = paging.page.value ?: 0,
             sort = listOf(SORT_COMMUNITY[spinnerPosition.value ?: 0])
         )
