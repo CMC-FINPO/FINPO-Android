@@ -1,5 +1,6 @@
 package com.finpo.app.ui.community_search
 
+import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.viewModels
 import com.finpo.app.R
@@ -12,7 +13,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.layout.fragment_community_search) {
     private val viewModel by viewModels<CommunityViewModel>()
 
-    override fun doViewCreated() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
+    override fun doViewCreated() {
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 }

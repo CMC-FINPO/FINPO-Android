@@ -10,6 +10,7 @@ import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.model.remote.WritingResponse
 import com.finpo.app.repository.CommunityRepository
 import com.finpo.app.ui.community_post.postTextStyle
+import com.finpo.app.ui.community_search.CommunitySearchLiveData
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SORT_COMMUNITY
@@ -23,6 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CommunityViewModel @Inject constructor(
     private val communityRepository: CommunityRepository,
+    val searchLiveData: CommunitySearchLiveData,
     val paging: Paging<WritingContent>
 ) : ViewModel() {
     private val _writingList = MutableLiveData<List<WritingContent?>>()
@@ -54,10 +56,6 @@ class CommunityViewModel @Inject constructor(
 
     private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, WritingContent>>()
     val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, WritingContent>> = _updateRecyclerViewItemEvent
-
-    init {
-        initData()
-    }
 
     fun searchClick() {
         _searchClickEvent.setValue(true)
@@ -95,6 +93,7 @@ class CommunityViewModel @Inject constructor(
 
     fun changeWriting() {
         paging.resetPage()
+        searchLiveData.showInitView.value = false
 
         viewModelScope.launch {
             val writingResponse = getWritingResponse()
@@ -127,7 +126,7 @@ class CommunityViewModel @Inject constructor(
 
     private suspend fun getWritingResponse(): ApiResponse<WritingResponse> {
         return communityRepository.getWriting(
-            content = "",
+            content = searchLiveData.searchInputText.value ?: "",
             page = paging.page.value ?: 0,
             sort = listOf(SORT_COMMUNITY[spinnerPosition.value ?: 0])
         )

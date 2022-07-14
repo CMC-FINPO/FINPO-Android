@@ -1,5 +1,6 @@
 package com.finpo.app.ui.community
 
+import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,6 +18,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
     private val viewModel by viewModels<CommunityViewModel>()
     private lateinit var communityAdapter: CommunityAdapter
     val TAG = "CommunityFragment"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.initData() // CommunitySearchFragment 애서는 데이터 초기화를 진행하지 않기 위해 initData를 onCreate에서 실행함
+    }
 
     override fun doViewCreated() {
         binding.viewModel = viewModel

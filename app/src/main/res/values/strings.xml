@@ -144,4 +144,6 @@
     <string name="edit_short">수정</string>
     <string name="select_report">신고 사유 선택</string>
     <string name="cancel">취소</string>
+    <string name="search_community_hint">제목이나 내용을 검색해주세요</string>
+    <string name="please_search_community">게시판의 글을 검색해보세요</string>
 </resources>
