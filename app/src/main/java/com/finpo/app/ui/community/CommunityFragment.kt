@@ -30,6 +30,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
             viewModel.changeWriting()
         }
 
+        viewModel.searchClickEvent.observe {
+            findNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunitySearchFragment())
+        }
+
         viewModel.goToDetailFragmentEvent.observe {
             findNavController().navigate(NavGraphDirections.actionGlobalCommunityDetailFragment(it))
         }

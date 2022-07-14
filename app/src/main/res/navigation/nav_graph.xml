@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_communityFragment_to_communityPostFragment"
             app:destination="@id/communityPostFragment" />
+        <action
+            android:id="@+id/action_communityFragment_to_communitySearchFragment"
+            app:destination="@id/communitySearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
@@ -231,4 +234,13 @@
         android:name="com.finpo.app.ui.setting.edit_my_info.EditMyInfoFragment"
         android:label="EditMyInfoFragment"
         tools:layout="@layout/fragment_edit_my_info"/>
+    <fragment
+        android:id="@+id/communitySearchFragment"
+        android:name="com.finpo.app.ui.community_search.CommunitySearchFragment"
+        android:label="CommunitySearchFragment"
+        tools:layout="@layout/fragment_community_search">
+        <action
+            android:id="@+id/action_communitySearchFragment_to_communityDetailFragment"
+            app:destination="@id/communityDetailFragment" />
+    </fragment>
 </navigation>

@@ -49,11 +49,18 @@ class CommunityViewModel @Inject constructor(
     private val _refreshed = MutableLiveData<Boolean>()
     val refreshed: LiveData<Boolean> = _refreshed
 
+    private val _searchClickEvent = MutableSingleLiveData<Boolean>()
+    val searchClickEvent: SingleLiveData<Boolean> = _searchClickEvent
+
     private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, WritingContent>>()
     val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, WritingContent>> = _updateRecyclerViewItemEvent
 
     init {
         initData()
+    }
+
+    fun searchClick() {
+        _searchClickEvent.setValue(true)
     }
 
     fun goToDetailFragment(id: Int) {

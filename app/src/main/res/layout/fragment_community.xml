@@ -34,6 +34,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
+                        android:onClick="@{() -> viewModel.searchClick()}"
                         android:src="@drawable/ic_search_community"
                         app:layout_constraintEnd_toStartOf="@id/iv_write"
                         app:layout_constraintTop_toTopOf="@id/iv_write" />
@@ -83,8 +84,8 @@
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="12dp"
                         android:background="@drawable/bg_solid_none_rounded_b01_5"
-                        android:paddingStart="7dp"
                         android:onClick="@{() -> viewModel.showBottomSheetDialog()}"
+                        android:paddingStart="7dp"
                         app:layout_constraintBottom_toBottomOf="@id/view_divider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_write">
@@ -93,12 +94,12 @@
                         <TextView
                             android:id="@+id/tv_spinner"
                             style="@style/body4"
+                            spinnerText="@{viewModel.spinnerPosition}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            spinnerText="@{viewModel.spinnerPosition}"
                             tools:text="최신순" />
 
 
@@ -135,9 +136,9 @@
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:onRefreshListener="@{() -> viewModel.refreshWriting()}"
-            app:refreshing="@{viewModel.refreshed}"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+            app:refreshing="@{viewModel.refreshed}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_community"
