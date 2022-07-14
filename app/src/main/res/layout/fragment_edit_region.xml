@@ -66,19 +66,19 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
+                    android:layout_height="42dp">
 
                     <View
                         android:id="@+id/view_divider"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="39dp"
+                        android:layout_marginTop="41dp"
                         android:background="@color/gray_g05" />
 
                     <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tb_edit_region"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="42dp"
                         android:background="@android:color/transparent"
                         app:tabIndicator="@drawable/shape_tab_indicator_height"
                         app:tabIndicatorColor="@color/point_p01"
