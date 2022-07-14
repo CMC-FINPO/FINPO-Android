@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentCommunitySearchBinding
+import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.community.CommunityAdapter
 import com.finpo.app.ui.community.CommunityViewModel
@@ -18,10 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.layout.fragment_community_search) {
     private val viewModel by viewModels<CommunityViewModel>()
     private lateinit var communityAdapter: CommunityAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
@@ -37,6 +35,10 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
             }
         }
 
+        viewModel.goToDetailFragmentEvent.observe {
+            findNavController().navigate(NavGraphDirections.actionGlobalCommunityDetailFragment(it))
+        }
+
         viewModel.searchLiveData.keyBoardSearchEvent.observe {
             viewModel.changeWriting()
             val inputMethodManager =
@@ -46,6 +48,15 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
 
         viewModel.backClickEvent.observe {
             findNavController().popBackStack()
+        }
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<WritingContent>("writingContent")
+            ?.observe(viewLifecycleOwner) { data ->
+                viewModel.checkContentChanged(data)
+            }
+
+        viewModel.updateRecyclerViewItemEvent.observe {
+            communityAdapter.notifyItemChanged(it.first, it.second)
         }
     }
 }
