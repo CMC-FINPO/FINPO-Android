@@ -6,4 +6,8 @@ import javax.inject.Inject
 class CommunitySearchLiveData @Inject constructor() {
     val searchInputText = MutableLiveData("")
     val showInitView = MutableLiveData(true)
+
+    fun clearSearchInputText() {
+        searchInputText.value = ""
+    }
 }

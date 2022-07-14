@@ -3,6 +3,7 @@ package com.finpo.app.ui.community_search
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentCommunitySearchBinding
 import com.finpo.app.ui.common.BaseFragment
@@ -20,5 +21,9 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.backClickEvent.observe {
+            findNavController().popBackStack()
+        }
     }
 }

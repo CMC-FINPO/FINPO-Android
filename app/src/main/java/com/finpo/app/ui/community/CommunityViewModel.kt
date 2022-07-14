@@ -9,6 +9,7 @@ import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.model.remote.WritingResponse
 import com.finpo.app.repository.CommunityRepository
+import com.finpo.app.ui.common.BaseViewModel
 import com.finpo.app.ui.community_post.postTextStyle
 import com.finpo.app.ui.community_search.CommunitySearchLiveData
 import com.finpo.app.utils.MutableSingleLiveData
@@ -26,7 +27,7 @@ class CommunityViewModel @Inject constructor(
     private val communityRepository: CommunityRepository,
     val searchLiveData: CommunitySearchLiveData,
     val paging: Paging<WritingContent>
-) : ViewModel() {
+) : BaseViewModel() {
     private val _writingList = MutableLiveData<List<WritingContent?>>()
     val writingList: LiveData<List<WritingContent?>> = _writingList
 
