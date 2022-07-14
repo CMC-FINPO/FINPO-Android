@@ -53,6 +53,11 @@ interface ApiService {
     @GET("/user/me/purpose")
     suspend fun getMyPurpose(): ApiResponse<MyPurpose>
 
+    @PUT("/user/me")
+    suspend fun editMyInfo(
+        @Body editMyInfoRequest: EditMyInfoRequest
+    )  : ApiResponse<JsonElement>
+
     //POLICY
     @GET("/policy/search")
     suspend fun getPolicy(
@@ -190,13 +195,13 @@ interface ApiService {
     @GET("/report/reason")
     suspend fun getReportReason(): ApiResponse<ReportReasonResponse>
 
-    @POST(" /comment/{id}/report")
+    @POST("/comment/{id}/report")
     suspend fun reportComment(
         @Path("id") id: Int,
         @Body reportRequest: ReportRequest
     ) : ApiResponse<JsonElement>
 
-    @POST(" /post/{id}/report")
+    @POST("/post/{id}/report")
     suspend fun reportPost(
         @Path("id") id: Int,
         @Body reportRequest: ReportRequest

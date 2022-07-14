@@ -14,3 +14,10 @@ data class MyInfo(
     val oAuthType: String?,
     val defaultRegion: RegionInterest?
 )
+
+data class EditMyInfoRequest(
+    val name: String?,
+    val nickname: String?,
+    val birth: String?,
+    val gender: String?
+)

@@ -1,6 +1,7 @@
 package com.finpo.app.repository
 
 import com.finpo.app.model.remote.CategoryRequest
+import com.finpo.app.model.remote.EditMyInfoRequest
 import com.finpo.app.model.remote.RegionRequest
 import com.finpo.app.network.ApiService
 import okhttp3.MultipartBody
@@ -19,4 +20,10 @@ class MyInfoRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun getMyParticipationPolicy() = apiService.getMyParticipationPolicy()
     suspend fun deleteMyParticipationPolicy(id: Int) = apiService.deleteParticipationPolicy(id)
     suspend fun getMyPurpose() = apiService.getMyPurpose()
+    suspend fun editMyInfo(
+        name: String? = null,
+        nickname: String? = null,
+        birth: String? = null,
+        gender: String? = null
+    ) = apiService.editMyInfo(EditMyInfoRequest(name, nickname, birth, gender))
 }
