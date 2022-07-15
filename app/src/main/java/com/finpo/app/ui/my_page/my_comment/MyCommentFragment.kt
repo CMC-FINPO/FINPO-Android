@@ -28,7 +28,10 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
         binding.rvCommunity.adapter = writingAdapter
 
         viewModel.myCommentLiveData.writingList.observe(viewLifecycleOwner) {
-            writingAdapter.submitList(it.toMutableList())
+            writingAdapter.submitList(it.toMutableList()) {
+                if(viewModel.myCommentLiveData.paging.page.value == 1)
+                    binding.rvCommunity.scrollToPosition(0)
+            }
         }
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<WritingContent>("writingContent")

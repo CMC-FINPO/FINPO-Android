@@ -24,6 +24,15 @@ class MyCommentLiveData @Inject constructor(
     private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, WritingContent>>()
     val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, WritingContent>> = _updateRecyclerViewItemEvent
 
+    private val _refreshed = MutableLiveData<Boolean>()
+    val refreshed: LiveData<Boolean> = _refreshed
+
+    fun refreshWriting() {
+        _refreshed.value = true
+        changeMyWriting()
+        _refreshed.value = false
+    }
+
     fun changeMyWriting() {
         paging.resetPage()
 

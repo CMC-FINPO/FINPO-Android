@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.my_page.MyPageViewModel" />
@@ -15,13 +16,23 @@
         android:background="@color/gray_g09"
         tools:context=".ui.my_page.MyCommentFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_community"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager=".utils.LinearLayoutManagerWrapper"
-            doScrollBottom="@{() -> viewModel.myCommentLiveData.addWriting()}"
-            tools:listitem="@layout/item_recycler_my_page_writing" />
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:onRefreshListener="@{() -> viewModel.myCommentLiveData.refreshWriting()}"
+            app:refreshing="@{viewModel.myCommentLiveData.refreshed}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_community"
+                doScrollBottom="@{() -> viewModel.myCommentLiveData.addWriting()}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager=".utils.LinearLayoutManagerWrapper"
+                tools:listitem="@layout/item_recycler_my_page_writing" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </FrameLayout>
 </layout>
