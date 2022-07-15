@@ -24,7 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/gray_g09"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        isRecyclerViewItemVisible="@{data.status}"
+        isBlocked="@{data.isUserBlocked}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

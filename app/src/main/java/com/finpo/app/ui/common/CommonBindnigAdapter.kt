@@ -133,10 +133,10 @@ fun setFont(
     }
 }
 
-@BindingAdapter("isDeleted")
-fun checkDelete(view: View, isDeleted: Boolean) {
+@BindingAdapter("isRecyclerViewItemVisible", "isBlocked")
+fun checkDelete(view: View, isRecyclerViewItemVisible: Boolean, isBlocked: Boolean?) {
     //XML상에서 GONE 설정 시 여백이 제거 안됨
-    if(!isDeleted) {
+    if(!isRecyclerViewItemVisible || isBlocked == true) {
         view.visibility = View.GONE
         view.layoutParams = RecyclerView.LayoutParams(0, 0)
     } else {
