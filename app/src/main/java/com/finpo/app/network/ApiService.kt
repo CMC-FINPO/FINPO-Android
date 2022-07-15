@@ -220,4 +220,15 @@ interface ApiService {
         @Path("id") id: Int,
         @Body reportRequest: ReportRequest
     ) : ApiResponse<JsonElement>
+
+    //BLOCK
+    @POST("/post/{id}/block")
+    suspend fun blockPost(
+        @Path("id") id: Int
+    ) : ApiResponse<JsonElement>
+
+    @POST("/comment/{id}/block")
+    suspend fun blockComment(
+        @Path("id") id: Int
+    ) : ApiResponse<JsonElement>
 }
