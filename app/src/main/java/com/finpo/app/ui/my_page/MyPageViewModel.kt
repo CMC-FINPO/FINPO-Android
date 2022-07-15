@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.ParentCategory
 import com.finpo.app.repository.MyInfoRepository
+import com.finpo.app.ui.my_page.my_comment.MyCommentLiveData
 import com.finpo.app.ui.my_page.my_writing.MyWritingLiveData
 import com.finpo.app.utils.ImageUtils
 import com.finpo.app.utils.MutableSingleLiveData
@@ -20,6 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
+    val myCommentLiveData: MyCommentLiveData,
     val myWritingLiveData: MyWritingLiveData,
     private val myInfoRepository: MyInfoRepository
 ): ViewModel() {

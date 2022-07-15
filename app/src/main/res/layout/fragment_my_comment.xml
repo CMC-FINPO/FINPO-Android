@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.my_page.MyCommentFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.my_page.MyPageViewModel" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/gray_g09"
+        tools:context=".ui.my_page.MyCommentFragment">
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_community"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager=".utils.LinearLayoutManagerWrapper"
+            doScrollBottom="@{() -> viewModel.myCommentLiveData.addWriting()}"
+            tools:listitem="@layout/item_recycler_my_page_writing" />
+
+    </FrameLayout>
+</layout>

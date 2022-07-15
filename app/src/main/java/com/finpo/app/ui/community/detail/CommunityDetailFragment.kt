@@ -47,7 +47,7 @@ class CommunityDetailFragment :
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.backClickEvent.observe {
-            findNavController().popBackStack()
+            popBackStack()
         }
 
         val bottomDialogFragment = BottomSheetReportDialog(viewModel)

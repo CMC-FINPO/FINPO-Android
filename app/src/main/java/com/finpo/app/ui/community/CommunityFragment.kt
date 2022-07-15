@@ -19,11 +19,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
     private lateinit var communityAdapter: CommunityAdapter
     val TAG = "CommunityFragment"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.initData() // CommunitySearchFragment 애서는 데이터 초기화를 진행하지 않기 위해 initData를 onCreate에서 실행함
-    }
-
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

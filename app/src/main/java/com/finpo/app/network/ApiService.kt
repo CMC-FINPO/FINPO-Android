@@ -198,6 +198,13 @@ interface ApiService {
         @Query("sort", encoded = true) sort: String = "id,desc"
     ) : ApiResponse<WritingResponse>
 
+    @GET("/post/comment/me")
+    suspend fun getMyComment(
+        @Query("page") page: Int,
+        @Query("size") size: Int = 10,
+        @Query("sort", encoded = true) sort: String = "id,desc"
+    ) : ApiResponse<WritingResponse>
+
     //REPORT
     @GET("/report/reason")
     suspend fun getReportReason(): ApiResponse<ReportReasonResponse>
