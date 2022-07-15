@@ -26,4 +26,5 @@ class MyInfoRepository @Inject constructor(private val apiService: ApiService) {
         birth: String? = null,
         gender: String? = null
     ) = apiService.editMyInfo(EditMyInfoRequest(name, nickname, birth, gender))
+    suspend fun getMyWriting(page: Int) = apiService.getMyWriting(page)
 }

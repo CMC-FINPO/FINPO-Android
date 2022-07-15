@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.ParentCategory
 import com.finpo.app.repository.MyInfoRepository
+import com.finpo.app.ui.my_page.my_writing.MyWritingLiveData
 import com.finpo.app.utils.ImageUtils
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
+    val myWritingLiveData: MyWritingLiveData,
     private val myInfoRepository: MyInfoRepository
 ): ViewModel() {
     private val _nickname = MutableLiveData<String>()
@@ -54,6 +56,8 @@ class MyPageViewModel @Inject constructor(
     private val _participationClickEvent = MutableSingleLiveData<Boolean>()
     val participationClickEvent: SingleLiveData<Boolean> = _participationClickEvent
 
+    var isInitDataCompleted = false
+
     init {
         _nickname.value = ""
         getMyInfo()
@@ -71,6 +75,9 @@ class MyPageViewModel @Inject constructor(
 
             val interestResponse = myInfoRepository.getMyParentCategory()
             interestResponse.onSuccess { _interestList.value = data.data }
+
+            myWritingLiveData.changeMyWriting()
+            isInitDataCompleted = true
         }
     }
 
