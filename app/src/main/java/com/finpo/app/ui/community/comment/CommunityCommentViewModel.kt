@@ -1,4 +1,4 @@
-package com.finpo.app.ui.community_comment
+package com.finpo.app.ui.community.comment
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

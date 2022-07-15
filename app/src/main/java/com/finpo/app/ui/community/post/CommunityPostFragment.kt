@@ -1,17 +1,13 @@
-package com.finpo.app.ui.community_post
+package com.finpo.app.ui.community.post
 
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentCommunityPostBinding
 import com.finpo.app.ui.common.BaseFragment
-import com.finpo.app.utils.dp
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

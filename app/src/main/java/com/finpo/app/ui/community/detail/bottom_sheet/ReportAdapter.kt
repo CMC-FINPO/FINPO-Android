@@ -1,24 +1,13 @@
-package com.finpo.app.ui.community_detail.bottom_sheet
+package com.finpo.app.ui.community.detail.bottom_sheet
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.finpo.app.databinding.ItemRecyclerFilterBinding
-import com.finpo.app.databinding.ItemRecyclerInterestParentBinding
-import com.finpo.app.databinding.ItemRecyclerRegionBinding
 import com.finpo.app.databinding.ItemRecyclerReportBinding
-import com.finpo.app.model.remote.CategoryChildFormat
 import com.finpo.app.model.remote.IdReason
-import com.finpo.app.model.remote.ParentCategory
-import com.finpo.app.model.remote.Region
-import com.finpo.app.ui.community_detail.CommunityDetailViewModel
-import com.finpo.app.utils.GridSpacingItemDecoration
-import com.finpo.app.utils.dp
-import com.google.android.flexbox.FlexboxLayoutManager
-import javax.inject.Inject
+import com.finpo.app.ui.community.detail.CommunityDetailViewModel
 
 class ReportAdapter (val viewModel: CommunityDetailViewModel) :
     ListAdapter<IdReason, ReportAdapter.ReportViewHolder>(diffUtil) {

@@ -1,8 +1,6 @@
-package com.finpo.app.ui.community_search
+package com.finpo.app.ui.community.search
 
 import android.content.Context
-import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,7 +11,6 @@ import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.community.CommunityAdapter
 import com.finpo.app.ui.community.CommunityViewModel
-import com.finpo.app.ui.home.PolicyAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.finpo.app.ui.community_detail
+package com.finpo.app.ui.community.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -3,15 +3,12 @@ package com.finpo.app.ui.community
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.model.remote.WritingResponse
 import com.finpo.app.repository.CommunityRepository
 import com.finpo.app.ui.common.BaseViewModel
-import com.finpo.app.ui.community_post.postTextStyle
-import com.finpo.app.ui.community_search.CommunitySearchLiveData
+import com.finpo.app.ui.community.search.CommunitySearchLiveData
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SORT_COMMUNITY

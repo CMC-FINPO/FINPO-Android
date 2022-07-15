@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="10dp"
-        tools:context=".ui.community_search.CommunitySearchFragment">
+        tools:context=".ui.community.search.CommunitySearchFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

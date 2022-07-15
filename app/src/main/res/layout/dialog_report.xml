@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.finpo.app.ui.community_detail.CommunityDetailViewModel" />
+            type="com.finpo.app.ui.community.detail.CommunityDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

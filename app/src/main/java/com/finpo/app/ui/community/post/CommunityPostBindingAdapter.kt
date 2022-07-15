@@ -1,4 +1,4 @@
-package com.finpo.app.ui.community_post
+package com.finpo.app.ui.community.post
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter

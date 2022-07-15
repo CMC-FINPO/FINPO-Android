@@ -1,6 +1,5 @@
 package com.finpo.app.utils
 
-import android.R.layout
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,7 @@ import com.finpo.app.databinding.PopupCommentBinding
 import com.finpo.app.databinding.PopupCommunityBinding
 import com.finpo.app.model.remote.CommentContent
 import com.finpo.app.model.remote.WritingContent
-import com.finpo.app.ui.community_detail.CommunityDetailViewModel
+import com.finpo.app.ui.community.detail.CommunityDetailViewModel
 
 
 class PopupWindowUtil(val context: Context) {

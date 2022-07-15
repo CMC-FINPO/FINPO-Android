@@ -1,4 +1,4 @@
-package com.finpo.app.ui.community_post
+package com.finpo.app.ui.community.post
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

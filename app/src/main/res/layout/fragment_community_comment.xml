@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.finpo.app.ui.community_comment.CommunityCommentViewModel" />
+            type="com.finpo.app.ui.community.comment.CommunityCommentViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.community_comment.CommunityCommentFragment">
+        tools:context=".ui.community.comment.CommunityCommentFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

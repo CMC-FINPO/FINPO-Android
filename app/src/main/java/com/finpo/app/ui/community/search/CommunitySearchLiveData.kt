@@ -1,4 +1,4 @@
-package com.finpo.app.ui.community_search
+package com.finpo.app.ui.community.search
 
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.MutableLiveData

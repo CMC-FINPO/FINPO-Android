@@ -160,7 +160,7 @@
     </fragment>
     <fragment
         android:id="@+id/communityPostFragment"
-        android:name="com.finpo.app.ui.community_post.CommunityPostFragment"
+        android:name="com.finpo.app.ui.community.post.CommunityPostFragment"
         android:label="CommunityPostFragment"
         tools:layout="@layout/fragment_community_post">
         <action
@@ -191,7 +191,7 @@
         tools:layout="@layout/fragment_alarm"/>
     <fragment
         android:id="@+id/communityDetailFragment"
-        android:name="com.finpo.app.ui.community_detail.CommunityDetailFragment"
+        android:name="com.finpo.app.ui.community.detail.CommunityDetailFragment"
         android:label="CommunityDetailFragment"
         tools:layout="@layout/fragment_community_detail">
         <argument
@@ -211,7 +211,7 @@
     </fragment>
     <fragment
         android:id="@+id/communityCommentFragment"
-        android:name="com.finpo.app.ui.community_comment.CommunityCommentFragment"
+        android:name="com.finpo.app.ui.community.comment.CommunityCommentFragment"
         android:label="CommunityCommentFragment"
         tools:layout="@layout/fragment_community_comment">
         <argument
@@ -236,7 +236,7 @@
         tools:layout="@layout/fragment_edit_my_info"/>
     <fragment
         android:id="@+id/communitySearchFragment"
-        android:name="com.finpo.app.ui.community_search.CommunitySearchFragment"
+        android:name="com.finpo.app.ui.community.search.CommunitySearchFragment"
         android:label="CommunitySearchFragment"
         tools:layout="@layout/fragment_community_search">
         <action

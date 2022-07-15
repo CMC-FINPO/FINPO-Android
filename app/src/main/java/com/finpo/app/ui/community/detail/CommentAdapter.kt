@@ -1,22 +1,17 @@
-package com.finpo.app.ui.community_detail
+package com.finpo.app.ui.community.detail
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.finpo.app.databinding.ItemRecyclerCommunityDetailCommentBinding
-import com.finpo.app.databinding.ItemRecyclerPolicyBinding
 import com.finpo.app.databinding.ItemRecyclerPolicyLoadingBinding
 import com.finpo.app.model.remote.CommentContent
-import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.utils.PolicyRecyclerViewType.LOADING
 import com.finpo.app.utils.PolicyRecyclerViewType.CONTENT
 import com.finpo.app.utils.PopupWindowUtil
-import java.lang.Exception
 
 class CommentAdapter(val viewModel: CommunityDetailViewModel)
     : ListAdapter<CommentContent, RecyclerView.ViewHolder>(diffUtil) {

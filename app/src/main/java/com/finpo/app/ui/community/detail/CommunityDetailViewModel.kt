@@ -1,9 +1,8 @@
-package com.finpo.app.ui.community_detail
+package com.finpo.app.ui.community.detail
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.CommentContent
 import com.finpo.app.model.remote.IdReason
@@ -18,8 +17,6 @@ import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

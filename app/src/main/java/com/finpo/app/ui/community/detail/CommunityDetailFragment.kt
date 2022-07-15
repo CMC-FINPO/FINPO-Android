@@ -1,8 +1,7 @@
-package com.finpo.app.ui.community_detail
+package com.finpo.app.ui.community.detail
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.PopupWindow
 import androidx.activity.OnBackPressedCallback
@@ -10,13 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentCommunityDetailBinding
 import com.finpo.app.ui.common.BaseFragment
-import com.finpo.app.ui.community_detail.bottom_sheet.BottomSheetReportDialog
-import com.finpo.app.ui.filter.bottom_sheet.BottomSheetRegionDialog
+import com.finpo.app.ui.community.detail.bottom_sheet.BottomSheetReportDialog
 import com.finpo.app.utils.PopupWindowUtil
 import dagger.hilt.android.AndroidEntryPoint
 

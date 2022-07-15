@@ -1,11 +1,10 @@
-package com.finpo.app.ui.community_detail.bottom_sheet
+package com.finpo.app.ui.community.detail.bottom_sheet
 
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.view.LayoutInflater
-import com.finpo.app.databinding.DialogCommunitySortBinding
 import com.finpo.app.databinding.DialogReportBinding
-import com.finpo.app.ui.community_detail.CommunityDetailViewModel
+import com.finpo.app.ui.community.detail.CommunityDetailViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetReportDialog(val viewModel: CommunityDetailViewModel) : BottomSheetDialogFragment() {
