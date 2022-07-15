@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
@@ -15,6 +16,16 @@
         android:layout_height="match_parent"
         android:background="@color/gray_g09"
         tools:context=".ui.my_page.MyCommentFragment">
+
+        <TextView
+            style="@style/header5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:text="@string/empty_my_comment"
+            android:textColor="@color/gray_g01"
+            android:visibility="@{viewModel.myCommentLiveData.writingList.empty ? View.VISIBLE : View.GONE}" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"

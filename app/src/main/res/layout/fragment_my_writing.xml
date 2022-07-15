@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.my_page.MyPageViewModel" />
@@ -16,13 +18,24 @@
         android:background="@color/gray_g09"
         tools:context=".ui.my_page.my_writing.MyWritingFragment">
 
+        <TextView
+            style="@style/header5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:text="@string/empty_my_writing"
+            android:textColor="@color/gray_g01"
+            android:visibility="@{viewModel.myWritingLiveData.writingList.empty ? View.VISIBLE : View.GONE}" />
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:onRefreshListener="@{() -> viewModel.myWritingLiveData.refreshWriting()}"
-            app:refreshing="@{viewModel.myWritingLiveData.refreshed}">
+            app:refreshing="@{viewModel.myWritingLiveData.refreshed}"
+            tools:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_community"

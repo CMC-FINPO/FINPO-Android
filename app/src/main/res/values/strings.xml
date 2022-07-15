@@ -146,4 +146,6 @@
     <string name="cancel">취소</string>
     <string name="search_community_hint">제목이나 내용을 검색해주세요</string>
     <string name="please_search_community">게시판의 글을 검색해보세요</string>
+    <string name="empty_my_writing">아직 쓴 글이 없네요...\n커뮤니티에 글을 쓰러 가볼까요?</string>
+    <string name="empty_my_comment">아직 단 댓글이 없네요...\n커뮤니티에 댓글을 달러 가볼까요?</string>
 </resources>

@@ -86,6 +86,7 @@ class MyPageViewModel @Inject constructor(
             interestResponse.onSuccess { _interestList.value = data.data }
 
             myWritingLiveData.changeMyWriting()
+            myCommentLiveData.changeMyWriting()
             isInitDataCompleted = true
         }
     }
