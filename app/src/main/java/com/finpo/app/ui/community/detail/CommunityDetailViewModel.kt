@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.CommentContent
 import com.finpo.app.model.remote.IdReason
 import com.finpo.app.model.remote.WritingContent
+import com.finpo.app.repository.BlockRepository
 import com.finpo.app.repository.CommunityRepository
 import com.finpo.app.repository.ReportRepository
 import com.finpo.app.ui.common.BaseViewModel
@@ -24,6 +25,7 @@ import javax.inject.Inject
 class CommunityDetailViewModel @Inject constructor(
     private val communityRepository: CommunityRepository,
     private val reportRepository: ReportRepository,
+    private val blockRepository: BlockRepository,
     val paging: Paging<CommentContent>
 ) : BaseViewModel() {
     var detailId: Int = 0
@@ -63,23 +65,28 @@ class CommunityDetailViewModel @Inject constructor(
     private val _showReportDialog = MutableSingleLiveData<Boolean>()
     val showReportDialog: SingleLiveData<Boolean> = _showReportDialog
 
+    private val _showBlockDialog = MutableSingleLiveData<Boolean>()
+    val showBlockDialog: SingleLiveData<Boolean> = _showBlockDialog
+
     private val _dismissBottomSheetEvent = MutableSingleLiveData<Boolean>()
     val dismissBottomSheetEvent: SingleLiveData<Boolean> = _dismissBottomSheetEvent
 
     private val _showReportFinishAlertDialog = MutableSingleLiveData<Boolean>()
     val showReportFinishAlertDialog: SingleLiveData<Boolean> = _showReportFinishAlertDialog
 
+    private val _showBlockFinishAlertDialog = MutableSingleLiveData<Boolean>()
+    val showBlockFinishAlertDialog: SingleLiveData<Boolean> = _showBlockFinishAlertDialog
+
     val comment = MutableLiveData<String>()
 
-    private var reportType = 0
-    private var reportId = 0
+    private var reportBlockType = 0
+    private var reportBlockId = 0
 
     fun report(reportContentId: Int) {
-        Log.d("report","클릭은 됨")
         viewModelScope.launch {
-            val response = when (reportType) {
-                POST -> reportRepository.reportPost(reportId, reportContentId)
-                else -> reportRepository.reportComment(reportId, reportContentId)
+            val response = when (reportBlockType) {
+                POST -> reportRepository.reportPost(reportBlockId, reportContentId)
+                else -> reportRepository.reportComment(reportBlockId, reportContentId)
             }
             response.onSuccess {
                 _dismissBottomSheetEvent.setValue(true)
@@ -89,9 +96,27 @@ class CommunityDetailViewModel @Inject constructor(
     }
 
     fun showReportDialog(reportType: Int, reportId: Int) {
-        this.reportType = reportType
-        this.reportId = reportId
+        this.reportBlockType = reportType
+        this.reportBlockId = reportId
         _showReportDialog.setValue(true)
+    }
+
+    fun block() {
+        viewModelScope.launch {
+            val response = when (reportBlockType) {
+                POST -> blockRepository.blockPost(reportBlockId)
+                else -> blockRepository.blockComment(reportBlockId)
+            }
+            response.onSuccess {
+                _showBlockFinishAlertDialog.setValue(true)
+            }
+        }
+    }
+
+    fun showBlockDialog(blockType: Int, blockId: Int) {
+        reportBlockType = blockType
+        reportBlockId = blockId
+        _showBlockDialog.setValue(true)
     }
 
     fun dismissReportDialog() {
@@ -175,6 +200,7 @@ class CommunityDetailViewModel @Inject constructor(
             val detailResponse = communityRepository.getWritingDetail(detailId)
             if(detailResponse !is ApiResponse.Success) return@launch
             _writingContent.value = detailResponse.data.data
+            if(detailResponse.data.data.isUserBlocked == true) _deleteSuccessfulEvent.setValue(true)
 
             paging.resetPage()
             val commentResponse = communityRepository.getComment(detailId, paging.page.value ?: 0)

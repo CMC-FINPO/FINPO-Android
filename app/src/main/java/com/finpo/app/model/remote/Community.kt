@@ -33,6 +33,7 @@ data class WritingContent(
     val isLiked: Boolean?,
     val isBookmarked: Boolean?,
     val isModified: Boolean?,
+    val isUserBlocked: Boolean?,
     val createdAt: String,
     val modifiedAt: String,
 ) : Parcelable

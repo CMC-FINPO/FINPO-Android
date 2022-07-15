@@ -58,5 +58,15 @@
             android:text="@string/report"
             android:visibility="@{data.isMine ? View.GONE : View.VISIBLE}" />
 
+        <TextView
+            android:id="@+id/tv_block_comment"
+            style="@style/label3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:onClick="@{() -> viewModel.showBlockDialog(reportType.COMMENT, data.id)}"
+            android:text="@string/block"
+            android:visibility="@{data.isMine ? View.GONE : View.VISIBLE}" />
+
     </LinearLayout>
 </layout>

@@ -50,6 +50,20 @@ class CommunityDetailFragment :
             popBackStack()
         }
 
+        viewModel.showBlockDialog.observe {
+            commentAdapter.commentPopup?.dismiss()
+            postPopup?.dismiss()
+            showAlertDialog("차단하시겠습니까?", "차단") {
+                viewModel.block()
+            }
+        }
+
+        viewModel.showBlockFinishAlertDialog.observe {
+            showConfirmDialog("차단되었습니다!") {
+                viewModel.refreshData()
+            }
+        }
+
         val bottomDialogFragment = BottomSheetReportDialog(viewModel)
 
         viewModel.showReportDialog.observe {

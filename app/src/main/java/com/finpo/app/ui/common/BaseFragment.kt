@@ -66,10 +66,11 @@ abstract class BaseFragment<B : ViewDataBinding>(
         builder.show()
     }
 
-    fun showConfirmDialog(message: String, positiveText: String = "확인") {
+    fun showConfirmDialog(message: String, positiveText: String = "확인", positiveClick: () -> Unit = {}) {
         builder = CustomAlertDialog(requireActivity())
             .setMessage(message)
             .setPositiveButton(positiveText) {
+                positiveClick()
                 builder.dismiss()
             }
             .hideNegativeButton()
