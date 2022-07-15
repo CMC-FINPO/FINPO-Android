@@ -12,7 +12,9 @@ data class MyNotificationResponse(
 data class MyNotification(
     val subscribe: Boolean,
     val interestCategories: List<InterestCategory>?,
-    val interestRegions: List<InterestRegion>?
+    val interestRegions: List<InterestRegion>?,
+    val communitySubscribe: Boolean?,
+    val adSubscribe: Boolean?
 )
 
 data class InterestCategory(
@@ -30,7 +32,9 @@ data class InterestRegion(
 data class MyNotificationBody(
     val subscribe: Boolean?,
     val interestRegions: List<IdSubscribe>?,
-    val interestCategories: List<IdSubscribe>?
+    val interestCategories: List<IdSubscribe>?,
+    val communitySubscribe: Boolean?,
+    val adSubscribe: Boolean?
 )
 
 data class IdSubscribe(

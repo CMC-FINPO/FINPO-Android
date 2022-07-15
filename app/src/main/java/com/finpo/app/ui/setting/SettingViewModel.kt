@@ -1,10 +1,13 @@
 package com.finpo.app.ui.setting
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.GoogleToken
 import com.finpo.app.network.ApiService
 import com.finpo.app.repository.GoogleLoginRepository
+import com.finpo.app.repository.NotificationRepository
 import com.finpo.app.repository.SettingRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
@@ -21,8 +24,10 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val settingRepository: SettingRepository,
-    private val googleApiRepository: GoogleLoginRepository
+    private val googleApiRepository: GoogleLoginRepository,
+    private val notificationRepository: NotificationRepository
 ): ViewModel() {
+
     private val _logoutClickEvent = MutableSingleLiveData<Boolean>()
     val logoutClickEvent: SingleLiveData<Boolean> = _logoutClickEvent
 
@@ -46,6 +51,38 @@ class SettingViewModel @Inject constructor(
 
     private val _editMyInfoEvent = MutableSingleLiveData<Boolean>()
     val editMyInfoEvent: SingleLiveData<Boolean> = _editMyInfoEvent
+
+    val isAcceptedMarketingAlarm = MutableLiveData<Boolean>()
+    val isAcceptedCommunityAlarm = MutableLiveData<Boolean>()
+
+
+    init {
+        getMyNotification()
+    }
+
+    private fun getMyNotification() {
+        viewModelScope.launch {
+            val myNotification = notificationRepository.getMyNotification()
+            myNotification.onSuccess {
+                isAcceptedMarketingAlarm.value = data.data.adSubscribe ?: false
+                isAcceptedCommunityAlarm.value = data.data.communitySubscribe ?: false
+            }
+        }
+    }
+
+    fun clickMarketingAlarm() {
+        viewModelScope.launch {
+            val response = notificationRepository.putMyNotification(adSubscribe = isAcceptedMarketingAlarm.value)
+            response.onFailure { isAcceptedMarketingAlarm.value = !isAcceptedMarketingAlarm.value!! }
+        }
+    }
+
+    fun clickCommentAlarm() {
+        viewModelScope.launch {
+            val response = notificationRepository.putMyNotification(communitySubscribe = isAcceptedCommunityAlarm.value)
+            response.onFailure { isAcceptedCommunityAlarm.value = !isAcceptedCommunityAlarm.value!! }
+        }
+    }
 
     fun editMyInfoClick() {
         _editMyInfoEvent.setValue(true)

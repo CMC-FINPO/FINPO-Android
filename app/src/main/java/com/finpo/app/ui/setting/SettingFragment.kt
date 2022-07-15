@@ -29,6 +29,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.editMyInfoEvent.observe {
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToEditMyInfoFragment())

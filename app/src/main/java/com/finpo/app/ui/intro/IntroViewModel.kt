@@ -23,6 +23,8 @@ import com.finpo.app.utils.PAGE.FINISH
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.onSuccess
+import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
@@ -74,7 +76,11 @@ class IntroViewModel @Inject constructor(
 
     fun setNotification(subscribe: Boolean?) {
         viewModelScope.launch {
-            notificationRepository.setNotification(getTokenResult(), subscribe)
+            val response = notificationRepository.setNotification(getTokenResult(), subscribe)
+            if(subscribe == null) return@launch
+            response.suspendOnSuccess {
+                notificationRepository.putMyNotification(adSubscribe = termsConditionsLiveData.isCheckedMarketing.value)
+            }
         }
     }
 
