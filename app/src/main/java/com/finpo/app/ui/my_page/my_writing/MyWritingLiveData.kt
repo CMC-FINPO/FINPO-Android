@@ -64,7 +64,7 @@ class MyWritingLiveData @Inject constructor(
     }
 
     fun checkContentChanged(data: WritingContent) {
-        val position = _writingList.value?.indexOfFirst { data.id == it!!.id } ?: return
+        val position = _writingList.value?.indexOfFirst { data.id == it?.id } ?: return
         if(position == -1) return
         val tempData = _writingList.value!!.toMutableList()
         tempData[position] = data

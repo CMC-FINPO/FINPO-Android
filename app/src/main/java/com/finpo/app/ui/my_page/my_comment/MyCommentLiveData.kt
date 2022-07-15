@@ -24,6 +24,9 @@ class MyCommentLiveData @Inject constructor(
     private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, WritingContent>>()
     val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, WritingContent>> = _updateRecyclerViewItemEvent
 
+    private val _writingSize = MutableLiveData(0)
+    val writingSize: LiveData<Int> = _writingSize
+
     private val _refreshed = MutableLiveData<Boolean>()
     val refreshed: LiveData<Boolean> = _refreshed
 
@@ -39,6 +42,7 @@ class MyCommentLiveData @Inject constructor(
         viewModelScope.launch {
             val response = myInfoRepository.getMyComment(paging.page.value ?: 0)
             response.onSuccess {
+                _writingSize.value = data.data.totalElements
                 paging.loadData(
                     data.data.content.toMutableList(),
                     data.data.last, _writingList,
