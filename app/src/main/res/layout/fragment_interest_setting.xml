@@ -15,6 +15,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/page_top_padding"
         tools:context=".ui.interest_setting.InterestSettingFragment">
 
         <com.google.android.material.appbar.AppBarLayout

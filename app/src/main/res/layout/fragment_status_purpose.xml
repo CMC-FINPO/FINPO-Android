@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -17,9 +18,10 @@
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:paddingTop="@dimen/page_top_padding"
             tools:context=".ui.intro.status_purpose.StatusPurposeFragment">
 
             <TextView
@@ -45,13 +47,13 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_header" />
 
             <androidx.recyclerview.widget.RecyclerView
-                tools:listitem="@layout/item_recycler_status"
                 android:id="@+id/rv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_status" />
+                app:layout_constraintTop_toBottomOf="@id/tv_status"
+                tools:listitem="@layout/item_recycler_status" />
 
             <View
                 android:id="@+id/view_divider"

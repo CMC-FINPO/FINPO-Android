@@ -14,7 +14,8 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/page_top_padding">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -62,10 +63,10 @@
                     <TextView
                         android:id="@+id/tv_progress"
                         style="@style/not_defined_12_reg"
-                        android:textColor="@color/gray_g05"
                         introProgressText="@{viewModel.currentPage}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/gray_g05"
                         app:layout_constraintBottom_toBottomOf="@id/pb"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/pb"

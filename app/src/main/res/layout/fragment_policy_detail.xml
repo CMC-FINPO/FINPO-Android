@@ -21,6 +21,7 @@
         android:layout_height="match_parent"
         android:background="@color/gray_g09"
         android:paddingHorizontal="20dp"
+        android:paddingTop="@dimen/page_top_padding"
         tools:context=".ui.policy_detail.PolicyDetailFragment">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -65,10 +66,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="@{() -> viewModel.setBookmark()}"
-                        tools:src="@drawable/ic_scrap_inactive"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@drawable/ic_scrap_inactive" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

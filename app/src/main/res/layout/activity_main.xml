@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/page_top_padding"
         tools:context=".ui.MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
@@ -17,26 +18,26 @@
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:navGraph="@navigation/nav_graph"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@+id/nav_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/nav_graph" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_bar"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            app:menu="@menu/nav_menu"
             app:itemBackground="@color/white"
-            app:itemTextColor="@color/selector_bottom_nav_text"
-            app:itemTextAppearanceInactive="@style/BottomNavigationText"
             app:itemTextAppearanceActive="@style/BottomNavigationText.Selected"
+            app:itemTextAppearanceInactive="@style/BottomNavigationText"
+            app:itemTextColor="@color/selector_bottom_nav_text"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/nav_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

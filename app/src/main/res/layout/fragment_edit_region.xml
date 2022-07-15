@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="boldType"
             type="com.finpo.app.utils.ConstantsKt" />
@@ -16,6 +17,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/page_top_padding"
         tools:context=".ui.edit_region.EditRegionFragment">
 
         <com.google.android.material.appbar.AppBarLayout

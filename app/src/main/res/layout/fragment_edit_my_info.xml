@@ -17,13 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="20dp"
-        android:paddingTop="10dp"
+        android:paddingTop="@dimen/page_top_padding"
         tools:context=".ui.setting.edit_my_info.EditMyInfoFragment">
 
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:onClick="@{() -> viewModel.backClick()}"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"

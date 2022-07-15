@@ -13,6 +13,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="@dimen/page_top_padding"
         tools:context=".ui.community.comment.CommunityCommentFragment">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -43,14 +44,14 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:text="@string/edit_short"
+                        style="@style/header5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/header5"/>
+                        android:text="@string/edit_short"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_post"
