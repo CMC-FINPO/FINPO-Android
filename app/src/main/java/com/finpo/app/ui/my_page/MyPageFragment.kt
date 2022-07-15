@@ -35,6 +35,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             }
         }.attach()
 
+        viewModel.goToDetailFragmentEvent.observe {
+            findNavController().navigate(MyPageFragmentDirections.actionGlobalCommunityDetailFragment(it, true))
+        }
+
         viewModel.alarmClickEvent.observe {
             findNavController().navigate(MyPageFragmentDirections.actionMyPageFragmentToAlarmFragment())
         }

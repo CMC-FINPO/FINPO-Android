@@ -22,6 +22,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var navController: NavController
     var isMovedHomeBySelectedItem = false
     var isMovedCommunityBySelectedItem = false
+    var isMovedMyPageBySelectedItem = false
 
     private var destinationId = R.id.homeFragment
     private val bottomItemIds = listOf(R.id.homeFragment, R.id.communityFragment, R.id.bookmarkFragment, R.id.myPageFragment)
@@ -38,12 +39,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             NavigationUI.onNavDestinationSelected(item, navController)
             if(item.itemId == R.id.homeFragment) isMovedHomeBySelectedItem = true
             if(item.itemId == R.id.communityFragment) isMovedCommunityBySelectedItem = true
+            if(item.itemId == R.id.myPageFragment) isMovedMyPageBySelectedItem = true
             true
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if(destination.id != R.id.homeFragment) isMovedHomeBySelectedItem = false
             if(destination.id != R.id.communityFragment) isMovedCommunityBySelectedItem = false
+            if(destination.id != R.id.myPageFragment) isMovedMyPageBySelectedItem = false
             destinationId = destination.id
 
             if(destination.id in bottomItemIds) navBarVisible()

@@ -45,8 +45,8 @@ class CommunityDetailViewModel @Inject constructor(
     private val _deletePostClickEvent = MutableSingleLiveData<Boolean>()
     val deletePostClickEvent: SingleLiveData<Boolean> = _deletePostClickEvent
 
-    private val _goToCommunityHomeFragmentEvent = MutableSingleLiveData<Boolean>()
-    val goToCommunityHomeFragmentEvent: SingleLiveData<Boolean> = _goToCommunityHomeFragmentEvent
+    private val _deleteSuccessfulEvent = MutableSingleLiveData<Boolean>()
+    val deleteSuccessfulEvent: SingleLiveData<Boolean> = _deleteSuccessfulEvent
 
     private val _deleteItemClickEvent = MutableSingleLiveData<CommentContent>()
     val deleteItemClickEvent: SingleLiveData<CommentContent> = _deleteItemClickEvent
@@ -141,7 +141,7 @@ class CommunityDetailViewModel @Inject constructor(
     fun deletePost() {
         viewModelScope.launch {
             val deleteResponse = communityRepository.deleteWriting(detailId)
-            deleteResponse.onSuccess { _goToCommunityHomeFragmentEvent.setValue(true) }
+            deleteResponse.onSuccess { _deleteSuccessfulEvent.setValue(true) }
         }
     }
 

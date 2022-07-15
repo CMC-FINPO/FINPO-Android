@@ -77,6 +77,9 @@
         <action
             android:id="@+id/action_myPageFragment_to_alarmFragment"
             app:destination="@id/alarmFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_communityDetailFragment"
+            app:destination="@id/communityDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
@@ -208,6 +211,15 @@
         <action
             android:id="@+id/action_communityDetailFragment_to_communityCommentFragment"
             app:destination="@id/communityCommentFragment" />
+        <action
+            android:id="@+id/action_communityDetailFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"
+            app:popUpTo="@id/myPageFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="goToMyPage"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/communityCommentFragment"
@@ -238,9 +250,5 @@
         android:id="@+id/communitySearchFragment"
         android:name="com.finpo.app.ui.community.search.CommunitySearchFragment"
         android:label="CommunitySearchFragment"
-        tools:layout="@layout/fragment_community_search">
-        <action
-            android:id="@+id/action_communitySearchFragment_to_communityDetailFragment"
-            app:destination="@id/communityDetailFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_community_search"/>
 </navigation>

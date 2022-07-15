@@ -85,8 +85,11 @@ class CommunityDetailFragment :
             }
         }
 
-        viewModel.goToCommunityHomeFragmentEvent.observe {
-            findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityFragment())
+        viewModel.deleteSuccessfulEvent.observe {
+            if(!args.goToMyPage)
+                findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityFragment())
+            else
+                findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToMyPageFragment())
         }
 
         viewModel.editPostClickEvent.observe {

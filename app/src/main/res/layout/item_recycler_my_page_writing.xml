@@ -29,8 +29,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.goToDetailFragment(data.id)}"
             android:padding="20dp">
-<!--            android:onClick="@{() -> viewModel.goToDetailFragment(data.id)}"-->
 
             <ImageView
                 android:id="@+id/iv_profile"

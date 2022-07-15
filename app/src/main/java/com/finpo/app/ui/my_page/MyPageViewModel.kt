@@ -56,11 +56,18 @@ class MyPageViewModel @Inject constructor(
     private val _participationClickEvent = MutableSingleLiveData<Boolean>()
     val participationClickEvent: SingleLiveData<Boolean> = _participationClickEvent
 
+    private val _goToDetailFragmentEvent = MutableSingleLiveData<Int>()
+    val goToDetailFragmentEvent: SingleLiveData<Int> = _goToDetailFragmentEvent
+
     var isInitDataCompleted = false
 
     init {
         _nickname.value = ""
         getMyInfo()
+    }
+
+    fun goToDetailFragment(id: Int) {
+        _goToDetailFragmentEvent.setValue(id)
     }
 
     private fun getMyInfo() {
