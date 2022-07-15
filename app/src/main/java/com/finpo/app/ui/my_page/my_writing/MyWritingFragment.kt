@@ -5,16 +5,25 @@ import com.finpo.app.R
 import com.finpo.app.databinding.FragmentMyWritingBinding
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.my_page.MyPageViewModel
+import com.finpo.app.ui.my_page.WritingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(R.layout.fragment_my_writing) {
     private val viewModel by viewModels<MyPageViewModel>({requireParentFragment()})
+    private lateinit var writingAdapter: WritingAdapter
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         if(viewModel.isInitDataCompleted) viewModel.myWritingLiveData.changeMyWriting()
+
+        writingAdapter = WritingAdapter(viewModel)
+        binding.rvCommunity.adapter = writingAdapter
+
+        viewModel.myWritingLiveData.writingList.observe(viewLifecycleOwner) {
+            writingAdapter.submitList(it.toMutableList())
+        }
     }
 }

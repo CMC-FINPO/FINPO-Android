@@ -33,4 +33,19 @@ class MyWritingLiveData @Inject constructor(
             }
         }
     }
+
+    fun addWriting() {
+        if (paging.isLastPage || paging.page.value == 0) return
+
+        viewModelScope.launch {
+            val writingResponse = myInfoRepository.getMyWriting(paging.page.value ?: 0)
+            writingResponse.onSuccess {
+                paging.loadData(
+                    data.data.content.toMutableList(),
+                    data.data.last, _writingList,
+                    paging.addData()
+                )
+            }
+        }
+    }
 }

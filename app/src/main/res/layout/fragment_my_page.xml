@@ -236,12 +236,12 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager_my_page"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fl_tab"
-            tools:background="@color/gray_g09"
-            tools:layout_height="500dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:background="@color/gray_g09" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
