@@ -251,4 +251,8 @@ interface ApiService {
     suspend fun blockComment(
         @Path("id") id: Int
     ) : ApiResponse<JsonElement>
+
+    //ETC
+    @GET("/information/open-api")
+    suspend fun getOpenApiList() : ApiResponse<OpenApiResponse>
 }

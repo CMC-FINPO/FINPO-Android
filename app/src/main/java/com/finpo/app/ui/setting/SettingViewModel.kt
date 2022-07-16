@@ -49,8 +49,8 @@ class SettingViewModel @Inject constructor(
     private val _openSourceEvent = MutableSingleLiveData<Boolean>()
     val openSourceEvent: SingleLiveData<Boolean> = _openSourceEvent
 
-    private val _openApiEvent = MutableSingleLiveData<Boolean>()
-    val openApiEvent: SingleLiveData<Boolean> = _openApiEvent
+    private val _openApiEvent = MutableSingleLiveData<String>()
+    val openApiEvent: SingleLiveData<String> = _openApiEvent
 
     private val _reportReasonEvent = MutableSingleLiveData<Boolean>()
     val reportReasonEvent: SingleLiveData<Boolean> = _reportReasonEvent
@@ -103,7 +103,17 @@ class SettingViewModel @Inject constructor(
     }
 
     fun openApiClick() {
-        _openApiEvent.setValue(true)
+        viewModelScope.launch {
+            val response = settingRepository.getOpenApiList()
+            response.onSuccess {
+                var msg = ""
+                for(i in data.data.indices) {
+                    msg += data.data[i].content
+                    if(i != data.data.size - 1) msg += "\n"
+                }
+                _openApiEvent.setValue(msg)
+            }
+        }
     }
 
     fun backClick() {

@@ -40,7 +40,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         }
 
         viewModel.openApiEvent.observe {
-            showConfirmDialog("한국고용정보원-온라인청년센터\n경기데이터드림")
+            showConfirmDialog(it)
         }
 
         viewModel.openSourceEvent.observe {

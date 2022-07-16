@@ -8,4 +8,5 @@ import javax.inject.Singleton
 @Singleton
 class SettingRepository @Inject constructor(private val apiService: ApiService) {
     suspend fun withdrawal(googleToken: GoogleToken) = apiService.withdrawal(googleToken)
+    suspend fun getOpenApiList() = apiService.getOpenApiList()
 }
