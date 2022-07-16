@@ -148,14 +148,12 @@ class CommunityDetailFragment :
         }
 
 
-        viewModel.updateRecyclerView.observe { data ->
-            data?.let {
-                writingAdapter.data = data
+        viewModel.likeBookmarkViewModel.updateRecyclerView.observe { data ->
+                writingAdapter.data = data.second
                 writingAdapter.notifyItemChanged(0)
-            }
         }
 
-        viewModel.likeClickErrorToastEvent.observe {
+        viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
             shortShowToast(getString(R.string.cannot_like_my_post))
         }
 

@@ -91,7 +91,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_content"
-                android:onClick="@{() -> viewModel.likeClick(data)}"
+                android:onClick="@{() -> viewModel.likeBookmarkViewModel.likeClick(0, data)}"
                 tools:src="@drawable/ic_like_active" />
 
             <ImageView
@@ -102,7 +102,7 @@
                 android:layout_marginStart="9dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_like"
-                android:onClick="@{() -> viewModel.bookmarkClick(data)}"
+                android:onClick="@{() -> viewModel.likeBookmarkViewModel.bookmarkClick(0, data)}"
                 tools:src="@drawable/ic_scrap_active" />
 
             <TextView

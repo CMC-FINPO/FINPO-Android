@@ -52,8 +52,12 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
                 viewModel.checkContentChanged(data)
             }
 
-        viewModel.updateRecyclerViewItemEvent.observe {
+        viewModel.likeBookmarkViewModel.updateRecyclerView.observe {
             communityAdapter.notifyItemChanged(it.first, it.second)
+        }
+
+        viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
+            shortShowToast(getString(R.string.cannot_like_my_post))
         }
     }
 }

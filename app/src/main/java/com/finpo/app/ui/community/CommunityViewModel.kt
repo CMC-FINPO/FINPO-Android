@@ -8,6 +8,7 @@ import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.model.remote.WritingResponse
 import com.finpo.app.repository.CommunityRepository
 import com.finpo.app.ui.common.BaseViewModel
+import com.finpo.app.ui.common.CommunityLikeBookmarkViewModel
 import com.finpo.app.ui.community.search.CommunitySearchLiveData
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.Paging
@@ -23,6 +24,7 @@ import javax.inject.Inject
 class CommunityViewModel @Inject constructor(
     private val communityRepository: CommunityRepository,
     val searchLiveData: CommunitySearchLiveData,
+    val likeBookmarkViewModel: CommunityLikeBookmarkViewModel,
     val paging: Paging<WritingContent>
 ) : BaseViewModel() {
     private val _writingList = MutableLiveData<List<WritingContent?>>()
@@ -51,9 +53,6 @@ class CommunityViewModel @Inject constructor(
 
     private val _searchClickEvent = MutableSingleLiveData<Boolean>()
     val searchClickEvent: SingleLiveData<Boolean> = _searchClickEvent
-
-    private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, WritingContent>>()
-    val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, WritingContent>> = _updateRecyclerViewItemEvent
 
     fun searchClick() {
         _searchClickEvent.setValue(true)
@@ -140,6 +139,6 @@ class CommunityViewModel @Inject constructor(
         val tempData = _writingList.value!!.toMutableList()
         tempData[position] = data
         _writingList.value = tempData
-        _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+        likeBookmarkViewModel.updateRecyclerView.setValue(Pair(position, data))
     }
 }

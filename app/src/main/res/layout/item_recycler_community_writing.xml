@@ -21,11 +21,11 @@
     </data>
 
     <LinearLayout
+        isBlocked="@{data.isUserBlocked}"
+        isRecyclerViewItemVisible="@{data.status}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        isRecyclerViewItemVisible="@{data.status}"
-        isBlocked="@{data.isUserBlocked}">
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -98,6 +98,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="10dp"
+                android:onClick="@{() -> viewModel.likeBookmarkViewModel.likeClick(position, data)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_content"
@@ -109,10 +110,10 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="9dp"
+                android:onClick="@{() -> viewModel.likeBookmarkViewModel.bookmarkClick(position, data)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_like"
                 tools:src="@drawable/ic_scrap_active" />
-            <!--        android:onClick="@{() -> viewModel.bookmarkClick(data, position)}"-->
 
             <TextView
                 android:id="@+id/tv_count"
