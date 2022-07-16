@@ -182,6 +182,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="start|center"
+                android:onClick="@{() -> viewModel.reportReasonClick()}"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/report_reason" />

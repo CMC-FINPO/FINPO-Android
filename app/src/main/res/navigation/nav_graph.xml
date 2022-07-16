@@ -99,6 +99,9 @@
         <action
             android:id="@+id/action_settingFragment_to_editMyInfoFragment"
             app:destination="@id/editMyInfoFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_reportReasonFragment"
+            app:destination="@id/reportReasonFragment" />
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
@@ -251,4 +254,9 @@
         android:name="com.finpo.app.ui.community.search.CommunitySearchFragment"
         android:label="CommunitySearchFragment"
         tools:layout="@layout/fragment_community_search"/>
+    <fragment
+        android:id="@+id/reportReasonFragment"
+        android:name="com.finpo.app.ui.setting.report_reason.ReportReasonFragment"
+        android:label="ReportReasonFragment"
+        tools:layout="@layout/fragment_report_reason"/>
 </navigation>
