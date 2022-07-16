@@ -17,12 +17,14 @@
             android:id="@+id/tv_message"
             style="@style/body1"
             android:layout_width="0dp"
-            android:layout_height="54dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="24dp"
             android:gravity="center"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="message" />
+            tools:text="message message message message message" />
 
         <View
             android:id="@+id/view_divider1"

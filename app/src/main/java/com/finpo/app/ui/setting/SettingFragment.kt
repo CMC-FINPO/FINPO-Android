@@ -35,6 +35,10 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
             findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToEditMyInfoFragment())
         }
 
+        viewModel.openApiEvent.observe {
+            showConfirmDialog("한국고용정보원-온라인청년센터\n경기데이터드림")
+        }
+
         viewModel.openSourceEvent.observe {
             LibsBuilder().start(requireContext())
         }

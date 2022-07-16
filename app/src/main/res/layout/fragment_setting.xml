@@ -240,6 +240,20 @@
                 android:text="@string/open_source" />
 
             <TextView
+                android:id="@+id/tv_open_api"
+                style="@style/header5"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_ripple_borderline_g05"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="start|center"
+                android:onClick="@{() -> viewModel.openApiClick()}"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/open_api" />
+
+            <TextView
                 android:id="@+id/tv_logout"
                 style="@style/header5"
                 android:layout_width="match_parent"

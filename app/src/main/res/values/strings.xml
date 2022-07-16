@@ -150,4 +150,5 @@
     <string name="empty_my_comment">아직 단 댓글이 없네요...\n커뮤니티에 댓글을 달러 가볼까요?</string>
     <string name="receive_comment">댓글 알림</string>
     <string name="block">차단하기</string>
+    <string name="open_api">오픈 API</string>
 </resources>
