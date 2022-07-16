@@ -1,5 +1,6 @@
 package com.finpo.app.ui.my_page.my_writing
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.finpo.app.R
@@ -8,7 +9,6 @@ import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.my_page.MyPageViewModel
-import com.finpo.app.ui.my_page.WritingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,11 +34,16 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(R.layout.fragme
             }
         }
 
-        viewModel.likeBookmarkViewModel.updateRecyclerView.observe {
+        viewModel.myWritingLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
+            shortShowToast(getString(R.string.cannot_like_my_post))
+        }
+
+        viewModel.myWritingLiveData.likeBookmarkViewModel.updateRecyclerView.observe {
+            Log.d("updateRV","내가 쓴 글 ${it.first}")
             writingAdapter.notifyItemChanged(it.first, it.second)
         }
 
-        viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+        viewModel.myWritingLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
             shortShowToast(getString(R.string.bookmark_max_msg))
         }
 

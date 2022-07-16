@@ -1,4 +1,4 @@
-package com.finpo.app.ui.my_page
+package com.finpo.app.ui.my_page.my_comment
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,17 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.finpo.app.databinding.ItemRecyclerCommunityWritingBinding
-import com.finpo.app.databinding.ItemRecyclerMyPageWritingBinding
-import com.finpo.app.databinding.ItemRecyclerPolicyBinding
-import com.finpo.app.databinding.ItemRecyclerPolicyLoadingBinding
+import com.finpo.app.databinding.*
 import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.model.remote.WritingContent
+import com.finpo.app.ui.my_page.MyPageViewModel
 import com.finpo.app.utils.PolicyRecyclerViewType.LOADING
 import com.finpo.app.utils.PolicyRecyclerViewType.CONTENT
 import java.lang.Exception
 
-class WritingAdapter(val viewModel: MyPageViewModel)
+class CommentAdapter(val viewModel: MyPageViewModel)
     : ListAdapter<WritingContent, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun getItemViewType(position: Int): Int {
@@ -27,7 +25,7 @@ class WritingAdapter(val viewModel: MyPageViewModel)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             CONTENT -> {
-                val binding = ItemRecyclerMyPageWritingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemRecyclerMyPageCommentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 PolicyHolder(binding)
             }
             else -> {
@@ -50,7 +48,7 @@ class WritingAdapter(val viewModel: MyPageViewModel)
     inner class LoadingHolder(private val binding: ItemRecyclerPolicyLoadingBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    inner class PolicyHolder(private val binding: ItemRecyclerMyPageWritingBinding) :
+    inner class PolicyHolder(private val binding: ItemRecyclerMyPageCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun setData(data: WritingContent, position: Int) {
             binding.data = data

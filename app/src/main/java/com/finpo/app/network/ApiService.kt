@@ -205,6 +205,13 @@ interface ApiService {
         @Query("sort", encoded = true) sort: String = "id,desc"
     ) : ApiResponse<WritingResponse>
 
+    @GET("/post/bookmark/me")
+    suspend fun getMyWritingBookmark(
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 20,
+        @Query("sort", encoded = true) sort: String = "id,desc"
+    ) : ApiResponse<WritingResponse>
+
     @POST("/post/{id}/bookmark")
     suspend fun putWritingBookmark(
         @Path("id") id: Int

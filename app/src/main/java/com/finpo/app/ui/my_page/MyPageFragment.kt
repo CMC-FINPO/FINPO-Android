@@ -31,13 +31,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         TabLayoutMediator(binding.tbMyPage, binding.viewPagerMyPage) {  tab, position ->
             tab.text = when(position) {
                 0 -> "내가 쓴 글"
-                else -> "댓글 단 글"
+                1 -> "댓글 단 글"
+                else -> "북마크 한 글"
             }
         }.attach()
-
-        viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
-            shortShowToast(getString(R.string.cannot_like_my_post))
-        }
 
         viewModel.goToDetailFragmentEvent.observe {
             findNavController().navigate(MyPageFragmentDirections.actionGlobalCommunityDetailFragment(it, true))

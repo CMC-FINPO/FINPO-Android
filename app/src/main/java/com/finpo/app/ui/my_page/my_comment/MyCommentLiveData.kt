@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.repository.MyInfoRepository
+import com.finpo.app.ui.common.CommunityLikeBookmarkViewModel
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SingleLiveData
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 class MyCommentLiveData @Inject constructor(
     private val myInfoRepository: MyInfoRepository,
+    val likeBookmarkViewModel: CommunityLikeBookmarkViewModel,
     val paging: Paging<WritingContent>
 ) : ViewModel() {
     private val _writingList = MutableLiveData<List<WritingContent?>>()

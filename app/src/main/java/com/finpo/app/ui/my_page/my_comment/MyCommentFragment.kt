@@ -1,5 +1,6 @@
 package com.finpo.app.ui.my_page.my_comment
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.finpo.app.R
@@ -8,13 +9,12 @@ import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.my_page.MyPageViewModel
-import com.finpo.app.ui.my_page.WritingAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragment_my_comment) {
     private val viewModel by viewModels<MyPageViewModel>({requireParentFragment()})
-    private lateinit var writingAdapter: WritingAdapter
+    private lateinit var commentAdapter: CommentAdapter
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
@@ -24,19 +24,24 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
         if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedItem)
             viewModel.myCommentLiveData.changeMyWriting()
 
-        writingAdapter = WritingAdapter(viewModel)
-        binding.rvCommunity.adapter = writingAdapter
+        commentAdapter = CommentAdapter(viewModel)
+        binding.rvCommunity.adapter = commentAdapter
 
-        viewModel.likeBookmarkViewModel.updateRecyclerView.observe {
-            writingAdapter.notifyItemChanged(it.first, it.second)
+        viewModel.myCommentLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
+            shortShowToast(getString(R.string.cannot_like_my_post))
         }
 
-        viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+        viewModel.myCommentLiveData.likeBookmarkViewModel.updateRecyclerView.observe {
+            Log.d("updateRV","댓글 ${it.first}")
+            commentAdapter.notifyItemChanged(it.first, it.second)
+        }
+
+        viewModel.myCommentLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
             shortShowToast(getString(R.string.bookmark_max_msg))
         }
 
         viewModel.myCommentLiveData.writingList.observe(viewLifecycleOwner) {
-            writingAdapter.submitList(it.toMutableList()) {
+            commentAdapter.submitList(it.toMutableList()) {
                 if(viewModel.myCommentLiveData.paging.page.value == 1)
                     binding.rvCommunity.scrollToPosition(0)
             }
@@ -48,7 +53,7 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
             }
 
         viewModel.myCommentLiveData.updateRecyclerViewItemEvent.observe {
-            writingAdapter.notifyItemChanged(it.first, it.second)
+            commentAdapter.notifyItemChanged(it.first, it.second)
         }
     }
 }

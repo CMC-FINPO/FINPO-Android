@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="com.finpo.app.ui.my_page.MyPageViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_g09"
+        tools:context=".ui.my_bookmark.MyBookmarkFragment">
+
+        <TextView
+            style="@style/header5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:gravity="center"
+            android:text="@string/empty_my_bookmark"
+            android:textColor="@color/gray_g01"
+            android:visibility="@{viewModel.myBookmarkLiveData.writingSize == 0 ? View.VISIBLE : View.GONE}" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:onRefreshListener="@{() -> viewModel.myBookmarkLiveData.refreshWriting()}"
+            app:refreshing="@{viewModel.myBookmarkLiveData.refreshed}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_community"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager=".utils.LinearLayoutManagerWrapper"
+                tools:listitem="@layout/item_recycler_my_page_writing" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </FrameLayout>
+</layout>
