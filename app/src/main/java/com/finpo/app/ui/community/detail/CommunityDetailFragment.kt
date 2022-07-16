@@ -123,7 +123,7 @@ class CommunityDetailFragment :
             )
         }
 
-        writingAdapter = WritingAdapter()
+        writingAdapter = WritingAdapter(viewModel)
         commentAdapter = CommentAdapter(viewModel)
         binding.rvCommunityDetail.adapter = ConcatAdapter(writingAdapter, commentAdapter)
         binding.rvCommunityDetail.itemAnimator = null
@@ -145,6 +145,18 @@ class CommunityDetailFragment :
                 if(viewModel.paging.page.value == 1)
                     binding.rvCommunityDetail.scrollToPosition(0)
             }
+        }
+
+
+        viewModel.updateRecyclerView.observe { data ->
+            data?.let {
+                writingAdapter.data = data
+                writingAdapter.notifyItemChanged(0)
+            }
+        }
+
+        viewModel.likeClickErrorToastEvent.observe {
+            shortShowToast(getString(R.string.cannot_like_my_post))
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)

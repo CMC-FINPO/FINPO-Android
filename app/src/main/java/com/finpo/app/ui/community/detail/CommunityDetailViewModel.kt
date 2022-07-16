@@ -77,10 +77,43 @@ class CommunityDetailViewModel @Inject constructor(
     private val _showBlockFinishAlertDialog = MutableSingleLiveData<Boolean>()
     val showBlockFinishAlertDialog: SingleLiveData<Boolean> = _showBlockFinishAlertDialog
 
+    private val _updateRecyclerView = MutableSingleLiveData<WritingContent?>()
+    val updateRecyclerView: SingleLiveData<WritingContent?> = _updateRecyclerView
+
+    private val _likeClickErrorToastEvent = MutableSingleLiveData<Boolean>()
+    val likeClickErrorToastEvent: SingleLiveData<Boolean> = _likeClickErrorToastEvent
+
     val comment = MutableLiveData<String>()
 
     private var reportBlockType = 0
     private var reportBlockId = 0
+
+    fun likeClick(data: WritingContent) {
+        if(data.isMine == true) {
+            _likeClickErrorToastEvent.setValue(true)
+            return
+        }
+
+        viewModelScope.launch {
+            val response = if (data.isLiked == true) communityRepository.deleteWritingLike(data.id)
+            else communityRepository.putWritingLike(data.id)
+            response.onSuccess {
+                _writingContent.value?.isLiked = !(data.isLiked ?: false)
+                _updateRecyclerView.setValue(_writingContent.value)
+            }
+        }
+    }
+
+    fun bookmarkClick(data: WritingContent) {
+        viewModelScope.launch {
+            val response = if (data.isBookmarked == true) communityRepository.deleteWritingBookmark(data.id)
+            else communityRepository.putWritingBookmark(data.id)
+            response.onSuccess {
+                _writingContent.value?.isBookmarked = !(data.isBookmarked ?: false)
+                _updateRecyclerView.setValue(_writingContent.value)
+            }
+        }
+    }
 
     fun report(reportContentId: Int) {
         viewModelScope.launch {

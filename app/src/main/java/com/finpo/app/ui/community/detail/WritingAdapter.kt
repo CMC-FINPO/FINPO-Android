@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.finpo.app.databinding.ItemRecyclerCommunityDetailWritingBinding
 import com.finpo.app.model.remote.WritingContent
 
-class WritingAdapter() : RecyclerView.Adapter<WritingAdapter.WritingViewHolder>() {
+class WritingAdapter(val viewModel: CommunityDetailViewModel) : RecyclerView.Adapter<WritingAdapter.WritingViewHolder>() {
     var data: WritingContent? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WritingViewHolder {
         return WritingViewHolder(
@@ -25,6 +25,7 @@ class WritingAdapter() : RecyclerView.Adapter<WritingAdapter.WritingViewHolder>(
         fun setData(data: WritingContent?) {
             if(data == null) return
             binding.data = data
+            binding.viewModel = viewModel
         }
     }
 }

@@ -205,6 +205,26 @@ interface ApiService {
         @Query("sort", encoded = true) sort: String = "id,desc"
     ) : ApiResponse<WritingResponse>
 
+    @POST("/post/{id}/bookmark")
+    suspend fun putWritingBookmark(
+        @Path("id") id: Int
+    ) : ApiResponse<JsonElement>
+
+    @DELETE("/post/{id}/bookmark")
+    suspend fun deleteWritingBookmark(
+        @Path("id") id: Int
+    ) : ApiResponse<JsonElement>
+
+    @POST("/post/{id}/like")
+    suspend fun putWritingLike(
+        @Path("id") id: Int
+    ) : ApiResponse<JsonElement>
+
+    @DELETE("/post/{id}/like")
+    suspend fun deleteWritingLike(
+        @Path("id") id: Int
+    ) : ApiResponse<JsonElement>
+
     //REPORT
     @GET("/report/reason")
     suspend fun getReportReason(): ApiResponse<ReportReasonResponse>
