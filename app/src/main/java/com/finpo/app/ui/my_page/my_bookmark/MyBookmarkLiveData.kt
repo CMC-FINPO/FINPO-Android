@@ -1,6 +1,5 @@
 package com.finpo.app.ui.my_page.my_bookmark
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,6 @@ import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.ui.common.CommunityLikeBookmarkViewModel
 import com.finpo.app.utils.MutableSingleLiveData
-import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.launch
@@ -31,13 +29,20 @@ class MyBookmarkLiveData @Inject constructor(
     private val _refreshed = MutableLiveData<Boolean>()
     val refreshed: LiveData<Boolean> = _refreshed
 
-    fun refreshWriting() {
+    fun refreshBookmark() {
         _refreshed.value = true
-        changeMyWriting()
+        changeMyBookmark()
         _refreshed.value = false
     }
 
-    fun changeMyWriting() {
+    fun removeMyBookmark(content: WritingContent) {
+        val data = _writingList.value?.toMutableList()
+        val index = data?.indexOfFirst { it?.id == content.id }
+        index?.let { data.removeAt(index) }
+        _writingList.value = data ?: mutableListOf()
+    }
+
+    fun changeMyBookmark() {
         viewModelScope.launch {
             val response = myInfoRepository.getMyWritingBookmark()
             response.onSuccess {

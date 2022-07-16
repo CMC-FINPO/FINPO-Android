@@ -1,6 +1,5 @@
 package com.finpo.app.ui.my_page.my_bookmark
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.finpo.app.R
@@ -22,14 +21,13 @@ class MyBookmarkFragment : BaseFragment<FragmentMyBookmarkBinding>(R.layout.frag
 
         //이미 onCreate에서 데이터가 초기화 되었고 바팀 네비게이션 아이템을 클릭한 경우에만 데이터 갱신
         if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedItem)
-            viewModel.myBookmarkLiveData.changeMyWriting()
+            viewModel.myBookmarkLiveData.changeMyBookmark()
 
         bookmarkAdapter = BookmarkAdapter(viewModel)
         binding.rvCommunity.adapter = bookmarkAdapter
 
         viewModel.myBookmarkLiveData.likeBookmarkViewModel.updateRecyclerView.observe {
-            Log.d("updateRV","북마크 ${it.first}")
-            bookmarkAdapter.notifyItemChanged(it.first, it.second)
+            viewModel.myBookmarkLiveData.removeMyBookmark(it.second)
         }
 
         viewModel.myBookmarkLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {

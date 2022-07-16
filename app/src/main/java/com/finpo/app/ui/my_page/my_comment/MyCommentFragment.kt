@@ -32,7 +32,6 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
         }
 
         viewModel.myCommentLiveData.likeBookmarkViewModel.updateRecyclerView.observe {
-            Log.d("updateRV","댓글 ${it.first}")
             commentAdapter.notifyItemChanged(it.first, it.second)
         }
 

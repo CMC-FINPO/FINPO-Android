@@ -39,7 +39,6 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(R.layout.fragme
         }
 
         viewModel.myWritingLiveData.likeBookmarkViewModel.updateRecyclerView.observe {
-            Log.d("updateRV","내가 쓴 글 ${it.first}")
             writingAdapter.notifyItemChanged(it.first, it.second)
         }
 

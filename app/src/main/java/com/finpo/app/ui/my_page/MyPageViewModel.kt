@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.ParentCategory
 import com.finpo.app.repository.MyInfoRepository
-import com.finpo.app.ui.common.CommunityLikeBookmarkViewModel
 import com.finpo.app.ui.my_page.my_bookmark.MyBookmarkLiveData
 import com.finpo.app.ui.my_page.my_comment.MyCommentLiveData
 import com.finpo.app.ui.my_page.my_writing.MyWritingLiveData
@@ -90,7 +89,7 @@ class MyPageViewModel @Inject constructor(
 
             myWritingLiveData.changeMyWriting()
             myCommentLiveData.changeMyWriting()
-            myBookmarkLiveData.changeMyWriting()
+            myBookmarkLiveData.changeMyBookmark()
             isInitDataCompleted = true
         }
     }

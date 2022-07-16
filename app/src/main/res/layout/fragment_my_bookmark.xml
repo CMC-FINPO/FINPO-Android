@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            app:onRefreshListener="@{() -> viewModel.myBookmarkLiveData.refreshWriting()}"
+            app:onRefreshListener="@{() -> viewModel.myBookmarkLiveData.refreshBookmark()}"
             app:refreshing="@{viewModel.myBookmarkLiveData.refreshed}">
 
             <androidx.recyclerview.widget.RecyclerView
