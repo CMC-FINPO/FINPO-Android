@@ -35,6 +35,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             }
         }.attach()
 
+        viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
+            shortShowToast(getString(R.string.cannot_like_my_post))
+        }
+
         viewModel.goToDetailFragmentEvent.observe {
             findNavController().navigate(MyPageFragmentDirections.actionGlobalCommunityDetailFragment(it, true))
         }

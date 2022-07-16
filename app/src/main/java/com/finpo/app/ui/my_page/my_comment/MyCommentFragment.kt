@@ -27,6 +27,10 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
         writingAdapter = WritingAdapter(viewModel)
         binding.rvCommunity.adapter = writingAdapter
 
+        viewModel.likeBookmarkViewModel.updateRecyclerView.observe {
+            writingAdapter.notifyItemChanged(it.first, it.second)
+        }
+
         viewModel.myCommentLiveData.writingList.observe(viewLifecycleOwner) {
             writingAdapter.submitList(it.toMutableList()) {
                 if(viewModel.myCommentLiveData.paging.page.value == 1)

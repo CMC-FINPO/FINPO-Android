@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.ParentCategory
 import com.finpo.app.repository.MyInfoRepository
+import com.finpo.app.ui.common.CommunityLikeBookmarkViewModel
 import com.finpo.app.ui.my_page.my_comment.MyCommentLiveData
 import com.finpo.app.ui.my_page.my_writing.MyWritingLiveData
 import com.finpo.app.utils.ImageUtils
@@ -23,6 +24,7 @@ import javax.inject.Inject
 class MyPageViewModel @Inject constructor(
     val myCommentLiveData: MyCommentLiveData,
     val myWritingLiveData: MyWritingLiveData,
+    val likeBookmarkViewModel: CommunityLikeBookmarkViewModel,
     private val myInfoRepository: MyInfoRepository
 ): ViewModel() {
     private val _nickname = MutableLiveData<String>()

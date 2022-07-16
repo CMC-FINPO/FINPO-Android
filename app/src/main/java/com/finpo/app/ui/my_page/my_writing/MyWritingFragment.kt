@@ -34,6 +34,10 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(R.layout.fragme
             }
         }
 
+        viewModel.likeBookmarkViewModel.updateRecyclerView.observe {
+            writingAdapter.notifyItemChanged(it.first, it.second)
+        }
+
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<WritingContent>("writingContent")
             ?.observe(viewLifecycleOwner) { data ->
                 viewModel.myWritingLiveData.checkContentChanged(data)
