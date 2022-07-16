@@ -152,4 +152,5 @@
     <string name="block">차단하기</string>
     <string name="open_api">오픈 API</string>
     <string name="cannot_like_my_post">내가 쓴 글은 좋아요할 수 없습니다</string>
+    <string name="empty_report">신고 받은 내역이 없어요</string>
 </resources>
