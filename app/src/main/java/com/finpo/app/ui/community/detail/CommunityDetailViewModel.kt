@@ -202,7 +202,6 @@ class CommunityDetailViewModel @Inject constructor(
             val detailResponse = communityRepository.getWritingDetail(detailId)
             if(detailResponse !is ApiResponse.Success) return@launch
             _writingContent.value = detailResponse.data.data
-            if(detailResponse.data.data.isUserBlocked == true) _deleteSuccessfulEvent.setValue(true)
 
             paging.resetPage()
             val commentResponse = communityRepository.getComment(detailId, paging.page.value ?: 0)

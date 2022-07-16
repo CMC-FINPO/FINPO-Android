@@ -60,7 +60,7 @@ class CommunityDetailFragment :
 
         viewModel.showBlockFinishAlertDialog.observe {
             showConfirmDialog("차단되었습니다!") {
-                viewModel.refreshData()
+                doDeleteComplete()
             }
         }
 
@@ -100,10 +100,7 @@ class CommunityDetailFragment :
         }
 
         viewModel.deleteSuccessfulEvent.observe {
-            if(!args.goToMyPage)
-                findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityFragment())
-            else
-                findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToMyPageFragment())
+            doDeleteComplete()
         }
 
         viewModel.editPostClickEvent.observe {
@@ -158,6 +155,13 @@ class CommunityDetailFragment :
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
+    }
+
+    private fun doDeleteComplete() {
+        if (!args.goToMyPage)
+            findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityFragment())
+        else
+            findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToMyPageFragment())
     }
 
     private fun popBackStack() {
