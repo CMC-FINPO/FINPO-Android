@@ -6,6 +6,7 @@ import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.repository.CommunityRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,6 +18,9 @@ class CommunityLikeBookmarkViewModel @Inject constructor(
 
     private val _likeClickErrorToastEvent = MutableSingleLiveData<Boolean>()
     val likeClickErrorToastEvent: SingleLiveData<Boolean> = _likeClickErrorToastEvent
+
+    private val _bookmarkMaxToastEvent = MutableSingleLiveData<Boolean>()
+    val bookmarkMaxToastEvent: SingleLiveData<Boolean> = _bookmarkMaxToastEvent
 
     fun likeClick(position: Int, data: WritingContent) {
         if(data.isMine == true) _likeClickErrorToastEvent.setValue(true)
@@ -40,7 +44,7 @@ class CommunityLikeBookmarkViewModel @Inject constructor(
             response.onSuccess {
                 data.isBookmarked = !(data.isBookmarked ?: true)
                 updateRecyclerView.setValue(Pair(position, data))
-            }
+            }.onError { if(statusCode.code == 400) _bookmarkMaxToastEvent.setValue(true) }
         }
     }
 }

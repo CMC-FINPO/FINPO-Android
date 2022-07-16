@@ -150,6 +150,10 @@ class CommunityDetailFragment :
                 writingAdapter.notifyItemChanged(0)
         }
 
+        viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+            shortShowToast(getString(R.string.bookmark_max_msg))
+        }
+
         viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
             shortShowToast(getString(R.string.cannot_like_my_post))
         }

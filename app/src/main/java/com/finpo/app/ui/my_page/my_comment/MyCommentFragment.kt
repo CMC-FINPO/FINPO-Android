@@ -31,6 +31,10 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
             writingAdapter.notifyItemChanged(it.first, it.second)
         }
 
+        viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+            shortShowToast(getString(R.string.bookmark_max_msg))
+        }
+
         viewModel.myCommentLiveData.writingList.observe(viewLifecycleOwner) {
             writingAdapter.submitList(it.toMutableList()) {
                 if(viewModel.myCommentLiveData.paging.page.value == 1)

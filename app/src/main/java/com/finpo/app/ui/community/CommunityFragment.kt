@@ -79,5 +79,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
             shortShowToast(getString(R.string.cannot_like_my_post))
         }
+
+        viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+            shortShowToast(getString(R.string.bookmark_max_msg))
+        }
     }
 }

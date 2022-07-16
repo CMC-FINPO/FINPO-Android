@@ -38,6 +38,10 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(R.layout.fragme
             writingAdapter.notifyItemChanged(it.first, it.second)
         }
 
+        viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+            shortShowToast(getString(R.string.bookmark_max_msg))
+        }
+
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<WritingContent>("writingContent")
             ?.observe(viewLifecycleOwner) { data ->
                 viewModel.myWritingLiveData.checkContentChanged(data)

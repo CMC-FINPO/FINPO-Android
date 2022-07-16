@@ -52,6 +52,10 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
                 viewModel.checkContentChanged(data)
             }
 
+        viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+            shortShowToast(getString(R.string.bookmark_max_msg))
+        }
+
         viewModel.likeBookmarkViewModel.updateRecyclerView.observe {
             communityAdapter.notifyItemChanged(it.first, it.second)
         }
