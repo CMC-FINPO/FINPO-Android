@@ -1,5 +1,6 @@
 package com.finpo.app.ui.home
 
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -162,8 +163,11 @@ class HomeViewModel @Inject constructor(
         } else false
     }
 
-    fun bookmarkClick(data: PolicyContent, position: Int) {
+    fun bookmarkClick(data: PolicyContent) {
         viewModelScope.launch {
+            val position = _policyList.value?.indexOfFirst { it?.id == data.id } ?: -1
+            if(position == -1) return@launch
+
             if(!data.isInterest) {
                 val addInterestPolicyResponse = bookmarkRepository.addInterestPolicy(data.id)
                 addInterestPolicyResponse.onSuccess {
@@ -178,6 +182,8 @@ class HomeViewModel @Inject constructor(
                     _updateRecyclerViewItemEvent.setValue(Pair(position, data))
                 }
             }
+
+            _policyList.value!![position]!!.isInterest = data.isInterest
         }
     }
 
