@@ -73,7 +73,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
             }
 
         viewModel.likeBookmarkViewModel.updateRecyclerView.observe { data ->
-            communityAdapter.notifyItemChanged(data.first, data.second)
+            viewModel.checkContentChanged(data)
+        }
+
+        viewModel.updateRecyclerViewItemEvent.observe {
+            communityAdapter.notifyItemChanged(it.first, it.second)
         }
 
         viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {

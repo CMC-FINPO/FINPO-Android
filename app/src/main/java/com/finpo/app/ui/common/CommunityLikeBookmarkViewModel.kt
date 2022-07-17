@@ -14,7 +14,7 @@ import javax.inject.Inject
 class CommunityLikeBookmarkViewModel @Inject constructor(
     private val communityRepository: CommunityRepository
 ) : ViewModel() {
-    val updateRecyclerView = MutableSingleLiveData<Pair<Int, WritingContent>>()
+    val updateRecyclerView = MutableSingleLiveData<WritingContent>()
 
     private val _likeClickErrorToastEvent = MutableSingleLiveData<Boolean>()
     val likeClickErrorToastEvent: SingleLiveData<Boolean> = _likeClickErrorToastEvent
@@ -22,7 +22,7 @@ class CommunityLikeBookmarkViewModel @Inject constructor(
     private val _bookmarkMaxToastEvent = MutableSingleLiveData<Boolean>()
     val bookmarkMaxToastEvent: SingleLiveData<Boolean> = _bookmarkMaxToastEvent
 
-    fun likeClick(position: Int, data: WritingContent) {
+    fun likeClick(data: WritingContent) {
         if(data.isMine == true) _likeClickErrorToastEvent.setValue(true)
 
         viewModelScope.launch {
@@ -31,20 +31,23 @@ class CommunityLikeBookmarkViewModel @Inject constructor(
                 else communityRepository.putWritingLike(data.id)
             response.onSuccess {
                 data.isLiked = !(data.isLiked ?: true)
-                updateRecyclerView.setValue(Pair(position, data))
+                data.likes += if(data.isLiked == true) 1 else -1
+                updateRecyclerView.setValue(data)
             }
         }
     }
 
-    fun bookmarkClick(position: Int, data: WritingContent) {
+    fun bookmarkClick(data: WritingContent) {
+
         viewModelScope.launch {
             val response =
                 if (data.isBookmarked == true) communityRepository.deleteWritingBookmark(data.id)
                 else communityRepository.putWritingBookmark(data.id)
             response.onSuccess {
                 data.isBookmarked = !(data.isBookmarked ?: true)
-                updateRecyclerView.setValue(Pair(position, data))
+                updateRecyclerView.setValue(data)
             }.onError { if(statusCode.code == 400) _bookmarkMaxToastEvent.setValue(true) }
         }
     }
+
 }

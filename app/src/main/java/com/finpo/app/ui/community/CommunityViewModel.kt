@@ -54,6 +54,9 @@ class CommunityViewModel @Inject constructor(
     private val _searchClickEvent = MutableSingleLiveData<Boolean>()
     val searchClickEvent: SingleLiveData<Boolean> = _searchClickEvent
 
+    private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, WritingContent>>()
+    val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, WritingContent>> = _updateRecyclerViewItemEvent
+
     fun searchClick() {
         _searchClickEvent.setValue(true)
     }
@@ -139,6 +142,6 @@ class CommunityViewModel @Inject constructor(
         val tempData = _writingList.value!!.toMutableList()
         tempData[position] = data
         _writingList.value = tempData
-        likeBookmarkViewModel.updateRecyclerView.setValue(Pair(position, data))
+        _updateRecyclerViewItemEvent.setValue(Pair(position, data))
     }
 }

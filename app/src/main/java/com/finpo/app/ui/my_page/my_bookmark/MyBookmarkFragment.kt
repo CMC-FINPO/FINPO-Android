@@ -26,8 +26,9 @@ class MyBookmarkFragment : BaseFragment<FragmentMyBookmarkBinding>(R.layout.frag
         bookmarkAdapter = BookmarkAdapter(viewModel)
         binding.rvCommunity.adapter = bookmarkAdapter
 
-        viewModel.myBookmarkLiveData.likeBookmarkViewModel.updateRecyclerView.observe {
-            viewModel.myBookmarkLiveData.removeMyBookmark(it.second)
+        viewModel.myBookmarkLiveData.likeBookmarkViewModel.updateRecyclerView.observe { data ->
+            if(data.isBookmarked == false) viewModel.myBookmarkLiveData.removeMyBookmark(data)
+            else viewModel.myBookmarkLiveData.checkContentChanged(data)
         }
 
         viewModel.myBookmarkLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {

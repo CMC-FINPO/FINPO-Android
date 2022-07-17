@@ -38,8 +38,8 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(R.layout.fragme
             shortShowToast(getString(R.string.cannot_like_my_post))
         }
 
-        viewModel.myWritingLiveData.likeBookmarkViewModel.updateRecyclerView.observe {
-            writingAdapter.notifyItemChanged(it.first, it.second)
+        viewModel.myWritingLiveData.likeBookmarkViewModel.updateRecyclerView.observe { data ->
+            viewModel.myWritingLiveData.checkContentChanged(data)
         }
 
         viewModel.myWritingLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {

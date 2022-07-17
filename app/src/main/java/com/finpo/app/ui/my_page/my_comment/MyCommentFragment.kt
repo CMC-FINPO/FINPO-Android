@@ -30,8 +30,8 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
             shortShowToast(getString(R.string.cannot_like_my_post))
         }
 
-        viewModel.myCommentLiveData.likeBookmarkViewModel.updateRecyclerView.observe {
-            commentAdapter.notifyItemChanged(it.first, it.second)
+        viewModel.myCommentLiveData.likeBookmarkViewModel.updateRecyclerView.observe { data ->
+            viewModel.myCommentLiveData.checkContentChanged(data)
         }
 
         viewModel.myCommentLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {

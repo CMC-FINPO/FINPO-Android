@@ -146,7 +146,7 @@ class CommunityDetailFragment :
 
 
         viewModel.likeBookmarkViewModel.updateRecyclerView.observe { data ->
-                writingAdapter.data = data.second
+                writingAdapter.data = data
                 writingAdapter.notifyItemChanged(0)
         }
 
