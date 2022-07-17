@@ -1,6 +1,5 @@
 package com.finpo.app.ui.my_page.my_comment
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,11 +33,11 @@ class MyCommentLiveData @Inject constructor(
 
     fun refreshWriting() {
         _refreshed.value = true
-        changeMyWriting()
+        changeMyComment()
         _refreshed.value = false
     }
 
-    fun changeMyWriting() {
+    fun changeMyComment() {
         paging.resetPage()
 
         viewModelScope.launch {

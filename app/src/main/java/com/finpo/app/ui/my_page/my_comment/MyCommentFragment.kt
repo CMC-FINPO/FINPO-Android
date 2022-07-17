@@ -1,6 +1,5 @@
 package com.finpo.app.ui.my_page.my_comment
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.finpo.app.R
@@ -22,7 +21,7 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
 
         //이미 onCreate에서 데이터가 초기화 되었고 바팀 네비게이션 아이템을 클릭한 경우에만 데이터 갱신
         if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedItem)
-            viewModel.myCommentLiveData.changeMyWriting()
+            viewModel.myCommentLiveData.changeMyComment()
 
         commentAdapter = CommentAdapter(viewModel)
         binding.rvCommunity.adapter = commentAdapter
