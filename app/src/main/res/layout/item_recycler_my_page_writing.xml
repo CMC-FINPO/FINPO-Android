@@ -107,14 +107,14 @@
 
             <ImageView
                 android:id="@+id/iv_scrap"
-                isBookmarkChecked="@{data.isBookmarked}"
+                isBookmarkCheckedSmall="@{data.isBookmarked}"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="9dp"
                 android:onClick="@{() -> viewModel.myWritingLiveData.likeBookmarkViewModel.bookmarkClick(position, data)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_like"
-                tools:src="@drawable/ic_scrap_active" />
+                tools:src="@drawable/ic_scrap_active_small" />
 
             <TextView
                 android:id="@+id/tv_count"

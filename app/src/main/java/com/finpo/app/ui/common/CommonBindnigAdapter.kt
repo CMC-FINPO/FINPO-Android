@@ -33,13 +33,22 @@ fun loadCircleImage(view: ImageView, imageUrl: String?, gender: String?) {
     } else view.setImageResource(defaultImage)
 }
 
-@BindingAdapter("isBookmarkChecked")
-fun setBookmarkImg(
+@BindingAdapter("isBookmarkCheckedLarge")
+fun setBookmarkImgLarge(
     imageView: ImageView,
     isBookmarkChecked: Boolean
 ) {
     if(isBookmarkChecked) imageView.setBackgroundResource(R.drawable.ic_scrap_active)
     else imageView.setBackgroundResource(R.drawable.ic_scrap_inactive)
+}
+
+@BindingAdapter("isBookmarkCheckedSmall")
+fun setBookmarkImgSmall(
+    imageView: ImageView,
+    isBookmarkChecked: Boolean
+) {
+    if(isBookmarkChecked) imageView.setBackgroundResource(R.drawable.ic_scrap_active_small)
+    else imageView.setBackgroundResource(R.drawable.ic_scrap_inactive_small)
 }
 
 @BindingAdapter("isLiked")

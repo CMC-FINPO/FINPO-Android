@@ -68,7 +68,7 @@
 
         <ImageView
             android:id="@+id/iv_scrap"
-            isBookmarkChecked="@{data.policy.isInterest}"
+            isBookmarkCheckedSmall="@{data.policy.isInterest}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> viewModel.bookmarkClick(data, position)}"
