@@ -78,7 +78,7 @@
                     doScrollBottom="@{() -> viewModel.addComment()}"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="20dp"
+                    android:paddingBottom="10dp"
                     app:layoutManager=".utils.LinearLayoutManagerWrapper" />
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -88,10 +88,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginBottom="43dp"
-                android:background="@drawable/bg_solid_w01_rounded_g02_5"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="15dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_solid_g09_rounded_g08_5"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="13dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:background="@null"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:hint="@string/comment_hint"
                     android:maxLength="@integer/comment_max_length"
                     android:text="@={viewModel.comment}"
