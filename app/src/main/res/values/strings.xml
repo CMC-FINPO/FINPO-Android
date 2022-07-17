@@ -164,4 +164,5 @@
     <string name="onboarding3_subtitle">마이페이지로 편리하게 저장 및 관리</string>
     <string name="onboarding4_title">후기나 관련 정보\n인사이트 공유</string>
     <string name="onboarding4_subtitle">청년만을 위한 커뮤니티 공간 제공</string>
+    <string name="etc">기타</string>
 </resources>
