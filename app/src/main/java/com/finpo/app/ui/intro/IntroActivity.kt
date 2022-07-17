@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class IntroActivity : BaseActivity<ActivityIntroBinding>(R.layout.activity_intro) {
-    lateinit var viewPager: ViewPager2
+    private lateinit var viewPager: ViewPager2
     val viewModel by viewModels<IntroViewModel>()
 
     override fun init() {

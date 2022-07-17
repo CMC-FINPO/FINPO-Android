@@ -12,6 +12,7 @@ import com.finpo.app.repository.IntroRepository
 import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseActivity
 import com.finpo.app.ui.intro.IntroActivity
+import com.finpo.app.ui.onboarding.OnBoardingActivity
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import com.skydoves.sandwich.suspendOnSuccess
@@ -37,6 +38,12 @@ class SplashActivity : AppCompatActivity() {
 
         CoroutineScope(IO).launch {
             delay(500L)
+            if(FinpoApplication.prefs.getBoolean("showOnBoarding", true)) {
+                startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
+                finish()
+                return@launch
+            }
+
             val accessToken = FinpoApplication.encryptedPrefs.getAccessToken()
             val refreshToken = FinpoApplication.encryptedPrefs.getRefreshToken()
             if(accessToken.isNullOrEmpty() || refreshToken.isNullOrEmpty()) {

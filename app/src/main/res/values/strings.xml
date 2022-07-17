@@ -154,4 +154,14 @@
     <string name="open_api">오픈 API</string>
     <string name="cannot_like_my_post">내가 쓴 글은 좋아요할 수 없습니다</string>
     <string name="empty_report">신고 받은 내역이 없어요</string>
+    <string name="skip_eng">Skip</string>
+    <string name="start">시작하기</string>
+    <string name="onboarding1_title">전국 청년 정책을 한 곳에</string>
+    <string name="onboarding1_subtitle">시군구별 청년정책 검색 가능</string>
+    <string name="onboarding2_title">관심분야\n청년정책만 모아서</string>
+    <string name="onboarding2_subtitle">세부 카테고리 별로 필터링</string>
+    <string name="onboarding3_title">참여하거나 관심있는\n청년정책 스크랩</string>
+    <string name="onboarding3_subtitle">마이페이지로 편리하게 저장 및 관리</string>
+    <string name="onboarding4_title">후기나 관련 정보\n인사이트 공유</string>
+    <string name="onboarding4_subtitle">청년만을 위한 커뮤니티 공간 제공</string>
 </resources>
