@@ -128,7 +128,7 @@ class CommunityViewModel @Inject constructor(
         return communityRepository.getWriting(
             content = searchLiveData.searchText,
             page = paging.page.value ?: 0,
-            sort = listOf(SORT_COMMUNITY[spinnerPosition.value ?: 0])
+            sort = SORT_COMMUNITY[spinnerPosition.value ?: 0]
         )
     }
 
