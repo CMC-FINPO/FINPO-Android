@@ -5,6 +5,8 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.finpo.app.R
 import com.finpo.app.model.remote.NotificationHistoryContent
+import com.finpo.app.utils.FCM_TYPE.CHILDCOMMENT
+import com.finpo.app.utils.FCM_TYPE.COMMENT
 import com.finpo.app.utils.FCM_TYPE.POLICY
 import com.finpo.app.utils.TimeFormatter
 import com.skydoves.balloon.textForm
@@ -26,10 +28,11 @@ fun setNotiTitle(textView: TextView, data: NotificationHistoryContent?) {
 fun setAdditionalNotiTitle(textView: TextView, data: NotificationHistoryContent?) {
     if(data == null) return
     textView.text =
-        if(data.policy == null)
-            textView.context.getString(R.string.noti_additional_comment_title)
-        else
-            textView.context.getString(R.string.noti_additional_policy_title)
+        when (data.type) {
+            COMMENT -> textView.context.getString(R.string.noti_additional_comment_title)
+            CHILDCOMMENT -> textView.context.getString(R.string.noti_additional_comment_reply_title)
+            else -> textView.context.getString(R.string.noti_additional_policy_title)
+        }
 }
 
 @BindingAdapter("notiIcon")
