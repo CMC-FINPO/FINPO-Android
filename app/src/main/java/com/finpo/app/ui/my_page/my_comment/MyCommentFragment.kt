@@ -19,10 +19,6 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        //이미 onCreate에서 데이터가 초기화 되었고 바팀 네비게이션 아이템을 클릭한 경우에만 데이터 갱신
-        if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedItem)
-            viewModel.myCommentLiveData.changeMyComment()
-
         commentAdapter = CommentAdapter(viewModel)
         binding.rvCommunity.adapter = commentAdapter
 
@@ -53,5 +49,12 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
         viewModel.myCommentLiveData.updateRecyclerViewItemEvent.observe {
             commentAdapter.notifyItemChanged(it.first, it.second)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //이미 onCreate에서 데이터가 초기화 되었고 바팀 네비게이션 아이템을 클릭한 경우에만 데이터 갱신
+        if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedItem)
+            viewModel.myCommentLiveData.changeMyComment()
     }
 }

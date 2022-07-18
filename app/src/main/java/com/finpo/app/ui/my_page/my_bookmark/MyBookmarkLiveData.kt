@@ -40,6 +40,7 @@ class MyBookmarkLiveData @Inject constructor(
         val index = data?.indexOfFirst { it?.id == content.id }
         index?.let { data.removeAt(index) }
         _writingList.value = data ?: mutableListOf()
+        _writingSize.value = _writingSize.value?.minus(1)
     }
 
     fun changeMyBookmark() {
@@ -55,9 +56,13 @@ class MyBookmarkLiveData @Inject constructor(
     fun checkContentChanged(data: WritingContent) {
         val position = _writingList.value?.indexOfFirst { data.id == it!!.id } ?: return
         if(position == -1) return
-        val tempData = _writingList.value!!.toMutableList()
-        tempData[position] = data
-        _writingList.value = tempData
+        _writingList.value!![position]?.apply {
+            isLiked = data.isLiked
+            likes = data.likes
+            isBookmarked = data.isBookmarked
+            countOfComment = data.countOfComment
+            hits = data.hits
+        }
         _updateRecyclerViewItemEvent.setValue(Pair(position, data))
     }
 }
