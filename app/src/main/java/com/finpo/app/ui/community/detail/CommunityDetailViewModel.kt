@@ -85,6 +85,9 @@ class CommunityDetailViewModel @Inject constructor(
     private val _updateCommentItem = MutableSingleLiveData<Pair<Int, CommentContent>>()
     val updateCommentItem : SingleLiveData<Pair<Int, CommentContent>> = _updateCommentItem
 
+    private val _dismissPopupEvent = MutableSingleLiveData<Boolean>()
+    val dismissPopupEvent: SingleLiveData<Boolean> = _dismissPopupEvent
+
     private val _replyName = MutableLiveData("")
     val replyName: LiveData<String> = _replyName
 
@@ -94,10 +97,11 @@ class CommunityDetailViewModel @Inject constructor(
     private var reportBlockId = 0
     private var commentParentId = 0
 
-    fun setReplyMode(parentId: Int, nickname: String) {
-        commentParentId = parentId
+    fun setReplyMode(data: CommentContent) {
+        _dismissPopupEvent.setValue(true)
+        commentParentId = data.id
         _isReplyMode.value = true
-        _replyName.value = nickname
+        _replyName.value = data.user?.nickname ?: "(알 수 없음)"
     }
 
     fun cancelReply() {
@@ -118,6 +122,9 @@ class CommunityDetailViewModel @Inject constructor(
             val position = _commentList.value?.indexOfFirst { it?.id == commentParentId } ?: -1
             if (position == -1) return@onSuccess
 
+            if(_commentList.value?.get(position)?.childs == null) {
+                _commentList.value?.get(position)?.childs = mutableListOf()
+            }
             _commentList.value?.get(position)?.childs?.add(data.data)
             val updateData = _commentList.value?.get(position) ?: return@onSuccess
             _updateCommentItem.setValue(Pair(position, updateData))

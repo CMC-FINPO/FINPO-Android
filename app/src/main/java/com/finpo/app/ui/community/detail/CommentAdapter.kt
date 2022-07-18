@@ -1,6 +1,7 @@
 package com.finpo.app.ui.community.detail
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupWindow
@@ -24,7 +25,6 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
     : ListAdapter<CommentContent, RecyclerView.ViewHolder>(diffUtil) {
 
     var commentPopup: PopupWindow? = null
-    var commentReplyPopup: PopupWindow? = null
 
     override fun getItemViewType(position: Int): Int {
         return if(currentList[position] == null) LOADING
@@ -70,7 +70,7 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
             }
 
             if(binding.rvReply.adapter == null) initRecyclerView(data)
-            else notifyDataSetChange()
+            else notifyDataSetChange(data)
 
             binding.executePendingBindings()
         }
@@ -85,7 +85,8 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
         }
 
         @SuppressLint("NotifyDataSetChanged")
-        private fun notifyDataSetChange() {
+        private fun notifyDataSetChange(data: CommentContent) {
+            (binding.rvReply.adapter as CommentReplyAdapter).submitList(data.childs)
             binding.rvReply.adapter?.notifyDataSetChanged()
         }
     }

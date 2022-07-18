@@ -49,17 +49,6 @@
             android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
 
         <TextView
-            android:id="@+id/tv_reply_comment"
-            style="@style/label3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/reply"
-            android:onClick="@{() -> viewModel.setReplyMode(data.id, data.user.nickname)}"
-            android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
-
-
-        <TextView
             android:id="@+id/tv_report_comment"
             style="@style/label3"
             android:layout_width="match_parent"
@@ -78,6 +67,15 @@
             android:onClick="@{() -> viewModel.showBlockDialog(reportType.COMMENT, data.id)}"
             android:text="@string/block"
             android:visibility="@{data.isMine ? View.GONE : View.VISIBLE}" />
+
+        <TextView
+            android:id="@+id/tv_reply_comment"
+            style="@style/label3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:onClick="@{() -> viewModel.setReplyMode(data)}"
+            android:text="@string/reply" />
 
     </LinearLayout>
 </layout>

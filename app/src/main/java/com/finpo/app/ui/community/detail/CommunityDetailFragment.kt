@@ -50,6 +50,11 @@ class CommunityDetailFragment :
             popBackStack()
         }
 
+        viewModel.dismissPopupEvent.observe {
+            commentAdapter.commentPopup?.dismiss()
+            postPopup?.dismiss()
+        }
+
         viewModel.showBlockDialog.observe {
             commentAdapter.commentPopup?.dismiss()
             postPopup?.dismiss()
