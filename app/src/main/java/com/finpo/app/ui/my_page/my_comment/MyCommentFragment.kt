@@ -22,6 +22,10 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
         commentAdapter = CommentAdapter(viewModel)
         binding.rvCommunity.adapter = commentAdapter
 
+        //이미 onCreate에서 데이터가 초기화 되었고 바팀 네비게이션 아이템을 클릭한 경우에만 데이터 갱신
+        if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedItem)
+            viewModel.myCommentLiveData.changeMyComment()
+
         viewModel.myCommentLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
             shortShowToast(getString(R.string.cannot_like_my_post))
         }
@@ -49,12 +53,5 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
         viewModel.myCommentLiveData.updateRecyclerViewItemEvent.observe {
             commentAdapter.notifyItemChanged(it.first, it.second)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //이미 onCreate에서 데이터가 초기화 되었고 바팀 네비게이션 아이템을 클릭한 경우에만 데이터 갱신
-        if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedItem)
-            viewModel.myCommentLiveData.changeMyComment()
     }
 }
