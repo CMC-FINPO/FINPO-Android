@@ -179,6 +179,12 @@ interface ApiService {
         @Body commentRequest: CommentRequest
     ): ApiResponse<PostCommentResponse>
 
+    @POST("/post/{id}/comment")
+    suspend fun postCommentReply(
+        @Path("id") id: Int,
+        @Body commentReplyRequest: CommentReplyRequest
+    ): ApiResponse<PostCommentReplyResponse>
+
     @DELETE("/post/{id}")
     suspend fun deleteWriting(@Path("id") id: Int): ApiResponse<JsonElement>
 

@@ -79,10 +79,69 @@ class CommunityDetailViewModel @Inject constructor(
     private val _showBlockFinishAlertDialog = MutableSingleLiveData<Boolean>()
     val showBlockFinishAlertDialog: SingleLiveData<Boolean> = _showBlockFinishAlertDialog
 
+    private val _isReplyMode = MutableLiveData(false)
+    val isReplyMode: LiveData<Boolean> = _isReplyMode
+
+    private val _updateCommentItem = MutableSingleLiveData<Pair<Int, CommentContent>>()
+    val updateCommentItem : SingleLiveData<Pair<Int, CommentContent>> = _updateCommentItem
+
+    private val _replyName = MutableLiveData("")
+    val replyName: LiveData<String> = _replyName
+
     val comment = MutableLiveData<String>()
 
     private var reportBlockType = 0
     private var reportBlockId = 0
+    private var commentParentId = 0
+
+    fun setReplyMode(parentId: Int, nickname: String) {
+        commentParentId = parentId
+        _isReplyMode.value = true
+        _replyName.value = nickname
+    }
+
+    fun cancelReply() {
+        _isReplyMode.value = false
+    }
+
+    fun postComment() {
+        viewModelScope.launch {
+            if(isReplyMode.value == true) callCommentReplyApi()
+            else callCommentApi()
+        }
+    }
+
+    private suspend fun callCommentReplyApi() {
+        val response =
+            communityRepository.postCommentReply(detailId, commentParentId, comment.value ?: "")
+        response.onSuccess {
+            val position = _commentList.value?.indexOfFirst { it?.id == commentParentId } ?: -1
+            if (position == -1) return@onSuccess
+
+            _commentList.value?.get(position)?.childs?.add(data.data)
+            val updateData = _commentList.value?.get(position) ?: return@onSuccess
+            _updateCommentItem.setValue(Pair(position, updateData))
+
+            _isReplyMode.value = false
+            comment.value = ""
+            _keyBoardHideEvent.setValue(true)
+            changeCommentCount(1)
+        }
+    }
+
+    private suspend fun callCommentApi() {
+        val postResponse = communityRepository.postComment(detailId, comment.value ?: "")
+        postResponse.onSuccess {
+            if (paging.isLastPage) {
+                val tempCommentList = _commentList.value?.toMutableList() ?: mutableListOf()
+                tempCommentList.add(data.data)
+                _commentList.value = tempCommentList
+            }
+            comment.value = ""
+            _keyBoardHideEvent.setValue(true)
+            changeCommentCount(1)
+        }
+    }
 
     fun report(reportContentId: Int) {
         viewModelScope.launch {
@@ -178,22 +237,6 @@ class CommunityDetailViewModel @Inject constructor(
 
     fun moreClick() {
         _moreClickEvent.setValue(true)
-    }
-
-    fun postComment() {
-        viewModelScope.launch {
-            val postResponse = communityRepository.postComment(detailId, comment.value ?: "")
-            postResponse.onSuccess {
-                if(paging.isLastPage) {
-                    val tempCommentList = _commentList.value?.toMutableList() ?: mutableListOf()
-                    tempCommentList.add(data.data)
-                    _commentList.value = tempCommentList
-                }
-                comment.value = ""
-                _keyBoardHideEvent.setValue(true)
-                changeCommentCount(1)
-            }
-        }
     }
 
     //TODO 코루틴 학습 후 리팩토링

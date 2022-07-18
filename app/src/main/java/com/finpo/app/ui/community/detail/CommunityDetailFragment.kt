@@ -125,6 +125,10 @@ class CommunityDetailFragment :
         binding.rvCommunityDetail.adapter = ConcatAdapter(writingAdapter, commentAdapter)
         binding.rvCommunityDetail.itemAnimator = null
 
+        viewModel.updateCommentItem.observe {
+            commentAdapter.notifyItemChanged(it.first, it.second)
+        }
+
         viewModel.keyBoardHideEvent.observe {
             val inputMethodManager =
                 requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

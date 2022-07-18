@@ -55,8 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="@string/reply"
+            android:onClick="@{() -> viewModel.setReplyMode(data.id, data.user.nickname)}"
             android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
-<!--        android:onClick="@{() -> viewModel.showDeleteCommentDialog(data)}"-->
+
 
         <TextView
             android:id="@+id/tv_report_comment"

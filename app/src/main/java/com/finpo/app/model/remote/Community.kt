@@ -64,8 +64,22 @@ data class CommentRequest(
     val anonymity: Boolean = false
 )
 
+data class CommentReplyRequest(
+    val parent: CommentReplyParent,
+    val content: String,
+    val anonymity: Boolean = false
+)
+
+data class CommentReplyParent(
+    val id: Int
+)
+
 data class PostCommentResponse(
     val data: CommentContent
+)
+
+data class PostCommentReplyResponse(
+    val data: CommentChilds
 )
 
 data class CommentContent(

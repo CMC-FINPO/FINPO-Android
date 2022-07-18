@@ -12,6 +12,8 @@ import com.finpo.app.databinding.ItemRecyclerCommunityDetailCommentBinding
 import com.finpo.app.databinding.ItemRecyclerPolicyLoadingBinding
 import com.finpo.app.model.remote.CategoryChildFormat
 import com.finpo.app.model.remote.CommentContent
+import com.finpo.app.model.remote.WritingContent
+import com.finpo.app.ui.community.CommunityAdapter
 import com.finpo.app.ui.interest_setting.InterestEditDetailAdapter
 import com.finpo.app.utils.PolicyRecyclerViewType.LOADING
 import com.finpo.app.utils.PolicyRecyclerViewType.CONTENT
@@ -40,6 +42,12 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
                 LoadingHolder(binding)
             }
         }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if(payloads.isNullOrEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else (holder as CommentHolder).setData(payloads[0] as CommentContent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
