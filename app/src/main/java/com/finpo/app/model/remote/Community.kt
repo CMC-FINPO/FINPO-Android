@@ -88,11 +88,14 @@ data class CommentChilds(
     val id: Int,
     val parent: CommentParent,
     val content: String,
+    val user: WritingUser?,
     val anonymity: Boolean,
     val anonymityId: Boolean,
     val isWriter: Boolean?,
     val isMine: Boolean?,
     val isModified: Boolean?,
+    val isUserWithdraw: Boolean?,
+    val isBlocked: Boolean?,
     val createdAt: String?,
     val modifiedAt: String?
 )

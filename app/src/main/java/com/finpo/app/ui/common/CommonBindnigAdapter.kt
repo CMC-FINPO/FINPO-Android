@@ -12,10 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.finpo.app.R
-import com.finpo.app.model.remote.CommentContent
-import com.finpo.app.model.remote.NotificationHistoryContent
-import com.finpo.app.model.remote.RegionInterest
-import com.finpo.app.model.remote.WritingContent
+import com.finpo.app.model.remote.*
 import com.finpo.app.utils.SORT_TYPE
 import com.finpo.app.utils.TimeFormatter
 import com.skydoves.balloon.textForm
@@ -74,6 +71,13 @@ fun setCommentDate(textView: TextView, data: CommentContent?) {
     textView.text= TimeFormatter.formatTime(date ?: "")
 }
 
+@BindingAdapter("commentReplyContentDate")
+fun setCommentReplyDate(textView: TextView, data: CommentChilds?) {
+    if(data == null) return
+    val date = if(data.isModified == true) data.modifiedAt else data.createdAt
+    textView.text= TimeFormatter.formatTime(date ?: "")
+}
+
 @BindingAdapter("communityNickname")
 fun setCommunityNickname(textView: TextView, data: WritingContent?) {
     if(data == null) return
@@ -88,6 +92,18 @@ fun setCommunityNickname(textView: TextView, data: WritingContent?) {
 
 @BindingAdapter("commentNickname")
 fun setCommentNickname(textView: TextView, data: CommentContent?) {
+    if(data == null) return
+    if(data.isUserWithdraw == true) {
+        textView.text = textView.context.getString(R.string.unknownUser)
+        textView.setTextColor(textView.context.getColor(R.color.gray_g03))
+    } else {
+        textView.text = data.user?.nickname ?: "익명"
+        textView.setTextColor(textView.context.getColor(R.color.black_b01))
+    }
+}
+
+@BindingAdapter("commentReplyNickname")
+fun setCommentReplyNickname(textView: TextView, data: CommentChilds?) {
     if(data == null) return
     if(data.isUserWithdraw == true) {
         textView.text = textView.context.getString(R.string.unknownUser)
@@ -145,12 +161,16 @@ fun setFont(
 @BindingAdapter("isRecyclerViewItemVisible", "isBlocked")
 fun checkDelete(view: View, isRecyclerViewItemVisible: Boolean, isBlocked: Boolean?) {
     //XML상에서 GONE 설정 시 여백이 제거 안됨
+    val params: ViewGroup.LayoutParams = view.layoutParams
     if(!isRecyclerViewItemVisible || isBlocked == true) {
         view.visibility = View.GONE
-        view.layoutParams = RecyclerView.LayoutParams(0, 0)
+        params.width = 0
+        params.height = 0
     } else {
         view.visibility = View.VISIBLE
-        view.layoutParams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT
     }
+    view.layoutParams = params
 }
 

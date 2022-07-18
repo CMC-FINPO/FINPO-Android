@@ -15,7 +15,7 @@
 
         <variable
             name="data"
-            type="com.finpo.app.model.remote.CommentContent" />
+            type="com.finpo.app.model.remote.CommentChilds" />
     </data>
 
     <LinearLayout
@@ -34,9 +34,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:onClick="@{() -> viewModel.editComment(data)}"
             android:text="@string/edit"
             android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
+<!--        android:onClick="@{() -> viewModel.editComment(data)}"-->
 
         <TextView
             android:id="@+id/tv_delete_comment"
@@ -44,17 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:onClick="@{() -> viewModel.showDeleteCommentDialog(data)}"
             android:text="@string/delete"
-            android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
-
-        <TextView
-            android:id="@+id/tv_reply_comment"
-            style="@style/label3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/reply"
             android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
 <!--        android:onClick="@{() -> viewModel.showDeleteCommentDialog(data)}"-->
 

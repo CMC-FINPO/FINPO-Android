@@ -165,4 +165,5 @@
     <string name="onboarding4_title">후기나 관련 정보\n인사이트 공유</string>
     <string name="onboarding4_subtitle">청년만을 위한 커뮤니티 공간 제공</string>
     <string name="etc">기타</string>
+    <string name="reply">답글달기</string>
 </resources>

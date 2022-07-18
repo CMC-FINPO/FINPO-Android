@@ -13,11 +13,11 @@
 
         <variable
             name="data"
-            type="com.finpo.app.model.remote.CommentContent" />
+            type="com.finpo.app.model.remote.CommentChilds" />
     </data>
 
     <LinearLayout
-        isBlocked="@{data.isUserBlocked}"
+        isBlocked="@{data.isBlocked}"
         isRecyclerViewItemVisible="@{data.status}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,8 +26,17 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/gray_g09"
             android:paddingHorizontal="18.5dp"
             android:paddingVertical="15dp">
+
+            <ImageView
+                android:id="@+id/iv_comment_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_comment_reply"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/iv_profile"
@@ -35,14 +44,14 @@
                 gender="@{data.user.gender}"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_comment_reply"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_profile_male_60" />
 
             <TextView
                 android:id="@+id/tv_nickname"
                 style="@style/header6"
-                commentNickname="@{data}"
+                commentReplyNickname="@{data}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -72,7 +81,7 @@
             <TextView
                 android:id="@+id/tv_time"
                 style="@style/not_defined_10_reg"
-                commentContentDate="@{data}"
+                commentReplyContentDate="@{data}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -96,12 +105,12 @@
             <TextView
                 android:id="@+id/tv_content"
                 style="@style/body3"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@{data.content}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_comment_reply"
                 app:layout_constraintTop_toBottomOf="@id/iv_profile"
                 tools:text="청년저축계좌랑 청년희망키움통장이랑 다른 거 맞죠? 어떤 점이 다른 건가요? 제가 어디에 해당되는지 모르겠는 어쩌구 저쩌구 어쩌구 저쩌구 어쩌구" />
 
@@ -112,12 +121,6 @@
             android:layout_height="1dp"
             android:background="@color/gray_g07"
             app:layout_constraintBottom_toBottomOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_reply"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_recycler_community_detail_comment_reply" />
 
     </LinearLayout>
 </layout>

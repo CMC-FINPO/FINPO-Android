@@ -1,17 +1,22 @@
 package com.finpo.app.ui.community.detail
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.finpo.app.databinding.ItemRecyclerCommunityDetailCommentBinding
 import com.finpo.app.databinding.ItemRecyclerPolicyLoadingBinding
+import com.finpo.app.model.remote.CategoryChildFormat
 import com.finpo.app.model.remote.CommentContent
+import com.finpo.app.ui.interest_setting.InterestEditDetailAdapter
 import com.finpo.app.utils.PolicyRecyclerViewType.LOADING
 import com.finpo.app.utils.PolicyRecyclerViewType.CONTENT
 import com.finpo.app.utils.PopupWindowUtil
+import com.google.android.flexbox.FlexboxLayoutManager
 
 class CommentAdapter(val viewModel: CommunityDetailViewModel)
     : ListAdapter<CommentContent, RecyclerView.ViewHolder>(diffUtil) {
@@ -55,7 +60,24 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
                 commentPopup = PopupWindowUtil(binding.root.context).commentPopupWindow(viewModel, data, it)
             }
 
+            if(binding.rvReply.adapter == null) initRecyclerView(data)
+            else notifyDataSetChange()
+
             binding.executePendingBindings()
+        }
+
+        private fun initRecyclerView(data: CommentContent) {
+            val replyAdapter = CommentReplyAdapter(viewModel)
+            replyAdapter.setHasStableIds(true)
+            binding.rvReply.layoutManager = LinearLayoutManager(binding.root.context)
+            binding.rvReply.adapter = replyAdapter
+            binding.rvReply.itemAnimator = null
+            replyAdapter.submitList(data.childs)
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        private fun notifyDataSetChange() {
+            binding.rvReply.adapter?.notifyDataSetChanged()
         }
     }
 
