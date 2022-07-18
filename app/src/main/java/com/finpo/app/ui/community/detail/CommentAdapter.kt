@@ -22,6 +22,7 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
     : ListAdapter<CommentContent, RecyclerView.ViewHolder>(diffUtil) {
 
     var commentPopup: PopupWindow? = null
+    var commentReplyPopup: PopupWindow? = null
 
     override fun getItemViewType(position: Int): Int {
         return if(currentList[position] == null) LOADING

@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class CommentReplyAdapter (val viewModel: CommunityDetailViewModel) :
     ListAdapter<CommentChilds, CommentReplyAdapter.CommentReplyViewHolder>(diffUtil) {
-
+    
     var commentReplyPopup: PopupWindow? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentReplyViewHolder {

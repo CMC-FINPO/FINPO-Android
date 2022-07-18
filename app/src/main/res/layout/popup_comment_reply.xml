@@ -36,7 +36,6 @@
             android:layout_marginBottom="8dp"
             android:text="@string/edit"
             android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
-<!--        android:onClick="@{() -> viewModel.editComment(data)}"-->
 
         <TextView
             android:id="@+id/tv_delete_comment"
@@ -46,7 +45,6 @@
             android:layout_marginBottom="8dp"
             android:text="@string/delete"
             android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
-<!--        android:onClick="@{() -> viewModel.showDeleteCommentDialog(data)}"-->
 
         <TextView
             android:id="@+id/tv_report_comment"
@@ -54,7 +52,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:onClick="@{() -> viewModel.showReportDialog(reportType.COMMENT, data.id)}"
             android:text="@string/report"
             android:visibility="@{data.isMine ? View.GONE : View.VISIBLE}" />
 
@@ -64,7 +61,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:onClick="@{() -> viewModel.showBlockDialog(reportType.COMMENT, data.id)}"
             android:text="@string/block"
             android:visibility="@{data.isMine ? View.GONE : View.VISIBLE}" />
 
