@@ -94,7 +94,7 @@ class CommunityDetailFragment :
 
         viewModel.goToCommunityCommentFragmentEvent.observe { data ->
             commentAdapter.commentPopup?.dismiss()
-            findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityCommentFragment(data.id, data.content ?: "", args.id))
+            findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityCommentFragment(data.first, data.second, args.id))
         }
 
         viewModel.deletePostClickEvent.observe {
@@ -134,10 +134,18 @@ class CommunityDetailFragment :
             commentAdapter.notifyItemChanged(it.first, it.second)
         }
 
+        val inputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
         viewModel.keyBoardHideEvent.observe {
-            val inputMethodManager =
-                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(binding.etComment.windowToken, 0)
+        }
+
+        viewModel.keyBoardShowEvent.observe {
+            binding.etComment.requestFocus()
+            binding.etComment.postDelayed({
+                inputMethodManager.showSoftInput(binding.etComment, InputMethodManager.SHOW_IMPLICIT)
+            }, 100)
         }
 
 

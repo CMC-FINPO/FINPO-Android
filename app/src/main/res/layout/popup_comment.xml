@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:onClick="@{() -> viewModel.editComment(data)}"
+            android:onClick="@{() -> viewModel.editComment(data.id, data.content)}"
             android:text="@string/edit"
             android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
 
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:onClick="@{() -> viewModel.showDeleteCommentDialog(data)}"
+            android:onClick="@{() -> viewModel.showDeleteCommentDialog(data.id)}"
             android:text="@string/delete"
             android:visibility="@{data.isMine ? View.VISIBLE : View.GONE}" />
 

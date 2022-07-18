@@ -40,6 +40,9 @@ class CommunityDetailViewModel @Inject constructor(
     private val _keyBoardHideEvent = MutableSingleLiveData<Boolean>()
     val keyBoardHideEvent: SingleLiveData<Boolean> = _keyBoardHideEvent
 
+    private val _keyBoardShowEvent = MutableSingleLiveData<Boolean>()
+    val keyBoardShowEvent: SingleLiveData<Boolean> = _keyBoardShowEvent
+
     private val _moreClickEvent = MutableSingleLiveData<Boolean>()
     val moreClickEvent: SingleLiveData<Boolean> = _moreClickEvent
 
@@ -52,14 +55,14 @@ class CommunityDetailViewModel @Inject constructor(
     private val _deleteSuccessfulEvent = MutableSingleLiveData<Boolean>()
     val deleteSuccessfulEvent: SingleLiveData<Boolean> = _deleteSuccessfulEvent
 
-    private val _deleteItemClickEvent = MutableSingleLiveData<CommentContent>()
-    val deleteItemClickEvent: SingleLiveData<CommentContent> = _deleteItemClickEvent
+    private val _deleteItemClickEvent = MutableSingleLiveData<Int>()
+    val deleteItemClickEvent: SingleLiveData<Int> = _deleteItemClickEvent
 
     private val _refreshed = MutableLiveData<Boolean>()
     val refreshed: LiveData<Boolean> = _refreshed
 
-    private val _goToCommunityCommentFragmentEvent = MutableSingleLiveData<CommentContent>()
-    val goToCommunityCommentFragmentEvent: SingleLiveData<CommentContent> = _goToCommunityCommentFragmentEvent
+    private val _goToCommunityCommentFragmentEvent = MutableSingleLiveData<Pair<Int, String>>()
+    val goToCommunityCommentFragmentEvent: SingleLiveData<Pair<Int, String>> = _goToCommunityCommentFragmentEvent
 
     private val _reportReasonList = MutableLiveData<List<IdReason>>()
     val reportReason: LiveData<List<IdReason>> = _reportReasonList
@@ -98,6 +101,7 @@ class CommunityDetailViewModel @Inject constructor(
     private var commentParentId = 0
 
     fun setReplyMode(data: CommentContent) {
+        _keyBoardShowEvent.setValue(true)
         _dismissPopupEvent.setValue(true)
         commentParentId = data.id
         _isReplyMode.value = true
@@ -204,8 +208,8 @@ class CommunityDetailViewModel @Inject constructor(
         _refreshed.value = false
     }
 
-    fun showDeleteCommentDialog(data: CommentContent) {
-        _deleteItemClickEvent.setValue(data)
+    fun showDeleteCommentDialog(id: Int) {
+        _deleteItemClickEvent.setValue(id)
     }
 
     private fun changeCommentCount(diff: Int) {
@@ -213,13 +217,13 @@ class CommunityDetailViewModel @Inject constructor(
         _writingContent.value = _writingContent.value
     }
 
-    fun editComment(data: CommentContent) {
-        _goToCommunityCommentFragmentEvent.setValue(data)
+    fun editComment(commentId: Int, comment: String) {
+        _goToCommunityCommentFragmentEvent.setValue(Pair(commentId, comment))
     }
 
-    fun deleteComment(data: CommentContent) {
+    fun deleteComment(data: Int) {
         viewModelScope.launch {
-            val deleteResponse = communityRepository.deleteComment(data.id)
+            val deleteResponse = communityRepository.deleteComment(data)
             deleteResponse.onSuccess {
                 changeCommentCount(-1)
                 changeComment()

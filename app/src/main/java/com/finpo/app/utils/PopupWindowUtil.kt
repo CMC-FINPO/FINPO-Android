@@ -65,6 +65,16 @@ class PopupWindowUtil(val context: Context) {
         mDropdown?.showAsDropDown(view, -50.dp, -26.dp)
 
         //TODO REFACTOR
+        binding.tvEditComment.setOnClickListener {
+            viewModel.editComment(data.id, data.content)
+            mDropdown?.dismiss()
+        }
+
+        binding.tvDeleteComment.setOnClickListener {
+            viewModel.showDeleteCommentDialog(data.id)
+            mDropdown?.dismiss()
+        }
+
         binding.tvReportComment.setOnClickListener {
             viewModel.showReportDialog(COMMENT, data.id)
             mDropdown?.dismiss()
