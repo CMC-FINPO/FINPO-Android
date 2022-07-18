@@ -203,14 +203,7 @@ class CommunityDetailViewModel @Inject constructor(
             if(detailResponse !is ApiResponse.Success) return@launch
             _writingContent.value = detailResponse.data.data
 
-            paging.resetPage()
-            val commentResponse = communityRepository.getComment(detailId, paging.page.value ?: 0)
-            if(commentResponse !is ApiResponse.Success) return@launch
-            paging.loadData(
-                commentResponse.data.data.content.toMutableList(),
-                commentResponse.data.data.last, _commentList,
-                paging.changeData()
-            )
+            changeComment()
         }
     }
 

@@ -79,7 +79,27 @@ data class CommentContent(
     val isMine: Boolean?,
     val isWriter: Boolean?,
     val createdAt: String?,
+    val modifiedAt: String?,
+    val childs: MutableList<CommentChilds>?
+)
+
+data class CommentChilds(
+    var status: Boolean,
+    val id: Int,
+    val parent: CommentParent,
+    val content: String,
+    val anonymity: Boolean,
+    val anonymityId: Boolean,
+    val isWriter: Boolean?,
+    val isMine: Boolean?,
+    val isModified: Boolean?,
+    val createdAt: String?,
     val modifiedAt: String?
+)
+
+data class CommentParent(
+    val status: Boolean,
+    var id: Int
 )
 
 data class Content(
