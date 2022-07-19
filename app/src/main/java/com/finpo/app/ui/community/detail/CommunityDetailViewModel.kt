@@ -133,9 +133,8 @@ class CommunityDetailViewModel @Inject constructor(
             val position = _commentList.value?.indexOfFirst { it?.id == commentParentId } ?: -1
             if (position == -1) return@onSuccess
 
-            if(_commentList.value?.get(position)?.childs == null) {
-                _commentList.value?.get(position)?.childs = mutableListOf()
-            }
+            if(_commentList.value?.get(position)?.childs == null) _commentList.value?.get(position)?.childs = mutableListOf()
+
             _commentList.value?.get(position)?.childs?.add(data.data)
             val updateData = _commentList.value?.get(position) ?: return@onSuccess
             _updateCommentItem.setValue(Pair(position, updateData))

@@ -46,68 +46,118 @@ class CommunityDetailFragment :
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.backClickEvent.observe {
-            popBackStack()
-        }
+        observeBackClickEvent()
+        observeMoreClickEvent()
+        observeDeleteItemClickEvent()
 
-        viewModel.dismissPopupEvent.observe {
-            commentAdapter.commentPopup?.dismiss()
-            postPopup?.dismiss()
-        }
-
-        viewModel.showBlockDialog.observe {
-            commentAdapter.commentPopup?.dismiss()
-            postPopup?.dismiss()
-            showAlertDialog("차단하시겠습니까?", "차단") {
-                viewModel.block()
-            }
-        }
-
-        viewModel.showBlockFinishAlertDialog.observe {
-            showConfirmDialog("차단되었습니다!") {
-                doDeleteComplete()
-            }
-        }
+        observeDismissPopupWindow()
+        observeShowBlockDialog()
+        observeBlockFinishAlertDialog()
+        observeShowReportFinishAlertDialog()
 
         val bottomDialogFragment = BottomSheetReportDialog(viewModel)
+        observeShowReportDialog(bottomDialogFragment)
+        observeDismissBottomSheetEvent(bottomDialogFragment)
 
-        viewModel.showReportDialog.observe {
-            commentAdapter.commentPopup?.dismiss()
-            postPopup?.dismiss()
-            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
+        observeGoToCommunityCommentFragmentEvent()
+
+        observeDeletePostClickEvent()
+        observeDeleteSuccessfulEvent()
+
+        observeEditPostClickEvent()
+
+        initRecyclerView()
+        observeRecyclerView()
+
+        observeUpdateCommentItem()
+
+        val inputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        observeKeyboardHideEvent(inputMethodManager)
+        observeKeyboardShowEvent(inputMethodManager)
+
+        observeLikeBookmarkUpdateRecyclerView()
+        observeBookmarkMaxToastEvent()
+        observeLikeClickErrorToastEvent()
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
+    }
+
+    private fun observeLikeClickErrorToastEvent() {
+        viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
+            shortShowToast(getString(R.string.cannot_like_my_post))
+        }
+    }
+
+    private fun observeBookmarkMaxToastEvent() {
+        viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+            shortShowToast(getString(R.string.bookmark_max_msg))
+        }
+    }
+
+    private fun observeLikeBookmarkUpdateRecyclerView() {
+        viewModel.likeBookmarkViewModel.updateRecyclerView.observe { data ->
+            writingAdapter.data = data
+            writingAdapter.notifyItemChanged(0)
+        }
+    }
+
+    private fun observeRecyclerView() {
+        viewModel.writingContent.observe(viewLifecycleOwner) {
+            writingAdapter.data = it
+            writingAdapter.notifyItemChanged(0)
         }
 
-        viewModel.dismissBottomSheetEvent.observe {
-            bottomDialogFragment.dismiss()
-        }
-
-        viewModel.showReportFinishAlertDialog.observe {
-            showConfirmDialog("신고가 접수되었습니다!")
-        }
-
-        viewModel.deleteItemClickEvent.observe { data ->
-            commentAdapter.commentPopup?.dismiss()
-            showAlertDialog("댓글을 삭제하시겠습니까?", "삭제") {
-                viewModel.deleteComment(data)
+        viewModel.commentList.observe(viewLifecycleOwner) {
+            commentAdapter.submitList(it.toMutableList()) {
+                if (viewModel.paging.page.value == 1)
+                    binding.rvCommunityDetail.scrollToPosition(0)
             }
         }
+    }
 
-        viewModel.goToCommunityCommentFragmentEvent.observe { data ->
-            commentAdapter.commentPopup?.dismiss()
-            findNavController().navigate(CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityCommentFragment(data.first, data.second, args.id))
+    private fun observeKeyboardShowEvent(inputMethodManager: InputMethodManager) {
+        viewModel.keyBoardShowEvent.observe {
+            binding.etComment.requestFocus()
+            binding.etComment.postDelayed({
+                inputMethodManager.showSoftInput(
+                    binding.etComment,
+                    InputMethodManager.SHOW_IMPLICIT
+                )
+            }, 70)
         }
+    }
 
-        viewModel.deletePostClickEvent.observe {
-            postPopup?.dismiss()
-            showAlertDialog("글을 삭제하시겠습니까?", "삭제") {
-                viewModel.deletePost()
-            }
+    private fun observeKeyboardHideEvent(inputMethodManager: InputMethodManager) {
+        viewModel.keyBoardHideEvent.observe {
+            inputMethodManager.hideSoftInputFromWindow(binding.etComment.windowToken, 0)
         }
+    }
 
-        viewModel.deleteSuccessfulEvent.observe {
-            doDeleteComplete()
+    private fun observeUpdateCommentItem() {
+        viewModel.updateCommentItem.observe {
+            commentAdapter.notifyItemChanged(it.first, it.second)
         }
+    }
 
+    private fun initRecyclerView() {
+        writingAdapter = WritingAdapter(viewModel)
+        commentAdapter = CommentAdapter(viewModel)
+        binding.rvCommunityDetail.adapter = ConcatAdapter(writingAdapter, commentAdapter)
+        binding.rvCommunityDetail.itemAnimator = null
+    }
+
+    private fun observeMoreClickEvent() {
+        viewModel.moreClickEvent.observe {
+            postPopup = PopupWindowUtil(requireContext()).postPopupWindow(
+                viewModel,
+                viewModel.writingContent.value!!,
+                binding.ivMore
+            )
+        }
+    }
+
+    private fun observeEditPostClickEvent() {
         viewModel.editPostClickEvent.observe {
             postPopup?.dismiss()
             findNavController().navigate(
@@ -116,66 +166,97 @@ class CommunityDetailFragment :
                 )
             )
         }
+    }
 
-        viewModel.moreClickEvent.observe {
-            postPopup = PopupWindowUtil(requireContext()).postPopupWindow(
-                viewModel,
-                viewModel.writingContent.value!!,
-                binding.ivMore
-            )
+    private fun observeDeleteSuccessfulEvent() {
+        viewModel.deleteSuccessfulEvent.observe {
+            doDeleteComplete()
         }
+    }
 
-        writingAdapter = WritingAdapter(viewModel)
-        commentAdapter = CommentAdapter(viewModel)
-        binding.rvCommunityDetail.adapter = ConcatAdapter(writingAdapter, commentAdapter)
-        binding.rvCommunityDetail.itemAnimator = null
-
-        viewModel.updateCommentItem.observe {
-            commentAdapter.notifyItemChanged(it.first, it.second)
-        }
-
-        val inputMethodManager =
-            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-        viewModel.keyBoardHideEvent.observe {
-            inputMethodManager.hideSoftInputFromWindow(binding.etComment.windowToken, 0)
-        }
-
-        viewModel.keyBoardShowEvent.observe {
-            binding.etComment.requestFocus()
-            binding.etComment.postDelayed({
-                inputMethodManager.showSoftInput(binding.etComment, InputMethodManager.SHOW_IMPLICIT)
-            }, 100)
-        }
-
-
-        viewModel.writingContent.observe(viewLifecycleOwner) {
-            writingAdapter.data = it
-            writingAdapter.notifyItemChanged(0)
-        }
-
-        viewModel.commentList.observe(viewLifecycleOwner) {
-            commentAdapter.submitList(it.toMutableList()) {
-                if(viewModel.paging.page.value == 1)
-                    binding.rvCommunityDetail.scrollToPosition(0)
+    private fun observeDeletePostClickEvent() {
+        viewModel.deletePostClickEvent.observe {
+            postPopup?.dismiss()
+            showAlertDialog("글을 삭제하시겠습니까?", "삭제") {
+                viewModel.deletePost()
             }
         }
+    }
 
-
-        viewModel.likeBookmarkViewModel.updateRecyclerView.observe { data ->
-                writingAdapter.data = data
-                writingAdapter.notifyItemChanged(0)
+    private fun observeGoToCommunityCommentFragmentEvent() {
+        viewModel.goToCommunityCommentFragmentEvent.observe { data ->
+            commentAdapter.commentPopup?.dismiss()
+            findNavController().navigate(
+                CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityCommentFragment(
+                    data.first,
+                    data.second,
+                    args.id
+                )
+            )
         }
+    }
 
-        viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
-            shortShowToast(getString(R.string.bookmark_max_msg))
+    private fun observeDeleteItemClickEvent() {
+        viewModel.deleteItemClickEvent.observe { data ->
+            commentAdapter.commentPopup?.dismiss()
+            showAlertDialog("댓글을 삭제하시겠습니까?", "삭제") {
+                viewModel.deleteComment(data)
+            }
         }
+    }
 
-        viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
-            shortShowToast(getString(R.string.cannot_like_my_post))
+    private fun observeShowReportFinishAlertDialog() {
+        viewModel.showReportFinishAlertDialog.observe {
+            showConfirmDialog("신고가 접수되었습니다!")
         }
+    }
 
-        requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
+    private fun observeDismissBottomSheetEvent(bottomDialogFragment: BottomSheetReportDialog) {
+        viewModel.dismissBottomSheetEvent.observe {
+            bottomDialogFragment.dismiss()
+        }
+    }
+
+    private fun observeShowReportDialog(bottomDialogFragment: BottomSheetReportDialog) {
+        viewModel.showReportDialog.observe {
+            commentAdapter.commentPopup?.dismiss()
+            postPopup?.dismiss()
+            bottomDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                bottomDialogFragment.tag
+            )
+        }
+    }
+
+    private fun observeBlockFinishAlertDialog() {
+        viewModel.showBlockFinishAlertDialog.observe {
+            showConfirmDialog("차단되었습니다!") {
+                doDeleteComplete()
+            }
+        }
+    }
+
+    private fun observeShowBlockDialog() {
+        viewModel.showBlockDialog.observe {
+            commentAdapter.commentPopup?.dismiss()
+            postPopup?.dismiss()
+            showAlertDialog("차단하시겠습니까?", "차단") {
+                viewModel.block()
+            }
+        }
+    }
+
+    private fun observeDismissPopupWindow() {
+        viewModel.dismissPopupEvent.observe {
+            commentAdapter.commentPopup?.dismiss()
+            postPopup?.dismiss()
+        }
+    }
+
+    private fun observeBackClickEvent() {
+        viewModel.backClickEvent.observe {
+            popBackStack()
+        }
     }
 
     private fun doDeleteComplete() {
