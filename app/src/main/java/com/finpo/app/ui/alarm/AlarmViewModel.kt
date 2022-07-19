@@ -89,7 +89,6 @@ class AlarmViewModel @Inject constructor(
                     data.data.last, _historyList,
                     paging.changeData()
                 )
-                Log.d("noti","${_historyList.value}")
             }
         }
     }

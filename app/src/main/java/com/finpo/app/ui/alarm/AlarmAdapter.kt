@@ -18,11 +18,6 @@ import java.lang.Exception
 class AlarmAdapter(val viewModel: AlarmViewModel)
     : ListAdapter<NotificationHistoryContent, RecyclerView.ViewHolder>(diffUtil) {
 
-    override fun getItemCount(): Int {
-        Log.d("infiniteScrolls", "${currentList.size} ${currentList}")
-        return super.getItemCount()
-    }
-
     override fun getItemViewType(position: Int): Int {
         return if(currentList[position] == null) LOADING
         else CONTENT
@@ -42,7 +37,7 @@ class AlarmAdapter(val viewModel: AlarmViewModel)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        currentList[position]?.let { (holder as PolicyHolder).setData(it, position) }
+        currentList[position]?.let { (holder as PolicyHolder).setData(it) }
     }
 
     inner class LoadingHolder(private val binding: ItemRecyclerPolicyLoadingBinding) :
@@ -50,7 +45,7 @@ class AlarmAdapter(val viewModel: AlarmViewModel)
 
     inner class PolicyHolder(private val binding: ItemRecyclerNotiHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun setData(data: NotificationHistoryContent, position: Int) {
+        fun setData(data: NotificationHistoryContent) {
             binding.data = data
             binding.viewModel = viewModel
             binding.executePendingBindings()

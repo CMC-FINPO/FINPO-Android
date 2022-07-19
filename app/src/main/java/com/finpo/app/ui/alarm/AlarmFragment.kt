@@ -1,5 +1,6 @@
 package com.finpo.app.ui.alarm
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
@@ -22,37 +23,63 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(R.layout.fragment_alarm
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        alarmAdapter = AlarmAdapter(viewModel)
-        binding.rvAlarm.adapter = alarmAdapter
-        binding.rvAlarm.itemAnimator = null
+        initRecyclerView()
+        observeAlarmItemClickEvent()
+        observeRecyclerViewItem()
+        observeDeleteBtnClickEvent()
+        observeBackEvent()
+    }
 
-        viewModel.alarmClickEvent.observe { data ->
-            when(data.type) {
-                POLICY -> findNavController().navigate(NavGraphDirections.actionGlobalPolicyDetailFragment(data.policy?.id ?: 0))
-                else -> findNavController().navigate(NavGraphDirections.actionGlobalCommunityDetailFragment(data.comment?.post?.id ?: 0))
-            }
+    private fun observeBackEvent() {
+        viewModel.backEvent.observe {
+            findNavController().popBackStack()
         }
+    }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun observeDeleteBtnClickEvent() {
+        viewModel.deleteBtnClickEvent.observe {
+            alarmAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun observeRecyclerViewItem() {
         viewModel.historyList.observe(viewLifecycleOwner) {
             alarmAdapter.submitList(it.toMutableList()) {
-                if(viewModel.paging.page.value == 1)
+                if (viewModel.paging.page.value == 1)
                     binding.rvAlarm.scrollToPosition(0)
 
-                //item 삭제하는 경우 recyclerview scroll bottom 감지가 되지 않아 아래의 코드를 추가함
+                //item 삭제하는 경우 recyclerview가 마지막 아이템이 보여지는지 감지를 하지 못해 아래의 코드를 추가함
                 try {
                     val lastVisibleItemPosition =
                         (binding.rvAlarm.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
                     if (it[lastVisibleItemPosition] == null) viewModel.addHistory()
-                } catch (e: Exception) {}
+                } catch (e: Exception) {
+                }
             }
         }
+    }
 
-        viewModel.deleteBtnClickEvent.observe {
-            alarmAdapter.notifyDataSetChanged()
+    private fun observeAlarmItemClickEvent() {
+        viewModel.alarmClickEvent.observe { data ->
+            when (data.type) {
+                POLICY -> findNavController().navigate(
+                    NavGraphDirections.actionGlobalPolicyDetailFragment(
+                        data.policy?.id ?: 0
+                    )
+                )
+                else -> findNavController().navigate(
+                    NavGraphDirections.actionGlobalCommunityDetailFragment(
+                        data.comment?.post?.id ?: 0
+                    )
+                )
+            }
         }
+    }
 
-        viewModel.backEvent.observe {
-            findNavController().popBackStack()
-        }
+    private fun initRecyclerView() {
+        alarmAdapter = AlarmAdapter(viewModel)
+        binding.rvAlarm.adapter = alarmAdapter
+        binding.rvAlarm.itemAnimator = null
     }
 }
