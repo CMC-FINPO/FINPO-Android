@@ -17,8 +17,11 @@ import com.finpo.app.utils.POST
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.ApiResponse
+import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
+import com.skydoves.sandwich.suspendOnFailure
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -94,11 +97,15 @@ class CommunityDetailViewModel @Inject constructor(
     private val _replyName = MutableLiveData("")
     val replyName: LiveData<String> = _replyName
 
+    private val _isLoading = MutableLiveData(true)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     val comment = MutableLiveData<String>()
 
     private var reportBlockType = 0
     private var reportBlockId = 0
     private var commentParentId = 0
+    private var isRetriedInitData = false
 
     fun setReplyMode(data: CommentContent) {
         _keyBoardShowEvent.setValue(true)
@@ -254,10 +261,18 @@ class CommunityDetailViewModel @Inject constructor(
     fun getInitData() {
         viewModelScope.launch {
             val detailResponse = communityRepository.getWritingDetail(detailId)
-            if(detailResponse !is ApiResponse.Success) return@launch
-            _writingContent.value = detailResponse.data.data
+            detailResponse.onSuccess {
+                _writingContent.value = data.data
+            }.suspendOnFailure {
+                if(!isRetriedInitData) {
+                    delay(500L)
+                    isRetriedInitData = true
+                    getInitData()
+                }
+            }
 
             changeComment()
+            _isLoading.value = false
         }
     }
 

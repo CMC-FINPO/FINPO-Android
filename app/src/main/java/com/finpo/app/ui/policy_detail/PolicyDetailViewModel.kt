@@ -12,7 +12,9 @@ import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onSuccess
+import com.skydoves.sandwich.suspendOnFailure
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -51,6 +53,7 @@ class PolicyDetailViewModel @Inject constructor(
     val participationPolicyMemo = MutableLiveData<String>()
 
     private var participationPolicyId = 0
+    private var isRetriedInitData = false
 
     fun addParticipationPolicyMemo() {
         viewModelScope.launch {
@@ -109,6 +112,12 @@ class PolicyDetailViewModel @Inject constructor(
             val policyDetailResponse = policyDetailRepository.getPolicyDetail(id)
             policyDetailResponse.onSuccess {
                 _policyDetailData.value = data.data!!
+            }.suspendOnFailure {
+                if(!isRetriedInitData) {
+                    delay(500L)
+                    isRetriedInitData = true
+                    getPolicyDetail(id)
+                }
             }
         }
     }
