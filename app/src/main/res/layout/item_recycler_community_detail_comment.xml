@@ -17,8 +17,6 @@
     </data>
 
     <LinearLayout
-        isBlocked="@{data.isUserBlocked}"
-        isRecyclerViewItemVisible="@{data.status}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -26,8 +24,37 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="18.5dp"
-            android:paddingVertical="15dp">
+            commentData="@{data}">
+
+            <TextView
+                style="@style/body3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18.5dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/deleted_comment"
+                android:textColor="@color/gray_g04"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_g07"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            isBlocked="@{data.isUserBlocked}"
+            isRecyclerViewItemVisible="@{data.status}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp">
 
             <ImageView
                 android:id="@+id/iv_profile"
@@ -35,6 +62,7 @@
                 gender="@{data.user.gender}"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:layout_marginStart="18.5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_profile_male_60" />
@@ -65,6 +93,7 @@
                 android:id="@+id/iv_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="18.5dp"
                 android:src="@drawable/ic_more_comment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -98,20 +127,23 @@
                 style="@style/body3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="18.5dp"
                 android:layout_marginTop="10dp"
+                android:paddingBottom="15dp"
                 android:text="@{data.content}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_profile"
                 tools:text="청년저축계좌랑 청년희망키움통장이랑 다른 거 맞죠? 어떤 점이 다른 건가요? 제가 어디에 해당되는지 모르겠는 어쩌구 저쩌구 어쩌구 저쩌구 어쩌구" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/gray_g07"
+                app:layout_constraintTop_toBottomOf="@id/tv_content" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray_g07"
-            app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_reply"

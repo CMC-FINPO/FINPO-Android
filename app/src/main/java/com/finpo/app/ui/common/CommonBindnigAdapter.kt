@@ -159,10 +159,33 @@ fun setFont(
 }
 
 @BindingAdapter("isRecyclerViewItemVisible", "isBlocked")
-fun checkDelete(view: View, isRecyclerViewItemVisible: Boolean, isBlocked: Boolean?) {
+fun checkWritingDelete(view: View, isRecyclerViewItemVisible: Boolean, isBlocked: Boolean?) {
     //XML상에서 GONE 설정 시 여백이 제거 안됨
     val params: ViewGroup.LayoutParams = view.layoutParams
     if(!isRecyclerViewItemVisible || isBlocked == true) {
+        view.visibility = View.GONE
+        params.width = 0
+        params.height = 0
+    } else {
+        view.visibility = View.VISIBLE
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+    }
+    view.layoutParams = params
+}
+
+@BindingAdapter("commentData")
+fun checkCommentDelete(view: View, commentData: CommentContent) {
+    val params: ViewGroup.LayoutParams = view.layoutParams
+    var hasChildren = false
+    commentData.childs?.forEach {
+        if(it.status && (it.isBlocked == false || it.isBlocked == null)) {
+            hasChildren = true
+            return@forEach
+        }
+    }
+    Log.d("replyDelete","hasChildren = ${hasChildren}")
+    if(!hasChildren || commentData.status || (commentData.isUserBlocked == false)) {
         view.visibility = View.GONE
         params.width = 0
         params.height = 0

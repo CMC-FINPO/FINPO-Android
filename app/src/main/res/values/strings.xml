@@ -168,4 +168,5 @@
     <string name="etc">기타</string>
     <string name="reply">답글달기</string>
     <string name="reply_nickname">%s님에게 답글 남기는 중...</string>
+    <string name="deleted_comment">(삭제된 댓글입니다)</string>
 </resources>

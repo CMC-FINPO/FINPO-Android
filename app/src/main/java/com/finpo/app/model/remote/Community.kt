@@ -94,7 +94,7 @@ data class CommentContent(
     val isWriter: Boolean?,
     val createdAt: String?,
     val modifiedAt: String?,
-    var childs: MutableList<CommentChilds> = mutableListOf()
+    var childs: MutableList<CommentChilds>? = mutableListOf()
 )
 
 data class CommentChilds(
