@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.finpo.app.ui.onboarding.OnBoardingViewModel" />
@@ -25,6 +27,7 @@
             android:padding="11dp"
             android:text="@string/skip_eng"
             android:textColor="@color/gray_g03"
+            android:visibility="@{viewModel.isLastPage ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
