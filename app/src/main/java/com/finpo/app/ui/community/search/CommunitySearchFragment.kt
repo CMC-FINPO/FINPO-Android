@@ -35,7 +35,7 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
             }
 
         viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
-            shortShowToast(getString(R.string.bookmark_max_msg))
+            shortShowToast(getString(R.string.scrap_max_msg))
         }
 
         viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {

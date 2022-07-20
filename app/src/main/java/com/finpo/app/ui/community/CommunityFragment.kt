@@ -78,7 +78,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         }
 
         viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
-            shortShowToast(getString(R.string.bookmark_max_msg))
+            shortShowToast(getString(R.string.scrap_max_msg))
         }
     }
 }

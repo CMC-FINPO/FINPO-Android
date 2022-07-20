@@ -32,7 +32,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             tab.text = when(position) {
                 0 -> "내가 쓴 글"
                 1 -> "댓글 단 글"
-                else -> "북마크 한 글"
+                else -> "스크랩 한 글"
             }
         }.attach()
 

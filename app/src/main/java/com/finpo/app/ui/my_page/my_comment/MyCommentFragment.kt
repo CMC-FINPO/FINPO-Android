@@ -35,7 +35,7 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
         }
 
         viewModel.myCommentLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
-            shortShowToast(getString(R.string.bookmark_max_msg))
+            shortShowToast(getString(R.string.scrap_max_msg))
         }
 
         viewModel.myCommentLiveData.writingList.observe(viewLifecycleOwner) {

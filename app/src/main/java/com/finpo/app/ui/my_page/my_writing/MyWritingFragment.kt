@@ -43,7 +43,7 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(R.layout.fragme
         }
 
         viewModel.myWritingLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
-            shortShowToast(getString(R.string.bookmark_max_msg))
+            shortShowToast(getString(R.string.scrap_max_msg))
         }
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<WritingContent>("writingContent")
