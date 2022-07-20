@@ -3,7 +3,7 @@
     <style name="Theme.Finpo.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/point_p01</item>
         <item name="postSplashScreenTheme">@style/Theme.Finpo.Splash12</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_white_500_500</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_notification</item>
         <item name="android:windowSplashScreenAnimationDuration">0</item>
 
         <item name="android:statusBarColor">@color/point_p01</item>

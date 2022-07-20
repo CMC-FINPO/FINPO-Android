@@ -101,7 +101,7 @@ class FirebaseService : FirebaseMessagingService() {
         } else NotificationCompat.Builder(this)
 
         builder
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(body)
             .setDefaults(NotificationCompat.DEFAULT_ALL)

@@ -22,30 +22,12 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        communityAdapter = CommunityAdapter(viewModel)
-        binding.rvCommunity.adapter = communityAdapter
+        initRecyclerView()
+        observeRecyclerView()
 
-        viewModel.writingList.observe(viewLifecycleOwner) {
-            communityAdapter.submitList(it.toMutableList()) {
-                if(viewModel.paging.page.value == 1)
-                    binding.rvCommunity.scrollToPosition(0)
-            }
-        }
-
-        viewModel.goToDetailFragmentEvent.observe {
-            findNavController().navigate(NavGraphDirections.actionGlobalCommunityDetailFragment(it))
-        }
-
-        viewModel.searchLiveData.keyBoardSearchEvent.observe {
-            viewModel.changeWriting()
-            val inputMethodManager =
-                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
-        }
-
-        viewModel.backClickEvent.observe {
-            findNavController().popBackStack()
-        }
+        observeGoToDetailFragmentEvent()
+        observeBackClickEvent()
+        observeKeyBoardSearchEvent()
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<WritingContent>("writingContent")
             ?.observe(viewLifecycleOwner) { data ->
@@ -56,6 +38,10 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
             shortShowToast(getString(R.string.bookmark_max_msg))
         }
 
+        viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
+            shortShowToast(getString(R.string.cannot_like_my_post))
+        }
+
         viewModel.likeBookmarkViewModel.updateRecyclerView.observe { data ->
             viewModel.checkContentChanged(data)
         }
@@ -63,9 +49,40 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
         viewModel.updateRecyclerViewItemEvent.observe {
             communityAdapter.notifyItemChanged(it.first, it.second)
         }
+    }
 
-        viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
-            shortShowToast(getString(R.string.cannot_like_my_post))
+    private fun observeKeyBoardSearchEvent() {
+        viewModel.searchLiveData.keyBoardSearchEvent.observe {
+            viewModel.changeWriting()
+            val inputMethodManager =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
         }
+    }
+
+    private fun observeBackClickEvent() {
+        viewModel.backClickEvent.observe {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun observeGoToDetailFragmentEvent() {
+        viewModel.goToDetailFragmentEvent.observe {
+            findNavController().navigate(NavGraphDirections.actionGlobalCommunityDetailFragment(it))
+        }
+    }
+
+    private fun observeRecyclerView() {
+        viewModel.writingList.observe(viewLifecycleOwner) {
+            communityAdapter.submitList(it.toMutableList()) {
+                if (viewModel.paging.page.value == 1)
+                    binding.rvCommunity.scrollToPosition(0)
+            }
+        }
+    }
+
+    private fun initRecyclerView() {
+        communityAdapter = CommunityAdapter(viewModel)
+        binding.rvCommunity.adapter = communityAdapter
     }
 }
