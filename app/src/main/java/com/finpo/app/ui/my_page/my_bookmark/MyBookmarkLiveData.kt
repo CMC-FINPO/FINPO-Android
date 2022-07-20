@@ -53,6 +53,7 @@ class MyBookmarkLiveData @Inject constructor(
         }
     }
 
+    //TODO 코드 중복 REFACTOR
     fun checkContentChanged(data: WritingContent) {
         val position = _writingList.value?.indexOfFirst { data.id == it!!.id } ?: return
         if(position == -1) return
@@ -61,6 +62,9 @@ class MyBookmarkLiveData @Inject constructor(
             likes = data.likes
             isBookmarked = data.isBookmarked
             countOfComment = data.countOfComment
+            content = data.content
+            isModified = data.isModified
+            modifiedAt = data.modifiedAt
             hits = data.hits
         }
         _updateRecyclerViewItemEvent.setValue(Pair(position, data))
