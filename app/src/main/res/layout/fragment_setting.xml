@@ -187,44 +187,116 @@
                 android:paddingEnd="20dp"
                 android:text="@string/report_reason" />
 
-            <TextView
-                android:id="@+id/tv_terms"
-                style="@style/header5"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_ripple_borderline_g05"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="start|center"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/terms" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_ask"
-                style="@style/header5"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_ripple_borderline_g05"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="start|center"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/ask" />
+                <TextView
+                    android:id="@+id/tv_terms"
+                    style="@style/header5"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_ripple_borderline_g05"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="start|center"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="@string/terms"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_personal_info"
-                style="@style/header5"
+                <TextView
+                    android:id="@+id/tv_terms_url"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:text="@string/terms_url"
+                    android:textColor="@android:color/transparent"
+                    android:textColorLink="@android:color/transparent"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_terms"
+                    app:layout_constraintEnd_toEndOf="@id/tv_terms"
+                    app:layout_constraintStart_toStartOf="@id/tv_terms"
+                    app:layout_constraintTop_toTopOf="@id/tv_terms" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_ripple_borderline_g05"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="start|center"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:text="@string/personal_info" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_ask"
+                    style="@style/header5"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_ripple_borderline_g05"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="start|center"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="@string/ask"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_ask_url"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:text="@string/ask_url"
+                    android:textColor="@android:color/transparent"
+                    android:textColorLink="@android:color/transparent"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_ask"
+                    app:layout_constraintEnd_toEndOf="@id/tv_ask"
+                    app:layout_constraintStart_toStartOf="@id/tv_ask"
+                    app:layout_constraintTop_toTopOf="@id/tv_ask" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_personal_info"
+                    style="@style/header5"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_ripple_borderline_g05"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="start|center"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="@string/personal_info"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_privacy_url"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:text="@string/privacy_url"
+                    android:textColor="@android:color/transparent"
+                    android:textColorLink="@android:color/transparent"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_personal_info"
+                    app:layout_constraintEnd_toEndOf="@id/tv_personal_info"
+                    app:layout_constraintStart_toStartOf="@id/tv_personal_info"
+                    app:layout_constraintTop_toTopOf="@id/tv_personal_info" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/tv_open_source"
