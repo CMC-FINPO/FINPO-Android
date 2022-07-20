@@ -137,9 +137,9 @@ class CommunityViewModel @Inject constructor(
     }
 
     fun checkContentChanged(data: WritingContent) {
-        val position = _writingList.value?.indexOfFirst { data.id == it!!.id } ?: return
+        val position = _writingList.value?.indexOfFirst { data.id == it?.id } ?: return
         if(position == -1) return
-        _writingList.value!![position]?.apply {
+        _writingList.value?.get(position)?.apply {
             isLiked = data.isLiked
             likes = data.likes
             isBookmarked = data.isBookmarked
