@@ -22,7 +22,7 @@ data class Writing(
 data class WritingContent(
     val status: Boolean,
     val id: Int,
-    val content: String,
+    var content: String,
     val anonymity: Boolean,
     var likes: Int,
     var hits: Int,
@@ -32,10 +32,10 @@ data class WritingContent(
     val isMine: Boolean?,
     var isLiked: Boolean?,
     var isBookmarked: Boolean?,
-    val isModified: Boolean?,
+    var isModified: Boolean?,
     val isUserBlocked: Boolean?,
     val createdAt: String,
-    val modifiedAt: String,
+    var modifiedAt: String,
 ) : Parcelable
 
 @Parcelize

@@ -22,7 +22,7 @@ class BookmarkViewModel @Inject constructor(
     private val myInfoRepository: MyInfoRepository,
     private val bookmarkRepository: BookmarkRepository
 ): ViewModel() {
-    private val _nickname = MutableLiveData<String>()
+    private val _nickname = MutableLiveData("")
     val nickname: LiveData<String> = _nickname
 
     private val _categoryData = MutableLiveData<List<ParentCategory>>()
@@ -31,16 +31,11 @@ class BookmarkViewModel @Inject constructor(
     private val _policyList = MutableLiveData<MutableList<PolicyContent>>()
     val policyList: LiveData<MutableList<PolicyContent>> = _policyList
 
-    private val _policySize = MutableLiveData<Int>()
+    private val _policySize = MutableLiveData(0)
     val policySize: LiveData<Int> = _policySize
 
     private val _goToDetailFragmentEvent = MutableSingleLiveData<Int>()
     val goToDetailFragmentEvent: SingleLiveData<Int> = _goToDetailFragmentEvent
-
-    init {
-        _nickname.value = ""
-        _policySize.value = 0
-    }
 
     //TODO 코루틴 공부 후 리팩토링
     fun getInitData() {

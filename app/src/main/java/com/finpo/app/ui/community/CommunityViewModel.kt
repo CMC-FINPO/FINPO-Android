@@ -76,7 +76,7 @@ class CommunityViewModel @Inject constructor(
     }
 
     fun initData() {
-        _writingSize.value = 0
+        clearWriting()
         changeWriting()
     }
 
@@ -144,6 +144,9 @@ class CommunityViewModel @Inject constructor(
             likes = data.likes
             isBookmarked = data.isBookmarked
             countOfComment = data.countOfComment
+            content = data.content
+            isModified = data.isModified
+            modifiedAt = data.modifiedAt
             hits = data.hits
         }
         _updateRecyclerViewItemEvent.setValue(Pair(position, data))

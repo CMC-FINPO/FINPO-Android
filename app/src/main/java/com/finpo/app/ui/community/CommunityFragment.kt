@@ -17,13 +17,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragment_community) {
     private val viewModel by viewModels<CommunityViewModel>()
     private lateinit var communityAdapter: CommunityAdapter
-    private var isInitDataCompleted = false
     val TAG = "CommunityFragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.initData()
-        isInitDataCompleted = true
     }
 
     override fun doViewCreated() {
@@ -38,11 +36,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
                 if(viewModel.paging.page.value == 1)
                     binding.rvCommunity.scrollToPosition(0)
             }
-        }
-
-        if((activity as MainActivity).isMovedCommunityBySelectedItem && !isInitDataCompleted) {
-            viewModel.clearWriting()
-            viewModel.changeWriting()
         }
 
         viewModel.searchClickEvent.observe {

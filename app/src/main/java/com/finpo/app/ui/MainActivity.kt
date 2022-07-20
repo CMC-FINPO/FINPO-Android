@@ -21,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var navController: NavController
     var isMovedHomeBySelectedItem = false
-    var isMovedCommunityBySelectedItem = false
     var isMovedMyPageBySelectedItem = false
 
     private var destinationId = R.id.homeFragment
@@ -38,14 +37,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         binding.navBar.setOnItemSelectedListener { item ->
             NavigationUI.onNavDestinationSelected(item, navController)
             if(item.itemId == R.id.homeFragment) isMovedHomeBySelectedItem = true
-            if(item.itemId == R.id.communityFragment) isMovedCommunityBySelectedItem = true
             if(item.itemId == R.id.myPageFragment) isMovedMyPageBySelectedItem = true
             true
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if(destination.id != R.id.homeFragment) isMovedHomeBySelectedItem = false
-            if(destination.id != R.id.communityFragment) isMovedCommunityBySelectedItem = false
             if(destination.id != R.id.myPageFragment) isMovedMyPageBySelectedItem = false
             destinationId = destination.id
 
@@ -87,9 +84,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         val startId = intent?.getIntExtra("startId", R.id.homeFragment) ?: R.id.homeFragment
         val bulletinId = intent?.getIntExtra("bulletinId", -1) ?: -1
 
-        val navOptions = NavOptions.Builder()
-            .setPopUpTo(R.id.homeFragment, true)
-            .build()
         when (startId) {
             R.id.policyDetailFragment -> navController.navigate(
                 NavGraphDirections.actionGlobalPolicyDetailFragment(
@@ -101,7 +95,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     bulletinId
                 )
             )
-            else -> navController.navigate(startId, null, navOptions)
+            else -> { }
         }
     }
 

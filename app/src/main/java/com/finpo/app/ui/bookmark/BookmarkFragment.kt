@@ -1,5 +1,7 @@
 package com.finpo.app.ui.bookmark
 
+import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.finpo.app.NavGraphDirections
