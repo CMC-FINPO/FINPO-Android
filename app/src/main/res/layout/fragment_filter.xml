@@ -164,6 +164,24 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/cl_search" />
 
+                    <CheckBox
+                        android:id="@+id/rb_category_all"
+                        style="@style/body2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:checked="@{viewModel.isCategoryAllChecked}"
+                        android:background="@drawable/selector_checkbox_status_purpose"
+                        android:button="@null"
+                        android:onClick="@{() -> viewModel.categoryAllClick()}"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="6dp"
+                        android:text="@string/category_all"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textColor="@drawable/selector_checkbox_status_purpose_text"
+                        app:layout_constraintTop_toBottomOf="@id/view_divider" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_filter"
                         android:layout_width="match_parent"
@@ -175,7 +193,7 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/view_divider" />
+                        app:layout_constraintTop_toBottomOf="@id/rb_category_all" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

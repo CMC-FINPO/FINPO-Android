@@ -2,12 +2,15 @@ package com.finpo.app.ui.filter
 
 import androidx.lifecycle.*
 import com.finpo.app.model.remote.CategoryChildFormat
+import com.finpo.app.model.remote.CategoryChildFormatResponse
 import com.finpo.app.repository.CategoryRepository
 import com.finpo.app.ui.common.RegionViewModel
 import com.finpo.app.ui.filter.bottom_sheet.BottomSheetRegionViewModel
 import com.finpo.app.utils.*
+import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,13 +41,30 @@ class FilterViewModel @Inject constructor(
     private val _goToHomeFragmentEvent = MutableSingleLiveData<Boolean>()
     val goToHomeFragmentEvent: SingleLiveData<Boolean> = _goToHomeFragmentEvent
 
+    val isCategoryAllChecked = MutableLiveData(false)
+
     val isFilterButtonEnabled = MediatorLiveData<Boolean>().apply {
-        addSourceList(filterRegionViewModel._regionCount, _userCategoryData) {
+        addSourceList(filterRegionViewModel._regionCount, _userCategoryData, isCategoryAllChecked) {
             isStatusPurposeValid()
         }
     }
 
-    private fun isStatusPurposeValid(): Boolean = (filterRegionViewModel._regionCount.value != 0 && _userCategoryData.value?.isEmpty() == false)
+    private val filterCategoryIds = mutableListOf<Int>()
+
+    private val _categoryAllCheckEvent = MutableSingleLiveData<Boolean>()
+    val categoryAllCheckEvent: SingleLiveData<Boolean> = _categoryAllCheckEvent
+
+    private fun isStatusPurposeValid(): Boolean = (filterRegionViewModel._regionCount.value != 0 && (_userCategoryData.value?.isEmpty() == false || isCategoryAllChecked.value == true))
+
+    fun categoryAllClick() {
+        viewModelScope.launch {
+            isCategoryAllChecked.value = true
+            _categoryAllCheckEvent.setValue(true)
+            delay(50L) // TODO REFACTOR recyclerView notiDataChange가 완료되기 전에 아래 코드가 먼저 실행됨 : 임시 조치로 해결 -> recyclerView에 viewLifecycleOwner 연동 필요
+            setCategories(filterCategoryIds.toIntArray())
+        }
+    }
+
 
     fun backClick() {
         _backEvent.setValue(true)
@@ -59,6 +79,11 @@ class FilterViewModel @Inject constructor(
     }
 
     fun categoryClick(id: Int) {
+        if(isCategoryAllChecked.value == true) {
+            isCategoryAllChecked.value = false
+            _userCategoryData.value = intArrayOf()
+        }
+
         val userCategoryData = _userCategoryData.value?.toMutableList() ?: mutableListOf()
         if (id in userCategoryData) userCategoryData.remove(id)
         else userCategoryData.add(id)
@@ -88,6 +113,15 @@ class FilterViewModel @Inject constructor(
             val filterResponse = categoryRepository.getCategoryChildFormat()
             filterResponse.onSuccess {
                 _filterCategoryData.value = data.data
+                setFilterCategoryIds()
+            }
+        }
+    }
+
+    private fun ApiResponse.Success<CategoryChildFormatResponse>.setFilterCategoryIds() {
+        data.data.forEach { parent ->
+            parent.childs.forEach { child ->
+                filterCategoryIds.add(child.id)
             }
         }
     }

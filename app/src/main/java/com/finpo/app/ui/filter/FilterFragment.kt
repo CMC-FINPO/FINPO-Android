@@ -71,15 +71,23 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(R.layout.fragment_fil
             }
         }
 
+        viewModel.categoryAllCheckEvent.observe {
+            clearCategory()
+        }
+
         viewModel.filterCategoryData.observe(viewLifecycleOwner) {
             filterAdapter.submitList(it)
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun clearFilter() {
+        clearCategory()
+        viewModel.clearRegion()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun clearCategory() {
         viewModel.setCategories(intArrayOf())
         filterAdapter.notifyDataSetChanged()
-        viewModel.clearRegion()
     }
 }
