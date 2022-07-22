@@ -83,6 +83,7 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(R.layout.fragment_fil
     private fun clearFilter() {
         clearCategory()
         viewModel.clearRegion()
+        viewModel.isCategoryAllChecked.value = false
     }
 
     @SuppressLint("NotifyDataSetChanged")
