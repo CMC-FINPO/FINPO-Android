@@ -84,6 +84,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         val startId = intent?.getIntExtra("startId", R.id.homeFragment) ?: R.id.homeFragment
         val bulletinId = intent?.getIntExtra("bulletinId", -1) ?: -1
 
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.homeFragment, true)
+            .build()
+
         when (startId) {
             R.id.policyDetailFragment -> navController.navigate(
                 NavGraphDirections.actionGlobalPolicyDetailFragment(
@@ -95,7 +99,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                     bulletinId
                 )
             )
-            else -> { }
+            R.id.homeFragment -> { }
+            else -> navController.navigate(startId, null, navOptions)
         }
     }
 
