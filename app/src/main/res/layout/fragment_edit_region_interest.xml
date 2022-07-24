@@ -39,6 +39,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_header"
+                app:emptyText="@string/no_selected_area"
                 app:regionCount="@{viewModel.interestRegionViewModel.regionCount}"
                 app:regionDelete="@{viewModel.interestRegionViewModel.deleteRegion}"
                 app:regionTextList="@{viewModel.interestRegionViewModel.regionTextList}" />
