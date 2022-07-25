@@ -95,38 +95,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:paddingVertical="1dp"
-            android:background="@drawable/ll_line_top_bot_g05"
-            android:layout_width="0dp"
-            android:layout_height="330dp"
+        <com.finpo.app.ui.common.RegionRecyclerView
+            android:id="@+id/region_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_live_area_none">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_region_all"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:listitem="@layout/item_recycler_region"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:layout_weight="3" />
-
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:background="@color/gray_g05" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_region_detail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_recycler_region_detail"/>
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@id/cl_live_area_none"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -55,11 +55,11 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
 
     private fun setRecyclerView() {
         additionalRegionAdapter.setHasStableIds(true)
-        binding.rvAdditionalRegionAll.adapter = additionalRegionAdapter
-        binding.rvAdditionalRegionAll.itemAnimator = null
+        binding.regionRecyclerview.rvRegionAll.adapter = additionalRegionAdapter
+        binding.regionRecyclerview.rvRegionAll.itemAnimator = null
 
         additionalRegionDetailAdapter.setHasStableIds(true)
-        binding.rvAdditionalRegionDetail.adapter = additionalRegionDetailAdapter
-        binding.rvAdditionalRegionDetail.itemAnimator = null
+        binding.regionRecyclerview.rvRegionDetail.adapter = additionalRegionDetailAdapter
+        binding.regionRecyclerview.rvRegionDetail.itemAnimator = null
     }
 }

@@ -33,12 +33,12 @@ class LivingAreaFragment : BaseFragment<FragmentLivingAreaBinding>(R.layout.frag
 
     private fun setRecyclerView() {
         regionAdapter.setHasStableIds(true)
-        binding.rvRegionAll.adapter = regionAdapter
-        binding.rvRegionAll.itemAnimator = null
+        binding.regionRecyclerview.rvRegionAll.adapter = regionAdapter
+        binding.regionRecyclerview.rvRegionAll.itemAnimator = null
 
         regionDetailAdapter.setHasStableIds(true)
-        binding.rvRegionDetail.adapter = regionDetailAdapter
-        binding.rvRegionDetail.itemAnimator = null
+        binding.regionRecyclerview.rvRegionDetail.adapter = regionDetailAdapter
+        binding.regionRecyclerview.rvRegionDetail.itemAnimator = null
     }
 
     private fun observeRecyclerViewData() {
