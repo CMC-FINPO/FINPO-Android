@@ -34,46 +34,50 @@ class FirebaseService : FirebaseMessagingService() {
         super.onMessageReceived(message)
 
         when(message.data["type"].toString()) {
-            POLICY -> {
-                val category = message.data["category"].toString()
-                val region = message.data["region"].toString()
-                val title = message.data["title"].toString()
-
-                notiTitle = "$region/$category"
-                notiBody = "새로 올라온 $title 정책을 확인해보시고 혜택 받아보세요!"
-                startId = R.id.policyDetailFragment
-                bulletinId = message.data["id"]?.toInt() ?: -1
-            }
-            COMMENT -> {
-                var post = message.data["postContent"].toString()
-                if(post.length > 10) post = post.substring(10) + "..."
-                startId = R.id.communityDetailFragment
-                bulletinId = message.data["postId"]?.toInt() ?: -1
-                notiTitle = "댓글 알림"
-                notiBody = "$post 글에 댓글이 달렸어요!"
-            }
-            CHILDCOMMENT -> {
-                var post = message.data["postContent"].toString()
-                if(post.length > 10) post = post.substring(10) + "..."
-                startId = R.id.communityDetailFragment
-                bulletinId = message.data["postId"]?.toInt() ?: -1
-                notiTitle = "대댓글 알림"
-                notiBody = "$post 글에 대댓글이 달렸어요!"
-            }
+            POLICY -> setPolicyNotiText(message)
+            COMMENT -> setCommentNotiText(message)
+            CHILDCOMMENT -> setChildCommentNotiText(message)
         }
 
         createNotificationChannel()
         sendNotification(notiTitle, notiBody)
     }
 
+    private fun setChildCommentNotiText(message: RemoteMessage) {
+        var post = message.data["postContent"].toString()
+        if (post.length > 10) post = post.substring(10) + "..."
+        startId = R.id.communityDetailFragment
+        bulletinId = message.data["postId"]?.toInt() ?: -1
+        notiTitle = "대댓글 알림"
+        notiBody = "$post 글에 대댓글이 달렸어요!"
+    }
+
+    private fun setCommentNotiText(message: RemoteMessage) {
+        var post = message.data["postContent"].toString()
+        if (post.length > 10) post = post.substring(10) + "..."
+        startId = R.id.communityDetailFragment
+        bulletinId = message.data["postId"]?.toInt() ?: -1
+        notiTitle = "댓글 알림"
+        notiBody = "$post 글에 댓글이 달렸어요!"
+    }
+
+    private fun setPolicyNotiText(message: RemoteMessage) {
+        val category = message.data["category"].toString()
+        val region = message.data["region"].toString()
+        val title = message.data["title"].toString()
+
+        notiTitle = "$region/$category"
+        notiBody = "새로 올라온 $title 정책을 확인해보시고 혜택 받아보세요!"
+        startId = R.id.policyDetailFragment
+        bulletinId = message.data["id"]?.toInt() ?: -1
+    }
+
     private fun createNotificationChannel() {
         val name = "name"
         val descriptionText = "description"
-        val importance = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            NotificationManager.IMPORTANCE_HIGH
-        } else {
-            NotificationCompat.PRIORITY_HIGH
-        }
+        val importance = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { NotificationManager.IMPORTANCE_HIGH }
+        else { NotificationCompat.PRIORITY_HIGH }
+
         val channel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel("channel", name, importance).apply {
                 description = descriptionText
