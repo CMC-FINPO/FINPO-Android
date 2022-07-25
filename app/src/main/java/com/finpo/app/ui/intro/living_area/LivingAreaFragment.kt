@@ -14,6 +14,7 @@ import com.finpo.app.model.remote.Region
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.intro.IntroViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.format
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,23 +42,20 @@ class LivingAreaFragment : BaseFragment<FragmentLivingAreaBinding>(R.layout.frag
         binding.regionRecyclerview.rvRegionDetail.itemAnimator = null
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun observeRecyclerViewData() {
-        viewModel.livingAreaLiveData.regionData.observe(viewLifecycleOwner) {
+        viewModel.livingAreaLiveData.livingRegionViewModel.regionData.observe(viewLifecycleOwner) {
             regionAdapter.submitList(it.data)
         }
 
-        viewModel.livingAreaLiveData.regionDetailData.observe(viewLifecycleOwner) {
+        viewModel.livingAreaLiveData.livingRegionViewModel.regionDetailData.observe(viewLifecycleOwner) {
             regionDetailAdapter.submitList(it.data)
+            regionAdapter.notifyDataSetChanged()
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun observeRecyclerViewEvent() {
-        viewModel.livingAreaLiveData.regionSelEvent.observe {
-            regionAdapter.notifyDataSetChanged()
-        }
-
-        viewModel.livingAreaLiveData.showRegionToastEvent.observe {
+        viewModel.livingAreaLiveData.livingRegionViewModel.chooseMaxToastEvent.observe {
             shortShowToast(getString(R.string.show_only_one_living_area))
         }
     }

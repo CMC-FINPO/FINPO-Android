@@ -18,9 +18,8 @@ class RegisterCompleteLiveData @Inject constructor(
     val additionalInfoButtonEvent: SingleLiveData<Boolean> = _additionalInfoButtonEvent
 
     fun setAdditionalRegionData() {
-        if(additionalRegionLiveData.additionalRegionData.value?.data.isNullOrEmpty()) {
-            additionalRegionLiveData.setAdditionalRegionData(livingAreaLiveData.regionData.value ?: RegionResponse(listOf()))
-            additionalRegionLiveData.setAdditionalRegionSel(livingAreaLiveData.regionData.value?.data?.get(0)?.id ?: 0)
+        if(additionalRegionLiveData.additionalRegionRegionViewModel.regionData.value?.data.isNullOrEmpty()) {
+            additionalRegionLiveData.additionalRegionRegionViewModel.getRegionDataByLocal(livingAreaLiveData.livingRegionViewModel.regionData.value ?: RegionResponse(listOf()))
         }
     }
 

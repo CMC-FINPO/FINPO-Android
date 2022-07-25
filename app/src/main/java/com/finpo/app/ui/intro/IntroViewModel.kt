@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.di.FinpoApplication
+import com.finpo.app.model.remote.RegionRequest
 import com.finpo.app.model.remote.TokenResponse
 import com.finpo.app.repository.EditRegionRepository
 import com.finpo.app.repository.IntroRepository
@@ -93,7 +94,9 @@ class IntroViewModel @Inject constructor(
 
     fun postAdditionalInfo() {
         viewModelScope.launch {
-            val additionalResponse = editRegionRepository.editMyInterestRegion(additionalRegionLiveData.additionalRegionDetailIdList)
+            val regionIds = additionalRegionLiveData.additionalRegionRegionViewModel.regionIds
+            val regionRequests = MutableList(regionIds.size) { RegionRequest(regionIds[it] ?: 0) }
+            val additionalResponse = editRegionRepository.editMyInterestRegion(regionRequests)
             val statusPurposeResponse = statusPurposeRepository.setStatusPurpose(
                 statusPurposeLiveData.statusSelectedId.value,
                 statusPurposeLiveData.purposeIds.value?.toList()
@@ -141,7 +144,7 @@ class IntroViewModel @Inject constructor(
             defaultInfoLiveData.nickNameInputText.value.toString().toPlainRequestBody()
         val birth = defaultInfoLiveData.birthText.value.toString().toPlainRequestBody()
         val gender = defaultInfoLiveData.gender.toPlainRequestBody()
-        val regionId = livingAreaLiveData.regionDetailSel.value.toString().toPlainRequestBody()
+        val regionId = livingAreaLiveData.livingRegionViewModel.regionIds[0].toString().toPlainRequestBody()
         val categories = Gson().toJson(interestLiveData.userInterestData.value?.toList())
         return hashMapOf(
             "name" to name, "nickname" to nickname, "birth" to birth, "gender" to gender,

@@ -33,9 +33,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@{data.name}"
-            regionSelectedId="@{viewModel.additionalRegionSel}"
+            regionSelectedId="@{viewModel.additionalRegionRegionViewModel.regionSel}"
             regionId="@{data.id}"
-            android:onClick="@{() -> viewModel.selectAdditionalRegion(data.id)}"
+            android:onClick="@{() -> viewModel.additionalRegionRegionViewModel.getRegionDetailData(data.id)}"
             tools:text="서울" />
 
         <TextView

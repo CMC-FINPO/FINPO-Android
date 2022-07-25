@@ -85,21 +85,21 @@ fun setIntroButtonText(textView: TextView, currentPage: Int) {
 }
 
 @BindingAdapter("currentPage", "isTermsConditionsButtonEnabled",
-    "isDefaultInfoButtonEnabled", "selectedDetailRegionText","userInterestData",
+    "isDefaultInfoButtonEnabled", "selectedDetailRegionSelCount","userInterestData",
     "isStatusPurposeButtonEnabled", "additionalRegionSelCount")
 fun setAgreeButtonEnabled(
     button: Button,
     currentPage: Int,
     isTermsConditionsButtonEnabled: Boolean,
     isDefaultInfoButtonEnabled: Boolean,
-    selectedDetailRegionText: String,
+    selectedDetailRegionSelCount: Int,
     userInterestData: MutableSet<CategoryId>,
     isStatusPurposeButtonEnabled: Boolean,
     additionalRegionSelCount: Int
 ) {
     button.isEnabled = (currentPage == AGREE && isTermsConditionsButtonEnabled) ||
             (currentPage == DEFAULT_INFO && isDefaultInfoButtonEnabled) ||
-            (currentPage == REGION && selectedDetailRegionText.isNotEmpty()) ||
+            (currentPage == REGION && selectedDetailRegionSelCount != 0) ||
             (currentPage == INTEREST && userInterestData.isNotEmpty()) ||
             (currentPage == REGISTRATION) ||
             (currentPage == STATE_PURPOSE && isStatusPurposeButtonEnabled) ||

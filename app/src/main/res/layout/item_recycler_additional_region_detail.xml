@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@{data.name}"
-            android:onClick="@{() -> viewModel.selectAdditionalRegionDetail(data.id, data.name)}"
+            android:onClick="@{() -> viewModel.additionalRegionRegionViewModel.selectEditRegionDetail(data.id, data.name)}"
             tools:text="서울" />
 
         <View
