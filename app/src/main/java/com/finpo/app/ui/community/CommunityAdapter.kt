@@ -39,11 +39,11 @@ class CommunityAdapter(val viewModel: CommunityViewModel)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
         if(payloads.isNullOrEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
-        } else (holder as PolicyHolder).setData(payloads[0] as WritingContent, position)
+        } else (holder as PolicyHolder).setData(payloads[0] as WritingContent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        currentList[position]?.let { (holder as PolicyHolder).setData(it, position) }
+        currentList[position]?.let { (holder as PolicyHolder).setData(it) }
     }
 
     inner class LoadingHolder(private val binding: ItemRecyclerPolicyLoadingBinding) :
@@ -51,10 +51,9 @@ class CommunityAdapter(val viewModel: CommunityViewModel)
 
     inner class PolicyHolder(private val binding: ItemRecyclerCommunityWritingBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun setData(data: WritingContent, position: Int) {
+        fun setData(data: WritingContent) {
             binding.data = data
             binding.viewModel = viewModel
-            binding.position = position
             binding.executePendingBindings()
         }
     }
