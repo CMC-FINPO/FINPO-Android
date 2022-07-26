@@ -136,6 +136,7 @@ class CommunityViewModel @Inject constructor(
         _goToPostFragmentEvent.setValue(true)
     }
 
+    //TODO REFACTOR 동일한 코드 전부 합치기
     fun checkContentChanged(data: WritingContent) {
         val position = _writingList.value?.indexOfFirst { data.id == it?.id } ?: return
         if(position == -1) return
