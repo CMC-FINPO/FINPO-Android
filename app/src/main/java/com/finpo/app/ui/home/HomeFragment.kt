@@ -42,8 +42,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         viewModel.policyList.observe(viewLifecycleOwner) {
             policyAdapter.submitList(it.toMutableList()) {
-                if(viewModel.paging.page.value == 1)
+                if(viewModel.paging.page.value == 1 && !viewModel.refreshedByBookmarked) {
                     binding.rvPolicy.scrollToPosition(0)
+                }
+                else viewModel.refreshedByBookmarked = false
             }
         }
 
@@ -86,9 +88,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             ?.observe(viewLifecycleOwner) {
                 viewModel.checkBookmarkChanged(it.first, it.second)
             }
-
-        viewModel.updateRecyclerViewItemEvent.observe {
-            policyAdapter.notifyItemChanged(it.first, it.second)
-        }
     }
 }

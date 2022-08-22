@@ -1,6 +1,5 @@
 package com.finpo.app.ui.home
 
-import android.util.Log
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -52,14 +51,13 @@ class HomeViewModel @Inject constructor(
     private val _goToDetailFragmentEvent = MutableSingleLiveData<Int>()
     val goToDetailFragmentEvent: SingleLiveData<Int> = _goToDetailFragmentEvent
 
-    private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, PolicyContent>>()
-    val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, PolicyContent>> = _updateRecyclerViewItemEvent
-
     private val _showBookmarkCountMaxToastEvent = MutableSingleLiveData<Boolean>()
     val showBookmarkCountMaxToastEvent: SingleLiveData<Boolean> = _showBookmarkCountMaxToastEvent
 
     val searchInputText = MutableLiveData<String>()
     var searchText = ""
+
+    var refreshedByBookmarked = false
 
     lateinit var regionIds: List<Int>
     lateinit var regionTextList: List<String>
@@ -171,27 +169,29 @@ class HomeViewModel @Inject constructor(
             if(!data.isInterest) {
                 val addInterestPolicyResponse = bookmarkRepository.addInterestPolicy(data.id)
                 addInterestPolicyResponse.onSuccess {
-                    data.isInterest = !data.isInterest
-                    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+                    updatePolicyInterest(position, !data.isInterest)
                 }.onError { if(statusCode.code == 400) _showBookmarkCountMaxToastEvent.setValue(true) }
-
             } else {
                 val deleteInterestPolicyResponse = bookmarkRepository.deleteInterestPolicy(data.id)
                 deleteInterestPolicyResponse.onSuccess {
-                    data.isInterest = !data.isInterest
-                    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+                    updatePolicyInterest(position, !data.isInterest)
                 }
             }
-
-            _policyList.value!![position]!!.isInterest = data.isInterest
         }
     }
 
     fun checkBookmarkChanged(id: Int, isBookmarked: Boolean) {
         val position = policyList.value?.indexOfFirst { it?.id == id } ?: return
         if(position == -1)   return
-        val data = policyList.value?.get(position)
-        data?.isInterest = isBookmarked
-        if(data != null) _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+
+        updatePolicyInterest(position, isBookmarked)
+    }
+
+    private fun updatePolicyInterest(position: Int, isBookmarked: Boolean) {
+        refreshedByBookmarked = true
+
+        val tempPolicyList = _policyList.value!!.deepCopy()
+        tempPolicyList[position]!!.isInterest = isBookmarked
+        _policyList.value = tempPolicyList
     }
 }
