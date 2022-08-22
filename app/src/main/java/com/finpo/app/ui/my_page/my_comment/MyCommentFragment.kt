@@ -23,7 +23,7 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
         binding.rvCommunity.adapter = commentAdapter
 
         //이미 onCreate에서 데이터가 초기화 되었고 바팀 네비게이션 아이템을 클릭한 경우에만 데이터 갱신
-        if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedItem)
+        if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedBottomNavigationItem)
             viewModel.myCommentLiveData.changeMyComment()
 
         viewModel.myCommentLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {

@@ -2,7 +2,6 @@ package com.finpo.app.ui.home
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -37,49 +36,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        policyAdapter = PolicyAdapter(viewModel)
-        binding.rvPolicy.adapter = policyAdapter
+        initRecyclerView()
+        observeRecyclerView()
 
-        viewModel.policyList.observe(viewLifecycleOwner) {
-            policyAdapter.submitList(it.toMutableList()) {
-                if(viewModel.paging.page.value == 1 && !viewModel.refreshedByBookmarked) {
-                    binding.rvPolicy.scrollToPosition(0)
-                }
-                else viewModel.refreshedByBookmarked = false
-            }
-        }
+        observeBookmarkCountMax()
 
-        viewModel.showBookmarkCountMaxToastEvent.observe {
-            longShowToast(getString(R.string.bookmark_max_msg))
-        }
-
-        viewModel.goToFilterFragmentEvent.observe {
-            val action = HomeFragmentDirections.actionHomeFragmentToFilterFragment(viewModel.regionTextList.toTypedArray(), viewModel.categoryIds.toIntArray(), viewModel.regionIds.toIntArray())
-            findNavController().navigate(action)
-        }
-
-        viewModel.goToDetailFragmentEvent.observe { id ->
-            val action = NavGraphDirections.actionGlobalPolicyDetailFragment(id)
-            findNavController().navigate(action)
-        }
+        observeGoToFilterFragmentEvent()
+        observeGoToDetailFragmentEvent()
 
         val bottomDialogFragment = BottomSheetPolicySortDialog(viewModel)
 
-        viewModel.bottomSheetShowEvent.observe {
-            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
-        }
+        observeBottomSheetShowEvent(bottomDialogFragment)
+        observeBottomSheetDismissEvent(bottomDialogFragment)
 
-        viewModel.bottomSheetDismissEvent.observe {
-            bottomDialogFragment.dismiss()
-        }
+        observeKeyBoardSearchEvent()
 
-        viewModel.keyBoardSearchEvent.observe {
-            val inputMethodManager =
-                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
-        }
-
-        if((activity as MainActivity).isMovedHomeBySelectedItem) {
+        if((activity as MainActivity).isMovedHomeBySelectedBottomNavigationItem) {
             viewModel.clearPolicy()
             viewModel.changePolicy()
         }
@@ -88,5 +60,67 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             ?.observe(viewLifecycleOwner) {
                 viewModel.checkBookmarkChanged(it.first, it.second)
             }
+    }
+
+    private fun observeKeyBoardSearchEvent() {
+        viewModel.keyBoardSearchEvent.observe {
+            val inputMethodManager =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+        }
+    }
+
+    private fun observeBottomSheetDismissEvent(bottomDialogFragment: BottomSheetPolicySortDialog) {
+        viewModel.bottomSheetDismissEvent.observe {
+            bottomDialogFragment.dismiss()
+        }
+    }
+
+    private fun observeBottomSheetShowEvent(bottomDialogFragment: BottomSheetPolicySortDialog) {
+        viewModel.bottomSheetShowEvent.observe {
+            bottomDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                bottomDialogFragment.tag
+            )
+        }
+    }
+
+    private fun observeGoToDetailFragmentEvent() {
+        viewModel.goToDetailFragmentEvent.observe { id ->
+            val action = NavGraphDirections.actionGlobalPolicyDetailFragment(id)
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun observeGoToFilterFragmentEvent() {
+        viewModel.goToFilterFragmentEvent.observe {
+            val action = HomeFragmentDirections.actionHomeFragmentToFilterFragment(
+                viewModel.regionTextList.toTypedArray(),
+                viewModel.categoryIds.toIntArray(),
+                viewModel.regionIds.toIntArray()
+            )
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun observeBookmarkCountMax() {
+        viewModel.showBookmarkCountMaxToastEvent.observe {
+            longShowToast(getString(R.string.bookmark_max_msg))
+        }
+    }
+
+    private fun observeRecyclerView() {
+        viewModel.policyList.observe(viewLifecycleOwner) {
+            policyAdapter.submitList(it.toMutableList()) {
+                if (viewModel.paging.page.value == 1 && !viewModel.refreshedByBookmarked) {
+                    binding.rvPolicy.scrollToPosition(0)
+                } else viewModel.refreshedByBookmarked = false
+            }
+        }
+    }
+
+    private fun initRecyclerView() {
+        policyAdapter = PolicyAdapter(viewModel)
+        binding.rvPolicy.adapter = policyAdapter
     }
 }
