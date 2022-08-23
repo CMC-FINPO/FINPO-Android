@@ -12,10 +12,7 @@ import com.finpo.app.repository.CommunityRepository
 import com.finpo.app.repository.ReportRepository
 import com.finpo.app.ui.common.BaseViewModel
 import com.finpo.app.ui.common.CommunityLikeBookmarkViewModel
-import com.finpo.app.utils.MutableSingleLiveData
-import com.finpo.app.utils.POST
-import com.finpo.app.utils.Paging
-import com.finpo.app.utils.SingleLiveData
+import com.finpo.app.utils.*
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
@@ -88,9 +85,6 @@ class CommunityDetailViewModel @Inject constructor(
     private val _isReplyMode = MutableLiveData(false)
     val isReplyMode: LiveData<Boolean> = _isReplyMode
 
-    private val _updateCommentItem = MutableSingleLiveData<Pair<Int, CommentContent>>()
-    val updateCommentItem : SingleLiveData<Pair<Int, CommentContent>> = _updateCommentItem
-
     private val _dismissPopupEvent = MutableSingleLiveData<Boolean>()
     val dismissPopupEvent: SingleLiveData<Boolean> = _dismissPopupEvent
 
@@ -105,7 +99,10 @@ class CommunityDetailViewModel @Inject constructor(
     private var reportBlockType = 0
     private var reportBlockId = 0
     private var commentParentId = 0
-    private var isRetriedInitData = false
+
+    fun updateWritingContent(data: WritingContent) {
+        _writingContent.value = data
+    }
 
     fun setReplyMode(data: CommentContent) {
         _keyBoardShowEvent.setValue(true)
@@ -133,11 +130,11 @@ class CommunityDetailViewModel @Inject constructor(
             val position = _commentList.value?.indexOfFirst { it?.id == commentParentId } ?: -1
             if (position == -1) return@onSuccess
 
-            if(_commentList.value?.get(position)?.childs == null) _commentList.value?.get(position)?.childs = mutableListOf()
+            val tempCommentList = _commentList.value?.deepCopy()
+            if(tempCommentList?.get(position)?.childs == null) tempCommentList?.get(position)?.childs = mutableListOf()
 
-            _commentList.value?.get(position)?.childs?.add(data.data)
-            val updateData = _commentList.value?.get(position) ?: return@onSuccess
-            _updateCommentItem.setValue(Pair(position, updateData))
+            tempCommentList?.get(position)?.childs?.add(data.data)
+            _commentList.value = tempCommentList!!
 
             _isReplyMode.value = false
             comment.value = ""
@@ -256,18 +253,11 @@ class CommunityDetailViewModel @Inject constructor(
         _moreClickEvent.setValue(true)
     }
 
-    //TODO 코루틴 학습 후 리팩토링
     fun getInitData() {
         viewModelScope.launch {
             val detailResponse = communityRepository.getWritingDetail(detailId)
             detailResponse.onSuccess {
                 _writingContent.value = data.data
-            }.suspendOnFailure {
-                if(!isRetriedInitData) {
-                    delay(500L)
-                    isRetriedInitData = true
-                    getInitData()
-                }
             }
 
             changeComment()

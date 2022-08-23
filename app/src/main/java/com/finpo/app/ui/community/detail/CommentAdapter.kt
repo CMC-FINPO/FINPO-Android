@@ -44,12 +44,6 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
-        if(payloads.isNullOrEmpty()) {
-            super.onBindViewHolder(holder, position, payloads)
-        } else (holder as CommentHolder).setData(payloads[0] as CommentContent)
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         currentList[position]?.let { (holder as CommentHolder).setData(it) }
     }

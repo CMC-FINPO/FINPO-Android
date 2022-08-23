@@ -36,12 +36,6 @@ class CommunityAdapter(val viewModel: CommunityViewModel)
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
-        if(payloads.isNullOrEmpty()) {
-            super.onBindViewHolder(holder, position, payloads)
-        } else (holder as PolicyHolder).setData(payloads[0] as WritingContent)
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         currentList[position]?.let { (holder as PolicyHolder).setData(it) }
     }

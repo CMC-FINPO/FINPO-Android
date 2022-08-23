@@ -10,10 +10,7 @@ import com.finpo.app.repository.CommunityRepository
 import com.finpo.app.ui.common.BaseViewModel
 import com.finpo.app.ui.common.CommunityLikeBookmarkViewModel
 import com.finpo.app.ui.community.search.CommunitySearchLiveData
-import com.finpo.app.utils.MutableSingleLiveData
-import com.finpo.app.utils.Paging
-import com.finpo.app.utils.SORT_COMMUNITY
-import com.finpo.app.utils.SingleLiveData
+import com.finpo.app.utils.*
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -54,8 +51,7 @@ class CommunityViewModel @Inject constructor(
     private val _searchClickEvent = MutableSingleLiveData<Boolean>()
     val searchClickEvent: SingleLiveData<Boolean> = _searchClickEvent
 
-    private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, WritingContent>>()
-    val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, WritingContent>> = _updateRecyclerViewItemEvent
+    var refreshedByContentChanged = false
 
     fun searchClick() {
         _searchClickEvent.setValue(true)
@@ -86,7 +82,7 @@ class CommunityViewModel @Inject constructor(
         _refreshed.value = false
     }
 
-    fun clearWriting() {
+    private fun clearWriting() {
         _writingSize.value = 0
         _writingList.value = listOf()
     }
@@ -136,20 +132,12 @@ class CommunityViewModel @Inject constructor(
         _goToPostFragmentEvent.setValue(true)
     }
 
-    //TODO REFACTOR 동일한 코드 전부 합치기
     fun checkContentChanged(data: WritingContent) {
         val position = _writingList.value?.indexOfFirst { data.id == it?.id } ?: return
         if(position == -1) return
-        _writingList.value?.get(position)?.apply {
-            isLiked = data.isLiked
-            likes = data.likes
-            isBookmarked = data.isBookmarked
-            countOfComment = data.countOfComment
-            content = data.content
-            isModified = data.isModified
-            modifiedAt = data.modifiedAt
-            hits = data.hits
-        }
-        _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+        val tempWritingList = _writingList.value?.deepCopy()
+        tempWritingList?.set(position, data)
+        _writingList.value = tempWritingList!!
+        refreshedByContentChanged = true
     }
 }

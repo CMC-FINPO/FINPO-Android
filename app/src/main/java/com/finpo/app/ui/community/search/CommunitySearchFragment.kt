@@ -45,10 +45,6 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
         viewModel.likeBookmarkViewModel.updateRecyclerView.observe { data ->
             viewModel.checkContentChanged(data)
         }
-
-        viewModel.updateRecyclerViewItemEvent.observe {
-            communityAdapter.notifyItemChanged(it.first, it.second)
-        }
     }
 
     private fun observeKeyBoardSearchEvent() {
@@ -75,8 +71,9 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
     private fun observeRecyclerView() {
         viewModel.writingList.observe(viewLifecycleOwner) {
             communityAdapter.submitList(it.toMutableList()) {
-                if (viewModel.paging.page.value == 1)
+                if (viewModel.paging.page.value == 1 && !viewModel.refreshedByContentChanged)
                     binding.rvCommunity.scrollToPosition(0)
+                viewModel.refreshedByContentChanged = false
             }
         }
     }
