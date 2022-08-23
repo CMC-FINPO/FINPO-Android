@@ -21,7 +21,7 @@ import javax.inject.Inject
 class BookmarkViewModel @Inject constructor(
     private val myInfoRepository: MyInfoRepository,
     private val bookmarkRepository: BookmarkRepository
-): ViewModel() {
+) : ViewModel() {
     private val _nickname = MutableLiveData("")
     val nickname: LiveData<String> = _nickname
 
@@ -37,31 +37,40 @@ class BookmarkViewModel @Inject constructor(
     private val _goToDetailFragmentEvent = MutableSingleLiveData<Int>()
     val goToDetailFragmentEvent: SingleLiveData<Int> = _goToDetailFragmentEvent
 
-    //TODO 코루틴 공부 후 리팩토링
     fun getInitData() {
-        viewModelScope.launch {
-            val myInfoResponse = myInfoRepository.getMyInfo()
-            if(myInfoResponse !is ApiResponse.Success) return@launch
-            _nickname.value = myInfoResponse.data.data.nickname ?: ""
+        getMyInfo()
+        getMyCategory()
+        getMyInterestPolicy()
+    }
 
-            val myCategoryResponse = myInfoRepository.getMyParentCategory()
-            if(myCategoryResponse !is ApiResponse.Success) return@launch
-            _categoryData.value = myCategoryResponse.data.data
+    private fun getMyInfo() = viewModelScope.launch {
+        val myInfoResponse = myInfoRepository.getMyInfo()
+        if (myInfoResponse !is ApiResponse.Success) return@launch
+        _nickname.value = myInfoResponse.data.data.nickname ?: ""
+    }
 
-            val myInterestPolicyResponse = myInfoRepository.getMyInterestPolicy()
-            if(myInterestPolicyResponse !is ApiResponse.Success) return@launch
-            _policyList.value = MutableList(myInterestPolicyResponse.data.data.size) { myInterestPolicyResponse.data.data[it].policy!! }
-            _policySize.value = myInterestPolicyResponse.data.data.size
-        }
+    private fun getMyCategory() = viewModelScope.launch {
+        val myCategoryResponse = myInfoRepository.getMyParentCategory()
+        if (myCategoryResponse !is ApiResponse.Success) return@launch
+        _categoryData.value = myCategoryResponse.data.data
+    }
+
+    private fun getMyInterestPolicy() = viewModelScope.launch {
+        val myInterestPolicyResponse = myInfoRepository.getMyInterestPolicy()
+        if (myInterestPolicyResponse !is ApiResponse.Success) return@launch
+        _policyList.value =
+            MutableList(myInterestPolicyResponse.data.data.size) { myInterestPolicyResponse.data.data[it].policy!! }
+        _policySize.value = myInterestPolicyResponse.data.data.size
     }
 
     fun deleteInterestPolicy(data: PolicyContent) {
         viewModelScope.launch {
             val deleteInterestPolicyResponse = bookmarkRepository.deleteInterestPolicy(data.id)
             deleteInterestPolicyResponse.onSuccess {
-                _policyList.value?.remove(data)
-                _policyList.value = _policyList.value
-                _policySize.value = _policyList.value?.size ?: 0
+                val tempPolicyList = _policyList.value
+                tempPolicyList?.remove(data)
+                _policyList.value = tempPolicyList!!
+                _policySize.value = tempPolicyList.size
             }
         }
     }
