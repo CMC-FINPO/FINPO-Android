@@ -34,12 +34,6 @@ class PolicyAdapter(val viewModel: HomeViewModel)
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
-        if(payloads.isNullOrEmpty()) {
-            super.onBindViewHolder(holder, position, payloads)
-        } else (holder as PolicyHolder).setData(payloads[0] as PolicyContent, position)
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         currentList[position]?.let { (holder as PolicyHolder).setData(it, position) }
     }

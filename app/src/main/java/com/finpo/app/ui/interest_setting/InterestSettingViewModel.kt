@@ -13,6 +13,7 @@ import com.finpo.app.utils.addSourceList
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +22,7 @@ class InterestSettingViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val myInfoRepository: MyInfoRepository,
     private val statusPurposeRepository: StatusPurposeRepository
-): ViewModel() {
+) : ViewModel() {
     private val _interestCategoryData = MutableLiveData<List<CategoryChildFormat>>()
     val interestCategoryData: LiveData<List<CategoryChildFormat>> = _interestCategoryData
 
@@ -49,8 +50,8 @@ class InterestSettingViewModel @Inject constructor(
         }
     }
 
-    private fun isEditInterestValid(): Boolean
-            = !_userCategoryData.value.isNullOrEmpty() && !_purposeIds.value.isNullOrEmpty()
+    private fun isEditInterestValid(): Boolean =
+        !_userCategoryData.value.isNullOrEmpty() && !_purposeIds.value.isNullOrEmpty()
 
     init {
         _purposeIds.value = mutableSetOf()
@@ -58,24 +59,39 @@ class InterestSettingViewModel @Inject constructor(
     }
 
     //TODO REFACTOR
-    private fun getInitData() {
+    private fun getInitData() =
         viewModelScope.launch {
-            val myCategoryResponse = myInfoRepository.getMyCategory()
-            if(myCategoryResponse !is ApiResponse.Success)  return@launch
-            _userCategoryData.value = List(myCategoryResponse.data.data.size) { CategoryRequest(myCategoryResponse.data.data[it].category.id) }
+            getMyCategory()
+            getMyPurpose()
+            joinAll(getMyCategory(), getMyPurpose())
+            getCategories()
+            getPurposes()
+        }
 
-            val myPurposeResponse = myInfoRepository.getMyPurpose()
-            if(myPurposeResponse !is ApiResponse.Success)     return@launch
-            _purposeIds.value = myPurposeResponse.data.data.toMutableSet()
 
-            val categoryResponse = categoryRepository.getCategoryChildFormat()
-            if(categoryResponse !is ApiResponse.Success)    return@launch
-            _interestCategoryData.value = categoryResponse.data.data
+    private fun getMyCategory() = viewModelScope.launch {
+        val myCategoryResponse = myInfoRepository.getMyCategory()
+        if (myCategoryResponse !is ApiResponse.Success) return@launch
+        _userCategoryData.value =
+            List(myCategoryResponse.data.data.size) { CategoryRequest(myCategoryResponse.data.data[it].category.id) }
+    }
 
-            val purposeResponse = statusPurposeRepository.getPurposeList()
-            purposeResponse.onSuccess {
-                _purposeData.value = data.data
-            }
+    private fun getMyPurpose() = viewModelScope.launch {
+        val myPurposeResponse = myInfoRepository.getMyPurpose()
+        if (myPurposeResponse !is ApiResponse.Success) return@launch
+        _purposeIds.value = myPurposeResponse.data.data.toMutableSet()
+    }
+
+    private fun getCategories() = viewModelScope.launch {
+        val categoryResponse = categoryRepository.getCategoryChildFormat()
+        if (categoryResponse !is ApiResponse.Success) return@launch
+        _interestCategoryData.value = categoryResponse.data.data
+    }
+
+    private fun getPurposes() = viewModelScope.launch {
+        val purposeResponse = statusPurposeRepository.getPurposeList()
+        purposeResponse.onSuccess {
+            _purposeData.value = data.data
         }
     }
 
@@ -87,7 +103,7 @@ class InterestSettingViewModel @Inject constructor(
     }
 
     fun purposeClick(id: Int) {
-        if(id in _purposeIds.value!!)    _purposeIds.value!!.remove(id)
+        if (id in _purposeIds.value!!) _purposeIds.value!!.remove(id)
         else _purposeIds.value!!.add(id)
 
         _purposeIds.value = _purposeIds.value
@@ -95,9 +111,11 @@ class InterestSettingViewModel @Inject constructor(
 
     fun selectBtnClick() {
         viewModelScope.launch {
-            val statusPurposeResponse = statusPurposeRepository.setStatusPurpose(purposeIds = purposeIds.value?.toList())
-            val editMyCategoryResponse = myInfoRepository.editMyCategory(_userCategoryData.value ?: listOf())
-            if(statusPurposeResponse is ApiResponse.Success && editMyCategoryResponse is ApiResponse.Success)
+            val statusPurposeResponse =
+                statusPurposeRepository.setStatusPurpose(purposeIds = purposeIds.value?.toList())
+            val editMyCategoryResponse =
+                myInfoRepository.editMyCategory(_userCategoryData.value ?: listOf())
+            if (statusPurposeResponse is ApiResponse.Success && editMyCategoryResponse is ApiResponse.Success)
                 _goToMyInfoFragmentEvent.setValue(true)
         }
     }
