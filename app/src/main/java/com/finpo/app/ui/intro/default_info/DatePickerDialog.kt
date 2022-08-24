@@ -7,9 +7,9 @@ import java.util.*
 
 class DatePickerDialog {
     private val c: Calendar = Calendar.getInstance()
-    var mYear: Int = c.get(Calendar.YEAR) - 20
-    var mMonth: Int = c.get(Calendar.MONTH)
-    var mDay: Int = c.get(Calendar.DAY_OF_MONTH)
+    private var mYear: Int = c.get(Calendar.YEAR) - 20
+    private var mMonth: Int = c.get(Calendar.MONTH)
+    private var mDay: Int = c.get(Calendar.DAY_OF_MONTH)
 
     fun showDatePickerDialog(context: Context, viewModel: IntroViewModel) {
 

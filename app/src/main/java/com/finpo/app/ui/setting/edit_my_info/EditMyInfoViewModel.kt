@@ -33,7 +33,7 @@ class EditMyInfoViewModel @Inject constructor(
                 defaultInfoLiveData.nameInputText.value = data.data.name
                 defaultNickname = data.data.nickname ?: ""
                 defaultInfoLiveData.nickNameInputText.value = data.data.nickname
-                defaultInfoLiveData._birthText.value = data.data.birth
+                defaultInfoLiveData.birthText.value = data.data.birth
                 when (data.data.gender) {
                     "MALE" -> defaultInfoLiveData.isMaleRadioButtonChecked.value = true
                     else -> defaultInfoLiveData.isFemaleRadioButtonChecked.value = true
@@ -44,8 +44,8 @@ class EditMyInfoViewModel @Inject constructor(
 
     fun afterNicknameTextChanged() {
         if (defaultInfoLiveData.nickNameInputText.value == defaultNickname) {
-            defaultInfoLiveData._isNicknameOverlap.value = false
-            defaultInfoLiveData._isNicknameError.value = false
+            defaultInfoLiveData.isNicknameOverlap.value = false
+            defaultInfoLiveData.isNicknameError.value = false
             return
         }
 

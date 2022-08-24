@@ -58,7 +58,6 @@ class InterestSettingViewModel @Inject constructor(
         getInitData()
     }
 
-    //TODO REFACTOR
     private fun getInitData() =
         viewModelScope.launch {
             getMyCategory()
