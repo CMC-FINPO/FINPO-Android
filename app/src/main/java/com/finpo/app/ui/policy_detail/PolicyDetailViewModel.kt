@@ -53,7 +53,6 @@ class PolicyDetailViewModel @Inject constructor(
     val participationPolicyMemo = MutableLiveData<String>()
 
     private var participationPolicyId = 0
-    private var isRetriedInitData = false
 
     fun addParticipationPolicyMemo() {
         viewModelScope.launch {
@@ -112,12 +111,6 @@ class PolicyDetailViewModel @Inject constructor(
             val policyDetailResponse = policyDetailRepository.getPolicyDetail(id)
             policyDetailResponse.onSuccess {
                 _policyDetailData.value = data.data!!
-            }.suspendOnFailure {
-                if(!isRetriedInitData) {
-                    delay(500L)
-                    isRetriedInitData = true
-                    getPolicyDetail(id)
-                }
             }
         }
     }

@@ -57,7 +57,6 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
             binding.data = data
             binding.viewModel = viewModel
 
-            //TODO MVVM 적용 시킬 방법이 안떠오름 ...
             if(data.status)
             binding.ivMore.setOnClickListener {
                 commentPopup = PopupWindowUtil(binding.root.context).commentPopupWindow(viewModel, data, it)
