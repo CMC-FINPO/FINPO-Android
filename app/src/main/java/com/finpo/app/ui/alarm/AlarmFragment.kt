@@ -80,6 +80,5 @@ class AlarmFragment : BaseFragment<FragmentAlarmBinding>(R.layout.fragment_alarm
     private fun initRecyclerView() {
         alarmAdapter = AlarmAdapter(viewModel)
         binding.rvAlarm.adapter = alarmAdapter
-        binding.rvAlarm.itemAnimator = null
     }
 }

@@ -1,6 +1,5 @@
 package com.finpo.app.ui.my_page.my_writing
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.finpo.app.R
@@ -21,7 +20,7 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(R.layout.fragme
         binding.lifecycleOwner = viewLifecycleOwner
 
         //이미 onCreate에서 데이터가 초기화 되었고 바팀 네비게이션 아이템을 클릭한 경우에만 데이터 갱신
-        if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedItem)
+        if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedBottomNavigationItem)
             viewModel.myWritingLiveData.changeMyWriting()
 
         writingAdapter = WritingAdapter(viewModel)
@@ -50,9 +49,5 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(R.layout.fragme
             ?.observe(viewLifecycleOwner) { data ->
                 viewModel.myWritingLiveData.checkContentChanged(data)
             }
-
-        viewModel.myWritingLiveData.updateRecyclerViewItemEvent.observe {
-            writingAdapter.notifyItemChanged(it.first, it.second)
-        }
     }
 }

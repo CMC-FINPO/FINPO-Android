@@ -29,24 +29,21 @@ class DefaultInfoLiveData @Inject constructor(
     private val _nickNameErrorText = MutableLiveData<Int?>()
     val nickNameErrorText: LiveData<Int?> = _nickNameErrorText
 
-    val _isNicknameError = MutableLiveData<Boolean>()
-    val isNicknameError: LiveData<Boolean> = _isNicknameError
+    val isNicknameError = MutableLiveData<Boolean>()
 
-    internal val _isNicknameOverlap = MutableLiveData<Boolean>()
-    val isNicknameOverlap: LiveData<Boolean> = _isNicknameOverlap
+    val isNicknameOverlap = MutableLiveData<Boolean>()
 
     private val _showDatePickerDialog = MutableSingleLiveData<Boolean>()
     val showDatePickerDialog: SingleLiveData<Boolean> = _showDatePickerDialog
 
-    val _birthText = MutableLiveData<String>()
-    val birthText: LiveData<String> = _birthText
+    val birthText = MutableLiveData<String>()
 
     val isFemaleRadioButtonChecked = MutableLiveData<Boolean>()
     val isMaleRadioButtonChecked = MutableLiveData<Boolean>()
 
     val isDefaultInfoButtonEnabled = MediatorLiveData<Boolean>().apply {
-        addSourceList(nameInputText, _isNameError, nickNameInputText, _isNicknameError,
-        _isNicknameOverlap, _birthText, isFemaleRadioButtonChecked, isMaleRadioButtonChecked) {
+        addSourceList(nameInputText, _isNameError, nickNameInputText, isNicknameError,
+        isNicknameOverlap, birthText, isFemaleRadioButtonChecked, isMaleRadioButtonChecked) {
             isDefaultInfoValid()
         }
     }
@@ -67,12 +64,12 @@ class DefaultInfoLiveData @Inject constructor(
     init {
         nameInputText.value = ""
         nickNameInputText.value = ""
-        _birthText.value = ""
-        _isNicknameOverlap.value = true
+        birthText.value = ""
+        isNicknameOverlap.value = true
     }
 
     fun setBirth(birth: String) {
-        _birthText.value = birth
+        birthText.value = birth
     }
 
     fun afterNameTextChanged() {
@@ -83,9 +80,9 @@ class DefaultInfoLiveData @Inject constructor(
 
     fun afterNicknameTextChanged() {
         var debounceJob: Job? = null
-        _isNicknameOverlap.value = true
+        isNicknameOverlap.value = true
         nickNameInputText.value?.let { nickNameText ->
-            verifyNameLength(nickNameText, _nickNameErrorText, _isNicknameError)
+            verifyNameLength(nickNameText, _nickNameErrorText, isNicknameError)
             debounceJob?.cancel()
             if (lastNicknameInput == nickNameText) return
             lastNicknameInput = nickNameText
@@ -93,7 +90,7 @@ class DefaultInfoLiveData @Inject constructor(
                 delay(500L)
 
                 if (!(lastNicknameInput == nickNameText && nickNameText.isNotBlank())) {
-                    _isNicknameOverlap.value = true
+                    isNicknameOverlap.value = true
                     return@launch
                 }
 
@@ -104,10 +101,10 @@ class DefaultInfoLiveData @Inject constructor(
 
                 if (isOverlap) {
                     _nickNameErrorText.value = R.string.is_overlap_nickname
-                    _isNicknameError.value = true
-                } else if (!isOverlap && _isNicknameError.value == false) _nickNameErrorText.value = null
+                    isNicknameError.value = true
+                } else if (!isOverlap && isNicknameError.value == false) _nickNameErrorText.value = null
 
-                _isNicknameOverlap.value = isOverlap
+                isNicknameOverlap.value = isOverlap
             }
 
         }

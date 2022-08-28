@@ -20,10 +20,6 @@ class InterestPolicyAdapter(val viewModel: BookmarkViewModel)
         currentList[position]?.let { holder.setData(it) }
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
     inner class PolicyHolder(private val binding: ItemRecyclerInterestPolicyBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun setData(data: PolicyContent) {

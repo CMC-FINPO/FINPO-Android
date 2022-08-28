@@ -22,7 +22,8 @@ class CommunityLikeBookmarkViewModel @Inject constructor(
     private val _bookmarkMaxToastEvent = MutableSingleLiveData<Boolean>()
     val bookmarkMaxToastEvent: SingleLiveData<Boolean> = _bookmarkMaxToastEvent
 
-    fun likeClick(data: WritingContent) {
+    fun likeClick(tempData: WritingContent) {
+        val data = tempData.copy()
         if(data.isMine == true) _likeClickErrorToastEvent.setValue(true)
 
         viewModelScope.launch {
@@ -37,8 +38,8 @@ class CommunityLikeBookmarkViewModel @Inject constructor(
         }
     }
 
-    fun bookmarkClick(data: WritingContent) {
-
+    fun bookmarkClick(tempData: WritingContent) {
+        val data = tempData.copy()
         viewModelScope.launch {
             val response =
                 if (data.isBookmarked == true) communityRepository.deleteWritingBookmark(data.id)

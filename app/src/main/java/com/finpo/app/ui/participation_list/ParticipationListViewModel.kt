@@ -5,15 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.ParticipationPolicy
-import com.finpo.app.model.remote.PolicyContent
 import com.finpo.app.repository.BookmarkRepository
 import com.finpo.app.repository.MyInfoRepository
 import com.finpo.app.repository.PolicyDetailRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
-import com.skydoves.sandwich.ApiResponse
+import com.finpo.app.utils.deepCopy
 import com.skydoves.sandwich.onError
-import com.skydoves.sandwich.onFailure
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -37,8 +35,8 @@ class ParticipationListViewModel @Inject constructor(
     private val _isDeleteMode = MutableLiveData<Boolean>()
     val isDeleteMode: LiveData<Boolean> = _isDeleteMode
 
-    private val _deleteBtnClickEvent = MutableSingleLiveData<Boolean>()
-    val deleteBtnClickEvent: SingleLiveData<Boolean> = _deleteBtnClickEvent
+    private val _changeToDeleteModeEvent = MutableSingleLiveData<Boolean>()
+    val changeToDeleteModeEvent: SingleLiveData<Boolean> = _changeToDeleteModeEvent
 
     private val _deleteItemClickEvent = MutableSingleLiveData<ParticipationPolicy>()
     val deleteItemClickEvent: SingleLiveData<ParticipationPolicy> = _deleteItemClickEvent
@@ -56,9 +54,6 @@ class ParticipationListViewModel @Inject constructor(
 
     private val _dismissBottomSheetEvent = MutableSingleLiveData<Boolean>()
     val dismissBottomSheetEvent: SingleLiveData<Boolean> = _dismissBottomSheetEvent
-
-    private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, ParticipationPolicy>>()
-    val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, ParticipationPolicy>> = _updateRecyclerViewItemEvent
 
     private val _showBookmarkCountMaxToastEvent = MutableSingleLiveData<Boolean>()
     val showBookmarkCountMaxToastEvent: SingleLiveData<Boolean> = _showBookmarkCountMaxToastEvent
@@ -104,9 +99,9 @@ class ParticipationListViewModel @Inject constructor(
             editMemoResponse.onSuccess {
                 val changeIdx = _policyList.value?.indexOfFirst { it.id == _memoId.value } ?: -1
                 if(changeIdx == -1) return@onSuccess
-                _policyList.value!![changeIdx].memo = editMemoText.value
-                _policyList.value = _policyList.value
-                _updateRecyclerViewItemEvent.setValue(Pair(changeIdx, _policyList.value!![changeIdx]))
+                val tempPolicyList = _policyList.value!!.deepCopy()
+                tempPolicyList[changeIdx].memo = editMemoText.value
+                _policyList.value = tempPolicyList
                 _dismissBottomSheetEvent.setValue(true)
             }
         }
@@ -114,7 +109,7 @@ class ParticipationListViewModel @Inject constructor(
 
     fun deleteClick() {
         _isDeleteMode.value = !_isDeleteMode.value!!
-        _deleteBtnClickEvent.setValue(true)
+        _changeToDeleteModeEvent.setValue(true)
     }
 
     fun deleteItemClick(data: ParticipationPolicy) {
@@ -125,8 +120,9 @@ class ParticipationListViewModel @Inject constructor(
         viewModelScope.launch {
             val deleteResponse = myInfoRepository.deleteMyParticipationPolicy(data.id)
             deleteResponse.onSuccess {
-                _policyList.value?.remove(data)
-                _policyList.value = _policyList.value
+                val tempPolicyList = _policyList.value!!.deepCopy()
+                tempPolicyList.remove(data)
+                _policyList.value = tempPolicyList
                 _policySize.value = _policySize.value?.minus(1)
             }
         }
@@ -142,21 +138,17 @@ class ParticipationListViewModel @Inject constructor(
         }
     }
 
-    fun bookmarkClick(data: ParticipationPolicy, position: Int) {
+    fun bookmarkClick(tempData: ParticipationPolicy) {
+        val data = tempData.copy()
         viewModelScope.launch {
-            if(data.policy?.isInterest == false) {
-                val addInterestPolicyResponse = bookmarkRepository.addInterestPolicy(data.policy.id)
-                addInterestPolicyResponse.onSuccess {
-                    data.policy.isInterest = !data.policy.isInterest
-                    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
-                }.onError { if(statusCode.code == 400) _showBookmarkCountMaxToastEvent.setValue(true) }
-            } else {
-                val deleteInterestPolicyResponse = bookmarkRepository.deleteInterestPolicy(data.policy!!.id)
-                deleteInterestPolicyResponse.onSuccess {
-                    data.policy.isInterest = !data.policy.isInterest
-                    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
-                }
-            }
+            val response = if(data.policy?.isInterest == false) bookmarkRepository.addInterestPolicy(data.policy.id)
+            else bookmarkRepository.deleteInterestPolicy(data.policy!!.id)
+
+            response.onSuccess {
+                val tempPolicyList = _policyList.value!!.deepCopy()
+                tempPolicyList.find { it == data }?.policy?.isInterest = !data.policy.isInterest
+                _policyList.value = tempPolicyList
+            }.onError { if(statusCode.code == 400) _showBookmarkCountMaxToastEvent.setValue(true) }
         }
     }
 }

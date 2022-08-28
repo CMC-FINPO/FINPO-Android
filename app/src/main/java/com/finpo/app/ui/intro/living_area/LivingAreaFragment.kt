@@ -14,6 +14,7 @@ import com.finpo.app.model.remote.Region
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.intro.IntroViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.format
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,31 +34,28 @@ class LivingAreaFragment : BaseFragment<FragmentLivingAreaBinding>(R.layout.frag
 
     private fun setRecyclerView() {
         regionAdapter.setHasStableIds(true)
-        binding.rvRegionAll.adapter = regionAdapter
-        binding.rvRegionAll.itemAnimator = null
+        binding.regionRecyclerview.rvRegionAll.adapter = regionAdapter
+        binding.regionRecyclerview.rvRegionAll.itemAnimator = null
 
         regionDetailAdapter.setHasStableIds(true)
-        binding.rvRegionDetail.adapter = regionDetailAdapter
-        binding.rvRegionDetail.itemAnimator = null
-    }
-
-    private fun observeRecyclerViewData() {
-        viewModel.livingAreaLiveData.regionData.observe(viewLifecycleOwner) {
-            regionAdapter.submitList(it.data)
-        }
-
-        viewModel.livingAreaLiveData.regionDetailData.observe(viewLifecycleOwner) {
-            regionDetailAdapter.submitList(it.data)
-        }
+        binding.regionRecyclerview.rvRegionDetail.adapter = regionDetailAdapter
+        binding.regionRecyclerview.rvRegionDetail.itemAnimator = null
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun observeRecyclerViewEvent() {
-        viewModel.livingAreaLiveData.regionSelEvent.observe {
-            regionAdapter.notifyDataSetChanged()
+    private fun observeRecyclerViewData() {
+        viewModel.livingAreaLiveData.livingRegionViewModel.regionData.observe(viewLifecycleOwner) {
+            regionAdapter.submitList(it.data)
         }
 
-        viewModel.livingAreaLiveData.showRegionToastEvent.observe {
+        viewModel.livingAreaLiveData.livingRegionViewModel.regionDetailData.observe(viewLifecycleOwner) {
+            regionDetailAdapter.submitList(it.data)
+            regionAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun observeRecyclerViewEvent() {
+        viewModel.livingAreaLiveData.livingRegionViewModel.chooseMaxToastEvent.observe {
             shortShowToast(getString(R.string.show_only_one_living_area))
         }
     }

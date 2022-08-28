@@ -60,7 +60,7 @@ class FilterViewModel @Inject constructor(
         viewModelScope.launch {
             isCategoryAllChecked.value = true
             _categoryAllCheckEvent.setValue(true)
-            delay(50L) // TODO REFACTOR recyclerView notiDataChange가 완료되기 전에 아래 코드가 먼저 실행됨 : 임시 조치로 해결 -> recyclerView에 viewLifecycleOwner 연동 필요
+            delay(50L) // TODO REFACTOR recyclerView notiDataChange가 완료되기 전에 아래 코드가 먼저 실행됨 : 임시 조치로 해결
             setCategories(filterCategoryIds.toIntArray())
         }
     }

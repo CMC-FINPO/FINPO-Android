@@ -31,53 +31,93 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(R.layout.fragment_fil
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        filterAdapter = FilterAdapter(viewModel)
-        filterAdapter.setHasStableIds(true)
-        binding.rvFilter.adapter = filterAdapter
-        binding.rvFilter.itemAnimator = null
+        initRecyclerView()
+        observeRecyclerView()
 
         val bottomDialogFragment = BottomSheetRegionDialog(viewModel)
-        viewModel.showBottomSheetEvent.observe {
-            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
-        }
+        observeShowBottomSheetEvent(bottomDialogFragment)
+        observeDismissBottomSheetEvent(bottomDialogFragment)
 
-        viewModel.dismissBottomSheetEvent.observe {
-            bottomDialogFragment.dismiss()
-        }
+        observeChooseMaxToastEvent()
+        observeRegionOverlapToastEvent()
 
-        viewModel.bottomSheetRegionViewModel.bottomFilterRegionViewModel.chooseMaxToastEvent.observe {
-            shortShowToast(format(getString(R.string.can_select_max), MAX_ADDITIONAL_COUNT + 1))
-        }
+        observeGoToHomeFragmentEvent()
+        observeBackEvent()
+        observeClearEvent()
+        observeCategoryAllCheckEvent()
+    }
 
-        viewModel.bottomSheetRegionViewModel.bottomFilterRegionViewModel.regionOverlapToastEvent.observe {
-            shortShowToast(getString(R.string.overlap_region))
+    private fun observeCategoryAllCheckEvent() {
+        viewModel.categoryAllCheckEvent.observe {
+            clearCategory()
         }
+    }
 
-        viewModel.goToHomeFragmentEvent.observe {
-            val action = FilterFragmentDirections.actionFilterFragmentToHomeFragment(
-                categories = viewModel.userCategoryData.value,
-            regionIds = IntArray(viewModel.filterRegionViewModel.regionIds.size) { viewModel.filterRegionViewModel.regionIds[it] ?: 0 },
-            regionTextList = viewModel.filterRegionViewModel.regionTextList.value?.toTypedArray())
-            findNavController().navigate(action)
-        }
-
-        viewModel.backEvent.observe {
-            findNavController().popBackStack()
-        }
-
+    private fun observeClearEvent() {
         viewModel.clearEvent.observe {
             showAlertDialog("초기화 하시겠어요?") {
                 clearFilter()
             }
         }
+    }
 
-        viewModel.categoryAllCheckEvent.observe {
-            clearCategory()
+    private fun observeBackEvent() {
+        viewModel.backEvent.observe {
+            findNavController().popBackStack()
         }
+    }
 
+    private fun observeGoToHomeFragmentEvent() {
+        viewModel.goToHomeFragmentEvent.observe {
+            val action = FilterFragmentDirections.actionFilterFragmentToHomeFragment(
+                categories = viewModel.userCategoryData.value,
+                regionIds = IntArray(viewModel.filterRegionViewModel.regionIds.size) {
+                    viewModel.filterRegionViewModel.regionIds[it] ?: 0
+                },
+                regionTextList = viewModel.filterRegionViewModel.regionTextList.value?.toTypedArray()
+            )
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun observeRegionOverlapToastEvent() {
+        viewModel.bottomSheetRegionViewModel.bottomFilterRegionViewModel.regionOverlapToastEvent.observe {
+            shortShowToast(getString(R.string.overlap_region))
+        }
+    }
+
+    private fun observeChooseMaxToastEvent() {
+        viewModel.bottomSheetRegionViewModel.bottomFilterRegionViewModel.chooseMaxToastEvent.observe {
+            shortShowToast(format(getString(R.string.can_select_max), MAX_ADDITIONAL_COUNT + 1))
+        }
+    }
+
+    private fun observeDismissBottomSheetEvent(bottomDialogFragment: BottomSheetRegionDialog) {
+        viewModel.dismissBottomSheetEvent.observe {
+            bottomDialogFragment.dismiss()
+        }
+    }
+
+    private fun observeShowBottomSheetEvent(bottomDialogFragment: BottomSheetRegionDialog) {
+        viewModel.showBottomSheetEvent.observe {
+            bottomDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                bottomDialogFragment.tag
+            )
+        }
+    }
+
+    private fun observeRecyclerView() {
         viewModel.filterCategoryData.observe(viewLifecycleOwner) {
             filterAdapter.submitList(it)
         }
+    }
+
+    private fun initRecyclerView() {
+        filterAdapter = FilterAdapter(viewModel)
+        filterAdapter.setHasStableIds(true)
+        binding.rvFilter.adapter = filterAdapter
+        binding.rvFilter.itemAnimator = null
     }
 
     private fun clearFilter() {

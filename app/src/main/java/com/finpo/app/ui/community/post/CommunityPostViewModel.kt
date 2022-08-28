@@ -42,7 +42,7 @@ class CommunityPostViewModel @Inject constructor(
         else putWriting()
     }
 
-    fun postWriting() {
+    private fun postWriting() {
         if(editTextInput.value.isNullOrEmpty()) return
 
         viewModelScope.launch {

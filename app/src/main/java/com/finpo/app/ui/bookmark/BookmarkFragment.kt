@@ -47,8 +47,6 @@ class BookmarkFragment : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment
     private fun initRecyclerView() {
         binding.rvUserCategory.adapter = interestCategoryAdapter
         interestPolicyAdapter = InterestPolicyAdapter(viewModel)
-        interestPolicyAdapter.setHasStableIds(true)
         binding.rvPolicy.adapter = interestPolicyAdapter
-        binding.rvPolicy.itemAnimator = null
     }
 }

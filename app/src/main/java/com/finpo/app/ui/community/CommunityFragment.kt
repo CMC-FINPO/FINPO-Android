@@ -28,37 +28,16 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        communityAdapter = CommunityAdapter(viewModel)
-        binding.rvCommunity.adapter = communityAdapter
+        initRecyclerView()
+        observeRecyclerView()
 
-        viewModel.writingList.observe(viewLifecycleOwner) {
-            communityAdapter.submitList(it.toMutableList()) {
-                if(viewModel.paging.page.value == 1)
-                    binding.rvCommunity.scrollToPosition(0)
-            }
-        }
-
-        viewModel.searchClickEvent.observe {
-            findNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunitySearchFragment())
-        }
-
-        viewModel.goToDetailFragmentEvent.observe {
-            findNavController().navigate(NavGraphDirections.actionGlobalCommunityDetailFragment(it))
-        }
+        observeSearchClickEvent()
+        observeGoToDetailFragmentEvent()
+        observeGoToPostFragmentEvent()
 
         val bottomDialogFragment = BottomSheetCommunitySortDialog(viewModel)
-
-        viewModel.bottomSheetShowEvent.observe {
-            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
-        }
-
-        viewModel.bottomSheetDismissEvent.observe {
-            bottomDialogFragment.dismiss()
-        }
-
-        viewModel.goToPostFragmentEvent.observe {
-            findNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityPostFragment())
-        }
+        observeBottomSheetShowEvent(bottomDialogFragment)
+        observeBottomSheetDismissEvent(bottomDialogFragment)
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<WritingContent>("writingContent")
             ?.observe(viewLifecycleOwner) { data ->
@@ -69,16 +48,67 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
             viewModel.checkContentChanged(data)
         }
 
-        viewModel.updateRecyclerViewItemEvent.observe {
-            communityAdapter.notifyItemChanged(it.first, it.second)
-        }
+        observeLikeClickErrorToastEvent()
+        observeBookmarkMaxToastEvent()
+    }
 
-        viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
-            shortShowToast(getString(R.string.cannot_like_my_post))
-        }
-
+    private fun observeBookmarkMaxToastEvent() {
         viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
             shortShowToast(getString(R.string.scrap_max_msg))
         }
+    }
+
+    private fun observeLikeClickErrorToastEvent() {
+        viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
+            shortShowToast(getString(R.string.cannot_like_my_post))
+        }
+    }
+
+    private fun observeBottomSheetDismissEvent(bottomDialogFragment: BottomSheetCommunitySortDialog) {
+        viewModel.bottomSheetDismissEvent.observe {
+            bottomDialogFragment.dismiss()
+        }
+    }
+
+    private fun observeBottomSheetShowEvent(bottomDialogFragment: BottomSheetCommunitySortDialog) {
+        viewModel.bottomSheetShowEvent.observe {
+            bottomDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                bottomDialogFragment.tag
+            )
+        }
+    }
+
+    private fun observeGoToPostFragmentEvent() {
+        viewModel.goToPostFragmentEvent.observe {
+            findNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunityPostFragment())
+        }
+    }
+
+    private fun observeGoToDetailFragmentEvent() {
+        viewModel.goToDetailFragmentEvent.observe {
+            findNavController().navigate(NavGraphDirections.actionGlobalCommunityDetailFragment(it))
+        }
+    }
+
+    private fun observeSearchClickEvent() {
+        viewModel.searchClickEvent.observe {
+            findNavController().navigate(CommunityFragmentDirections.actionCommunityFragmentToCommunitySearchFragment())
+        }
+    }
+
+    private fun observeRecyclerView() {
+        viewModel.writingList.observe(viewLifecycleOwner) {
+            communityAdapter.submitList(it.toMutableList()) {
+                if (viewModel.paging.page.value == 1 && !viewModel.refreshedByContentChanged)
+                    binding.rvCommunity.scrollToPosition(0)
+                viewModel.refreshedByContentChanged = false
+            }
+        }
+    }
+
+    private fun initRecyclerView() {
+        communityAdapter = CommunityAdapter(viewModel)
+        binding.rvCommunity.adapter = communityAdapter
     }
 }

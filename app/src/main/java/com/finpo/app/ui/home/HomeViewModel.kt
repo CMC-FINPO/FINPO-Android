@@ -17,6 +17,7 @@ import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -52,14 +53,13 @@ class HomeViewModel @Inject constructor(
     private val _goToDetailFragmentEvent = MutableSingleLiveData<Int>()
     val goToDetailFragmentEvent: SingleLiveData<Int> = _goToDetailFragmentEvent
 
-    private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, PolicyContent>>()
-    val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, PolicyContent>> = _updateRecyclerViewItemEvent
-
     private val _showBookmarkCountMaxToastEvent = MutableSingleLiveData<Boolean>()
     val showBookmarkCountMaxToastEvent: SingleLiveData<Boolean> = _showBookmarkCountMaxToastEvent
 
     val searchInputText = MutableLiveData<String>()
     var searchText = ""
+
+    var refreshedByBookmarked = false
 
     lateinit var regionIds: List<Int>
     lateinit var regionTextList: List<String>
@@ -83,43 +83,52 @@ class HomeViewModel @Inject constructor(
         changePolicy()
     }
 
-    fun getInitData() {
+    fun getInitData() = viewModelScope.launch {
         _policySize.value = 0
-        viewModelScope.launch {
-            val myRegionResponse = myInfoRepository.getMyRegion()
-            val myCategoryResponse = myInfoRepository.getMyCategory()
-            if(myRegionResponse !is ApiResponse.Success || myCategoryResponse !is ApiResponse.Success)   return@launch
-            regionIds = List(myRegionResponse.data.data.size) { myRegionResponse.data.data[it].region.id ?: 0 }
-            initRegions(myRegionResponse.data.data)
-            categoryIds = List(myCategoryResponse.data.data.size) { myCategoryResponse.data.data[it].category.id }
-            changePolicy()
+        getMyRegion()
+        getMyCategory()
+        joinAll(getMyRegion(), getMyCategory())
+        changePolicy()
+    }
+
+    private fun getMyCategory() = viewModelScope.launch {
+        val myCategoryResponse = myInfoRepository.getMyCategory()
+        myCategoryResponse.onSuccess {
+            categoryIds = List(data.data.size) { data.data[it].category.id }
+        }
+    }
+
+    private fun getMyRegion() = viewModelScope.launch {
+        val myRegionResponse = myInfoRepository.getMyRegion()
+        myRegionResponse.onSuccess {
+            regionIds = List(data.data.size) { data.data[it].region.id ?: 0 }
+            initRegions(data.data)
         }
     }
 
     private fun initRegions(data: List<MyRegion>) {
         val tempRegions = mutableListOf<String>()
-        for(element in data) {
-            if(element.region.parent == null) tempRegions.add("${element.region.name} 전체")
+        for (element in data) {
+            if (element.region.parent == null) tempRegions.add("${element.region.name} 전체")
             else tempRegions.add("${element.region.parent.name} ${element.region.name}")
         }
-        for(idx in data.size until MAX_FILTER_REGION_COUNT)
+        for (idx in data.size until MAX_FILTER_REGION_COUNT)
             tempRegions.add("")
         regionTextList = tempRegions
     }
 
-    fun addPolicy() {
-        if (paging.isLastPage || paging.page.value == 0) return
+    fun addPolicy() = viewModelScope.launch {
+        if (paging.isLastPage || paging.page.value == 0) return@launch
 
-        viewModelScope.launch {
-            val policyResponse = getPolicyResponse()
-            policyResponse.onSuccess {
-                paging.loadData(
-                    data.data.content.toMutableList(),
-                    data.data.last, _policyList,
-                    paging.addData()
-                )
-            }
+        val policyResponse = getPolicyResponse()
+        policyResponse.onSuccess {
+            paging.loadData(
+                data.data.content.toMutableList(),
+                data.data.last, _policyList,
+                paging.addData()
+            )
         }
+
     }
 
     fun clearPolicy() {
@@ -127,20 +136,19 @@ class HomeViewModel @Inject constructor(
         _policyList.value = listOf()
     }
 
-    fun changePolicy() {
+    fun changePolicy() = viewModelScope.launch {
+        if(!(::regionIds.isInitialized && ::regionTextList.isInitialized && ::categoryIds.isInitialized)) return@launch
+
         paging.resetPage()
 
-        if(::regionIds.isInitialized && ::regionTextList.isInitialized && ::categoryIds.isInitialized)
-        viewModelScope.launch {
-            val policyResponse = getPolicyResponse()
-            policyResponse.onSuccess {
-                paging.loadData(
-                    data.data.content.toMutableList(),
-                    data.data.last, _policyList,
-                    paging.changeData()
-                )
-                _policySize.value = data.data.totalElements
-            }
+        val policyResponse = getPolicyResponse()
+        policyResponse.onSuccess {
+            paging.loadData(
+                data.data.content.toMutableList(),
+                data.data.last, _policyList,
+                paging.changeData()
+            )
+            _policySize.value = data.data.totalElements
         }
     }
 
@@ -155,7 +163,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onEditTextSearchClick(actionId: Int): Boolean {
-        return if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+        return if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             searchText = searchInputText.value ?: ""
             changePolicy()
             _keyBoardSearchEvent.setValue(true)
@@ -163,35 +171,36 @@ class HomeViewModel @Inject constructor(
         } else false
     }
 
-    fun bookmarkClick(data: PolicyContent) {
-        viewModelScope.launch {
-            val position = _policyList.value?.indexOfFirst { it?.id == data.id } ?: -1
-            if(position == -1) return@launch
+    fun bookmarkClick(data: PolicyContent) = viewModelScope.launch {
+        val position = _policyList.value?.indexOfFirst { it?.id == data.id } ?: -1
+        if (position == -1) return@launch
 
-            if(!data.isInterest) {
-                val addInterestPolicyResponse = bookmarkRepository.addInterestPolicy(data.id)
-                addInterestPolicyResponse.onSuccess {
-                    data.isInterest = !data.isInterest
-                    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
-                }.onError { if(statusCode.code == 400) _showBookmarkCountMaxToastEvent.setValue(true) }
-
-            } else {
-                val deleteInterestPolicyResponse = bookmarkRepository.deleteInterestPolicy(data.id)
-                deleteInterestPolicyResponse.onSuccess {
-                    data.isInterest = !data.isInterest
-                    _updateRecyclerViewItemEvent.setValue(Pair(position, data))
-                }
-            }
-
-            _policyList.value!![position]!!.isInterest = data.isInterest
+        val bookmarkResponse =
+            if (!data.isInterest) bookmarkRepository.addInterestPolicy(data.id) else bookmarkRepository.deleteInterestPolicy(
+                data.id
+            )
+        bookmarkResponse.onSuccess {
+            updatePolicyInterest(position, !data.isInterest)
+        }.onError {
+            if (statusCode.code == 400 && !data.isInterest) _showBookmarkCountMaxToastEvent.setValue(
+                true
+            )
         }
     }
 
+
     fun checkBookmarkChanged(id: Int, isBookmarked: Boolean) {
         val position = policyList.value?.indexOfFirst { it?.id == id } ?: return
-        if(position == -1)   return
-        val data = policyList.value?.get(position)
-        data?.isInterest = isBookmarked
-        if(data != null) _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+        if (position == -1) return
+
+        updatePolicyInterest(position, isBookmarked)
+    }
+
+    private fun updatePolicyInterest(position: Int, isBookmarked: Boolean) {
+        refreshedByBookmarked = true
+
+        val tempPolicyList = _policyList.value!!.deepCopy()
+        tempPolicyList[position]!!.isInterest = isBookmarked
+        _policyList.value = tempPolicyList
     }
 }

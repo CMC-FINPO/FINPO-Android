@@ -57,8 +57,14 @@ class RegionLayout @JvmOverloads constructor(
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         binding = DataBindingUtil.inflate(inflater, R.layout.custom_region_layout, this, true)
 
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.RegionLayout, defStyleAttr, 0)
+        val emptyText = typedArray.getString(R.styleable.RegionLayout_emptyText)
+
         with(binding) {
+            tvRegionNone.text = emptyText
             regionContainerList = listOf(regionBox1, regionBox2, regionBox3, regionBox4, regionBox5, regionBox6)
         }
+
+        typedArray.recycle()
     }
 }

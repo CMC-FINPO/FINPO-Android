@@ -20,8 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var navController: NavController
-    var isMovedHomeBySelectedItem = false
-    var isMovedMyPageBySelectedItem = false
+    var isMovedHomeBySelectedBottomNavigationItem = false
+    var isMovedMyPageBySelectedBottomNavigationItem = false
 
     private var destinationId = R.id.homeFragment
     private val bottomItemIds = listOf(R.id.homeFragment, R.id.communityFragment, R.id.bookmarkFragment, R.id.myPageFragment)
@@ -36,14 +36,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         binding.navBar.setOnItemSelectedListener { item ->
             NavigationUI.onNavDestinationSelected(item, navController)
-            if(item.itemId == R.id.homeFragment) isMovedHomeBySelectedItem = true
-            if(item.itemId == R.id.myPageFragment) isMovedMyPageBySelectedItem = true
+            if(item.itemId == R.id.homeFragment) isMovedHomeBySelectedBottomNavigationItem = true
+            if(item.itemId == R.id.myPageFragment) isMovedMyPageBySelectedBottomNavigationItem = true
             true
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id != R.id.homeFragment) isMovedHomeBySelectedItem = false
-            if(destination.id != R.id.myPageFragment) isMovedMyPageBySelectedItem = false
+            if(destination.id != R.id.homeFragment) isMovedHomeBySelectedBottomNavigationItem = false
+            if(destination.id != R.id.myPageFragment) isMovedMyPageBySelectedBottomNavigationItem = false
             destinationId = destination.id
 
             if(destination.id in bottomItemIds) navBarVisible()

@@ -29,37 +29,34 @@ class AdditionalRegionFragment : BaseFragment<FragmentAdditionalRegionBinding>(R
     }
 
     private fun observeRecyclerViewEvent() {
-        viewModel.additionalRegionLiveData.chooseMaxToastEvent.observe {
+        viewModel.additionalRegionLiveData.additionalRegionRegionViewModel.chooseMaxToastEvent.observe {
             shortShowToast(format(getString(R.string.can_select_max), MAX_ADDITIONAL_COUNT))
         }
 
-        viewModel.additionalRegionLiveData.regionOverlapToastEvent.observe {
+        viewModel.additionalRegionLiveData.additionalRegionRegionViewModel.regionOverlapToastEvent.observe {
             shortShowToast(getString(R.string.overlap_region))
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun observeRecyclerViewData() {
-        viewModel.additionalRegionLiveData.additionalRegionData.observe(viewLifecycleOwner) {
+        viewModel.additionalRegionLiveData.additionalRegionRegionViewModel.regionData.observe(viewLifecycleOwner) {
             additionalRegionAdapter.submitList(it.data)
         }
 
-        viewModel.additionalRegionLiveData.additionalRegionSelEvent.observe {
-            additionalRegionAdapter.notifyDataSetChanged()
-        }
-
-        viewModel.additionalRegionLiveData.additionalRegionDetailData.observe(viewLifecycleOwner) {
+        viewModel.additionalRegionLiveData.additionalRegionRegionViewModel.regionDetailData.observe(viewLifecycleOwner) {
             additionalRegionDetailAdapter.submitList(it.data)
+            additionalRegionAdapter.notifyDataSetChanged()
         }
     }
 
     private fun setRecyclerView() {
         additionalRegionAdapter.setHasStableIds(true)
-        binding.rvAdditionalRegionAll.adapter = additionalRegionAdapter
-        binding.rvAdditionalRegionAll.itemAnimator = null
+        binding.regionRecyclerview.rvRegionAll.adapter = additionalRegionAdapter
+        binding.regionRecyclerview.rvRegionAll.itemAnimator = null
 
         additionalRegionDetailAdapter.setHasStableIds(true)
-        binding.rvAdditionalRegionDetail.adapter = additionalRegionDetailAdapter
-        binding.rvAdditionalRegionDetail.itemAnimator = null
+        binding.regionRecyclerview.rvRegionDetail.adapter = additionalRegionDetailAdapter
+        binding.regionRecyclerview.rvRegionDetail.itemAnimator = null
     }
 }

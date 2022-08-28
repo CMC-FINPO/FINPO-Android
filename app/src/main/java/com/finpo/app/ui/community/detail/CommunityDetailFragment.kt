@@ -2,6 +2,7 @@ package com.finpo.app.ui.community.detail
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.PopupWindow
 import androidx.activity.OnBackPressedCallback
@@ -69,8 +70,6 @@ class CommunityDetailFragment :
         initRecyclerView()
         observeRecyclerView()
 
-        observeUpdateCommentItem()
-
         val inputMethodManager =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         observeKeyboardHideEvent(inputMethodManager)
@@ -98,6 +97,7 @@ class CommunityDetailFragment :
     private fun observeLikeBookmarkUpdateRecyclerView() {
         viewModel.likeBookmarkViewModel.updateRecyclerView.observe { data ->
             writingAdapter.data = data
+            viewModel.updateWritingContent(data)
             writingAdapter.notifyItemChanged(0)
         }
     }
@@ -131,12 +131,6 @@ class CommunityDetailFragment :
     private fun observeKeyboardHideEvent(inputMethodManager: InputMethodManager) {
         viewModel.keyBoardHideEvent.observe {
             inputMethodManager.hideSoftInputFromWindow(binding.etComment.windowToken, 0)
-        }
-    }
-
-    private fun observeUpdateCommentItem() {
-        viewModel.updateCommentItem.observe {
-            commentAdapter.notifyItemChanged(it.first, it.second)
         }
     }
 

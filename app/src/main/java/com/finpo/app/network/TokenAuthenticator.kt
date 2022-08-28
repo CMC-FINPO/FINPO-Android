@@ -18,27 +18,33 @@ class TokenAuthenticator@Inject constructor() : Authenticator {
     @Inject lateinit var api: ApiServiceWithoutToken
 
     override fun authenticate(route: Route?, response: okhttp3.Response): Request? {
-
         val access = FinpoApplication.encryptedPrefs.getAccessToken() ?: ""
         val refresh = FinpoApplication.encryptedPrefs.getRefreshToken() ?: ""
-        Log.d(
-            RETROFIT_TAG,
-            "TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청: $refresh"
-        )
-        val tokenResponse = runBlocking {
-            api.refreshToken(RequestTokenBody(access, refresh))
+
+        synchronized(this) {
+            val newAccess = FinpoApplication.encryptedPrefs.getAccessToken() ?: ""
+
+            val isTokenRefreshed = if(access != newAccess) true else {
+                Log.d(RETROFIT_TAG, "TokenAuthenticator - authenticate() called / 토큰 만료. 토큰 Refresh 요청: $refresh")
+                val tokenResponse = runBlocking { api.refreshToken(RequestTokenBody(access, refresh)) }
+                handleResponse(tokenResponse)
+            }
+
+            return if (isTokenRefreshed) {
+                Log.d(RETROFIT_TAG, "TokenAuthenticator - authenticate() called / 중단된 API 재요청")
+                response.request
+                    .newBuilder()
+                    .removeHeader("Authorization")
+                    .header(
+                        "Authorization",
+                        "Bearer " + FinpoApplication.encryptedPrefs.getAccessToken()
+                    )
+                    .build()
+            } else {
+                null
+            }
         }
 
-        return if (handleResponse(tokenResponse)) {
-            Log.d(RETROFIT_TAG, "TokenAuthenticator - authenticate() called / 중단된 API 재요청")
-            response.request
-                .newBuilder()
-                .removeHeader("Authorization")
-                .header("Authorization", "Bearer " + FinpoApplication.encryptedPrefs.getAccessToken())
-                .build()
-        } else {
-            null
-        }
     }
 
     private fun handleResponse(tokenResponse: ApiResponse<TokenResponse>) =

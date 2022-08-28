@@ -8,10 +8,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="position"
-            type="Integer" />
-
-        <variable
             name="viewModel"
             type="com.finpo.app.ui.community.CommunityViewModel" />
 

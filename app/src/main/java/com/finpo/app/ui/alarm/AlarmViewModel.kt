@@ -10,6 +10,7 @@ import com.finpo.app.repository.NotificationRepository
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SingleLiveData
+import com.finpo.app.utils.deepCopy
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_components_SingletonComponent
@@ -49,7 +50,7 @@ class AlarmViewModel @Inject constructor(
         viewModelScope.launch {
             val deleteResponse = notificationRepository.deleteNotificationHistory(data.id)
             deleteResponse.onSuccess {
-                val historyList = _historyList.value?.toMutableList() ?: mutableListOf()
+                val historyList = _historyList.value?.toMutableList()?.deepCopy() ?: mutableListOf()
                 historyList.remove(data)
                 _historyList.value = historyList
                 paging.deleteData(data)

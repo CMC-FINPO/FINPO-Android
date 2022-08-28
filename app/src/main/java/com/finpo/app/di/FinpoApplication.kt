@@ -33,12 +33,14 @@ class FinpoApplication : Application() {
     fun showLoadingDialog(activity: Activity) {
         if(activity.isFinishing || loadingDialog?.isShowing == true)    return
         loadingDialog = Dialog(activity)
-        loadingDialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        loadingDialog?.window!!.setDimAmount(0f)
-        loadingDialog?.setContentView(R.layout.dialog_loading)
-        loadingDialog?.setCanceledOnTouchOutside(false)
-        loadingDialog?.setOnCancelListener { activity.onBackPressed() }
-        loadingDialog?.show()
+        loadingDialog?.apply {
+            window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window!!.setDimAmount(0f)
+            setContentView(R.layout.dialog_loading)
+            setCanceledOnTouchOutside(false)
+            setOnCancelListener { activity.onBackPressed() }
+            show()
+        }
     }
 
     fun hideLoadingDialog() {
