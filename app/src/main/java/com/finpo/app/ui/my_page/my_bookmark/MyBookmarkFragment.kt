@@ -47,9 +47,5 @@ class MyBookmarkFragment : BaseFragment<FragmentMyBookmarkBinding>(R.layout.frag
             ?.observe(viewLifecycleOwner) { data ->
                 viewModel.myBookmarkLiveData.checkContentChanged(data)
             }
-
-        viewModel.myBookmarkLiveData.updateRecyclerViewItemEvent.observe {
-            bookmarkAdapter.notifyItemChanged(it.first, it.second)
-        }
     }
 }

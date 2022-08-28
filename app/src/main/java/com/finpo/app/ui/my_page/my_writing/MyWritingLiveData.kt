@@ -11,6 +11,7 @@ import com.finpo.app.ui.common.CommunityLikeBookmarkViewModel
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.Paging
 import com.finpo.app.utils.SingleLiveData
+import com.finpo.app.utils.deepCopy
 import com.skydoves.sandwich.onSuccess
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,9 +23,6 @@ class MyWritingLiveData @Inject constructor(
 ) : ViewModel() {
     private val _writingList = MutableLiveData<List<WritingContent?>>()
     val writingList: LiveData<List<WritingContent?>> = _writingList
-
-    private val _updateRecyclerViewItemEvent = MutableSingleLiveData<Pair<Int, WritingContent>>()
-    val updateRecyclerViewItemEvent: SingleLiveData<Pair<Int, WritingContent>> = _updateRecyclerViewItemEvent
 
     private val _refreshed = MutableLiveData<Boolean>()
     val refreshed: LiveData<Boolean> = _refreshed
@@ -68,16 +66,8 @@ class MyWritingLiveData @Inject constructor(
     fun checkContentChanged(data: WritingContent) {
         val position = _writingList.value?.indexOfFirst { data.id == it?.id } ?: return
         if(position == -1) return
-        _writingList.value!![position]?.apply {
-            isLiked = data.isLiked
-            likes = data.likes
-            isBookmarked = data.isBookmarked
-            countOfComment = data.countOfComment
-            content = data.content
-            isModified = data.isModified
-            modifiedAt = data.modifiedAt
-            hits = data.hits
-        }
-        _updateRecyclerViewItemEvent.setValue(Pair(position, data))
+        val tempWritingList = _writingList.value!!.deepCopy()
+        tempWritingList[position] = data
+        _writingList.value = tempWritingList
     }
 }

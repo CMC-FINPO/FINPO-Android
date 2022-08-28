@@ -28,25 +28,14 @@ class ParticipationPolicyAdapter(val viewModel: ParticipationListViewModel)
         return PolicyHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
-        if(payloads.isNullOrEmpty()) {
-            super.onBindViewHolder(holder, position, payloads)
-        } else (holder as PolicyHolder).setData(payloads[0] as ParticipationPolicy, position)
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        currentList[position]?.let { (holder as PolicyHolder).setData(it, position) }
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
+        currentList[position]?.let { (holder as PolicyHolder).setData(it) }
     }
 
     inner class PolicyHolder(private val binding: ItemRecyclerParticipationPolicyBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun setData(data: ParticipationPolicy, position: Int) {
+        fun setData(data: ParticipationPolicy) {
             binding.data = data
-            binding.position = position
             binding.viewModel = viewModel
             binding.executePendingBindings()
         }

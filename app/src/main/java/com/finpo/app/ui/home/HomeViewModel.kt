@@ -137,6 +137,8 @@ class HomeViewModel @Inject constructor(
     }
 
     fun changePolicy() = viewModelScope.launch {
+        if(!(::regionIds.isInitialized && ::regionTextList.isInitialized && ::categoryIds.isInitialized)) return@launch
+
         paging.resetPage()
 
         val policyResponse = getPolicyResponse()

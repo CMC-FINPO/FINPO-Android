@@ -8,10 +8,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="position"
-            type="Integer" />
-
-        <variable
             name="viewModel"
             type="com.finpo.app.ui.participation_list.ParticipationListViewModel" />
 
@@ -71,7 +67,7 @@
             isBookmarkCheckedSmall="@{data.policy.isInterest}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.bookmarkClick(data, position)}"
+            android:onClick="@{() -> viewModel.bookmarkClick(data)}"
             android:visibility="@{viewModel.isDeleteMode ? View.GONE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

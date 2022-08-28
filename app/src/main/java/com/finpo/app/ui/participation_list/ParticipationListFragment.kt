@@ -7,9 +7,7 @@ import androidx.navigation.fragment.navArgs
 import com.finpo.app.NavGraphDirections
 import com.finpo.app.R
 import com.finpo.app.databinding.FragmentParticipationListBinding
-import com.finpo.app.ui.bookmark.InterestPolicyAdapter
 import com.finpo.app.ui.common.BaseFragment
-import com.finpo.app.ui.policy_detail.BottomSheetAddParticipationDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,9 +28,7 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
         binding.lifecycleOwner = viewLifecycleOwner
 
         policyAdapter = ParticipationPolicyAdapter(viewModel)
-        policyAdapter.setHasStableIds(true)
         binding.rvPolicy.adapter = policyAdapter
-        binding.rvPolicy.itemAnimator = null
 
         viewModel.backEvent.observe {
             findNavController().popBackStack()
@@ -40,10 +36,6 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
 
         viewModel.goToPolicyDetailEvent.observe {
             findNavController().navigate(NavGraphDirections.actionGlobalPolicyDetailFragment(it))
-        }
-
-        viewModel.updateRecyclerViewItemEvent.observe {
-            policyAdapter.notifyItemChanged(it.first, it.second)
         }
 
         viewModel.showBookmarkCountMaxToastEvent.observe {
@@ -64,7 +56,7 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
             policyAdapter.submitList(it.toMutableList())
         }
 
-        viewModel.deleteBtnClickEvent.observe {
+        viewModel.changeToDeleteModeEvent.observe {
             policyAdapter.notifyDataSetChanged()
         }
 

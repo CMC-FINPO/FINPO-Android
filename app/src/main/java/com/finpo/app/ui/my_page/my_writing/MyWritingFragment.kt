@@ -49,9 +49,5 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(R.layout.fragme
             ?.observe(viewLifecycleOwner) { data ->
                 viewModel.myWritingLiveData.checkContentChanged(data)
             }
-
-        viewModel.myWritingLiveData.updateRecyclerViewItemEvent.observe {
-            writingAdapter.notifyItemChanged(it.first, it.second)
-        }
     }
 }

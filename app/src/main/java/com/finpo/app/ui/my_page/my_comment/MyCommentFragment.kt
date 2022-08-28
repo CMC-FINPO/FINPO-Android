@@ -49,9 +49,5 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
             ?.observe(viewLifecycleOwner) { data ->
                 viewModel.myCommentLiveData.checkContentChanged(data)
             }
-
-        viewModel.myCommentLiveData.updateRecyclerViewItemEvent.observe {
-            commentAdapter.notifyItemChanged(it.first, it.second)
-        }
     }
 }
