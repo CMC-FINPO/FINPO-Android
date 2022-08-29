@@ -34,16 +34,26 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
                 viewModel.checkContentChanged(data)
             }
 
-        viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
-            shortShowToast(getString(R.string.scrap_max_msg))
-        }
+        observeBookmarkMaxToastEvent()
+        observeLikeClickErrorToastEvent()
+        observeUpdateRecyclerView()
+    }
 
+    private fun observeUpdateRecyclerView() {
+        viewModel.likeBookmarkViewModel.updateRecyclerView.observe { data ->
+            viewModel.checkContentChanged(data)
+        }
+    }
+
+    private fun observeLikeClickErrorToastEvent() {
         viewModel.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
             shortShowToast(getString(R.string.cannot_like_my_post))
         }
+    }
 
-        viewModel.likeBookmarkViewModel.updateRecyclerView.observe { data ->
-            viewModel.checkContentChanged(data)
+    private fun observeBookmarkMaxToastEvent() {
+        viewModel.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+            shortShowToast(getString(R.string.scrap_max_msg))
         }
     }
 

@@ -1,5 +1,6 @@
 package com.finpo.app.ui.interest_setting
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -28,6 +29,57 @@ class InterestSettingFragment : BaseFragment<FragmentInterestSettingBinding>(R.l
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        initRecyclerView()
+        observeInterestCategoryData()
+        observePurposeData()
+        observeGoToMyInfoFragmentEvent()
+
+        observeBackEvent()
+        observeClearEvent()
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun observeClearEvent() {
+        viewModel.clearEvent.observe {
+            showAlertDialog("초기화 하시겠어요?") {
+                viewModel.clearData()
+                interestEditAdapter.notifyDataSetChanged()
+                purposeAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    private fun observeBackEvent() {
+        viewModel.backEvent.observe {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun observeGoToMyInfoFragmentEvent() {
+        viewModel.goToMyInfoFragmentEvent.observe {
+            startActivity(
+                Intent(
+                    requireContext(),
+                    MainActivity::class.java
+                ).apply { putExtra("startId", R.id.myPageFragment) })
+            activity?.finish()
+        }
+    }
+
+    private fun observePurposeData() {
+        viewModel.purposeData.observe(viewLifecycleOwner) {
+            purposeAdapter.submitList(it)
+        }
+    }
+
+    private fun observeInterestCategoryData() {
+        viewModel.interestCategoryData.observe(viewLifecycleOwner) {
+            interestEditAdapter.submitList(it)
+        }
+    }
+
+    private fun initRecyclerView() {
         interestEditAdapter = InterestEditAdapter(viewModel)
         interestEditAdapter.setHasStableIds(true)
         binding.rvInterest.adapter = interestEditAdapter
@@ -38,31 +90,5 @@ class InterestSettingFragment : BaseFragment<FragmentInterestSettingBinding>(R.l
         binding.rvPurpose.layoutManager = FlexboxLayoutManager(requireActivity(), FlexDirection.ROW)
         binding.rvPurpose.adapter = purposeAdapter
         binding.rvPurpose.itemAnimator = null
-
-        viewModel.interestCategoryData.observe(viewLifecycleOwner) {
-            interestEditAdapter.submitList(it)
-        }
-
-        viewModel.purposeData.observe(viewLifecycleOwner) {
-            purposeAdapter.submitList(it)
-        }
-
-        viewModel.goToMyInfoFragmentEvent.observe {
-            startActivity(Intent(requireContext(), MainActivity::class.java).apply { putExtra("startId",R.id.myPageFragment) })
-            activity?.finish()
-        }
-
-        viewModel.backEvent.observe {
-            findNavController().popBackStack()
-        }
-
-        viewModel.clearEvent.observe {
-            showAlertDialog("초기화 하시겠어요?") {
-                viewModel.clearData()
-                interestEditAdapter.notifyDataSetChanged()
-                purposeAdapter.notifyDataSetChanged()
-            }
-        }
-
     }
 }
