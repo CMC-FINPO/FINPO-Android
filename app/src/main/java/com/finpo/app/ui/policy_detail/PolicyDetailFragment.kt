@@ -35,51 +35,83 @@ class PolicyDetailFragment : BaseFragment<FragmentPolicyDetailBinding>(R.layout.
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        if(FinpoApplication.prefs.getBoolean("showBalloon", true)) {
-            showBalloon()
-            FinpoApplication.prefs.setBoolean("showBalloon", false)
-        }
+        checkShowBalloon()
 
         val bottomDialogFragment = BottomSheetAddParticipationDialog(viewModel)
 
-        viewModel.showBottomDialogEvent.observe {
-            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
-        }
-
-        viewModel.dismissBottomDialogEvent.observe {
-            bottomDialogFragment.dismiss()
-        }
-
-        viewModel.showBookmarkCountMaxToastEvent.observe {
-            longShowToast(getString(R.string.bookmark_max_msg))
-        }
-
-        viewModel.showParticipationCountMaxToastEvent.observe {
-            longShowToast(getString(R.string.participation_max_msg))
-        }
-
-        viewModel.addParticipationMemoSuccessEvent.observe {
-            showConfirmDialog("메모가 등록되었습니다")
-        }
-
-        viewModel.overlapParticipationEvent.observe {
-            longShowToast("이미 참여 목록에 추가되어있는 정책입니다!")
-        }
-
-        viewModel.backClickEvent.observe {
-            popBackStack()
-        }
-
+        observeShowBottomDialogEvent(bottomDialogFragment)
+        observeDismissBottomDialogEvent(bottomDialogFragment)
+        observeShowBookmarkCountMaxToastEvent()
+        observeShowParticipationCountMaxToastEvent()
+        observeAddParticipationMemoSuccessEvent()
+        observeOverlapParticipationEvent()
+        observeBackClickEvent()
         requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
+        initViewPager()
+    }
 
-        binding.viewPagerPolicyDetail.adapter = PolicyDetailViewPagerAdapter(childFragmentManager, lifecycle)
+    private fun initViewPager() {
+        binding.viewPagerPolicyDetail.adapter =
+            PolicyDetailViewPagerAdapter(childFragmentManager, lifecycle)
 
-        TabLayoutMediator(binding.tbPolicyDetail, binding.viewPagerPolicyDetail) {  tab, position ->
-            tab.text = when(position) {
+        TabLayoutMediator(binding.tbPolicyDetail, binding.viewPagerPolicyDetail) { tab, position ->
+            tab.text = when (position) {
                 0 -> "사업 내용"
                 else -> "신청 방법"
             }
         }.attach()
+    }
+
+    private fun observeBackClickEvent() {
+        viewModel.backClickEvent.observe {
+            popBackStack()
+        }
+    }
+
+    private fun observeOverlapParticipationEvent() {
+        viewModel.overlapParticipationEvent.observe {
+            longShowToast("이미 참여 목록에 추가되어있는 정책입니다!")
+        }
+    }
+
+    private fun observeAddParticipationMemoSuccessEvent() {
+        viewModel.addParticipationMemoSuccessEvent.observe {
+            showConfirmDialog("메모가 등록되었습니다")
+        }
+    }
+
+    private fun observeShowParticipationCountMaxToastEvent() {
+        viewModel.showParticipationCountMaxToastEvent.observe {
+            longShowToast(getString(R.string.participation_max_msg))
+        }
+    }
+
+    private fun observeShowBookmarkCountMaxToastEvent() {
+        viewModel.showBookmarkCountMaxToastEvent.observe {
+            longShowToast(getString(R.string.bookmark_max_msg))
+        }
+    }
+
+    private fun observeDismissBottomDialogEvent(bottomDialogFragment: BottomSheetAddParticipationDialog) {
+        viewModel.dismissBottomDialogEvent.observe {
+            bottomDialogFragment.dismiss()
+        }
+    }
+
+    private fun observeShowBottomDialogEvent(bottomDialogFragment: BottomSheetAddParticipationDialog) {
+        viewModel.showBottomDialogEvent.observe {
+            bottomDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                bottomDialogFragment.tag
+            )
+        }
+    }
+
+    private fun checkShowBalloon() {
+        if (FinpoApplication.prefs.getBoolean("showBalloon", true)) {
+            showBalloon()
+            FinpoApplication.prefs.setBoolean("showBalloon", false)
+        }
     }
 
     private fun popBackStack() {

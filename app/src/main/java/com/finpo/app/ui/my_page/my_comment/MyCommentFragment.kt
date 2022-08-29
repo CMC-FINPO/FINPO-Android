@@ -19,35 +19,52 @@ class MyCommentFragment : BaseFragment<FragmentMyCommentBinding>(R.layout.fragme
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        commentAdapter = CommentAdapter(viewModel)
-        binding.rvCommunity.adapter = commentAdapter
+        initRecyclerView()
+        observeRecyclerView()
 
         //이미 onCreate에서 데이터가 초기화 되었고 바팀 네비게이션 아이템을 클릭한 경우에만 데이터 갱신
         if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedBottomNavigationItem)
             viewModel.myCommentLiveData.changeMyComment()
 
-        viewModel.myCommentLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
-            shortShowToast(getString(R.string.cannot_like_my_post))
-        }
-
-        viewModel.myCommentLiveData.likeBookmarkViewModel.updateRecyclerView.observe { data ->
-            viewModel.myCommentLiveData.checkContentChanged(data)
-        }
-
-        viewModel.myCommentLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
-            shortShowToast(getString(R.string.scrap_max_msg))
-        }
-
-        viewModel.myCommentLiveData.writingList.observe(viewLifecycleOwner) {
-            commentAdapter.submitList(it.toMutableList()) {
-                if(viewModel.myCommentLiveData.paging.page.value == 1)
-                    binding.rvCommunity.scrollToPosition(0)
-            }
-        }
+        observeLikeClickErrorToastEvent()
+        observeUpdateRecyclerView()
+        observeBookmarkMaxToastEvent()
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<WritingContent>("writingContent")
             ?.observe(viewLifecycleOwner) { data ->
                 viewModel.myCommentLiveData.checkContentChanged(data)
             }
+    }
+
+    private fun observeRecyclerView() {
+        viewModel.myCommentLiveData.writingList.observe(viewLifecycleOwner) {
+            commentAdapter.submitList(it.toMutableList()) {
+                if (viewModel.myCommentLiveData.paging.page.value == 1)
+                    binding.rvCommunity.scrollToPosition(0)
+            }
+        }
+    }
+
+    private fun observeBookmarkMaxToastEvent() {
+        viewModel.myCommentLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+            shortShowToast(getString(R.string.scrap_max_msg))
+        }
+    }
+
+    private fun observeUpdateRecyclerView() {
+        viewModel.myCommentLiveData.likeBookmarkViewModel.updateRecyclerView.observe { data ->
+            viewModel.myCommentLiveData.checkContentChanged(data)
+        }
+    }
+
+    private fun observeLikeClickErrorToastEvent() {
+        viewModel.myCommentLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
+            shortShowToast(getString(R.string.cannot_like_my_post))
+        }
+    }
+
+    private fun initRecyclerView() {
+        commentAdapter = CommentAdapter(viewModel)
+        binding.rvCommunity.adapter = commentAdapter
     }
 }

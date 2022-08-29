@@ -31,48 +31,22 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.editMyInfoEvent.observe {
-            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToEditMyInfoFragment())
-        }
+        observeEditMyInfoEvent()
+        observeReportReasonEvent()
+        observeOpenApiEvent()
+        observeOpenSourceEvent()
+        observeBackEvent()
+        observeGoToInterestAlarmSettingFragmentEvent()
+        observeGoToRegionAlarmSettingFragmentEvent()
+        observeLogoutClickEvent()
+        observeWithdrawalClickEvent()
+        observeWithdrawalSuccessfulEvent()
+    }
 
-        viewModel.reportReasonEvent.observe {
-            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToReportReasonFragment())
-        }
-
-        viewModel.openApiEvent.observe {
-            showConfirmDialog(it)
-        }
-
-        viewModel.openSourceEvent.observe {
-            LibsBuilder().start(requireContext())
-        }
-
-        viewModel.backEvent.observe {
-            findNavController().popBackStack()
-        }
-
-        viewModel.goToInterestAlarmSettingFragmentEvent.observe {
-            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToInterestAlarmSettingFragment())
-        }
-
-        viewModel.goToRegionAlarmSettingFragmentEvent.observe {
-            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToRegionAlarmSettingFragment())
-        }
-
-        viewModel.logoutClickEvent.observe {
-            showAlertDialog("로그아웃 하시겠어요?") { logout() }
-        }
-
-        viewModel.withdrawalClickEvent.observe {
-            showAlertDialog("회원 탈퇴 하시겠어요?") {
-                showLoadingDialog()
-                withdrawal()
-            }
-        }
-
+    private fun observeWithdrawalSuccessfulEvent() {
         viewModel.withdrawalSuccessfulEvent.observe { statusCode ->
             hideLoadingDialog()
-            when(statusCode) {
+            when (statusCode) {
                 200 -> logout()
                 202 -> {
                     longShowToast("소셜 계정 해제 실패! 문의하기를 통해 연락주세요!")
@@ -80,6 +54,63 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
                 }
                 else -> longShowToast("회원 탈퇴 실패! 문의하기를 통해 연락주세요!")
             }
+        }
+    }
+
+    private fun observeWithdrawalClickEvent() {
+        viewModel.withdrawalClickEvent.observe {
+            showAlertDialog("회원 탈퇴 하시겠어요?") {
+                showLoadingDialog()
+                withdrawal()
+            }
+        }
+    }
+
+    private fun observeLogoutClickEvent() {
+        viewModel.logoutClickEvent.observe {
+            showAlertDialog("로그아웃 하시겠어요?") { logout() }
+        }
+    }
+
+    private fun observeGoToRegionAlarmSettingFragmentEvent() {
+        viewModel.goToRegionAlarmSettingFragmentEvent.observe {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToRegionAlarmSettingFragment())
+        }
+    }
+
+    private fun observeGoToInterestAlarmSettingFragmentEvent() {
+        viewModel.goToInterestAlarmSettingFragmentEvent.observe {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToInterestAlarmSettingFragment())
+        }
+    }
+
+    private fun observeBackEvent() {
+        viewModel.backEvent.observe {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun observeOpenSourceEvent() {
+        viewModel.openSourceEvent.observe {
+            LibsBuilder().start(requireContext())
+        }
+    }
+
+    private fun observeOpenApiEvent() {
+        viewModel.openApiEvent.observe {
+            showConfirmDialog(it)
+        }
+    }
+
+    private fun observeReportReasonEvent() {
+        viewModel.reportReasonEvent.observe {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToReportReasonFragment())
+        }
+    }
+
+    private fun observeEditMyInfoEvent() {
+        viewModel.editMyInfoEvent.observe {
+            findNavController().navigate(SettingFragmentDirections.actionSettingFragmentToEditMyInfoFragment())
         }
     }
 

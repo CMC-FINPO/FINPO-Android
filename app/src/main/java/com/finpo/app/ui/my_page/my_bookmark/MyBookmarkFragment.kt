@@ -19,33 +19,50 @@ class MyBookmarkFragment : BaseFragment<FragmentMyBookmarkBinding>(R.layout.frag
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        bookmarkAdapter = BookmarkAdapter(viewModel)
-        binding.rvCommunity.adapter = bookmarkAdapter
+        initRecyclerView()
+        observeRecyclerView()
 
         //이미 onCreate에서 데이터가 초기화 되었고 바팀 네비게이션 아이템을 클릭한 경우에만 데이터 갱신
         if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedBottomNavigationItem)
             viewModel.myBookmarkLiveData.changeMyBookmark()
 
-        viewModel.myBookmarkLiveData.likeBookmarkViewModel.updateRecyclerView.observe { data ->
-            if(data.isBookmarked == false) viewModel.myBookmarkLiveData.removeMyBookmark(data)
-            else viewModel.myBookmarkLiveData.checkContentChanged(data)
-        }
-
-        viewModel.myBookmarkLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
-            shortShowToast(getString(R.string.cannot_like_my_post))
-        }
-
-        viewModel.myBookmarkLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
-            shortShowToast(getString(R.string.scrap_max_msg))
-        }
-
-        viewModel.myBookmarkLiveData.writingList.observe(viewLifecycleOwner) {
-            bookmarkAdapter.submitList(it.toMutableList())
-        }
+        observeUpdateRecyclerView()
+        observeLikeClickErrorToastEvent()
+        observeBookmarkMaxToastEvent()
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<WritingContent>("writingContent")
             ?.observe(viewLifecycleOwner) { data ->
                 viewModel.myBookmarkLiveData.checkContentChanged(data)
             }
+    }
+
+    private fun observeRecyclerView() {
+        viewModel.myBookmarkLiveData.writingList.observe(viewLifecycleOwner) {
+            bookmarkAdapter.submitList(it.toMutableList())
+        }
+    }
+
+    private fun observeBookmarkMaxToastEvent() {
+        viewModel.myBookmarkLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+            shortShowToast(getString(R.string.scrap_max_msg))
+        }
+    }
+
+    private fun observeLikeClickErrorToastEvent() {
+        viewModel.myBookmarkLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
+            shortShowToast(getString(R.string.cannot_like_my_post))
+        }
+    }
+
+    private fun observeUpdateRecyclerView() {
+        viewModel.myBookmarkLiveData.likeBookmarkViewModel.updateRecyclerView.observe { data ->
+            if (data.isBookmarked == false) viewModel.myBookmarkLiveData.removeMyBookmark(data)
+            else viewModel.myBookmarkLiveData.checkContentChanged(data)
+        }
+    }
+
+    private fun initRecyclerView() {
+        bookmarkAdapter = BookmarkAdapter(viewModel)
+        binding.rvCommunity.adapter = bookmarkAdapter
     }
 }

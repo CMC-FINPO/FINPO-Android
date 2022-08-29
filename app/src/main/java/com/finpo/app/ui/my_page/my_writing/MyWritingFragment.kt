@@ -23,31 +23,48 @@ class MyWritingFragment : BaseFragment<FragmentMyWritingBinding>(R.layout.fragme
         if(viewModel.isInitDataCompleted && (activity as MainActivity).isMovedMyPageBySelectedBottomNavigationItem)
             viewModel.myWritingLiveData.changeMyWriting()
 
-        writingAdapter = WritingAdapter(viewModel)
-        binding.rvCommunity.adapter = writingAdapter
+        initRecyclerView()
+        observeRecyclerView()
 
-        viewModel.myWritingLiveData.writingList.observe(viewLifecycleOwner) {
-            writingAdapter.submitList(it.toMutableList()) {
-                if(viewModel.myWritingLiveData.paging.page.value == 1)
-                    binding.rvCommunity.scrollToPosition(0)
-            }
-        }
-
-        viewModel.myWritingLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
-            shortShowToast(getString(R.string.cannot_like_my_post))
-        }
-
-        viewModel.myWritingLiveData.likeBookmarkViewModel.updateRecyclerView.observe { data ->
-            viewModel.myWritingLiveData.checkContentChanged(data)
-        }
-
-        viewModel.myWritingLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
-            shortShowToast(getString(R.string.scrap_max_msg))
-        }
+        observeLikeClickErrorToastEvent()
+        observeUpdateRecyclerView()
+        observeBookmarkMaxToastEvent()
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<WritingContent>("writingContent")
             ?.observe(viewLifecycleOwner) { data ->
                 viewModel.myWritingLiveData.checkContentChanged(data)
             }
+    }
+
+    private fun observeBookmarkMaxToastEvent() {
+        viewModel.myWritingLiveData.likeBookmarkViewModel.bookmarkMaxToastEvent.observe {
+            shortShowToast(getString(R.string.scrap_max_msg))
+        }
+    }
+
+    private fun observeUpdateRecyclerView() {
+        viewModel.myWritingLiveData.likeBookmarkViewModel.updateRecyclerView.observe { data ->
+            viewModel.myWritingLiveData.checkContentChanged(data)
+        }
+    }
+
+    private fun observeLikeClickErrorToastEvent() {
+        viewModel.myWritingLiveData.likeBookmarkViewModel.likeClickErrorToastEvent.observe {
+            shortShowToast(getString(R.string.cannot_like_my_post))
+        }
+    }
+
+    private fun observeRecyclerView() {
+        viewModel.myWritingLiveData.writingList.observe(viewLifecycleOwner) {
+            writingAdapter.submitList(it.toMutableList()) {
+                if (viewModel.myWritingLiveData.paging.page.value == 1)
+                    binding.rvCommunity.scrollToPosition(0)
+            }
+        }
+    }
+
+    private fun initRecyclerView() {
+        writingAdapter = WritingAdapter(viewModel)
+        binding.rvCommunity.adapter = writingAdapter
     }
 }

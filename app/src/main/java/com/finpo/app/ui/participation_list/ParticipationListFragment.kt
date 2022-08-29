@@ -27,43 +27,76 @@ class ParticipationListFragment : BaseFragment<FragmentParticipationListBinding>
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        policyAdapter = ParticipationPolicyAdapter(viewModel)
-        binding.rvPolicy.adapter = policyAdapter
+        initRecyclerView()
+        observeRecyclerView()
 
-        viewModel.backEvent.observe {
-            findNavController().popBackStack()
-        }
-
-        viewModel.goToPolicyDetailEvent.observe {
-            findNavController().navigate(NavGraphDirections.actionGlobalPolicyDetailFragment(it))
-        }
-
-        viewModel.showBookmarkCountMaxToastEvent.observe {
-            longShowToast(getString(R.string.bookmark_max_msg))
-        }
+        observeBackEvent()
+        observeGoToPolicyDetailEvent()
+        observeShowBookmarkCountMaxToastEvent()
 
         val bottomDialogFragment = BottomSheetEditMemoDialog(viewModel)
+        observeShowBottomSheetEvent(bottomDialogFragment)
+        observeDismissBottomSheetEvent(bottomDialogFragment)
 
-        viewModel.showBottomSheetEvent.observe {
-            bottomDialogFragment.show(requireActivity().supportFragmentManager, bottomDialogFragment.tag)
-        }
+        observeChangeToDeleteModeEvent()
+        observeDeleteItemClickEvent()
+    }
 
-        viewModel.dismissBottomSheetEvent.observe {
-            bottomDialogFragment.dismiss()
-        }
-
-        viewModel.policyList.observe(viewLifecycleOwner) {
-            policyAdapter.submitList(it.toMutableList())
-        }
-
-        viewModel.changeToDeleteModeEvent.observe {
-            policyAdapter.notifyDataSetChanged()
-        }
-
+    private fun observeDeleteItemClickEvent() {
         viewModel.deleteItemClickEvent.observe { data ->
             showAlertDialog("참여한 정책을 삭제하시겠습니까?", "삭제") {
                 viewModel.deleteParticipationPolicy(data)
             }
         }
+    }
+
+    private fun observeChangeToDeleteModeEvent() {
+        viewModel.changeToDeleteModeEvent.observe {
+            policyAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun observeRecyclerView() {
+        viewModel.policyList.observe(viewLifecycleOwner) {
+            policyAdapter.submitList(it.toMutableList())
+        }
+    }
+
+    private fun observeDismissBottomSheetEvent(bottomDialogFragment: BottomSheetEditMemoDialog) {
+        viewModel.dismissBottomSheetEvent.observe {
+            bottomDialogFragment.dismiss()
+        }
+    }
+
+    private fun observeShowBottomSheetEvent(bottomDialogFragment: BottomSheetEditMemoDialog) {
+        viewModel.showBottomSheetEvent.observe {
+            bottomDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                bottomDialogFragment.tag
+            )
+        }
+    }
+
+    private fun observeShowBookmarkCountMaxToastEvent() {
+        viewModel.showBookmarkCountMaxToastEvent.observe {
+            longShowToast(getString(R.string.bookmark_max_msg))
+        }
+    }
+
+    private fun observeGoToPolicyDetailEvent() {
+        viewModel.goToPolicyDetailEvent.observe {
+            findNavController().navigate(NavGraphDirections.actionGlobalPolicyDetailFragment(it))
+        }
+    }
+
+    private fun observeBackEvent() {
+        viewModel.backEvent.observe {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun initRecyclerView() {
+        policyAdapter = ParticipationPolicyAdapter(viewModel)
+        binding.rvPolicy.adapter = policyAdapter
     }
 }

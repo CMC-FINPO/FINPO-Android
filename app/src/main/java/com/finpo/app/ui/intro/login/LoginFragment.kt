@@ -52,14 +52,27 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel.loginLiveData.kakaoLoginEvent.observe {
-            kakaoLogin()
-        }
+        observeKakaoLoginEvent()
+        observeGoogleLoginEvent()
+        observeNeedRegisterEvent()
+        observeIsLoginSuccessfulEvent()
+    }
 
-        viewModel.loginLiveData.googleLoginEvent.observe {
-            googleLogin()
+    private fun observeIsLoginSuccessfulEvent() {
+        viewModel.loginLiveData.isLoginSuccessfulEvent.observe(this) { tokenResponse ->
+            FinpoApplication.encryptedPrefs.saveTokens(
+                tokenResponse.data.accessToken ?: "",
+                tokenResponse.data.refreshToken ?: ""
+            )
+            viewModel.loginLiveData.acToken = ""
+            viewModel.setNotification(null)
+            hideLoadingDialog()
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
+            activity?.finish()
         }
+    }
 
+    private fun observeNeedRegisterEvent() {
         viewModel.loginLiveData.needRegisterEvent.observe(this) { tokenResponse ->
             CoroutineScope(Main).launch {
                 setUserInfo(tokenResponse)
@@ -67,16 +80,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 viewModel.nextPage()
             }
         }
+    }
 
-        viewModel.loginLiveData.isLoginSuccessfulEvent.observe(this) { tokenResponse ->
-            FinpoApplication.encryptedPrefs.saveTokens(tokenResponse.data.accessToken ?: "", tokenResponse.data.refreshToken ?: "")
-            viewModel.loginLiveData.acToken = ""
-            viewModel.setNotification(null)
-            hideLoadingDialog()
-            startActivity(Intent(requireActivity(), MainActivity::class.java))
-            activity?.finish()
+    private fun observeGoogleLoginEvent() {
+        viewModel.loginLiveData.googleLoginEvent.observe {
+            googleLogin()
         }
+    }
 
+    private fun observeKakaoLoginEvent() {
+        viewModel.loginLiveData.kakaoLoginEvent.observe {
+            kakaoLogin()
+        }
     }
 
     private suspend fun setUserInfo(tokenResponse: TokenResponse) {
