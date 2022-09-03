@@ -4,6 +4,7 @@ import android.util.Log
 import com.finpo.app.network.*
 import com.finpo.app.repository.IntroRepository
 import com.finpo.app.utils.API.BASE_URL
+import com.finpo.app.utils.API.DEV_URL
 import com.finpo.app.utils.RETROFIT_TAG
 import com.finpo.app.utils.isJsonArray
 import com.finpo.app.utils.isJsonObject
@@ -62,6 +63,7 @@ object NetworkModule {
         return loggingInterceptor
     }
 
+    //TODO 배포시 base url 변경
     @Singleton
     @Provides
     fun provideApiServiceWithoutToken(
@@ -69,7 +71,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory
     ): ApiServiceWithoutToken {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(DEV_URL)
             .client(okHttpClient)
             .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .addConverterFactory(gsonConverterFactory)
