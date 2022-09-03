@@ -11,16 +11,19 @@ import com.finpo.app.ui.MainActivity
 import com.finpo.app.ui.common.BaseFragment
 import com.finpo.app.ui.policy_detail.PolicyDetailViewPagerAdapter
 import com.finpo.app.utils.ImageUtils
+import com.finpo.app.utils.PermissionManager
 import com.google.android.material.tabs.TabLayoutMediator
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedbottompicker.TedBottomPicker
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
     private val viewModel by viewModels<MyPageViewModel>()
+    @Inject lateinit var permissionManager: PermissionManager
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
@@ -73,8 +76,8 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
     private fun observeProfileEditClickEvent() {
         viewModel.profileEditClickEvent.observe {
-            val permissionListener: PermissionListener = setPermissionListener()
-            createPermission(permissionListener)
+            val permissionListener: PermissionListener = permissionManager.setPermissionListener { showImagePicker() }
+            permissionManager.createGetImagePermission(permissionListener)
         }
     }
 
@@ -105,28 +108,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
                 else -> "스크랩 한 글"
             }
         }.attach()
-    }
-
-    private fun setPermissionListener(): PermissionListener {
-        val permissionListener: PermissionListener = object : PermissionListener {
-            override fun onPermissionGranted() {
-                showImagePicker()
-            }
-
-            override fun onPermissionDenied(deniedPermissions: List<String>) {}
-        }
-        return permissionListener
-    }
-
-    private fun createPermission(permissionListener: PermissionListener) {
-        TedPermission.create()
-            .setPermissionListener(permissionListener)
-            .setPermissions(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-            .check()
     }
 
     private fun showImagePicker() {
