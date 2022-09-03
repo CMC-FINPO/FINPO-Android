@@ -122,3 +122,11 @@ data class CommentParent(
 data class Content(
     val content: String
 )
+
+data class CommunityImageResponse(
+    val data : CommunityImage
+)
+
+data class CommunityImage(
+    val imgUrls: List<String>
+)

@@ -2,6 +2,7 @@ package com.finpo.app.repository
 
 import com.finpo.app.model.remote.*
 import com.finpo.app.network.ApiService
+import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,6 +22,8 @@ class CommunityRepository @Inject constructor(private val apiService: ApiService
         postId,
         CommentReplyRequest(CommentReplyParent(parentId), comment)
     )
+
+    suspend fun uploadCommunityImages(images: List<MultipartBody.Part>) = apiService.uploadCommunityImages(images)
 
     suspend fun putWritingBookmark(id: Int) = apiService.putWritingBookmark(id)
     suspend fun deleteWritingBookmark(id: Int) = apiService.deleteWritingBookmark(id)
