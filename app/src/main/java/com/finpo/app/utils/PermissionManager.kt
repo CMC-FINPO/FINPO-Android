@@ -6,6 +6,7 @@ import com.gun0912.tedpermission.normal.TedPermission
 import javax.inject.Inject
 
 class PermissionManager @Inject constructor() {
+
     fun setPermissionListener(doWhenPermissionGranted : () -> Unit): PermissionListener {
         val permissionListener: PermissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
@@ -17,7 +18,9 @@ class PermissionManager @Inject constructor() {
         return permissionListener
     }
 
-    fun createGetImagePermission(permissionListener: PermissionListener) {
+    fun createGetImagePermission(doWhenPermissionGranted : () -> Unit) {
+        val permissionListener = setPermissionListener { doWhenPermissionGranted() }
+
         TedPermission.create()
             .setPermissionListener(permissionListener)
             .setPermissions(

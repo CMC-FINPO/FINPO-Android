@@ -76,8 +76,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
     private fun observeProfileEditClickEvent() {
         viewModel.profileEditClickEvent.observe {
-            val permissionListener: PermissionListener = permissionManager.setPermissionListener { showImagePicker() }
-            permissionManager.createGetImagePermission(permissionListener)
+            permissionManager.createGetImagePermission { showImagePicker() }
         }
     }
 
