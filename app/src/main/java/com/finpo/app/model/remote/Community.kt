@@ -5,7 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 data class PostWritingRequest(
     val content: String,
-    val anonymity: Boolean = false
+    val anonymity: Boolean = false,
+    val imgs: List<ImageOrder>? = null
 )
 
 data class WritingResponse(
@@ -129,4 +130,9 @@ data class CommunityImageResponse(
 
 data class CommunityImage(
     val imgUrls: List<String>
+)
+
+data class ImageOrder(
+    val img: String,
+    val order: Int
 )

@@ -1,15 +1,21 @@
 package com.finpo.app.ui.community.post
 
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.PostWritingRequest
 import com.finpo.app.repository.CommunityRepository
+import com.finpo.app.utils.ImageUtils
 import com.finpo.app.utils.MutableSingleLiveData
 import com.finpo.app.utils.SingleLiveData
+import com.finpo.app.utils.addOrder
+import com.skydoves.sandwich.getOrNull
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,6 +35,9 @@ class CommunityPostViewModel @Inject constructor(
     private val _goToCommunityHomeFragmentEvent = MutableSingleLiveData<Boolean>()
     val goToCommunityHomeFragmentEvent: SingleLiveData<Boolean> = _goToCommunityHomeFragmentEvent
 
+    private val _finishButtonClickEvent = MutableSingleLiveData<Boolean>()
+    val finishButtonClickEvent: SingleLiveData<Boolean> = _finishButtonClickEvent
+
     fun showPreparationToast() {
         _showPreparationToastEvent.setValue(true)
     }
@@ -38,29 +47,24 @@ class CommunityPostViewModel @Inject constructor(
     }
 
     fun finishClick() {
-        if(id == -1) postWriting()
-        else putWriting()
+        if(editTextInput.value.isNullOrEmpty()) return
+        _finishButtonClickEvent.setValue(true)
     }
 
-    private fun postWriting() {
-        if(editTextInput.value.isNullOrEmpty()) return
-
-        viewModelScope.launch {
-            val postResponse = communityRepository.postWriting(PostWritingRequest(content = editTextInput.value ?: ""))
-            postResponse.onSuccess {
-                _goToCommunityHomeFragmentEvent.setValue(true)
-            }
+    fun postOrPutWriting(bitmapList: List<Bitmap?>) = viewModelScope.launch {
+        val imgs = uploadImage(bitmapList)?.addOrder()
+        val response = if(id == -1) communityRepository.postWriting(PostWritingRequest(content = editTextInput.value ?: "", imgs = imgs))
+        else communityRepository.putWriting(id, PostWritingRequest(content = editTextInput.value ?: "", imgs = imgs))
+        response.onSuccess {
+            _goToCommunityHomeFragmentEvent.setValue(id == -1)
         }
     }
 
-    private fun putWriting() {
-        if(editTextInput.value.isNullOrEmpty()) return
-
-        viewModelScope.launch {
-            val postResponse = communityRepository.putWriting(id, PostWritingRequest(content = editTextInput.value ?: ""))
-            postResponse.onSuccess {
-                _goToCommunityHomeFragmentEvent.setValue(true)
-            }
+    private suspend fun uploadImage(bitmapList: List<Bitmap?>) =
+        withContext(viewModelScope.coroutineContext) {
+            val bitmapMultipartBodyList: List<MultipartBody.Part?> =
+                ImageUtils().getMultipartBodyImgListFromBitmapList(bitmapList)
+            val response = communityRepository.uploadCommunityImages(bitmapMultipartBodyList)
+            response.getOrNull()?.data?.imgUrls
         }
-    }
 }

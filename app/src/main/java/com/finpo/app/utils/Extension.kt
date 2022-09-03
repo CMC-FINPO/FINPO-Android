@@ -1,8 +1,10 @@
 package com.finpo.app.utils
 
 import android.content.res.Resources
+import android.graphics.Bitmap
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.finpo.app.model.remote.ImageOrder
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -21,6 +23,14 @@ fun <T> List<T>.deepCopy(): MutableList<T> {
     val tempList = mutableListOf<T>()
     this.forEach {
         if(it != null) {  tempList.add(Gson().fromJson(Gson().toJson(it), it!!::class.java)) } else tempList.add(it)
+    }
+    return tempList
+}
+
+fun List<String>.addOrder(): List<ImageOrder> {
+    val tempList = mutableListOf<ImageOrder>()
+    for(i in this.indices) {
+        tempList.add(ImageOrder(this[i], i))
     }
     return tempList
 }

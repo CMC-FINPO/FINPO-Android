@@ -12,6 +12,7 @@ const val COMMENT = 0
 const val POST = 1
 const val TAB_SMALL = "SMALL"
 const val TAB_NORMAL = "NORMAL"
+const val COMMUNITY_IMAGE_MAX_COUNT = 5
 
 enum class EditRegionType {
     LIVING, INTEREST

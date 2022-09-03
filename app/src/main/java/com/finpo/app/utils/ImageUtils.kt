@@ -25,14 +25,20 @@ class ImageUtils {
         }.getOrNull()
     }
 
-    fun getProfileImgFromBitmap(bitmap: Bitmap?): MultipartBody.Part? {
+    fun getMultipartBodyImgFromBitmap(bitmap: Bitmap?, name: String, filename: String): MultipartBody.Part? {
         val profileImage = bitmap?.let { BitmapRequestBody(it) }
         return if (profileImage == null) null
         else MultipartBody.Part.createFormData(
-            "profileImgFile",
-            "imagefile.jpeg",
+            name,
+            filename,
             profileImage
         )
+    }
+
+    fun getMultipartBodyImgListFromBitmapList(bitmapList: List<Bitmap?>): List<MultipartBody.Part?> {
+        val tempMultipartBodyImgList = mutableListOf<MultipartBody.Part?>()
+        bitmapList.forEach { bitmap -> tempMultipartBodyImgList.add(getMultipartBodyImgFromBitmap(bitmap, "imgFiles", "imagefile.jpeg")) }
+        return tempMultipartBodyImgList
     }
 
     fun uriToBitmap(context: Context, imageUri: Uri): Bitmap? {
@@ -49,6 +55,18 @@ class ImageUtils {
             }
         } catch (e: Exception) {
             null
+        }
+    }
+
+    fun uriListToBitmapList(context: Context, imageUriList: List<Uri>): List<Bitmap?> {
+        return try {
+            val tempBitmapList = mutableListOf<Bitmap?>()
+            imageUriList.forEach { uri ->
+                tempBitmapList.add(uriToBitmap(context, uri))
+            }
+            tempBitmapList
+        } catch (e: Exception) {
+            listOf()
         }
     }
 }

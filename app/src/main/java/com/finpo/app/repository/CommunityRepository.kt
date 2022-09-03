@@ -23,7 +23,7 @@ class CommunityRepository @Inject constructor(private val apiService: ApiService
         CommentReplyRequest(CommentReplyParent(parentId), comment)
     )
 
-    suspend fun uploadCommunityImages(images: List<MultipartBody.Part>) = apiService.uploadCommunityImages(images)
+    suspend fun uploadCommunityImages(images: List<MultipartBody.Part?>) = apiService.uploadCommunityImages(images)
 
     suspend fun putWritingBookmark(id: Int) = apiService.putWritingBookmark(id)
     suspend fun deleteWritingBookmark(id: Int) = apiService.deleteWritingBookmark(id)

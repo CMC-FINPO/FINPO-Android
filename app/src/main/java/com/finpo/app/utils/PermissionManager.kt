@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class PermissionManager @Inject constructor() {
 
-    fun setPermissionListener(doWhenPermissionGranted : () -> Unit): PermissionListener {
+    private fun setPermissionListener(doWhenPermissionGranted : () -> Unit): PermissionListener {
         val permissionListener: PermissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
                 doWhenPermissionGranted()

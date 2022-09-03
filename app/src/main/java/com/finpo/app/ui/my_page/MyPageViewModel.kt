@@ -116,13 +116,12 @@ class MyPageViewModel @Inject constructor(
 
     fun changeProfileImg(profileImage: Bitmap?) {
         viewModelScope.launch {
-            val bitmapMultipartBody: MultipartBody.Part? = ImageUtils().getProfileImgFromBitmap(profileImage)
+            val bitmapMultipartBody: MultipartBody.Part? = ImageUtils().getMultipartBodyImgFromBitmap(profileImage, "profileImgFile", "imagefile.jpeg")
             val changeProfileImgResponse = myInfoRepository.changeProfileImg(bitmapMultipartBody)
             changeProfileImgResponse.onSuccess {
                 _profileImgUrl.value = data.data.profileImg
             }
         }
-
     }
 
     fun profileEditClick() {

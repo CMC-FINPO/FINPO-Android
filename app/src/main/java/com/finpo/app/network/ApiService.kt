@@ -237,9 +237,10 @@ interface ApiService {
         @Path("id") id: Int
     ) : ApiResponse<JsonElement>
 
+    @Multipart
     @POST("upload/post")
     suspend fun uploadCommunityImages(
-        @Part images: List<MultipartBody.Part>
+        @Part images: List<MultipartBody.Part?>
     ) : ApiResponse<CommunityImageResponse>
 
     //REPORT

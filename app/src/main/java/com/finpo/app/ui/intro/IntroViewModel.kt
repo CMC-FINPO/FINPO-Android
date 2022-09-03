@@ -24,7 +24,6 @@ import com.finpo.app.utils.PAGE.FINISH
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.skydoves.sandwich.ApiResponse
-import com.skydoves.sandwich.onSuccess
 import com.skydoves.sandwich.suspendOnSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -110,7 +109,8 @@ class IntroViewModel @Inject constructor(
         viewModelScope.launch {
             val registerKakaoResponse = introRepository.registerByKakao(
                 loginLiveData.acToken,
-                ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage),
+                ImageUtils().getMultipartBodyImgFromBitmap(loginLiveData.profileImage, "profileImgFile",
+                    "imagefile.jpeg" ),
                 getUserInputInfo()
             )
             processRegisterResponse(registerKakaoResponse)
@@ -131,7 +131,8 @@ class IntroViewModel @Inject constructor(
         viewModelScope.launch {
             val registerGoogleResponse = introRepository.registerByGoogle(
                 loginLiveData.acToken,
-                ImageUtils().getProfileImgFromBitmap(loginLiveData.profileImage),
+                ImageUtils().getMultipartBodyImgFromBitmap(loginLiveData.profileImage, "profileImgFile",
+                    "imagefile.jpeg"),
                 getUserInputInfo()
             )
             processRegisterResponse(registerGoogleResponse)
