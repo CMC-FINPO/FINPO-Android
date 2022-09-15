@@ -2,6 +2,7 @@ package com.finpo.app.ui.community.post
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,10 +21,9 @@ import javax.inject.Inject
 class CommunityPostFragment : BaseFragment<FragmentCommunityPostBinding>(R.layout.fragment_community_post) {
     private val viewModel by viewModels<CommunityPostViewModel>()
     private val args by navArgs<CommunityPostFragmentArgs>()
+    private lateinit var communityImagePostAdapter: CommunityImagePostAdapter
 
     @Inject lateinit var permissionManager: PermissionManager
-
-    private var selectedUriList: List<Uri> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +36,13 @@ class CommunityPostFragment : BaseFragment<FragmentCommunityPostBinding>(R.layou
         binding.lifecycleOwner = viewLifecycleOwner
 
         //TODO 이미지 불러오고, 해당 이미지 selectedUriList에 넣기
+
+        communityImagePostAdapter = CommunityImagePostAdapter(viewModel)
+        binding.rvImage.adapter = communityImagePostAdapter
+
+        viewModel.selectedUriList.observe(viewLifecycleOwner) {
+            communityImagePostAdapter.submitList(it.toList())
+        }
 
         viewModel.backEvent.observe {
             findNavController().popBackStack()
@@ -53,7 +60,7 @@ class CommunityPostFragment : BaseFragment<FragmentCommunityPostBinding>(R.layou
         }
 
         viewModel.finishButtonClickEvent.observe {
-            val bitmapList = ImageUtils().uriListToBitmapList(requireActivity(), selectedUriList)
+            val bitmapList = ImageUtils().uriListToBitmapList(requireActivity(), viewModel.selectedUriList.value!!)
             viewModel.postOrPutWriting(bitmapList)
         }
     }
@@ -62,13 +69,13 @@ class CommunityPostFragment : BaseFragment<FragmentCommunityPostBinding>(R.layou
         TedBottomPicker.with(requireActivity())
             .setPreviewMaxCount(Int.MAX_VALUE)
             .setCompleteButtonText("선택 완료")
-            .setSelectedUriList(selectedUriList)
+            .setSelectedUriList(viewModel.selectedUriList.value!!)
             .setSelectMaxCount(COMMUNITY_IMAGE_MAX_COUNT)
             .setSelectedForeground(R.drawable.ic_bg_selected_img)
             .setSelectMaxCountErrorText("최대 5장까지 첨부할 수 있습니다.")
             .showTitle(false)
             .showMultiImage { uris ->
-                selectedUriList = uris
+                viewModel.updateUriList(uris)
             }
     }
 }

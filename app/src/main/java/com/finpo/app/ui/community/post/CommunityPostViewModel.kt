@@ -1,15 +1,14 @@
 package com.finpo.app.ui.community.post
 
 import android.graphics.Bitmap
+import android.net.Uri
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.PostWritingRequest
 import com.finpo.app.repository.CommunityRepository
-import com.finpo.app.utils.ImageUtils
-import com.finpo.app.utils.MutableSingleLiveData
-import com.finpo.app.utils.SingleLiveData
-import com.finpo.app.utils.addOrder
+import com.finpo.app.utils.*
 import com.skydoves.sandwich.getOrNull
 import com.skydoves.sandwich.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,6 +36,19 @@ class CommunityPostViewModel @Inject constructor(
 
     private val _finishButtonClickEvent = MutableSingleLiveData<Boolean>()
     val finishButtonClickEvent: SingleLiveData<Boolean> = _finishButtonClickEvent
+
+    private val _selectedUriList = MutableLiveData<List<Uri>>(emptyList())
+    val selectedUriList: LiveData<List<Uri>> = _selectedUriList
+
+    fun updateUriList(uris: List<Uri>) {
+        _selectedUriList.value = uris
+    }
+
+    fun deleteUriListItem(uri: Uri) {
+        val tempUriList = _selectedUriList.value!!.toMutableList()
+        tempUriList.remove(uri)
+        _selectedUriList.value = tempUriList
+    }
 
     fun showPreparationToast() {
         _showPreparationToastEvent.setValue(true)

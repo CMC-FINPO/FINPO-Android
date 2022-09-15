@@ -1,5 +1,6 @@
 package com.finpo.app.ui.common
 
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -7,15 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.finpo.app.R
 import com.finpo.app.model.remote.*
 import com.finpo.app.utils.SORT_TYPE
 import com.finpo.app.utils.TimeFormatter
-import com.skydoves.balloon.textForm
 
 @BindingAdapter("circleImageUrl", "gender")
 fun loadCircleImage(view: ImageView, imageUrl: String?, gender: String?) {
@@ -28,6 +25,11 @@ fun loadCircleImage(view: ImageView, imageUrl: String?, gender: String?) {
             .circleCrop()
             .into(view)
     } else view.setImageResource(defaultImage)
+}
+
+@BindingAdapter("imageUri")
+fun loadImageUri(view: ImageView, imgUri: Uri) {
+    view.setImageURI(imgUri)
 }
 
 @BindingAdapter("isBookmarkCheckedLarge")
