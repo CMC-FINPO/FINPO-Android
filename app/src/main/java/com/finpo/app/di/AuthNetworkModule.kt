@@ -3,8 +3,7 @@ package com.finpo.app.di
 import com.finpo.app.network.ApiService
 import com.finpo.app.network.AuthenticationInterceptor
 import com.finpo.app.network.TokenAuthenticator
-import com.finpo.app.utils.API
-import com.finpo.app.utils.API.DEV_URL
+import com.finpo.app.utils.API.BASE_URL
 import com.skydoves.sandwich.adapters.ApiResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -38,7 +37,6 @@ object AuthNetworkModule {
             .build()
     }
 
-    //TODO 배포시 base url 변경
     @Singleton
     @Provides
     fun provideApiService(
@@ -46,7 +44,7 @@ object AuthNetworkModule {
         gsonConverterFactory: GsonConverterFactory
     ): ApiService {
         return Retrofit.Builder()
-            .baseUrl(DEV_URL)
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
             .addConverterFactory(gsonConverterFactory)

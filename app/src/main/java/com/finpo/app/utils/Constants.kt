@@ -43,8 +43,11 @@ object PAGE {
 }
 
 object API {
-    const val BASE_URL: String = "https://api.finpo.kr/"
-    const val DEV_URL: String = "https://dev.finpo.kr/"
+    /**
+     * 배포 :  "https://api.finpo.kr/"
+     * 개발 : "https://dev.finpo.kr/"
+     * */
+    const val BASE_URL: String = "https://dev.finpo.kr/"
 }
 
 object PolicyRecyclerViewType {
