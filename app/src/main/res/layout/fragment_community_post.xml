@@ -91,13 +91,13 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_image"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="15dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_recycler_community_post_img"/>
+                    tools:listitem="@layout/item_recycler_community_post_img" />
 
                 <View
                     android:id="@+id/view_divider"
@@ -105,15 +105,50 @@
                     android:layout_height="1dp"
                     android:background="@color/gray_g07" />
 
-                <ImageView
-                    android:id="@+id/iv_camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
-                    android:onClick="@{() -> viewModel.showPreparationToast()}"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_img" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:onClick="@{() -> viewModel.showPreparationToast()}"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_img"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/cb_anonymous"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:background="@drawable/selector_anonymous_checkbox"
+                        android:button="@null"
+                        android:layout_marginEnd="6dp"
+                        android:checked="@={viewModel.isAnonymous}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tv_anonymous"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_anonymous"
+                        style="@style/body3"
+                        setAnonymousTextColor="@{viewModel.isAnonymous}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:text="@string/anonymous"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </LinearLayout>
 

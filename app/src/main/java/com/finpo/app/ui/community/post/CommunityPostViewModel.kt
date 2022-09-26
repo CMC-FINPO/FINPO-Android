@@ -41,6 +41,8 @@ class CommunityPostViewModel @Inject constructor(
     private val _selectedUriList = MutableLiveData<List<Uri>>(emptyList())
     val selectedUriList: LiveData<List<Uri>> = _selectedUriList
 
+    val isAnonymous = MutableLiveData(true)
+
     fun updateUriList(uris: List<Uri>) {
         _selectedUriList.value = uris
     }
@@ -66,8 +68,8 @@ class CommunityPostViewModel @Inject constructor(
 
     fun postOrPutWriting(bitmapList: List<Bitmap?>) = viewModelScope.launch {
         val imgs = uploadImage(bitmapList)?.addOrder()
-        val response = if(id == -1) communityRepository.postWriting(PostWritingRequest(content = editTextInput.value ?: "", imgs = imgs))
-        else communityRepository.putWriting(id, PostWritingRequest(content = editTextInput.value ?: "", imgs = imgs))
+        val response = if(id == -1) communityRepository.postWriting(PostWritingRequest(content = editTextInput.value ?: "", imgs = imgs, anonymity = isAnonymous.value!!))
+        else communityRepository.putWriting(id, PostWritingRequest(content = editTextInput.value ?: "", imgs = imgs, anonymity = isAnonymous.value!!))
         response.onSuccess {
             _goToCommunityHomeFragmentEvent.setValue(id == -1)
         }
