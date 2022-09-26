@@ -19,5 +19,7 @@ class ImageViewerFragment : BaseFragment<FragmentImageViewerBinding>(R.layout.fr
 
         binding.rvImage.adapter = imageAdapter
         imageAdapter.submitList(args.imgs.toList())
+
+        binding.rvImage.scrollToPosition(args.startIndex)
     }
 }
