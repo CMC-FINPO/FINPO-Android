@@ -57,6 +57,7 @@ class CommunityPostFragment : BaseFragment<FragmentCommunityPostBinding>(R.layou
         }
 
         viewModel.goToCommunityHomeFragmentEvent.observe { isPostNewArticle ->
+            hideLoadingDialog()
             if(isPostNewArticle)
                 findNavController().navigate(CommunityPostFragmentDirections.actionCommunityPostFragmentToCommunityFragment())
             else
@@ -64,12 +65,12 @@ class CommunityPostFragment : BaseFragment<FragmentCommunityPostBinding>(R.layou
         }
 
         viewModel.finishButtonClickEvent.observe {
+            showLoadingDialog()
             CoroutineScope(IO).launch {
                 val bitmapList = ImageUtils().uriListToBitmapList(
                     requireActivity(),
                     viewModel.selectedUriList.value!!
                 )
-                Log.d("test", "$bitmapList ${viewModel.selectedUriList.value}")
                 viewModel.postOrPutWriting(bitmapList)
             }
         }
