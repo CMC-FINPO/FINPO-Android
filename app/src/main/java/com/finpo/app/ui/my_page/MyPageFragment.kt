@@ -17,6 +17,7 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedbottompicker.TedBottomPicker
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 
@@ -113,7 +114,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         TedBottomPicker.with(requireActivity())
             .setPreviewMaxCount(Int.MAX_VALUE)
             .show { uri ->
-                val bitmap = ImageUtils().uriToBitmap(requireActivity(), uri)
+                val bitmap = runBlocking { ImageUtils().uriToBitmap(requireActivity(), uri) }
                 viewModel.changeProfileImg(bitmap)
             }
     }

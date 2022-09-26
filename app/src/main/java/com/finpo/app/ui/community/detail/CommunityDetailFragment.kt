@@ -157,7 +157,7 @@ class CommunityDetailFragment :
             postPopup?.dismiss()
             findNavController().navigate(
                 CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityPostFragment(
-                    viewModel.detailId, viewModel.writingContent.value?.content
+                    viewModel.detailId, viewModel.writingContent.value
                 )
             )
         }

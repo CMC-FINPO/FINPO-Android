@@ -15,6 +15,9 @@ import com.finpo.app.utils.ImageUtils
 import com.finpo.app.utils.PermissionManager
 import dagger.hilt.android.AndroidEntryPoint
 import gun0912.tedbottompicker.TedBottomPicker
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -28,14 +31,15 @@ class CommunityPostFragment : BaseFragment<FragmentCommunityPostBinding>(R.layou
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.id = args.id
-        viewModel.editTextInput.value = args.content
+        viewModel.editTextInput.value = args.content?.content ?: ""
+
+        if(args.content?.imgs != null)
+            viewModel.updateUriList(ImageUtils().imageOrderListToUriList(args.content!!.imgs!!))
     }
 
     override fun doViewCreated() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
-        //TODO 이미지 불러오고, 해당 이미지 selectedUriList에 넣기
 
         communityImagePostAdapter = CommunityImagePostAdapter(viewModel)
         binding.rvImage.adapter = communityImagePostAdapter
@@ -60,8 +64,14 @@ class CommunityPostFragment : BaseFragment<FragmentCommunityPostBinding>(R.layou
         }
 
         viewModel.finishButtonClickEvent.observe {
-            val bitmapList = ImageUtils().uriListToBitmapList(requireActivity(), viewModel.selectedUriList.value!!)
-            viewModel.postOrPutWriting(bitmapList)
+            CoroutineScope(IO).launch {
+                val bitmapList = ImageUtils().uriListToBitmapList(
+                    requireActivity(),
+                    viewModel.selectedUriList.value!!
+                )
+                Log.d("test", "$bitmapList ${viewModel.selectedUriList.value}")
+                viewModel.postOrPutWriting(bitmapList)
+            }
         }
     }
 

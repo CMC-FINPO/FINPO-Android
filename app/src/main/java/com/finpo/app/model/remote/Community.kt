@@ -37,7 +37,7 @@ data class WritingContent(
     val isUserBlocked: Boolean?,
     val createdAt: String,
     var modifiedAt: String,
-    val imgs: List<ImageOrder>
+    val imgs: List<ImageOrder>?
 ) : Parcelable
 
 @Parcelize

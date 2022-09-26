@@ -106,7 +106,7 @@ class CommunityDetailViewModel @Inject constructor(
 
     fun imageClickEvent(index: Int) {
         if(writingContent.value?.imgs != null)
-            _goToImageViewerFragmentEvent.setValue(Pair(writingContent.value!!.imgs, index))
+            _goToImageViewerFragmentEvent.setValue(Pair(writingContent.value!!.imgs!!, index))
     }
 
     fun updateWritingContent(data: WritingContent) {

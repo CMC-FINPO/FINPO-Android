@@ -29,7 +29,9 @@ fun loadCircleImage(view: ImageView, imageUrl: String?, gender: String?) {
 
 @BindingAdapter("imageUri")
 fun loadImageUri(view: ImageView, imgUri: Uri) {
-    view.setImageURI(imgUri)
+    Glide.with(view)
+        .load(imgUri)
+        .into(view);
 }
 
 @BindingAdapter("isBookmarkCheckedLarge")
