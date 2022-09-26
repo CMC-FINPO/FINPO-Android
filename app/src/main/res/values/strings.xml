@@ -175,4 +175,6 @@
     <string name="ask_url">https://forms.gle/29dvEJfe6S2GK6xh8</string>
     <string name="community_rule_url">https://sites.google.com/view/finpo-community-rule/</string>
     <string name="category_all">분야 전체</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

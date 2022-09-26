@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.finpo.app.model.remote.CommentContent
 import com.finpo.app.model.remote.IdReason
+import com.finpo.app.model.remote.ImageOrder
 import com.finpo.app.model.remote.WritingContent
 import com.finpo.app.repository.BlockRepository
 import com.finpo.app.repository.CommunityRepository
@@ -64,6 +65,9 @@ class CommunityDetailViewModel @Inject constructor(
     private val _goToCommunityCommentFragmentEvent = MutableSingleLiveData<Pair<Int, String>>()
     val goToCommunityCommentFragmentEvent: SingleLiveData<Pair<Int, String>> = _goToCommunityCommentFragmentEvent
 
+    private val _goToImageViewerFragmentEvent = MutableSingleLiveData<Pair<ImageOrder, Int>>()
+    val goToImageViewerFragmentEvent: SingleLiveData<Pair<ImageOrder, Int>> = _goToImageViewerFragmentEvent
+
     private val _reportReasonList = MutableLiveData<List<IdReason>>()
     val reportReason: LiveData<List<IdReason>> = _reportReasonList
 
@@ -99,6 +103,10 @@ class CommunityDetailViewModel @Inject constructor(
     private var reportBlockType = 0
     private var reportBlockId = 0
     private var commentParentId = 0
+
+    fun imageClickEvent(imageOrder: ImageOrder, index: Int) {
+        _goToImageViewerFragmentEvent.setValue(Pair(imageOrder, index))
+    }
 
     fun updateWritingContent(data: WritingContent) {
         _writingContent.value = data

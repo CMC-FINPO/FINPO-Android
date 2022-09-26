@@ -66,6 +66,7 @@ class CommunityDetailFragment :
         observeDeleteSuccessfulEvent()
 
         observeEditPostClickEvent()
+        observeImageClickEvent()
 
         initRecyclerView()
         observeRecyclerView()
@@ -157,6 +158,16 @@ class CommunityDetailFragment :
             findNavController().navigate(
                 CommunityDetailFragmentDirections.actionCommunityDetailFragmentToCommunityPostFragment(
                     viewModel.detailId, viewModel.writingContent.value?.content
+                )
+            )
+        }
+    }
+
+    private fun observeImageClickEvent() {
+        viewModel.goToImageViewerFragmentEvent.observe {
+            findNavController().navigate(
+                CommunityDetailFragmentDirections.actionGlobalImageViewFragment(
+                    it.first, it.second
                 )
             )
         }

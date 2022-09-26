@@ -13,6 +13,10 @@
         app:destination="@id/communityDetailFragment"
         app:enterAnim="@android:anim/slide_in_left" />
 
+    <action
+        android:id="@+id/action_global_imageViewFragment"
+        app:destination="@id/imageViewerFragment" />
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.finpo.app.ui.home.HomeFragment"
@@ -259,4 +263,17 @@
         android:name="com.finpo.app.ui.setting.report_reason.ReportReasonFragment"
         android:label="ReportReasonFragment"
         tools:layout="@layout/fragment_report_reason"/>
+    <fragment
+        android:id="@+id/imageViewerFragment"
+        android:name="com.finpo.app.ui.community.detail.image_viewer.ImageViewerFragment"
+        android:label="ImageViewerFragment"
+        tools:layout="@layout/fragment_image_viewer">
+        <argument
+            android:name="imgs"
+            app:argType="com.finpo.app.model.remote.ImageOrder" />
+        <argument
+            android:name="startIndex"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>
