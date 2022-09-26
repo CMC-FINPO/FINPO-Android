@@ -37,6 +37,7 @@ data class WritingContent(
     val isUserBlocked: Boolean?,
     val createdAt: String,
     var modifiedAt: String,
+    val imgs: List<ImageOrder>
 ) : Parcelable
 
 @Parcelize
@@ -132,7 +133,8 @@ data class CommunityImage(
     val imgUrls: List<String>
 )
 
+@Parcelize
 data class ImageOrder(
     val img: String,
     val order: Int
-)
+) : Parcelable

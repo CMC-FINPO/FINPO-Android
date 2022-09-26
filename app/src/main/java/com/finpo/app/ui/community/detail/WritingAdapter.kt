@@ -26,6 +26,10 @@ class WritingAdapter(val viewModel: CommunityDetailViewModel) : RecyclerView.Ada
             if(data == null) return
             binding.data = data
             binding.viewModel = viewModel
+
+            val imageAdapter = CommunityImageDetailAdapter(viewModel)
+            binding.rvImage.adapter = imageAdapter
+            imageAdapter.submitList(data.imgs)
         }
     }
 }

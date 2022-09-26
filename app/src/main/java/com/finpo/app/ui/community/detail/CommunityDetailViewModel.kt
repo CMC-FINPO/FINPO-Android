@@ -258,6 +258,7 @@ class CommunityDetailViewModel @Inject constructor(
             val detailResponse = communityRepository.getWritingDetail(detailId)
             detailResponse.onSuccess {
                 _writingContent.value = data.data
+                Log.d("test","${data.data.imgs}")
             }
 
             changeComment()

@@ -82,6 +82,19 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_profile"
                 tools:text="청년저축계좌랑 청년희망키움통장이랑 다른 거 맞죠? 어떤 점이 다른 건가요? 제가 어디에 해당되는지 모르겠는 어쩌구 저쩌구 어쩌구 저쩌구 어쩌구" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_image"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_recycler_community_detail_img"/>
+
             <ImageView
                 android:id="@+id/iv_like"
                 isLiked="@{data.isLiked}"
@@ -90,7 +103,7 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_content"
+                app:layout_constraintTop_toBottomOf="@id/rv_image"
                 android:onClick="@{() -> viewModel.likeBookmarkViewModel.likeClick(data)}"
                 tools:src="@drawable/ic_like_active" />
 
