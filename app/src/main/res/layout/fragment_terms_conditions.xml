@@ -215,5 +215,42 @@
             app:layout_constraintStart_toEndOf="@id/tv_required_marketing"
             app:layout_constraintTop_toTopOf="@id/tv_required_marketing" />
 
+        <CheckBox
+            android:id="@+id/cb_over_14"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/selector_checkbox_agree"
+            android:button="@null"
+            android:checked="@{viewModel.termsConditionsLiveData.isCheckedOver14()}"
+            android:onCheckedChanged="@{viewModel.termsConditionsLiveData.onCheckboxOver14Change}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cb_marketing" />
+
+        <TextView
+            android:id="@+id/tv_over_14_label"
+            style="@style/label2"
+            android:layout_width="32dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/bg_solid_none_rounded_g04_5"
+            android:gravity="center"
+            android:text="@string/essential"
+            android:textColor="@color/gray_g04"
+            app:layout_constraintBottom_toBottomOf="@id/cb_over_14"
+            app:layout_constraintStart_toEndOf="@id/cb_over_14"
+            app:layout_constraintTop_toTopOf="@id/cb_over_14" />
+
+        <TextView
+            android:id="@+id/tv_over_14"
+            style="@style/header5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@string/over_14"
+            app:layout_constraintBottom_toBottomOf="@id/tv_over_14_label"
+            app:layout_constraintStart_toEndOf="@id/tv_over_14_label"
+            app:layout_constraintTop_toTopOf="@id/tv_over_14_label" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
