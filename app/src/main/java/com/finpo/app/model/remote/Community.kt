@@ -106,7 +106,7 @@ data class CommentChilds(
     val content: String,
     val user: WritingUser?,
     val anonymity: Boolean,
-    val anonymityId: Boolean,
+    val anonymityId: Int,
     val isWriter: Boolean?,
     val isMine: Boolean?,
     val isModified: Boolean?,

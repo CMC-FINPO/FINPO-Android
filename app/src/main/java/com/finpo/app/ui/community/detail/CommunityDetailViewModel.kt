@@ -14,10 +14,7 @@ import com.finpo.app.repository.ReportRepository
 import com.finpo.app.ui.common.BaseViewModel
 import com.finpo.app.ui.common.CommunityLikeBookmarkViewModel
 import com.finpo.app.utils.*
-import com.skydoves.sandwich.ApiResponse
-import com.skydoves.sandwich.onFailure
-import com.skydoves.sandwich.onSuccess
-import com.skydoves.sandwich.suspendOnFailure
+import com.skydoves.sandwich.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -267,9 +264,7 @@ class CommunityDetailViewModel @Inject constructor(
             val detailResponse = communityRepository.getWritingDetail(detailId)
             detailResponse.onSuccess {
                 _writingContent.value = data.data
-                Log.d("test","${data.data.imgs}")
             }
-
             changeComment()
             _isLoading.value = false
         }
