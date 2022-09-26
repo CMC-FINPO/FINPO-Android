@@ -95,6 +95,8 @@ class CommunityDetailViewModel @Inject constructor(
     private val _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean> = _isLoading
 
+    val isAnonymous = MutableLiveData(true)
+
     val comment = MutableLiveData<String>()
 
     private var reportBlockType = 0
@@ -115,7 +117,8 @@ class CommunityDetailViewModel @Inject constructor(
         _dismissPopupEvent.setValue(true)
         commentParentId = data.id
         _isReplyMode.value = true
-        _replyName.value = data.user?.nickname ?: "(알 수 없음)"
+        _replyName.value = if(data.anonymity) "익명${data.anonymityId ?: ""}" else
+            data.user?.nickname ?: "(알 수 없음)"
     }
 
     fun cancelReply() {
@@ -131,7 +134,7 @@ class CommunityDetailViewModel @Inject constructor(
 
     private suspend fun callCommentReplyApi() {
         val response =
-            communityRepository.postCommentReply(detailId, commentParentId, comment.value ?: "")
+            communityRepository.postCommentReply(detailId, commentParentId, comment.value ?: "", isAnonymous.value!!)
         response.onSuccess {
             val position = _commentList.value?.indexOfFirst { it?.id == commentParentId } ?: -1
             if (position == -1) return@onSuccess
@@ -150,7 +153,7 @@ class CommunityDetailViewModel @Inject constructor(
     }
 
     private suspend fun callCommentApi() {
-        val postResponse = communityRepository.postComment(detailId, comment.value ?: "")
+        val postResponse = communityRepository.postComment(detailId, comment.value ?: "", isAnonymous.value!!)
         postResponse.onSuccess {
             if (paging.isLastPage) {
                 val tempCommentList = _commentList.value?.toMutableList() ?: mutableListOf()

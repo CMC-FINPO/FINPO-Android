@@ -89,7 +89,7 @@ fun setCommunityNickname(textView: TextView, data: WritingContent?) {
         textView.text = textView.context.getString(R.string.unknownUser)
         textView.setTextColor(textView.context.getColor(R.color.gray_g03))
     } else {
-        textView.text = data.user?.nickname ?: ""
+        textView.text = if(data.anonymity) "익명" else data.user?.nickname ?: "(알 수 없음)"
         textView.setTextColor(textView.context.getColor(R.color.black_b01))
     }
 }
@@ -101,7 +101,8 @@ fun setCommentNickname(textView: TextView, data: CommentContent?) {
         textView.text = textView.context.getString(R.string.unknownUser)
         textView.setTextColor(textView.context.getColor(R.color.gray_g03))
     } else {
-        textView.text = data.user?.nickname ?: "익명"
+        textView.text = if(data.anonymity) "익명${data.anonymityId ?: ""}" else
+            data.user?.nickname ?: "(알 수 없음)"
         textView.setTextColor(textView.context.getColor(R.color.black_b01))
     }
 }
@@ -113,7 +114,8 @@ fun setCommentReplyNickname(textView: TextView, data: CommentChilds?) {
         textView.text = textView.context.getString(R.string.unknownUser)
         textView.setTextColor(textView.context.getColor(R.color.gray_g03))
     } else {
-        textView.text = data.user?.nickname ?: "익명"
+        textView.text = if(data.anonymity) "익명${if(data.anonymityId == 0) "" else data.anonymityId}" else
+            data.user?.nickname ?: "(알 수 없음)"
         textView.setTextColor(textView.context.getColor(R.color.black_b01))
     }
 }

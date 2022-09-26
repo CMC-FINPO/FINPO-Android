@@ -62,8 +62,7 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
                 commentPopup = PopupWindowUtil(binding.root.context).commentPopupWindow(viewModel, data, it)
             }
 
-            if(binding.rvReply.adapter == null) initRecyclerView(data)
-            else notifyDataSetChange(data)
+            initRecyclerView(data)
 
             binding.executePendingBindings()
         }
@@ -75,12 +74,6 @@ class CommentAdapter(val viewModel: CommunityDetailViewModel)
             binding.rvReply.adapter = replyAdapter
             binding.rvReply.itemAnimator = null
             replyAdapter.submitList(data.childs)
-        }
-
-        @SuppressLint("NotifyDataSetChanged")
-        private fun notifyDataSetChange(data: CommentContent) {
-            (binding.rvReply.adapter as CommentReplyAdapter).submitList(data.childs)
-            binding.rvReply.adapter?.notifyDataSetChanged()
         }
     }
 

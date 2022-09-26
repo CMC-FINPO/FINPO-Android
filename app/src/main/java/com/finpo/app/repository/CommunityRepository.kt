@@ -14,13 +14,13 @@ class CommunityRepository @Inject constructor(private val apiService: ApiService
     suspend fun getWritingDetail(id: Int) = apiService.getWritingDetail(id)
     suspend fun deleteWriting(id: Int) = apiService.deleteWriting(id)
     suspend fun getComment(id: Int, page: Int) = apiService.getComment(id, page)
-    suspend fun postComment(id: Int, comment: String) = apiService.postComment(id, CommentRequest(comment))
+    suspend fun postComment(id: Int, comment: String, isAnonymous: Boolean) = apiService.postComment(id, CommentRequest(comment, isAnonymous))
     suspend fun deleteComment(id: Int) = apiService.deleteComment(id)
     suspend fun editComment(id: Int, comment: String) = apiService.editComment(id, Content(comment))
-    suspend fun postCommentReply(postId: Int, parentId: Int,comment: String)
+    suspend fun postCommentReply(postId: Int, parentId: Int,comment: String, isAnonymous: Boolean)
     = apiService.postCommentReply(
         postId,
-        CommentReplyRequest(CommentReplyParent(parentId), comment)
+        CommentReplyRequest(CommentReplyParent(parentId), comment, anonymity = isAnonymous)
     )
 
     suspend fun uploadCommunityImages(images: List<MultipartBody.Part?>) = apiService.uploadCommunityImages(images)

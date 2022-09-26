@@ -96,6 +96,8 @@ data class CommentContent(
     val isWriter: Boolean?,
     val createdAt: String?,
     val modifiedAt: String?,
+    val anonymity: Boolean,
+    val anonymityId: Int?,
     var childs: MutableList<CommentChilds>? = mutableListOf()
 )
 
