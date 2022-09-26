@@ -27,7 +27,7 @@
             imageUrl="@{imageOrder.img}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick="@{() -> viewModel.imageClickEvent(imageOrder, imageOrder.order)}"
+            android:onClick="@{() -> viewModel.imageClickEvent(imageOrder.order)}"
             android:scaleType="centerCrop"
             tools:src="@mipmap/ic_main" />
 

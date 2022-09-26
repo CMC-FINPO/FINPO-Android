@@ -270,7 +270,7 @@
         tools:layout="@layout/fragment_image_viewer">
         <argument
             android:name="imgs"
-            app:argType="com.finpo.app.model.remote.ImageOrder" />
+            app:argType="com.finpo.app.model.remote.ImageOrder[]" />
         <argument
             android:name="startIndex"
             app:argType="integer"

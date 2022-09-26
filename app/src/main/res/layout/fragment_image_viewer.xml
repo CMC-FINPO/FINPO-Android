@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -9,13 +10,16 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/black_b01"
         tools:context=".ui.community.detail.image_viewer.ImageViewerFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:orientation="horizontal"
+            app:layoutManager=".utils.LinearLayoutManagerWrapper"
+            tools:listitem="@layout/item_recycler_img_viewer" />
 
     </FrameLayout>
 </layout>

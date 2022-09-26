@@ -65,8 +65,8 @@ class CommunityDetailViewModel @Inject constructor(
     private val _goToCommunityCommentFragmentEvent = MutableSingleLiveData<Pair<Int, String>>()
     val goToCommunityCommentFragmentEvent: SingleLiveData<Pair<Int, String>> = _goToCommunityCommentFragmentEvent
 
-    private val _goToImageViewerFragmentEvent = MutableSingleLiveData<Pair<ImageOrder, Int>>()
-    val goToImageViewerFragmentEvent: SingleLiveData<Pair<ImageOrder, Int>> = _goToImageViewerFragmentEvent
+    private val _goToImageViewerFragmentEvent = MutableSingleLiveData<Pair<List<ImageOrder>, Int>>()
+    val goToImageViewerFragmentEvent: SingleLiveData<Pair<List<ImageOrder>, Int>> = _goToImageViewerFragmentEvent
 
     private val _reportReasonList = MutableLiveData<List<IdReason>>()
     val reportReason: LiveData<List<IdReason>> = _reportReasonList
@@ -104,8 +104,9 @@ class CommunityDetailViewModel @Inject constructor(
     private var reportBlockId = 0
     private var commentParentId = 0
 
-    fun imageClickEvent(imageOrder: ImageOrder, index: Int) {
-        _goToImageViewerFragmentEvent.setValue(Pair(imageOrder, index))
+    fun imageClickEvent(index: Int) {
+        if(writingContent.value?.imgs != null)
+            _goToImageViewerFragmentEvent.setValue(Pair(writingContent.value!!.imgs, index))
     }
 
     fun updateWritingContent(data: WritingContent) {

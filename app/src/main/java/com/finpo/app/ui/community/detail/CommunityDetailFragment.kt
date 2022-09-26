@@ -167,7 +167,7 @@ class CommunityDetailFragment :
         viewModel.goToImageViewerFragmentEvent.observe {
             findNavController().navigate(
                 CommunityDetailFragmentDirections.actionGlobalImageViewFragment(
-                    it.first, it.second
+                    it.first.toTypedArray(), it.second
                 )
             )
         }
