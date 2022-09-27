@@ -67,7 +67,7 @@ class CommunityPostViewModel @Inject constructor(
     }
 
     fun postOrPutWriting(bitmapList: List<Bitmap?>) = viewModelScope.launch {
-        val imgs = uploadImage(bitmapList)?.addOrder()
+        val imgs = uploadImage(bitmapList)?.addOrder() ?: listOf()
         val response = if(id == -1) communityRepository.postWriting(PostWritingRequest(content = editTextInput.value ?: "", imgs = imgs, anonymity = isAnonymous.value!!))
         else communityRepository.putWriting(id, PostWritingRequest(content = editTextInput.value ?: "", imgs = imgs, anonymity = isAnonymous.value!!))
         response.onSuccess {
