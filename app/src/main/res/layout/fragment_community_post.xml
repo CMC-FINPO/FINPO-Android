@@ -125,11 +125,11 @@
 
                     <CheckBox
                         android:id="@+id/cb_anonymous"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:background="@drawable/selector_anonymous_checkbox"
                         android:button="@null"
-                        android:layout_marginEnd="6dp"
+                        android:layout_marginEnd="5dp"
                         android:checked="@={viewModel.isAnonymous}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/tv_anonymous"
@@ -137,11 +137,11 @@
 
                     <TextView
                         android:id="@+id/tv_anonymous"
-                        style="@style/body3"
+                        style="@style/header6"
                         setAnonymousTextColor="@{viewModel.isAnonymous}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
+                        android:layout_marginEnd="22dp"
                         android:text="@string/anonymous"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
